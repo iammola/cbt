@@ -64,6 +64,7 @@ const Register: NextPage = () => {
                             Choose Question Type:
                         </span>
                         <Select
+                            className="-mt-5"
                             handleChange={() => { }}
                             selected={{
                                 _id: "Multiple Choice",
@@ -210,9 +211,9 @@ const Register: NextPage = () => {
     );
 }
 
-const Select: FunctionComponent<SelectProps> = ({ label, options, selected, handleChange }) => {
+const Select: FunctionComponent<SelectProps> = ({ label, options, selected, className, handleChange }) => {
     return (
-        <div className="flex flex-col w-80 relative">
+        <div className={classNames("flex flex-col w-80 relative", className)}>
             <Listbox value={selected} onChange={handleChange}>
                 <div className="relative mt-1">
                     {label !== undefined && (
@@ -278,6 +279,7 @@ const Select: FunctionComponent<SelectProps> = ({ label, options, selected, hand
 
 type SelectProps = {
     label?: string;
+    className?: string;
     selected: SelectOption;
     options?: SelectProps['selected'][];
     handleChange(T: SelectProps['selected']): void;
