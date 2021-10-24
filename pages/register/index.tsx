@@ -18,6 +18,25 @@ const Register: NextPage = () => {
     const [selectedDuration, setSelectedDuration] = useState<number | undefined>();
     const [selectedClass, setSelectedClass] = useState<SelectOption>({ _id: "", name: "Loading classes..." });
     const [selectedSubject, setSelectedSubject] = useState<SelectOption>({ _id: "", name: "Select class first" });
+
+    useEffect(() => {
+        setSelectedClass({
+            _id: "",
+            name: error !== undefined ? "Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
+        });
+    }, [classes, error]);
+
+    useEffect(() => {
+        const { _id } = selectedClass;
+        if (_id !== "") {
+            setSelectedSubject({ _id: "", name: "Loading subjects..." });
+            fetch(`/api/classes/${_id}/subjects`).then(res => res.json()).then(subjects => {
+                setSubjects(subjects);
+                setSelectedSubject({ _id: "", name: "Select a subject" });
+            });
+        }
+    }, [selectedClass]);
+
     return (
         <section className="flex flex-col">
             <section className="flex flex-col items-center justify-center w-screen h-screen">
