@@ -1,12 +1,15 @@
 import useSWR from "swr";
 import { NextPage } from "next";
 import { format } from "date-fns";
-import { Fragment, useEffect, useState, FunctionComponent } from 'react';
-
 import { Listbox, Transition } from "@headlessui/react";
-import { CalendarIcon, CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { Fragment, useEffect, useState, FunctionComponent } from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import { CalendarIcon, CheckIcon, SelectorIcon, PlusSmIcon } from '@heroicons/react/solid';
+
+import { classNames } from "utils";
 
 import type { ClassRecord } from "db/models/Class";
+import { CircleIcon, LineIcon } from "components/CustomIcons";
 
 type SelectOption = Pick<ClassRecord<true>, '_id' | 'name'>;
 
@@ -39,6 +42,102 @@ const Register: NextPage = () => {
 
     return (
         <section className="flex flex-col">
+            <section className="flex flex-col items-center justify-start gap-10 w-screen h-screen p-10">
+                <div className="flex items-center justify-between gap-6 w-full">
+                    <button className="p-1.5 rounded-md shadow-md bg-gray-200 focus:outline-none">
+                        <ChevronLeftIcon className="w-6 h-6 text-blue-700" />
+                    </button>
+                    <span className="flex-grow text-left block truncate">
+                        Q. 2 - Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dignissimos?
+                    </span>
+                    <button className="p-1.5 rounded-md shadow-md bg-gray-200 focus:outline-none">
+                        <ChevronRightIcon className="w-6 h-6 text-blue-700" />
+                    </button>
+                </div>
+                <div className="flex flex-col gap-20  relative w-full">
+                    <div className="flex flex-col lg:flex-row items-start gap-y-2 lg:gap-y-0 gap-x-0 lg:gap-x-6 pl-[34px]">
+                        <span className="absolute left-0 z-0 flex flex-col items-center justify-start w-[22px] h-[calc(100%+2px)] pt-1.5">
+                            <CircleIcon className="drop-shadow-2xl text-gray-800 flex-shrink-0" />
+                            <LineIcon className="flex-grow text-gray-800 -mt-1" />
+                        </span>
+                        <span className="w-max font-medium">
+                            Choose Question Type:
+                        </span>
+                        <Select
+                            handleChange={() => { }}
+                            selected={{
+                                _id: "Multiple Choice",
+                                name: "Multiple Choice single answer"
+                            }}
+                            options={[{
+                                _id: "Multiple Choice",
+                                name: "Multiple Choice single answer"
+                            }, {
+                                _id: "Checkboxes",
+                                name: "Multiple Choice multiple answer"
+                            }, {
+                                _id: "Short Answer",
+                                name: "Short Answer"
+                            }, {
+                                _id: "Long Answer",
+                                name: "Long Answer"
+                            }]}
+                        />
+                    </div>
+                    <div className="flex flex-col items-start gap-6 pl-[34px]">
+                        <span className="absolute left-0 z-0 flex flex-col items-center justify-start w-[22px] h-[calc(100%+2px)] pt-2">
+                            <CircleIcon className="drop-shadow-2xl text-gray-800 flex-shrink-0" />
+                        </span>
+                        <span className="w-max font-medium">
+                            Question:
+                        </span>
+                        <div className="flex flex-col items-start justify-start gap-7 w-full">
+                            <input
+                                type="text"
+                                className="w-full py-4 pl-8 pr-10 rounded-lg border border-gray-300"
+                            />
+                            <ul className="flex flex-col items-start justify-start gap-5 w-full pl-6 pr-4 md:pr-8 xl:pr-14 2xl:pr-20">
+                                <li className="flex items-center justify-start gap-4 w-full">
+                                    <span className="w-4 h-4 rounded-full border border-gray-500 flex-shrink-0"></span>
+                                    <span className="">
+                                        A.
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className="w-full py-3 pl-5 rounded-lg border border-gray-300"
+                                    />
+                                </li>
+                                <li className="flex items-center justify-start gap-4 w-full">
+                                    <span className="w-4 h-4 rounded-full border border-gray-500 flex-shrink-0"></span>
+                                    <span className="">
+                                        B.
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className="w-full py-3 pl-5 rounded-lg border border-gray-300"
+                                    />
+                                </li>
+                                <li className="flex items-center justify-start gap-4 w-full">
+                                    <span className="w-4 h-4 rounded-full border border-gray-500 flex-shrink-0"></span>
+                                    <span className="">
+                                        C.
+                                    </span>
+                                    <input
+                                        type="text"
+                                        className="w-full py-3 pl-5 rounded-lg border border-gray-300"
+                                    />
+                                </li>
+                            </ul>
+                            <button className="flex items-center gap-5 ml-10 py-3 px-4 rounded-md transition-shadow hover:ring-2 hover:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <span className="p-2 rounded-full bg-blue-600">
+                                    <PlusSmIcon className="w-5 h-5 text-white" />
+                                </span>
+                                Add Option
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section className="flex flex-col items-center justify-center w-screen h-screen">
                 <section className="flex flex-col gap-5 rounded-2xl shadow-lg p-10 bg-gray-50">
                     <h2 className="text-2xl text-gray-800 text-center tracking-white font-extrabold">
@@ -107,7 +206,7 @@ const Register: NextPage = () => {
                     </form>
                 </section>
             </section>
-        </section>
+        </section >
     );
 }
 
