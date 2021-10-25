@@ -25,7 +25,7 @@ const CreateStudents: NextPage = () => {
     useEffect(() => {
         if (classes === undefined || error === undefined) setSelectedClass({
             _id: "",
-            name: (error !== undefined && classes === undefined) ? "Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
+            name: (error !== undefined && classes === undefined) ? "⚠️ Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
         });
     }, [classes, error]);
 
