@@ -41,6 +41,7 @@ const CreateStudents: NextPage = () => {
 
                 if (success === true) {
                     setSubjects(data);
+                    setSelectedSubjects([]);
                     console.log({ message, data });
                 } else throw new Error(error);
                 
