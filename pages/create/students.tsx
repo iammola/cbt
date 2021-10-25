@@ -178,7 +178,7 @@ const CreateStudents: NextPage = () => {
                                 </label>
                             ))}
                             <div className="w-full pt-2 text-center empty:hidden">
-                                {subjectsLoadingState !== undefined && subjects.length === 0 && (selectedClass._id !== "" ? (
+                                {subjectsLoadingState === undefined && subjects.length === 0 && (selectedClass._id !== "" ? (
                                     "No subjects linked to this class"
                                 ) : (
                                     "Select a class ⬆️"
