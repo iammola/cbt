@@ -26,13 +26,14 @@ async function createSubject(id: string, subjectData: typeof SubjectModel.schema
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
+    const { id } = query as { id: string };
     let [success, status, message]: RouteResponse = [false, 400, ""];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
-    }
+    } else[success, status, message] = await (method === "POST" ? createSubject(id, JSON.parse(body)) : [success, status, message])
 
     if (typeof message !== "object") message = { message };
 
