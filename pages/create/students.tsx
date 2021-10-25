@@ -27,6 +27,23 @@ const CreateStudents: NextPage = () => {
         });
     }, [classes, error]);
 
+    useEffect(() => {
+        async function fetchSubjects() {
+            try {
+                const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
+                const { success, message, data, error } = await res.json();
+
+                if (success === true) {
+                    setSubjects(data);
+                    console.log({ message, data });
+                } else throw new Error(error);
+            } catch (error) {
+                console.log({ error })
+            }
+        }
+        if (selectedClass._id !== "") fetchSubjects();
+    }, [selectedClass])
+
     return (
         <>
             <Head>
