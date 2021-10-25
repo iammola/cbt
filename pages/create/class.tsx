@@ -1,14 +1,10 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useState } from "react";
 
 import ClassForm from "components/ClassForm";
 import SubjectForm from "components/SubjectForm";
 
 const CreateClass: NextPage = () => {
-    const [name, setName] = useState('');
-    const [selectedClass, setSelectedClass] = useState('');
-
     return (
         <>
             <Head>
