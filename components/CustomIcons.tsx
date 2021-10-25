@@ -34,7 +34,6 @@ const LineIcon: FunctionComponent<ComponentProps<'svg'>> = (props) => {
     )
 }
 
-export { CircleIcon, LineIcon };
 const LoadingIcon: FunctionComponent<ComponentProps<'svg'>> = (props) => {
     return (
         <svg
@@ -60,3 +59,4 @@ const LoadingIcon: FunctionComponent<ComponentProps<'svg'>> = (props) => {
     )
 }
 
+export { CircleIcon, OuterCircleIcon, CircleOutlineIcon, LineIcon, LoadingIcon };
