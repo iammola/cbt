@@ -5,6 +5,20 @@ import { ClassModel } from "db/models/Class";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
+async function getClasses(select: string = ''): Promise<RouteResponse> {
+    await connect();
+    let [success, status, message]: RouteResponse = [false, 501, ""];
+
+    try {
+        const data = await ClassModel.find({}).select(select);
+        [success, status, message] = [true, 200, { data, message: "Success" }];
+    } catch (error) {   
+        [status, message] = [400, { error, message: "Couldn't GET Classes" }];
+    }
+    
+    return [success, status, message];
+}
+
 async function createClass(item: typeof ClassModel.schema.obj): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, 501, ""];
