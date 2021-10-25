@@ -136,13 +136,7 @@ const CreateStudents: NextPage = () => {
                             Subjects
                         </span>
                         <div className="flex gap-x-4 gap-y-3 w-full text-sm">
-                            {[{
-                                _id: "",
-                                name: "Mathematics"
-                            }, {
-                                _id: "",
-                                name: "English Language"
-                            }].map(({ _id, name }) => (
+                            {subjects.map(({ _id, name }) => (
                                 <label
                                     key={_id}
                                     htmlFor={_id}
