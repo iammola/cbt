@@ -1,9 +1,11 @@
-import { connect } from "db";
-import { AnswerModel } from "db/models/Answer";
-import { ExamModel, ExamRecord } from "db/models/Exam";
-import { QuestionModel, QuestionRecord } from "db/models/Question";
 import { startSession } from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import { connect } from "db";
+import { AnswerModel } from "db/models/Answer";
+import { QuestionModel } from "db/models/Question";
+import { ExamModel, ExamRecord } from "db/models/Exam";
+
 import { RawQuestion } from "pages/create/questions";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
