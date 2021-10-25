@@ -5,7 +5,7 @@ import { QuestionRecord } from "./Question";
 export type ExamRecord<P = false> = {
     date: number;
     duration: number
-    SubjectID: string;
+    SubjectID: P extends true ? string : Schema.Types.ObjectId;
     questions: (P extends true ? QuestionRecord<P> : string)[];
 } & (P extends true ? { _id: string } : {})
 
