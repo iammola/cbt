@@ -180,7 +180,7 @@ const CreateStudents: NextPage = () => {
                             <div className="w-full pt-2 text-center empty:hidden">
                                 {subjectsLoadingState === undefined && subjects.length === 0 && (selectedClass._id !== "" ? (
                                     "No subjects linked to this class"
-                                ) : (
+                                ) : classes !== undefined && (
                                     "Select a class ⬆️"
                                 ))}
                                 {subjectsLoadingState === false && "Error loading subjects. Change selected class to retry"}
