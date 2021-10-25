@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
 
 import Select from "components/Select";
+import { LoadingIcon } from "components/CustomIcons";
 
 const SubjectForm: NextPage = () => {
     const [name, setName] = useState('');
@@ -91,6 +92,9 @@ const SubjectForm: NextPage = () => {
                 <button
                     type="submit"
                 >
+                    {loading === true && (
+                        <LoadingIcon className="animate-spin w-5 h-5" />
+                    )}
                     Create Subject
                 </button>
             </form>
