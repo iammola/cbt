@@ -47,7 +47,7 @@ const SubjectForm: NextPage = () => {
                     _id: "",
                     name: "Select class"
                 })
-                setTimeout(setSuccess, 5e3, undefined);
+                setTimeout(setSuccess, 15e2, undefined);
 
                 console.log({ message, data });
             } else throw new Error(error);
