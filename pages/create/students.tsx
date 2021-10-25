@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Select from "components/Select";
+import useSWR from "swr";
 
 const CreateStudents: NextPage = () => {
     const [email, setEmail] = useState('');
@@ -15,6 +16,14 @@ const CreateStudents: NextPage = () => {
         name: "Select class"
     });
     const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+
+    useEffect(() => {
+        if (classes === undefined || error === undefined) setSelectedClass({
+            _id: "",
+            name: (error !== undefined && classes === undefined) ? "Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
+        });
+    }, [classes, error]);
 
     return (
         <>
@@ -116,7 +125,7 @@ const CreateStudents: NextPage = () => {
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
                         }}
-                        options={[]}
+                        options={classes?.data}
                         selected={selectedClass}
                         handleChange={setSelectedClass}
                     />
