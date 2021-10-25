@@ -2,6 +2,11 @@ import { NextPage } from "next";
 import { FormEvent, Fragment, useMemo, useState } from "react";
 
 
+import type { QuestionRecord } from "db/models/Question";
+
+export type RawQuestion = Omit<QuestionRecord<true>, '_id' | 'answers'> & {
+    answers: Omit<NonNullable<QuestionRecord<true>['answers']>[number], '_id'>[];
+};
 
 const CreateQuestions: NextPage = () => {
     const recordTemplate = useMemo<RawQuestion>(() => ({
