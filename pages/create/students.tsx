@@ -5,10 +5,16 @@ import { useState } from "react";
 import Select from "components/Select";
 
 const CreateStudents: NextPage = () => {
+    const [email, setEmail] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [initials, setInitials] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
     const [selectedClass, setSelectedClass] = useState({
         _id: "",
         name: "Select class"
     });
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
 
     return (
         <>
@@ -33,6 +39,7 @@ const CreateStudents: NextPage = () => {
                             required
                             type="text"
                             id="fullName"
+                            value={fullName}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -48,6 +55,7 @@ const CreateStudents: NextPage = () => {
                                 required
                                 type="text"
                                 id="initials"
+                                value={initials}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -62,6 +70,7 @@ const CreateStudents: NextPage = () => {
                                 required
                                 id="email"
                                 type="email"
+                                value={email}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -78,6 +87,7 @@ const CreateStudents: NextPage = () => {
                                 required
                                 type="text"
                                 id="firstName"
+                                value={firstName}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -92,6 +102,7 @@ const CreateStudents: NextPage = () => {
                                 required
                                 type="text"
                                 id="lastName"
+                                value={lastName}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
