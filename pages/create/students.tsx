@@ -175,6 +175,15 @@ const CreateStudents: NextPage = () => {
                                     {name}
                                 </label>
                             ))}
+                            <div className="w-full pt-2 text-center empty:hidden">
+                                {subjectsLoadingState !== undefined && subjects.length === 0 && (selectedClass._id !== "" ? (
+                                    "No subjects linked to this class"
+                                ) : (
+                                    "Select a class ⬆️"
+                                ))}
+                                {subjectsLoadingState === false && "Error loading subjects. Change selected class to retry"}
+                                {subjectsLoadingState === true && `Loading ${selectedClass.name}'s subjects...`}
+                            </div>
                         </div>
                     </div>
                     <button
