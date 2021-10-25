@@ -1,9 +1,22 @@
 import { NextPage } from "next";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const SubjectForm: NextPage = () => {
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
+    const [loading, setLoading] = useState(false);
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+        } catch (error) {
+            console.log({ error });
+        }
+
+        setLoading(false);
+    }
+
     return (
         <>
             <form
