@@ -14,7 +14,7 @@ const ExamSchema = new Schema<ExamRecord>({
         type: Number,
         required: [true, 'Exam duration required'],
     }, SubjectID: {
-        type: String,
+        type: Schema.Types.ObjectId,
         required: [true, 'Exam subject required'],
     }, date: {
         type: Number,
