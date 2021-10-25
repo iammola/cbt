@@ -1,10 +1,17 @@
 import { NextPage } from "next";
 import { FormEvent, useState } from "react";
 
+import Select from "components/Select";
+
 const SubjectForm: NextPage = () => {
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
+    const [selectedClass, setSelectedClass] = useState({
+        _id: "",
+        name: "Select class"
+    });
+
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setLoading(true);
@@ -26,6 +33,19 @@ const SubjectForm: NextPage = () => {
                     <span>Create a</span>{' '}
                     <span className="text-blue-500">Subject</span>
                 </h1>
+                <Select
+                    label="Classes"
+                    colorPallette={{
+                        activeCheckIconColor: "text-blue-600",
+                        inactiveCheckIconColor: "text-blue-800",
+                        activeOptionColor: "text-blue-900 bg-blue-100",
+                        buttonBorderColor: "focus-visible:border-blue-500",
+                        buttonOffsetFocusColor: "focus-visible:ring-offset-blue-500"
+                    }}
+                    options={[]}
+                    selected={selectedClass}
+                    handleChange={setSelectedClass}
+                />
                 <div className="flex flex-col gap-2.5 w-80">
                     <label
                         htmlFor="name"
