@@ -172,6 +172,7 @@ const CreateStudents: NextPage = () => {
                                         id={_id}
                                         type="checkbox"
                                         checked={selectedSubjects.includes(_id)}
+                                        onChange={({ target: { checked } }) => checked === true ? setSelectedSubjects([...selectedSubjects, _id]) : setSelectedSubjects(selectedSubjects.filter(selected => selected !== _id))}
                                     />
                                     {name}
                                 </label>
