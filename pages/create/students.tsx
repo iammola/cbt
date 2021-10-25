@@ -15,7 +15,7 @@ const CreateStudents: NextPage = () => {
         _id: "",
         name: "Select class"
     });
-    const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
     const [subjects, setSubjects] = useState<{ _id: string; name: string; }[]>([]);
     const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
