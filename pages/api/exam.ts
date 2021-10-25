@@ -16,21 +16,18 @@ async function createExam({ exam, questions }: { exam: Omit<ExamRecord, 'questio
     let [success, status, message]: RouteResponse = [false, 501, ""];
 
     try {
-        session.startTransaction();
-
-        const data = await ExamModel.create([{
+        const data = await session.withTransaction(async () => await ExamModel.create([{
             ...exam,
             questions: (await QuestionModel.create(await Promise.all(questions.map(async ({ answers, ...question }) => ({
                 ...question,
                 answers: (await AnswerModel.create(answers, { session })).map(({ _id }) => _id)
             }))), { session })).map(({ _id }) => _id)
-        }], { session });
+        }], { session }));
 
-        [success, status, message] = [true, 201, { data, message: "Success" }]
-        await session.commitTransaction();
+        [success, status, message] = [true, 201, { data, message: "Success" }];
     } catch (error) {
+        
         [status, message] = [400, { error, message: "Couldn't CREATE Exam" }];
-        await session.abortTransaction();
     }
 
     session.endSession();
