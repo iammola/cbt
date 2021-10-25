@@ -11,8 +11,10 @@ async function createSubject(id: string, subjectData: typeof SubjectModel.schema
     let [success, status, message]: RouteResponse = [false, 501, ""];
 
     try {
-        const data = await SubjectModel.create(subjectData);
-        [success, status, message] = [true, 201, { data, message: "Created" }];
+        if (await ClassModel.exists({ _id: id }) === true) {
+            const data = await SubjectModel.create(subjectData);
+            [success, status, message] = [true, 201, { data, message: "Created" }];
+        } else[success, status, message] = [false, 400, "Class does not exist"];
     } catch (error) {
         [status, message] = [400, { error, message: "Couldn't CREATE subject" }];
     }
