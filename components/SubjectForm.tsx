@@ -9,6 +9,7 @@ const SubjectForm: NextPage = () => {
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState<boolean | undefined>();
     const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedClass, setSelectedClass] = useState({
@@ -28,6 +29,25 @@ const SubjectForm: NextPage = () => {
         setLoading(true);
 
         try {
+            const res = await fetch(`/api/classes/${selectedClass._id}/subjects`, {
+                method: "POST",
+                body: JSON.stringify({ name, alias })
+            });
+            const { success, message, data, error } = await res.json();
+
+            setSuccess(success);
+
+            if (success === true) {
+                setName('');
+                setAlias('');
+                setSelectedClass({
+                    _id: "",
+                    name: "Select class"
+                })
+                setTimeout(setSuccess, 5e3, undefined);
+
+                console.log({ message, data });
+            } else throw new Error(error);
         } catch (error) {
             console.log({ error });
         }
