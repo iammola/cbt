@@ -171,6 +171,7 @@ const CreateStudents: NextPage = () => {
                                     <input
                                         id={_id}
                                         type="checkbox"
+                                        checked={selectedSubjects.includes(_id)}
                                     />
                                     {name}
                                 </label>
