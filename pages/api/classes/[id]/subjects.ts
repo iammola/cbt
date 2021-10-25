@@ -16,6 +16,7 @@ async function createSubject(id: string, subjectData: typeof SubjectModel.schema
             await ClassModel.findByIdAndUpdate(id, {
                 $addToSet: { subjects: data._id }
             }, { runValidators: true });
+            
             [success, status, message] = [true, 201, { data, message: "Created" }];
         } else[success, status, message] = [false, 400, "Class does not exist"];
     } catch (error) {
