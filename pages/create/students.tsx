@@ -44,7 +44,7 @@ const CreateStudents: NextPage = () => {
                     setSelectedSubjects([]);
                     console.log({ message, data });
                 } else throw new Error(error);
-                
+
                 setTimeout(setSubjectsLoadingState, 15e2, undefined);
             } catch (error) {
                 console.log({ error })
