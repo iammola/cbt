@@ -4,9 +4,20 @@ import { FormEvent, Fragment, useMemo, useState } from "react";
 
 
 const CreateQuestions: NextPage = () => {
+    const recordTemplate = useMemo<RawQuestion>(() => ({
+        question: "",
+        type: "Multiple choice",
+        answers: [{ answer: "", isCorrect: true }, { answer: "" }],
+        max: undefined,
+        min: undefined,
+        minLength: undefined,
+        maxLength: undefined
+    }), []);
+    const [uploading, setUploading] = useState(false);
     const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setUploading(true);
     }
 
     return (
@@ -41,6 +52,26 @@ const CreateQuestions: NextPage = () => {
                         </Fragment>
                     ))}
                 </section>
+                <div className="flex items-center justify-center gap-7 w-full">
+                    <button
+                        type="button"
+                        onClick={() => setQuestions([...questions, { ...recordTemplate }])}
+                        className="flex items-center justify-center gap-2 py-3 px-7 rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-600"
+                    >
+                        <PlusSmIcon className="w-5 h-5 text-white" />
+                        Add Question
+                    </button>
+                    <button
+                        type="submit"
+                        className="flex items-center justify-center gap-2 py-3 px-7 rounded-lg shadow-md text-white bg-green-500 hover:bg-green-600"
+                    >
+                        {uploading === true && (
+                            <LoadingIcon className="animate-spin w-5 h-5" />
+                        )}
+                        Save Exam
+                    </button>
+                </div>
+            </form>
         </section>
     );
 }
