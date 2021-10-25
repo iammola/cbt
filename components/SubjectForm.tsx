@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
@@ -122,6 +123,12 @@ const SubjectForm: NextPage = () => {
                 >
                     {loading === true && (
                         <LoadingIcon className="animate-spin w-5 h-5" />
+                    )}
+                    {success === true && (
+                        <CheckIcon className="w-5 h-5" />
+                    )}
+                    {success === false && (
+                        <XIcon className="w-5 h-5" />
                     )}
                     Create Subject
                 </button>
