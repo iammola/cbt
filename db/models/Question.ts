@@ -31,7 +31,7 @@ const QuestionSchema = new Schema<QuestionRecord>({
         required: [true, 'Question required'],
     }, min: {
         type: Number,
-        default: 1,
+        default: undefined,
     }, max: {
         type: Number,
         required: [function (this: QuestionRecord) {
