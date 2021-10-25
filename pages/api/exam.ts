@@ -10,7 +10,7 @@ import { RawQuestion } from "pages/create/questions";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
-async function createExam({ exam, questions }: { exam: ExamRecord; questions: RawQuestion[] }): Promise<RouteResponse> {
+async function createExam({ exam, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: RawQuestion[] }): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, 501, ""];
