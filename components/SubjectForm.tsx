@@ -1,5 +1,6 @@
+import useSWR from "swr";
 import { NextPage } from "next";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import Select from "components/Select";
 
@@ -7,10 +8,19 @@ const SubjectForm: NextPage = () => {
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
+    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+
     const [selectedClass, setSelectedClass] = useState({
         _id: "",
         name: "Select class"
     });
+
+    useEffect(() => {
+        setSelectedClass({
+            _id: "",
+            name: error !== undefined ? "Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
+        });
+    }, [classes, error]);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -42,7 +52,7 @@ const SubjectForm: NextPage = () => {
                         buttonBorderColor: "focus-visible:border-blue-500",
                         buttonOffsetFocusColor: "focus-visible:ring-offset-blue-500"
                     }}
-                    options={[]}
+                    options={classes?.data}
                     selected={selectedClass}
                     handleChange={setSelectedClass}
                 />
