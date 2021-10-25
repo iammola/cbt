@@ -20,6 +20,8 @@ const CreateStudents: NextPage = () => {
     const [subjects, setSubjects] = useState<{ _id: string; name: string; }[]>([]);
     const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
 
+    const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
+
     useEffect(() => {
         if (classes === undefined || error === undefined) setSelectedClass({
             _id: "",
@@ -29,14 +31,20 @@ const CreateStudents: NextPage = () => {
 
     useEffect(() => {
         async function fetchSubjects() {
+            setSubjectsLoadingState(true);
+
             try {
                 const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
                 const { success, message, data, error } = await res.json();
+
+                setSubjectsLoadingState(success);
 
                 if (success === true) {
                     setSubjects(data);
                     console.log({ message, data });
                 } else throw new Error(error);
+                
+                setTimeout(setSubjectsLoadingState, 15e2, undefined);
             } catch (error) {
                 console.log({ error })
             }
