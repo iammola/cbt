@@ -112,6 +112,7 @@ const SubjectForm: NextPage = () => {
                 </div>
                 <button
                     type="submit"
+                    className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-blue-400 hover:bg-blue-500 focus:ring-blue-500"
                 >
                     {loading === true && (
                         <LoadingIcon className="animate-spin w-5 h-5" />
