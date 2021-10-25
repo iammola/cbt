@@ -1,8 +1,14 @@
 import { NextPage } from "next";
+import { FormEvent, Fragment, useMemo, useState } from "react";
 
 
 
 const CreateQuestions: NextPage = () => {
+    const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+    }
+
     return (
         <section className="flex flex-col items-center justify-center gap-2 w-screen">
             <div className="flex items-center justify-start gap-2 text-gray-400 pt-7 pb-2 px-10 w-full text-sm font-medium">
@@ -14,6 +20,27 @@ const CreateQuestions: NextPage = () => {
                 <ChevronRightIcon className="w-5 h-5 text-gray-500" />
                 <span className="text-gray-600">Questions</span>
             </div>
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center justify-start gap-10 w-full flex-grow p-10"
+            >
+                <section className="flex flex-col items-center justify-center gap-14 w-full h-full">
+                    {questions.map((question, i) => (
+                        <Fragment key={i}>
+                            <Question
+                                number={i + 1}
+                                record={question}
+                                onChange={newQuestion => setQuestions(questions.map((item, questionIdx) => questionIdx === i ? ({ ...item, ...newQuestion }) : item))}
+                            />
+                            <div
+                                aria-hidden="true"
+                                className="w-full px-20"
+                            >
+                                <hr />
+                            </div>
+                        </Fragment>
+                    ))}
+                </section>
         </section>
     );
 }
