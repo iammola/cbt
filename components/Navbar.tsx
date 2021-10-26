@@ -51,7 +51,7 @@ const Navbar: FunctionComponent = () => {
             </ul>
             {account !== undefined && (
                 <div className="flex flex-shrink-0 items-center gap-5 p-3 cursor-pointer rounded-lg transition-colors hover:bg-gray-100">
-                    <div className="flex items-center justify-center relative rounded-full bg-blue-500 flex-shrink-0 font-bold w-10 h-10">
+                    <div className="flex items-center justify-center relative rounded-full bg-blue-500 flex-shrink-0 w-10 h-10">
                         <UserImage
                             image=""
                             className="rounded-full"
