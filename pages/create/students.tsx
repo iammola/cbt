@@ -1,9 +1,9 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
 
 import Select from "components/Select";
-import useSWR from "swr";
 
 const CreateStudents: NextPage = () => {
     const [email, setEmail] = useState('');
