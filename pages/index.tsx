@@ -7,6 +7,7 @@ import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react
 
 import Image1 from "/public/BG.jpg";
 import { LoadingIcon } from 'components/CustomIcons';
+import { classNames } from 'utils';
 
 const Home: NextPage = () => {
     const [active, setActive] = useState(0);
@@ -84,7 +85,11 @@ const Home: NextPage = () => {
                     </div>
                     <button
                         type="submit"
-                        className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-white"
+                        className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
+                            "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500": success === undefined,
+                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
+                        })}
                     >
                         {loading === true && (
                             <LoadingIcon className="animate-spin w-5 h-5" />
