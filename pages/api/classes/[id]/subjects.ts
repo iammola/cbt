@@ -6,6 +6,20 @@ import { SubjectModel } from "db/models/Subject";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
+async function getSubjects(id: string, select: string): Promise<RouteResponse> {
+    await connect();
+    let [success, status, message]: RouteResponse = [false, 501, ""];
+
+    try {
+        const data = await ClassModel.findById(id).populate('subjects').select(`-_id subjects`);
+        [success, status, message] = [true, 201, { data, message: "Created" }];
+    } catch (error) {
+        [status, message] = [400, { error, message: "Couldn't GET subjects" }];
+    }
+
+    return [success, status, message];
+}
+
 async function createSubject(id: string, subjectData: typeof SubjectModel.schema.obj): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, 501, ""];
