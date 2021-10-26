@@ -142,6 +142,8 @@ const CreateStudents: NextPage = () => {
                             <input
                                 required
                                 type="text"
+                                minLength={2}
+                                maxLength={3}
                                 id="initials"
                                 value={initials}
                                 onChange={({ target: { value } }) => setInitials(value)}
