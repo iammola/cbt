@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
 
@@ -12,6 +13,7 @@ import { LoadingIcon } from 'components/CustomIcons';
 
 const Home: NextPage = () => {
     const router = useRouter();
+    const [,setCookies] = useCookies(['account']);
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
@@ -36,6 +38,10 @@ const Home: NextPage = () => {
             setSuccess(success);
             if (success === true) {
                 router.push('/home');
+                setCookies("account", JSON.stringify(data), {
+                    path: '/',
+                    sameSite: true
+                });
             } else throw new Error(error);
         } catch (error) {
             console.log(error);
