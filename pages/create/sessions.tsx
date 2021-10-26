@@ -33,6 +33,11 @@ const CreateSession: NextPage = () => {
             setSuccess(success);
 
             if (success === true) {
+                setName('');
+                setAlias('');
+                setCurrent(false);
+                setTerms([{ ...termTemplate }]);
+
                 console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
