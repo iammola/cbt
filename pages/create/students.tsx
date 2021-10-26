@@ -39,6 +39,17 @@ const CreateStudents: NextPage = () => {
             const { success, error, message, data } = await res.json();
 
             if (success === true) {
+                setEmail('');
+                setFullName('');
+                setInitials('');
+                setLastName('');
+                setFirstName('');
+                setSelectedClass({
+                    _id: "",
+                    name: "Select class"
+                })
+                setSelectedSubjects([]);
+
                 console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
