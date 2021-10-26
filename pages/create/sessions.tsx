@@ -7,6 +7,9 @@ const CreateSession: NextPage = () => {
     const [alias, setAlias] = useState('');
     const [current, setCurrent] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState<boolean | undefined>();
+
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
     }
