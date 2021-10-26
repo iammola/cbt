@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
@@ -9,6 +9,7 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/CustomIcons";
 
 const SubjectForm: NextPage = () => {
+    const { mutate } = useSWRConfig();
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
@@ -50,6 +51,7 @@ const SubjectForm: NextPage = () => {
                 setTimeout(setSuccess, 15e2, undefined);
 
                 console.log({ message, data });
+                mutate(`/api/classes/${selectedClass._id}/subjects`);
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });
