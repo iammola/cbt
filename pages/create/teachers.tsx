@@ -1,8 +1,11 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Select from "components/Select";
+import { ClassRecord } from "db/models/Class";
+import { SubjectRecord } from "db/models/Subject";
 
 const CreateTeachers: NextPage = () => {
     const [email, setEmail] = useState('');
@@ -10,6 +13,37 @@ const CreateTeachers: NextPage = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [initials, setInitials] = useState('');
+
+    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+
+    const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
+
+    useEffect(() => {
+        async function fetchSubjects() {
+            try {
+                const data = await Promise.all((classes?.data as Pick<ClassRecord<true>, '_id' | 'name'>[]).map(async ({ _id, name }) => {
+                    const res = await fetch(`/api/classes/${_id}/subjects`);
+                    const { data } = await res.json();
+
+                    return {
+                        _id, name,
+                        subjects: data.subjects as SubjectRecord<true>[]
+                    };
+                }));
+                setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
+            } catch (error) {
+                setSubjectsData("⚠️ Error loading subjects");
+            }
+        }
+
+        if (error !== undefined && classes === undefined) setSubjectsData("⚠️ Error loading classes");
+        else if (classes === undefined) setSubjectsData("Loading classes...");
+        else {
+            fetchSubjects();
+            setSubjectsData("Loading subjects...");
+        }
+    }, [classes, error]);
 
     return (
         <>
@@ -121,6 +155,52 @@ const CreateTeachers: NextPage = () => {
                             onChange={({ target: { value } }) => setEmail(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                         />
+                    </div>
+                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                        <span className="text-sm text-gray-600 font-semibold">
+                            Subjects
+                        </span>
+                        <div className="flex flex-col gap-y-4 w-full">
+                            {typeof subjectsData === "string" ? (
+                                <span className="text-center text-sm">
+                                    {subjectsData}
+                                </span>
+                            ) : (
+                                subjectsData.length > 0 ? (
+                                    subjectsData.map(({ _id, name, subjects }) => (
+                                        <div
+                                            key={_id}
+                                            className="flex flex-col gap-2"
+                                        >
+                                            <span className="text-xs w-full font-medium text-gray-600">
+                                                {name}
+                                            </span>
+                                            <div className="flex gap-x-4 gap-y-3 w-full text-sm text-gray-700">
+                                                {subjects.map(({ _id, name }) => (
+                                                    <label
+                                                        key={_id}
+                                                        htmlFor={_id}
+                                                        className="flex gap-3 p-2"
+                                                    >
+                                                        <input
+                                                            id={_id}
+                                                            type="checkbox"
+                                                            checked={selectedSubjects.includes(_id)}
+                                                            onChange={({ target: { checked } }) => checked === true ? setSelectedSubjects([...selectedSubjects, _id]) : setSelectedSubjects(selectedSubjects.filter(selected => selected !== _id))}
+                                                        />
+                                                        {name}
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <span className="text-center text-sm">
+                                        No subjects found
+                                    </span>
+                                )
+                            )}
+                        </div>
                     </div>
                     <button
                         type="submit"
