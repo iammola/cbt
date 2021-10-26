@@ -45,9 +45,9 @@ const Home: NextPage = () => {
                                 key={pos}
                                 value={number}
                                 focus={pos === active}
-                                focusNext={() => focusNext(pos)}
-                                focusPrevious={() => focusPrevious(pos)}
                                 handleChange={val => setCode(arr.map((number, i) => pos === i ? val : number))}
+                                focusNext={() => pos !== (arr.length - 1) && focusNext(pos)}
+                                focusPrevious={() => pos !== 0 && focusPrevious(pos)}
                             />
                         ))}
                     </div>
