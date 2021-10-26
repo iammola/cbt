@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
 
@@ -10,6 +11,7 @@ import Image1 from "/public/BG.jpg";
 import { LoadingIcon } from 'components/CustomIcons';
 
 const Home: NextPage = () => {
+    const router = useRouter();
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
@@ -33,7 +35,7 @@ const Home: NextPage = () => {
 
             setSuccess(success);
             if (success === true) {
-                console.log({ message, data });
+                router.push('/home');
             } else throw new Error(error);
         } catch (error) {
             console.log(error);
