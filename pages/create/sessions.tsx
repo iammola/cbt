@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import { XIcon } from "@heroicons/react/solid";
-import { useState, FormEvent, useMemo } from "react";
+import { useState, FormEvent, useMemo, useEffect } from "react";
 
 const CreateSession: NextPage = () => {
     const termTemplate = useMemo(() => ({
@@ -19,6 +19,11 @@ const CreateSession: NextPage = () => {
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
     }
+
+    useEffect(() => {
+        if (current === true && terms.every(term => !!term.current === false)) setTerms([{ ...terms[0], current }, ...terms.slice(1)]);
+        if (current === false && terms.some(term => term.current === true)) setTerms(terms.map(term => ({ ...term, current })));
+    }, [current, terms]);
 
     return (
         <>
