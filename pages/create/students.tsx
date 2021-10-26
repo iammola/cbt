@@ -76,6 +76,7 @@ const CreateStudents: NextPage = () => {
                             type="text"
                             id="fullName"
                             value={fullName}
+                            onChange={({ target: { value } }) => setFullName(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -92,6 +93,7 @@ const CreateStudents: NextPage = () => {
                                 type="text"
                                 id="initials"
                                 value={initials}
+                                onChange={({ target: { value } }) => setInitials(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -107,6 +109,7 @@ const CreateStudents: NextPage = () => {
                                 id="email"
                                 type="email"
                                 value={email}
+                                onChange={({ target: { value } }) => setEmail(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -124,6 +127,7 @@ const CreateStudents: NextPage = () => {
                                 type="text"
                                 id="firstName"
                                 value={firstName}
+                                onChange={({ target: { value } }) => setFirstName(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -139,6 +143,7 @@ const CreateStudents: NextPage = () => {
                                 type="text"
                                 id="lastName"
                                 value={lastName}
+                                onChange={({ target: { value } }) => setLastName(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
