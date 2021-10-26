@@ -31,6 +31,7 @@ const CreateSession: NextPage = () => {
                             id="name"
                             type="text"
                             value={name}
+                            onChange={({ target: { value } }) => setName(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -46,6 +47,7 @@ const CreateSession: NextPage = () => {
                             id="alias"
                             type="text"
                             value={alias}
+                            onChange={({ target: { value } }) => setAlias(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -58,6 +60,7 @@ const CreateSession: NextPage = () => {
                                 id="current"
                                 type="checkbox"
                                 checked={current}
+                                onChange={({ target: { checked } }) => setCurrent(checked)}
                             />
                             Mark as active session
                         </label>
