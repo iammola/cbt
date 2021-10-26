@@ -72,6 +72,61 @@ const CreateSession: NextPage = () => {
                     </div>
                     <div className="flex flex-col gap-2.5 min-w-80 w-full">
                         <label
+                            htmlFor="alias"
+                            className="text-sm text-gray-600 font-semibold"
+                        >
+                            Terms
+                        </label>
+                        {terms.map((term, termIdx) => (
+                            <div
+                                key={term.name}
+                                className="flex flex-wrap gap-3 items-center justify-start"
+                            >
+                                <input
+                                    required
+                                    type="text"
+                                    placeholder="Name"
+                                    onChange={({ target: { value } }) => setTerms(terms.map((term, i) => i === termIdx ? ({ ...term, name: value }) : term))}
+                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                                />
+                                <input
+                                    required
+                                    type="text"
+                                    placeholder="Alias"
+                                    onChange={({ target: { value } }) => setTerms(terms.map((term, i) => i === termIdx ? ({ ...term, alias: value }) : term))}
+                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                                />
+                                <label
+                                    htmlFor={`Term${termIdx}`}
+                                    className=" flex flex-shrink-0 gap-3 p-2 text-sm"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id={`Term${termIdx}`}
+                                        checked={term.current ?? false}
+                                        onChange={({ target: { checked } }) => setTerms(terms.map((term, i) => ({ ...term, current: i === (checked === true ? termIdx : 0) })))}
+                                    />
+                                    Mark as active term
+                                </label>
+                                {terms.length > 1 && (
+                                    <span
+                                        onClick={() => setTerms(terms.filter((_, i) => i !== termIdx))}
+                                        className="p-1 rounded-full hover:bg-gray-300 text-gray-500 hover:text-gray-600"
+                                    >
+                                        <XIcon className="w-4 h-4" />
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                        <span
+                            onClick={() => setTerms([...terms, { ...termTemplate }])}
+                            className="cursor-pointer w-max text-xs text-blue-400 hover:text-blue-500 hover:underline"
+                        >
+                            Add Term
+                        </span>
+                    </div>
+                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                        <label
                             htmlFor="current"
                             className="flex gap-3 p-2"
                         >
