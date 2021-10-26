@@ -21,6 +21,20 @@ const CreateSession: NextPage = () => {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        try {
+            const res = await fetch('/api/sessions', {
+                method: "POST",
+                body: JSON.stringify({ name, alias, current, terms })
+            });
+            const { success, error, data, message } = await res.json();
+
+            if (success === true) {
+                console.log({ message, data });
+            } else throw new Error(error);
+        } catch (error) {
+            console.log({ error });
+        }
     }
 
     useEffect(() => {
