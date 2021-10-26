@@ -149,7 +149,7 @@ const CreateStudents: NextPage = () => {
                         </div>
                     </div>
                     <Select
-                        label="Classes"
+                        label="Class"
                         colorPallette={{
                             activeCheckIconColor: "text-purple-600",
                             inactiveCheckIconColor: "text-purple-800",
