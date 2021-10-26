@@ -11,7 +11,7 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
     let [success, status, message]: RouteResponse = [false, 501, ""];
 
     try {
-        const currentSession = await SessionModel.findOne({ current: true, "terms.current": { $elemMatch: { current: true } } }).select('terms')
+        const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }).select('terms');
 
         const data = await StudentModel.create({
             ...student,
