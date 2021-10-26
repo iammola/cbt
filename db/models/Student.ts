@@ -24,6 +24,7 @@ const StudentSchema = new Schema<StudentRecord>({
             initials: {
                 type: String,
                 trim: true,
+                uppercase: true,
                 minlength: [2, 'Initials min-length is 2'],
                 maxlength: [3, 'Initials max-length is 3'],
                 required: [true, 'Initials required']
