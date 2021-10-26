@@ -63,7 +63,10 @@ const CreateStudents: NextPage = () => {
                 <meta name="description" content="Student Registration | GRS CBT" />
             </Head>
             <section className="flex flex-col md:flex-row items-center justify-center gap-y-20 md:gap-y-0 gap-x-0 md:gap-x-10 p-10 w-screen min-h-screen">
-                <form className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+                >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
                         <span className="text-purple-500">Student Profile</span>
