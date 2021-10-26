@@ -65,3 +65,5 @@ const CreateSession: NextPage = () => {
         </>
     )
 }
+
+export default CreateSession;
