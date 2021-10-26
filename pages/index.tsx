@@ -13,7 +13,7 @@ import { LoadingIcon } from 'components/CustomIcons';
 
 const Home: NextPage = () => {
     const router = useRouter();
-    const [,setCookies] = useCookies(['account']);
+    const [, setCookies] = useCookies(['account']);
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
