@@ -26,7 +26,7 @@ const Navbar: FunctionComponent = () => {
             <div className="flex items-center justify-center text-lg font-bold text-gray-800 tracking-wide h-full">
                 Grand Regal School
             </div>
-            <nav>
+            <nav className="h-full">
                 <ul className="flex items-center justify-center gap-5 flex-grow h-full">
                     <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
                         <a className="text-sm tracking-wider drop-shadow-xl text-blue-700">
