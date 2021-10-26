@@ -14,6 +14,7 @@ async function createSession(session: SessionRecord): Promise<RouteResponse> {
             current: false,
             $set: { "terms.$[i].current": false }
         }, {
+            runValidators: true,
             arrayFilters: [{ "i.current": true }]
         });
         const data = await SessionModel.create(session);
