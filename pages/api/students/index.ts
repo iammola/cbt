@@ -38,7 +38,7 @@ export default async function handler({ method, query, body }: NextApiRequest, r
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
-    }
+    } else [success, status, message] = await (method === "POST" ? createStudent(JSON.parse(body)) : [success, status, message]);
 
     if (typeof message !== "object") message = { message };
 
