@@ -1,11 +1,10 @@
 import { Schema, Model, model, models } from "mongoose";
 
 export type TermRecord<P = false> = {
-    _id: P extends true ? Schema.Types.ObjectId : string;
     name: string;
     alias: string;
     current?: boolean;
-}
+} & (P extends true ? { _id: string } : {})
 
 export type SessionRecord<P = false> = {
     name: string;
@@ -30,9 +29,7 @@ const SessionSchema = new Schema<SessionRecord>({
         default: undefined
     }, terms: [{
         type: {
-            _id: {
-                type: Schema.Types.ObjectId
-            }, name: {
+            name: {
                 type: String,
                 trim: true,
             }, alias: {
