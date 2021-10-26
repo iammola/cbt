@@ -1,7 +1,12 @@
 import Head from "next/head";
 import { NextPage } from "next";
+import { useState } from "react";
 
 const CreateSession: NextPage = () => {
+    const [name, setName] = useState('');
+    const [alias, setAlias] = useState('');
+    const [current, setCurrent] = useState(false);
+
     return (
         <>
             <Head>
@@ -25,6 +30,7 @@ const CreateSession: NextPage = () => {
                             required
                             id="name"
                             type="text"
+                            value={name}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -39,6 +45,7 @@ const CreateSession: NextPage = () => {
                             required
                             id="alias"
                             type="text"
+                            value={alias}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -50,6 +57,7 @@ const CreateSession: NextPage = () => {
                             <input
                                 id="current"
                                 type="checkbox"
+                                checked={current}
                             />
                             Mark as active session
                         </label>
