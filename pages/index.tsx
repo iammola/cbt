@@ -14,6 +14,24 @@ const Home: NextPage = () => {
 
     const focusNext = (index: number) => setActive(++index < code.length ? index : 0);
 
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        try {
+            const res = await fetch('/api/login', {
+                method: "POST",
+                body: JSON.stringify({ code: code.join('') })
+            });
+            const { success, message, error, data } = await res.json();
+
+            if (success === true) {
+                console.log({ message, data });
+            } else throw new Error(error);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <>
             <Head>
@@ -32,7 +50,10 @@ const Home: NextPage = () => {
                         <div className="absolute z-1 bg-blue-400/60 w-full h-full"></div>
                     </div>
                 </div>
-                <form className="flex flex-col gap-y-14 justify-between p-12 bg-white rounded-2xl shadow-xl z-0">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-y-14 justify-between p-12 bg-white rounded-2xl shadow-xl z-0"
+                >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span className="text-blue-500">Log in</span>{' '}
                         <span>to your</span>{' '}
