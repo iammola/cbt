@@ -33,7 +33,7 @@ const Home: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({ code: code.join('') })
             });
-            const { success, message, error, data } = await res.json();
+            const { success, error, data } = await res.json();
 
             setSuccess(success);
             if (success === true) {
