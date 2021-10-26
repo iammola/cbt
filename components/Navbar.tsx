@@ -8,6 +8,18 @@ const Navbar: FunctionComponent = () => {
     const [online, setOnline] = useState(false);
     const [{ account }] = useCookies(['account']);
 
+    useEffect(() => {
+        const toggleOnline = () => setOnline(navigator.onLine);
+
+        window.addEventListener('online', toggleOnline);
+        window.addEventListener('offline', toggleOnline);
+
+        return () => {
+            window.removeEventListener('online', toggleOnline);
+            window.removeEventListener('offline', toggleOnline);
+        }
+    }, []);
+
     return (
         <nav className="flex gap-4 items-center justify-between w-full h-20 px-6 border-b-[1.5px] border-gray-200">
             <div className="flex items-center justify-center text-lg font-bold text-gray-800 tracking-wide h-full">
