@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { useState, FormEvent, useMemo, useEffect } from "react";
 
+import { classNames } from "utils";
 import { LoadingIcon } from "components/CustomIcons";
 
 const CreateSession: NextPage = () => {
@@ -145,7 +146,11 @@ const CreateSession: NextPage = () => {
                     </div>
                     <button
                         type="submit"
-                        className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500"
+                        className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
+                            "bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500": success === undefined,
+                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
+                        })}
                     >
                         {loading === true && (
                             <LoadingIcon className="animate-spin w-5 h-5" />
