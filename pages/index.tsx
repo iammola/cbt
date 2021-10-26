@@ -37,7 +37,7 @@ const Home: NextPage = () => {
 
             setSuccess(success);
             if (success === true) {
-                router.push('/home');
+                setTimeout(router.push, 155e1, '/home');
                 setCookies("account", JSON.stringify(data), {
                     path: '/',
                     sameSite: true
