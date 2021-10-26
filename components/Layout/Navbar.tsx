@@ -26,29 +26,31 @@ const Navbar: FunctionComponent = () => {
             <div className="flex items-center justify-center text-lg font-bold text-gray-800 tracking-wide h-full">
                 Grand Regal School
             </div>
-            <ul className="flex items-center justify-center gap-5 flex-grow h-full">
-                <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                    <a className="text-sm tracking-wider drop-shadow-xl text-blue-700">
-                        Home
-                    </a>
-                    <span className="w-full h-[0.165rem] absolute top-0 inset-x-0 bg-blue-700 rounded-full drop-shadow-xl" />
-                </li>
-                <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                    <a className="text-sm tracking-wider text-gray-400">
-                        Exams
-                    </a>
-                </li>
-                <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                    <a className="text-sm tracking-wider text-gray-400">
-                        Results
-                    </a>
-                </li>
-                <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                    <a className="text-sm tracking-wider text-gray-400">
-                        Schedule
-                    </a>
-                </li>
-            </ul>
+            <nav>
+                <ul className="flex items-center justify-center gap-5 flex-grow h-full">
+                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
+                        <a className="text-sm tracking-wider drop-shadow-xl text-blue-700">
+                            Home
+                        </a>
+                        <span className="w-full h-[0.165rem] absolute top-0 inset-x-0 bg-blue-700 rounded-full drop-shadow-xl" />
+                    </li>
+                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
+                        <a className="text-sm tracking-wider text-gray-400">
+                            Exams
+                        </a>
+                    </li>
+                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
+                        <a className="text-sm tracking-wider text-gray-400">
+                            Results
+                        </a>
+                    </li>
+                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
+                        <a className="text-sm tracking-wider text-gray-400">
+                            Schedule
+                        </a>
+                    </li>
+                </ul>
+            </nav>
             {account !== undefined && (
                 <div className="flex flex-shrink-0 items-center gap-5 p-3 cursor-pointer rounded-lg transition-colors hover:bg-gray-100">
                     <div className="flex items-center justify-center relative rounded-full bg-blue-500 flex-shrink-0 w-10 h-10">
