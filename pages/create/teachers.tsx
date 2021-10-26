@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import Select from "components/Select";
 import { ClassRecord } from "db/models/Class";
@@ -66,6 +66,28 @@ const CreateTeachers: NextPage = () => {
         }
     }, [classes, error]);
 
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        try {
+            const res = await fetch('/api/teachers', {
+                method: "POST",
+                body: JSON.stringify({
+                    email,
+                    name: { initials, fullName, lastName, firstName, title: selectedTitle._id },
+                    subjects: selectedSubjects
+                })
+            });
+            const { success, error, message, data } = await res.json();
+
+            if (success === true) {
+                console.log({ message, data });
+            } else throw new Error(error);
+        } catch (error) {
+            console.log({ error });
+        }
+    }
+
     return (
         <>
             <Head>
@@ -73,7 +95,10 @@ const CreateTeachers: NextPage = () => {
                 <meta name="description" content="Teacher Registration | GRS CBT" />
             </Head>
             <section className="flex flex-col md:flex-row items-center justify-center gap-y-20 md:gap-y-0 gap-x-0 md:gap-x-10 p-10 w-screen min-h-screen">
-                <form className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+                >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
                         <span className="text-pink-500">Teacher Profile</span>
