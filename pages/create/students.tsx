@@ -50,7 +50,7 @@ const CreateStudents: NextPage = () => {
             }
         }
         if (selectedClass._id !== "") fetchSubjects();
-    }, [selectedClass])
+    }, [selectedClass]);
 
     return (
         <>
