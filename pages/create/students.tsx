@@ -2,8 +2,10 @@ import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import Select from "components/Select";
+import { LoadingIcon } from "components/CustomIcons";
 
 const CreateStudents: NextPage = () => {
     const [email, setEmail] = useState('');
@@ -22,8 +24,13 @@ const CreateStudents: NextPage = () => {
 
     const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
 
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState<boolean | undefined>();
+
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
+
         try {
             const res = await fetch('/api/students', {
                 method: "POST",
@@ -37,6 +44,8 @@ const CreateStudents: NextPage = () => {
                 })
             });
             const { success, error, message, data } = await res.json();
+
+            setSuccess(success);
 
             if (success === true) {
                 setEmail('');
@@ -55,6 +64,9 @@ const CreateStudents: NextPage = () => {
         } catch (error) {
             console.log({ error });
         }
+
+        setLoading(false);
+        setTimeout(setSuccess, 15e2, undefined);
     }
 
     useEffect(() => {
@@ -234,6 +246,15 @@ const CreateStudents: NextPage = () => {
                         type="submit"
                         className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-purple-400 hover:bg-purple-500 focus:ring-purple-500"
                     >
+                        {loading === true && (
+                            <LoadingIcon className="animate-spin w-5 h-5" />
+                        )}
+                        {success === true && (
+                            <CheckIcon className="w-5 h-5" />
+                        )}
+                        {success === false && (
+                            <XIcon className="w-5 h-5" />
+                        )}
                         Create Profile
                     </button>
                 </form>
