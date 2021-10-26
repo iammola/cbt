@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-import type { NextPage } from 'next';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { NextPage } from 'next';
+import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
 
 import Image1 from "/public/BG.jpg";
 
