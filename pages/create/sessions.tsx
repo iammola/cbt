@@ -21,6 +21,7 @@ const CreateSession: NextPage = () => {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
 
         try {
             const res = await fetch('/api/sessions', {
@@ -29,12 +30,17 @@ const CreateSession: NextPage = () => {
             });
             const { success, error, data, message } = await res.json();
 
+            setSuccess(success);
+
             if (success === true) {
                 console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });
         }
+
+        setLoading(false);
+        setTimeout(setSuccess, 15e2, undefined);
     }
 
     useEffect(() => {
