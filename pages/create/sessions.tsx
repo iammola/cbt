@@ -10,11 +10,11 @@ const CreateSession: NextPage = () => {
     }), []);
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
+    const [current, setCurrent] = useState(false);
     const [terms, setTerms] = useState<{ name: string; alias: string; current?: boolean; }[]>([{
         current: true,
         ...termTemplate,
     }]);
-    const [current, setCurrent] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
