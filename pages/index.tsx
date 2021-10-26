@@ -40,14 +40,14 @@ const Home: NextPage = () => {
                         <span>account</span>
                     </h1>
                     <div className="flex items-center justify-between py-3 px-5 gap-x-6">
-                        {code.map((number, pos, arr) => (
+                        {code.map((number, pos) => (
                             <Input
                                 key={pos}
                                 value={number}
                                 focus={pos === active}
-                                handleChange={val => setCode(arr.map((number, i) => pos === i ? val : number))}
-                                focusNext={() => pos !== (arr.length - 1) && focusNext(pos)}
+                                focusNext={() => pos !== (code.length - 1) && focusNext(pos)}
                                 focusPrevious={() => pos !== 0 && focusPrevious(pos)}
+                                handleChange={val => setCode(code.map((number, i) => pos === i ? val : number))}
                             />
                         ))}
                     </div>
