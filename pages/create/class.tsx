@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { NextPage } from "next";
 
-import ClassForm from "components/ClassForm";
-import SubjectForm from "components/SubjectForm";
+import ClassForm from "components/Form/ClassForm";
+import SubjectForm from "components/Form/SubjectForm";
 
 const CreateClass: NextPage = () => {
     return (
