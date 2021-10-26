@@ -2,9 +2,11 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
 import { NextPage } from 'next';
+import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
 
 import Image1 from "/public/BG.jpg";
+import { LoadingIcon } from 'components/CustomIcons';
 
 const Home: NextPage = () => {
     const [active, setActive] = useState(0);
@@ -84,6 +86,15 @@ const Home: NextPage = () => {
                         type="submit"
                         className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-white"
                     >
+                        {loading === true && (
+                            <LoadingIcon className="animate-spin w-5 h-5" />
+                        )}
+                        {success === true && (
+                            <CheckIcon className="w-5 h-5" />
+                        )}
+                        {success === false && (
+                            <XIcon className="w-5 h-5" />
+                        )}
                         Log In
                     </button>
                 </form>
