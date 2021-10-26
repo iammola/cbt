@@ -42,8 +42,8 @@ const CreateStudents: NextPage = () => {
                 setSubjectsLoadingState(success);
 
                 if (success === true) {
-                    setSubjects(data);
                     setSelectedSubjects([]);
+                    setSubjects(data.subjects);
                     console.log({ message, data });
                 } else throw new Error(error);
 
