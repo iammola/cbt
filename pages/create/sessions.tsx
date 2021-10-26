@@ -116,6 +116,7 @@ const CreateSession: NextPage = () => {
                                     required
                                     type="text"
                                     placeholder="Name"
+                                    value={term.name}
                                     onChange={({ target: { value } }) => setTerms(terms.map((term, i) => i === termIdx ? ({ ...term, name: value }) : term))}
                                     className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                                 />
@@ -123,6 +124,7 @@ const CreateSession: NextPage = () => {
                                     required
                                     type="text"
                                     placeholder="Alias"
+                                    value={term.alias}
                                     onChange={({ target: { value } }) => setTerms(terms.map((term, i) => i === termIdx ? ({ ...term, alias: value }) : term))}
                                     className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                                 />
