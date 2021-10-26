@@ -106,7 +106,7 @@ const CreateSession: NextPage = () => {
                                         type="checkbox"
                                         id={`Term${termIdx}`}
                                         checked={term.current ?? false}
-                                        onChange={({ target: { checked } }) => setTerms(terms.map((term, i) => ({ ...term, current: i === (checked === true ? termIdx : 0) })))}
+                                        onChange={({ target: { checked } }) => setTerms(terms.map((term, i) => ({ ...term, current: current === true && i === (checked === true ? termIdx : 0) })))}
                                     />
                                     Mark as active term
                                 </label>
