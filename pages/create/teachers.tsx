@@ -1,9 +1,16 @@
 import Head from "next/head";
 import { NextPage } from "next";
+import { useState } from "react";
 
 import Select from "components/Select";
 
 const CreateTeachers: NextPage = () => {
+    const [email, setEmail] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [initials, setInitials] = useState('');
+
     return (
         <>
             <Head>
@@ -27,6 +34,8 @@ const CreateTeachers: NextPage = () => {
                             required
                             type="text"
                             id="fullName"
+                            value={fullName}
+                            onChange={({ target: { value } }) => setFullName(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -44,6 +53,8 @@ const CreateTeachers: NextPage = () => {
                                 minLength={2}
                                 maxLength={3}
                                 id="initials"
+                                value={initials}
+                                onChange={({ target: { value } }) => setInitials(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -73,6 +84,8 @@ const CreateTeachers: NextPage = () => {
                                 required
                                 type="text"
                                 id="firstName"
+                                value={firstName}
+                                onChange={({ target: { value } }) => setFirstName(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -87,6 +100,8 @@ const CreateTeachers: NextPage = () => {
                                 required
                                 type="text"
                                 id="lastName"
+                                value={lastName}
+                                onChange={({ target: { value } }) => setLastName(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -102,6 +117,8 @@ const CreateTeachers: NextPage = () => {
                             required
                             type="text"
                             id="email"
+                            value={email}
+                            onChange={({ target: { value } }) => setEmail(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
