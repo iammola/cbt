@@ -41,6 +41,14 @@ const CreateTeachers: NextPage = () => {
     const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
 
     useEffect(() => {
+        if (typeof subjectsData === 'string') {
+            if (error !== undefined && classes === undefined) setSubjectsData("⚠️ Error loading subjects");
+            else if (classes === undefined) setSubjectsData("Loading classes...");
+            else setSubjectsData("Loading subjects...");
+        }
+    }, [classes, error, subjectsData]);
+
+    useEffect(() => {
         async function fetchSubjects() {
             try {
                 const data = await Promise.all((classes?.data as Pick<ClassRecord<true>, '_id' | 'name'>[]).map(async ({ _id, name }) => {
@@ -54,17 +62,12 @@ const CreateTeachers: NextPage = () => {
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
             } catch (error) {
-                setSubjectsData("⚠️ Error loading subjects");
+                console.log({ error });
             }
         }
 
-        if (error !== undefined && classes === undefined) setSubjectsData("⚠️ Error loading classes");
-        else if (classes === undefined) setSubjectsData("Loading classes...");
-        else {
-            fetchSubjects();
-            setSubjectsData("Loading subjects...");
-        }
-    }, [classes, error]);
+        if (classes !== undefined) fetchSubjects();
+    }, [classes]);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
