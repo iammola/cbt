@@ -16,7 +16,7 @@ const UserImage: FunctionComponent<UserImageProps> = ({ image, placeholder, clas
         />
     ) : (
         <span className={classNames("flex items-center justify-center h-full w-full text-white text-sm font-medium overflow-hidden", className)}>
-            {placeholder.slice(0, 2).toUpperCase()}
+            {placeholder}
         </span>
     );
 }
