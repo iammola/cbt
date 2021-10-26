@@ -48,7 +48,6 @@ const SubjectForm: NextPage = () => {
                     _id: "",
                     name: "Select class"
                 })
-                setTimeout(setSuccess, 15e2, undefined);
 
                 console.log({ message, data });
                 mutate(`/api/classes/${selectedClass._id}/subjects`);
@@ -58,6 +57,7 @@ const SubjectForm: NextPage = () => {
         }
 
         setLoading(false);
+        setTimeout(setSuccess, 15e2, undefined);
     }
 
     return (
