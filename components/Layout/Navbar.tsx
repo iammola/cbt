@@ -22,7 +22,7 @@ const Navbar: FunctionComponent = () => {
     }, []);
 
     return (
-        <nav className="flex gap-4 items-center justify-between w-full h-[4.5rem] px-6">
+        <header className="flex gap-4 items-center justify-between w-full h-[4.5rem] px-6">
             <div className="flex items-center justify-center text-lg font-bold text-gray-800 tracking-wide h-full">
                 Grand Regal School
             </div>
@@ -82,7 +82,7 @@ const Navbar: FunctionComponent = () => {
                     </div>
                 </div>
             )}
-        </nav>
+        </header>
     )
 }
 
