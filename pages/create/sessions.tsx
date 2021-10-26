@@ -1,10 +1,19 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useState, FormEvent } from "react";
+import { XIcon } from "@heroicons/react/solid";
+import { useState, FormEvent, useMemo } from "react";
 
 const CreateSession: NextPage = () => {
+    const termTemplate = useMemo(() => ({
+        name: "",
+        alias: "",
+    }), []);
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
+    const [terms, setTerms] = useState<{ name: string; alias: string; current?: boolean; }[]>([{
+        current: true,
+        ...termTemplate,
+    }]);
     const [current, setCurrent] = useState(false);
 
     const [loading, setLoading] = useState(false);
