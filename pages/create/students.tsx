@@ -24,6 +24,26 @@ const CreateStudents: NextPage = () => {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        try {
+            const res = await fetch('/api/students', {
+                method: "POST",
+                body: JSON.stringify({
+                    email,
+                    name: { initials, fullName, lastName, firstName },
+                    academic: {
+                        class: selectedClass._id,
+                        subjects: selectedSubjects
+                    }
+                })
+            });
+            const { success, error, message, data } = await res.json();
+
+            if (success === true) {
+                console.log({ message, data });
+            } else throw new Error(error);
+        } catch (error) {
+            console.log({ error });
+        }
     }
 
     useEffect(() => {
