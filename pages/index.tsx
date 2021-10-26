@@ -49,7 +49,7 @@ const Home: NextPage = () => {
                 <title>Login | CBT | Grand Regal School</title>
                 <meta name="description" content="Login Page to GRS CBT" />
             </Head>
-            <section className="flex flex-col items-center justify-center w-screen h-screen p-8 z-0">
+            <section className="flex flex-col items-center justify-center w-screen h-screen overflow-auto p-4 sm:p-6 md:p-8 z-0">
                 <div className="w-full h-full absolute inset-0 z-[-1]">
                     <div className="relative w-full h-full">
                         <Image
@@ -63,15 +63,15 @@ const Home: NextPage = () => {
                 </div>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-y-14 justify-between p-12 bg-white rounded-2xl shadow-xl z-0"
+                    className="flex flex-col gap-y-6 sm:gap-y-8 md:gap-y-14 justify-between py-12 px-5 md:px-8 lg:px-12 bg-white rounded-2xl shadow-xl z-0 max-w-full"
                 >
-                    <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
-                        <span className="text-blue-500">Log in</span>{' '}
+                    <h1 className="text-3xl sm:text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+                        <span className="sm:text-blue-500">Log in</span>{' '}
                         <span>to your</span>{' '}
                         <span className="text-blue-500">CBT</span>{' '}
                         <span>account</span>
                     </h1>
-                    <div className="flex items-center justify-between py-3 px-5 gap-x-6">
+                    <div className="flex items-center justify-between py-3 sm:px-3 md:px-5 sm:gap-x-4 md:gap-x-6">
                         {code.map((number, pos) => (
                             <Input
                                 key={pos}
@@ -153,7 +153,7 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
             onKeyDown={onKeyDown}
             onBeforeInput={validateCharacter}
             onChange={e => onChange(e.target.value.slice(-1))}
-            className="p-4 text-2xl text-gray-700 font-bold border rounded-md w-20 h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white"
+            className="text-lg sm:text-xl md:text-2xl text-gray-700 font-bold border rounded-md sm:p-3 md:p-4 w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white"
         />
     );
 }
