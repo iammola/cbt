@@ -90,11 +90,15 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
 
     return (
         <input
+            min={0}
+            max={9}
+            step={1}
             required
             ref={ref}
-            pattern="\d"
-            value={value}
+            pattern="\d+"
             type="number"
+            value={value ?? ''}
+            inputMode="numeric"
             onKeyDown={onKeyDown}
             onChange={e => onChange(e.target.value.slice(-1))}
             className="p-4 text-2xl text-gray-700 font-bold border rounded-md w-20 h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white"
