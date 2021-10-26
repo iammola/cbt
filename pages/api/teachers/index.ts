@@ -1,6 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { connect } from "db";
+import { SubjectModel } from "db/models/Subject";
+import { TeacherModel, TeacherRecord } from "db/models/Teacher";
+
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
+
+async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<RouteResponse> {
+    await connect();
+    let [success, status, message]: RouteResponse = [false, 501, ""];
+
+    try {
+        const data = await TeacherModel.create({
+            ...teacher,
+            subjects: (await SubjectModel.find({ _id: { $in: subjects } }).select('_id').lean()).map(({ _id }: any) => _id)
+        });
+        [success, status, message] = [true, 201, { data, message: "Created" }];
+    } catch (error) {
+        [status, message] = [400, { error, message: "Couldn't CREATE Class" }];
+    }
+
+    return [success, status, message];
+}
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, 400, ""];
