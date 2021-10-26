@@ -10,12 +10,16 @@ const Home: NextPage = () => {
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState<boolean | undefined>();
+
     const focusPrevious = (index: number) => setActive(--index >= 0 ? index : 0);
 
     const focusNext = (index: number) => setActive(++index < code.length ? index : 0);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
 
         try {
             const res = await fetch('/api/login', {
@@ -24,12 +28,16 @@ const Home: NextPage = () => {
             });
             const { success, message, error, data } = await res.json();
 
+            setSuccess(success);
             if (success === true) {
                 console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
             console.log(error);
         }
+
+        setLoading(false);
+        setTimeout(setSuccess, 15e2, undefined);
     }
 
     return (
