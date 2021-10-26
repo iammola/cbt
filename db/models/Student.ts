@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type SubjectRecord<P = false> = {
+export type StudentRecord<P = false> = {
     name: {
         initials: string;
         fullName: string;
@@ -18,7 +18,7 @@ export type SubjectRecord<P = false> = {
     }[];
 } & (P extends true ? { _id: string } : {})
 
-const SubjectSchema = new Schema<SubjectRecord>({
+const StudentSchema = new Schema<StudentRecord>({
     name: {
         type: {
             initials: {
@@ -58,10 +58,10 @@ const SubjectSchema = new Schema<SubjectRecord>({
                     }, subjects: [{
                         type: Schema.Types.ObjectId
                     }]
-                }, validate: [(v: SubjectRecord['academic']) => v.every(i => i.terms.length > 0), 'At least one term required']
+                }, validate: [(v: StudentRecord['academic']) => v.every(i => i.terms.length > 0), 'At least one term required']
             }]
         },
     }]
 });
 
-export const SubjectModel = models.Subject as Model<SubjectRecord> ?? model('Subject', SubjectSchema);
+export const StudentModel = models.Student as Model<StudentRecord> ?? model('Student', StudentSchema);
