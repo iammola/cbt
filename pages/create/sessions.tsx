@@ -79,7 +79,7 @@ const CreateSession: NextPage = () => {
                         </label>
                         {terms.map((term, termIdx) => (
                             <div
-                                key={term.name}
+                                key={termIdx}
                                 className="flex flex-wrap gap-3 items-center justify-start"
                             >
                                 <input
