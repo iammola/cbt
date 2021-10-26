@@ -31,6 +31,8 @@ const CreateStudents: NextPage = () => {
 
     useEffect(() => {
         async function fetchSubjects() {
+            setSubjects([]);
+            setSelectedSubjects([]);
             setSubjectsLoadingState(true);
 
             try {
