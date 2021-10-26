@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Select from "components/Select";
 import { ClassRecord } from "db/models/Class";
@@ -13,6 +13,27 @@ const CreateTeachers: NextPage = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [initials, setInitials] = useState('');
+    const [selectedTitle, setSelectedTitle] = useState({
+        _id: "",
+        name: "Select title"
+    })
+
+    const titleOptions = useMemo(() => ([{
+        _id: "Mr.",
+        name: "Mr."
+    }, {
+        _id: "Mrs.",
+        name: "Mrs."
+    }, {
+        _id: "Ms.",
+        name: "Ms."
+    }, {
+        _id: "Dr.",
+        name: "Dr."
+    }, {
+        _id: "Master",
+        name: "Master"
+    }]), []);
 
     const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
@@ -94,9 +115,9 @@ const CreateTeachers: NextPage = () => {
                         </div>
                         <Select
                             label="Title"
-                            options={undefined}
-                            selected={{ _id: "", name: "Select title" }}
-                            handleChange={() => { }}
+                            options={titleOptions}
+                            selected={selectedTitle}
+                            handleChange={setSelectedTitle}
                             colorPallette={{
                                 activeCheckIconColor: "text-pink-600",
                                 inactiveCheckIconColor: "text-pink-800",
