@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import Select from "components/Select";
 import useSWR from "swr";
@@ -21,6 +21,10 @@ const CreateStudents: NextPage = () => {
     const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
 
     const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+    }
 
     useEffect(() => {
         if (classes === undefined || error === undefined) setSelectedClass({
