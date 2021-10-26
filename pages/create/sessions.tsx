@@ -1,7 +1,9 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { XIcon } from "@heroicons/react/solid";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { useState, FormEvent, useMemo, useEffect } from "react";
+
+import { LoadingIcon } from "components/CustomIcons";
 
 const CreateSession: NextPage = () => {
     const termTemplate = useMemo(() => ({
@@ -145,6 +147,15 @@ const CreateSession: NextPage = () => {
                         type="submit"
                         className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500"
                     >
+                        {loading === true && (
+                            <LoadingIcon className="animate-spin w-5 h-5" />
+                        )}
+                        {success === true && (
+                            <CheckIcon className="w-5 h-5" />
+                        )}
+                        {success === false && (
+                            <XIcon className="w-5 h-5" />
+                        )}
                         Create Session
                     </button>
                 </form>
