@@ -46,6 +46,7 @@ const CreateStudents: NextPage = () => {
                 } else throw new Error(error);
             } catch (error) {
                 console.log({ error });
+                setSubjectsLoadingState(false);
             }
         }
         if (selectedClass._id !== "") fetchSubjects();
