@@ -22,13 +22,15 @@ const Home: NextPage = () => {
             </Head>
             <section className="flex flex-col items-center justify-center w-screen h-screen p-8 z-0">
                 <div className="w-full h-full absolute inset-0 z-[-1]">
-                    <Image
-                        alt="Panda"
-                        src={Image1}
-                        layout="fill"
-                        className="object-cover"
-                    />
-                    <div className="absolute z-1 bg-blue-400/60 w-full h-full"></div>
+                    <div className="relative w-full h-full">
+                        <Image
+                            alt="Panda"
+                            src={Image1}
+                            layout="fill"
+                            className="object-cover"
+                        />
+                        <div className="absolute z-1 bg-blue-400/60 w-full h-full"></div>
+                    </div>
                 </div>
                 <form className="flex flex-col gap-y-14 justify-between p-12 bg-white rounded-2xl shadow-xl z-0">
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
