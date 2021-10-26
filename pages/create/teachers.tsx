@@ -115,8 +115,8 @@ const CreateTeachers: NextPage = () => {
                         </label>
                         <input
                             required
-                            type="text"
                             id="email"
+                            type="email"
                             value={email}
                             onChange={({ target: { value } }) => setEmail(value)}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
