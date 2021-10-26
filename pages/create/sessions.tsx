@@ -49,8 +49,8 @@ const CreateSession: NextPage = () => {
     }
 
     useEffect(() => {
-        if (current === true && terms.every(term => !!term.current === false)) setTerms([{ ...terms[0], current }, ...terms.slice(1)]);
-        if (current === false && terms.some(term => term.current === true)) setTerms(terms.map(term => ({ ...term, current })));
+        if (current === true && terms.every(term => !!term.current === false)) setTerms(terms => [{ ...terms[0], current }, ...terms.slice(1)]);
+        if (current === false && terms.some(term => term.current === true)) setTerms(terms => terms.map(term => ({ ...term, current })));
     }, [current, terms]);
 
     return (
