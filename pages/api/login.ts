@@ -6,12 +6,12 @@ import { TeacherModel } from "db/models/Teacher";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
-async function findUser(model: typeof TeacherModel | typeof StudentModel, code: string) {
+async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Mola" | "Teacher" | "Student", code: string) {
     await connect();
     const data = await model.findOne({ code }).select('name email').lean();
     if (data === null) throw new Error('User does not exist');
 
-    return data;
+    return { ...data, access };
 }
 
 export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
@@ -24,7 +24,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
     } else {
         const { code }: { code: string } = JSON.parse(body);
         try {
-            const data = await Promise.any([findUser(TeacherModel, code), findUser(StudentModel, code)]);
+            const data = await Promise.any([findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)]);
             [success, status, message] = [true, 200, { data, message: "Success" }];
         } catch (error) {
             if (error instanceof AggregateError === true) [status, message] = [400, "Failed"];
