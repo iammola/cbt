@@ -3,6 +3,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { FunctionComponent, useEffect, useState } from "react";
 
 import { classNames } from "utils";
+import UserImage from "components/UserImage";
 
 const Navbar: FunctionComponent = () => {
     const [online, setOnline] = useState(false);
@@ -51,6 +52,11 @@ const Navbar: FunctionComponent = () => {
             {account !== undefined && (
                 <div className="flex flex-shrink-0 items-center gap-5 p-3 cursor-pointer rounded-lg transition-colors hover:bg-gray-100">
                     <div className="flex items-center justify-center relative rounded-full bg-blue-500 flex-shrink-0 font-bold w-10 h-10">
+                        <UserImage
+                            image=""
+                            className="rounded-full"
+                            placeholder={account.name.initials}
+                        />
                         <span className="flex absolute bottom-0.5 right-0.5 h-2.5 w-2.5 -mt-1 -mr-1">
                             <span className="absolute h-full w-full rounded-full ring ring-white" />
                             <span className={classNames("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", {
