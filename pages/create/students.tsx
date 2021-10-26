@@ -39,15 +39,11 @@ const CreateStudents: NextPage = () => {
                 const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
                 const { success, message, data, error } = await res.json();
 
-                setSubjectsLoadingState(success);
-
                 if (success === true) {
-                    setSelectedSubjects([]);
                     setSubjects(data.subjects);
+                    setSubjectsLoadingState(undefined);
                     console.log({ message, data });
                 } else throw new Error(error);
-
-                setTimeout(setSubjectsLoadingState, 15e2, undefined);
             } catch (error) {
                 console.log({ error })
             }
