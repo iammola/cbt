@@ -45,7 +45,7 @@ const CreateStudents: NextPage = () => {
                     console.log({ message, data });
                 } else throw new Error(error);
             } catch (error) {
-                console.log({ error })
+                console.log({ error });
             }
         }
         if (selectedClass._id !== "") fetchSubjects();
