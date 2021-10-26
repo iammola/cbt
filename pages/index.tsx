@@ -88,6 +88,10 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
         if (focus === true) ref.current?.focus();
     });
 
+    function validateCharacter(e: FormEvent<HTMLInputElement> & { data: string; }) {
+        if (/\d/.test(e.data) === false) e.preventDefault();
+    }
+
     return (
         <input
             min={0}
@@ -100,6 +104,7 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
             value={value ?? ''}
             inputMode="numeric"
             onKeyDown={onKeyDown}
+            onBeforeInput={validateCharacter}
             onChange={e => onChange(e.target.value.slice(-1))}
             className="p-4 text-2xl text-gray-700 font-bold border rounded-md w-20 h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white"
         />
