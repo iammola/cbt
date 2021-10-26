@@ -22,7 +22,7 @@ const Navbar: FunctionComponent = () => {
     }, []);
 
     return (
-        <nav className="flex gap-4 items-center justify-between w-full h-20 px-6 border-b-[1.5px] border-gray-200">
+        <nav className="flex gap-4 items-center justify-between w-full h-[4.5rem] px-6">
             <div className="flex items-center justify-center text-lg font-bold text-gray-800 tracking-wide h-full">
                 Grand Regal School
             </div>
