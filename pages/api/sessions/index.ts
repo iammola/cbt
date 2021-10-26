@@ -10,6 +10,12 @@ async function createSession(session: SessionRecord): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, 501, ""];
 
     try {
+        if (session.current === true) await SessionModel.updateMany({ current: true }, {
+            current: false,
+            $set: { "terms.$[i].current": false }
+        }, {
+            arrayFilters: [{ "i.current": true }]
+        });
         const data = await SessionModel.create(session);
         [success, status, message] = [true, 201, { data, message: "Created" }];
     } catch (error) {
