@@ -16,6 +16,7 @@ export type StudentRecord<P = false> = {
             subjects: Schema.Types.ObjectId[];
         }[];
     }[];
+    code: string;
 } & (P extends true ? { _id: string } : {})
 
 const StudentSchema = new Schema<StudentRecord>({
@@ -67,7 +68,12 @@ const StudentSchema = new Schema<StudentRecord>({
                 _id: false,
             }]
         },
-    }]
+    }], code: {
+        type: String,
+        required: [true, 'User Login Code required'],
+        unique: true,
+        select: false,
+    }
 });
 
 export const StudentModel = models.Student as Model<StudentRecord> ?? model('Student', StudentSchema);

@@ -10,6 +10,7 @@ export type TeacherRecord<P = false> = {
     };
     email: string;
     subjects: Schema.Types.ObjectId[];
+    code: string;
 } & (P extends true ? { _id: string } : {})
 
 const TeacherSchema = new Schema<TeacherRecord>({
@@ -51,7 +52,12 @@ const TeacherSchema = new Schema<TeacherRecord>({
     }, subjects: [{
         type: Schema.Types.ObjectId,
         ref: 'Subject'
-    }]
+    }], code: {
+        type: String,
+        required: [true, 'User Login Code required'],
+        unique: true,
+        select: false,
+    }
 });
 
 export const TeacherModel = models.Teacher as Model<TeacherRecord> ?? model('Teacher', TeacherSchema);
