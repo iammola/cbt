@@ -15,7 +15,10 @@ const UserImage: FunctionComponent<UserImageProps> = ({ image, placeholder, clas
             className={classNames("object-cover", className)}
         />
     ) : (
-        <span className={classNames("flex items-center justify-center h-full w-full text-white text-sm font-medium overflow-hidden", className)}>
+        <span className={classNames("flex items-center justify-center h-full w-full text-white font-medium overflow-hidden", className, {
+            "text-sm": placeholder.length === 2,
+            "text-xs": placeholder.length > 2
+        })}>
             {placeholder}
         </span>
     );
