@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -28,26 +29,34 @@ const Navbar: FunctionComponent = () => {
             </div>
             <nav className="h-full">
                 <ul className="flex items-center justify-center gap-5 flex-grow h-full">
-                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                        <a className="text-sm tracking-wider drop-shadow-xl text-blue-700">
-                            Home
-                        </a>
+                    <li className="relative h-full cursor-pointer">
+                        <Link href="/home">
+                            <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full drop-shadow-xl text-blue-700">
+                                Home
+                            </a>
+                        </Link>
                         <span className="w-full h-[0.165rem] absolute top-0 inset-x-0 bg-blue-700 rounded-full drop-shadow-xl" />
                     </li>
-                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                        <a className="text-sm tracking-wider text-gray-400">
-                            Exams
-                        </a>
+                    <li className="relative h-full cursor-pointer">
+                        <Link href="/exams">
+                            <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
+                                Exams
+                            </a>
+                        </Link>
                     </li>
-                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                        <a className="text-sm tracking-wider text-gray-400">
-                            Results
-                        </a>
+                    <li className="relative h-full cursor-pointer">
+                        <Link href="/results">
+                            <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
+                                Results
+                            </a>
+                        </Link>
                     </li>
-                    <li className="flex items-center justify-center relative h-full w-max px-7 cursor-pointer">
-                        <a className="text-sm tracking-wider text-gray-400">
-                            Schedule
-                        </a>
+                    <li className="relative h-full cursor-pointer">
+                        <Link href="/schedule">
+                            <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
+                                Schedule
+                            </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>
