@@ -4,7 +4,7 @@ import { Calendar, Schedule } from "components/Misc";
 
 const Sidebar: FunctionComponent = () => {
     return (
-        <aside className="flex flex-col flex-shrink-0 gap-8 py-7 px-4 w-80 h-full">
+        <aside className="flex flex-col flex-shrink-0 gap-8 py-7 px-4 w-80 h-full overflow-y-auto">
             <Calendar
                 month={9}
                 year={2021}
