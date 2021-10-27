@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useCookies } from "react-cookie";
 import { FormEvent, Fragment, useMemo, useState } from "react";
 import { ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
 
@@ -14,6 +15,8 @@ export type RawQuestion = Omit<QuestionRecord<true>, '_id' | 'answers'> & {
 };
 
 const CreateQuestions: NextPage = () => {
+    const [{ savedExams }, setCookies] = useCookies(['savedExams']);
+
     const recordTemplate = useMemo<RawQuestion>(() => ({
         question: "",
         type: "Multiple choice",
@@ -27,6 +30,17 @@ const CreateQuestions: NextPage = () => {
     const [exam, setExam] = useState<{ class: string; subject: string; details: Omit<ExamRecord, 'questions'>; }>();
     const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
 
+    function saveQuestions() {
+        if (exam !== undefined) {
+            setCookies('savedExams', JSON.stringify({
+                ...(savedExams ?? {}),
+                [exam.details.SubjectID as any]: { exam, questions }
+            }), {
+                path: '/',
+                sameSite: true
+            });
+        }
+    }
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
