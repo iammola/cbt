@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import { format } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
-import { CalendarIcon } from "@heroicons/react/solid";
 import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
 import { ExamRecord } from "db/models/Exam";
