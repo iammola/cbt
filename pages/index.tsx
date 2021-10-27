@@ -44,7 +44,7 @@ const Home: NextPage = () => {
                 });
             } else throw new Error(error);
         } catch (error) {
-            console.log(error);
+            console.log({ error });
         }
 
         setLoading(false);
