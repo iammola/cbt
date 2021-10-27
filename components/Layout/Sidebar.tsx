@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 
-import { Calendar } from "components/Misc";
+import { Calendar, Schedule } from "components/Misc";
 
 const Sidebar: FunctionComponent = () => {
     return (
@@ -10,6 +10,7 @@ const Sidebar: FunctionComponent = () => {
                 year={2021}
                 events={[{ date: 3, count: 5 }, { date: 15, count: 1 }, { date: 18, count: 2 }]}
             />
+            <Schedule />
         </aside>
     )
 }
