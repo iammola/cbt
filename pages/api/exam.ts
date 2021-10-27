@@ -1,4 +1,5 @@
 import { startSession } from "mongoose";
+import { minutesToMilliseconds } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { connect } from "db";
@@ -10,7 +11,7 @@ import { RawQuestion } from "pages/create/questions";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
-async function createExam({ exam, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: RawQuestion[] }): Promise<RouteResponse> {
+async function createExam({ exam: { duration, ...exam }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: RawQuestion[] }): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, 501, ""];
@@ -18,6 +19,7 @@ async function createExam({ exam, questions }: { exam: Omit<ExamRecord, 'questio
     try {
         const data = await session.withTransaction(async () => await ExamModel.create([{
             ...exam,
+            duration: minutesToMilliseconds(duration),
             questions: (await QuestionModel.create(await Promise.all(questions.map(async ({ answers, ...question }) => ({
                 ...question,
                 answers: (await AnswerModel.create(answers, { session })).map(({ _id }) => _id)
