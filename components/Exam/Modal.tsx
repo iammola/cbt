@@ -97,12 +97,26 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                             label="Classes"
                             options={classes?.data}
                             selected={selectedClass}
+                            colorPallette={{
+                                activeCheckIconColor: "text-indigo-600",
+                                inactiveCheckIconColor: "text-indigo-800",
+                                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                                buttonBorderColor: "focus-visible:border-indigo-500",
+                                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
+                            }}
                             handleChange={setSelectedClass}
                         />
                         <Select
                             label="Subjects"
                             options={subjects}
                             selected={selectedSubject}
+                            colorPallette={{
+                                activeCheckIconColor: "text-indigo-600",
+                                inactiveCheckIconColor: "text-indigo-800",
+                                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                                buttonBorderColor: "focus-visible:border-indigo-500",
+                                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
+                            }}
                             handleChange={setSelectedSubject}
                         />
                         <div className="flex flex-col w-80 relative">
