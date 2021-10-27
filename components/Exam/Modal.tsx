@@ -76,7 +76,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Dialog.Overlay className="w-full h-full fixed inset-0 bg-black/30" />
+                    <Dialog.Overlay className="w-full h-full fixed z-[-1] inset-0 bg-black/30" />
                 </Transition.Child>
                 <Transition.Child
                     enter="ease-out duration-300 transition"
