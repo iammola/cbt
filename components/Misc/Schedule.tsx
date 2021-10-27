@@ -4,7 +4,7 @@ const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
     return (
         <div className="flex flex-col flex-grow gap-2">
             <h5 className="font-semibold text-gray-800">
-                Today
+                {title}
             </h5>
                     </div>
                     </div>
