@@ -3,11 +3,11 @@ import { getDaysInMonth, getDay, isSameMonth } from "date-fns";
 
 import { classNames } from "utils";
 
-const Calendar: FunctionComponent<CalendarProps> = ({ month, year }) => {
-    const events = [17, 11, 8];
+const Calendar: FunctionComponent<CalendarProps> = ({ month, year, events }) => {
     const days = useMemo(() => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], []);
     const months = useMemo(() => ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], []);
     const validToday = useMemo(() => isSameMonth(new Date(), new Date(year, month)) === true && new Date().getDate(), [month, year]);
+    const formattedEvents = Object.fromEntries(events?.map(event => [event.date, event.count]) ?? [])
 
     function getDates(month: number, year: number) {
         let b = 0;
