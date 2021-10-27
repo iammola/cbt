@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
+const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
 
-const Schedule: FunctionComponent<ScheduleProps> = () => {
     return (
         <div className="flex flex-col gap-2">
             <h5 className="font-semibold text-gray-800">
