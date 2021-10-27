@@ -131,7 +131,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                                     id="date"
                                     type="date"
                                     value={date === 0 ? '' : format(new Date(date), 'yyyy-MM-dd')}
-                                    onChange={({ target: { valueAsNumber } }) => setDate(valueAsNumber)}
+                                    onChange={({ target: { valueAsNumber } }) => setDate(isNaN(valueAsNumber) ? 0 : valueAsNumber)}
                                     className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                                 />
                             </div>
