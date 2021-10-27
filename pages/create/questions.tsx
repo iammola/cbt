@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import { FormEvent, Fragment, useMemo, useState } from "react";
 import { ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
 
-import Question from "components/Question";
 import ExamModal from "components/Exam/Modal";
+import Question from "components/Exam/Question";
 import { LoadingIcon } from "components/CustomIcons";
 
 import { ExamRecord } from "db/models/Exam";
