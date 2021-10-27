@@ -54,8 +54,8 @@ const Schedule: FunctionComponent<ScheduleProps> = () => {
 interface ScheduleProps {
     schedules: {
         name: string;
-        time: string;
-        questions: string
+        time: number;
+        questions: number;
     }[];
 }
 
