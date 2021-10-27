@@ -3,7 +3,7 @@ import { NextPage } from "next";
 
 import { Navbar, Sidebar } from "components/Layout";
 
-const Home: NextPage = (props) => {
+const Home: NextPage = () => {
     return (
         <>
             <Head>
