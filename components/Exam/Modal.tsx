@@ -127,7 +127,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                                     Date
                                 </label>
                                 <input
-                                    requiindigo
+                                    required
                                     id="date"
                                     type="date"
                                     value={date === 0 ? '' : format(new Date(date), 'yyyy-MM-dd')}
@@ -145,7 +145,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                                 <input
                                     min={15}
                                     step={1}
-                                    requiindigo
+                                    required
                                     pattern="\d+"
                                     id="duration"
                                     type="number"
