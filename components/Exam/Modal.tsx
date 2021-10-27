@@ -47,14 +47,17 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        props.onSubmit({
-            class: selectedClass.name,
-            subject: selectedSubject.name,
-            details: {
-                date, duration,
-                SubjectID: selectedSubject._id as any
-            },
-        });
+
+        if (selectedClass._id !== "" && selectedSubject._id !== "") {
+            props.onSubmit({
+                class: selectedClass.name,
+                subject: selectedSubject.name,
+                details: {
+                    date, duration,
+                    SubjectID: selectedSubject._id as any
+                },
+            });
+        }
     }
 
     return (
