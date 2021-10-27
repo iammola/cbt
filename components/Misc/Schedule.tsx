@@ -12,7 +12,11 @@ const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
                 {title}
             </h5>
             <div className="flex flex-col gap-3 h-full">
+                {schedules.length === 0 && (
+                    <div className="h-full flex items-center justify-center text-sm text-gray-600">
+                        Nothing to see here
                     </div>
+                )}
                 {schedules.map(({ name, time, questions }, scheduleIdx) => (
                     <div
                         key={scheduleIdx}
