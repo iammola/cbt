@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 
-const Schedule: FunctionComponent = () => {
+const Schedule: FunctionComponent<ScheduleProps> = () => {
     return (
         <div className="flex flex-col gap-2">
             <h5 className="font-semibold text-gray-800">
@@ -49,6 +49,14 @@ const Schedule: FunctionComponent = () => {
             </div>
         </div>
     );
+}
+
+interface ScheduleProps {
+    schedules: {
+        name: string;
+        time: string;
+        questions: string
+    }[];
 }
 
 export default Schedule;
