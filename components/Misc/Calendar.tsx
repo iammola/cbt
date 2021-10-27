@@ -60,7 +60,7 @@ const Calendar: FunctionComponent<CalendarProps> = ({ month, year, events }) => 
                                 {day}
                                 {validToday === day ? (
                                     <span className="w-8 h-8 bg-gradient-to-br from-indigo-300 to-indigo-600 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[-1] rounded-full shadow-md" />
-                                ) : (events.includes(+day) && (
+                                ) : (formattedEvents[day] && (
                                     <>
                                         <span className="flex items-center justify-center gap-0.5 w-full absolute left-1/2 -translate-x-1/2">
                                             <span className="inline-block flex-shrink-0 w-0.5 h-0.5 bg-indigo-600 rounded-full" />
@@ -68,7 +68,7 @@ const Calendar: FunctionComponent<CalendarProps> = ({ month, year, events }) => 
                                             <span className="inline-block flex-shrink-0 w-0.5 h-0.5 bg-indigo-600 rounded-full" />
                                         </span>
                                         <span className="hidden group-hover:inline-block rounded-md p-2 shadow-md z-10 absolute top-[-2.25rem] -left-2 bg-white text-gray-600 text-xs font-medium w-max">
-                                            {Math.ceil(Math.random() * 12)} events
+                                            {formattedEvents[day]} event{formattedEvents[day] > 1 && 's'}
                                         </span>
                                     </>
                                 ))}
