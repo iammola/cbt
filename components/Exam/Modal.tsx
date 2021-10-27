@@ -89,8 +89,10 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                         onSubmit={handleSubmit}
                         className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white w-[30rem]"
                     >
-                        <Dialog.Title className="text-lg text-center font-medium tracking-wide text-gray-800">
-                            Exam
+                        <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+                            <span>Create an</span>{' '}
+                            <span className="text-indigo-500">Exam</span>{' '}
+                            <span>🚀</span>
                         </Dialog.Title>
                         <Select
                             label="Classes"
