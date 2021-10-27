@@ -3,8 +3,10 @@ import { FormEvent, Fragment, useMemo, useState } from "react";
 import { ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
 
 import Question from "components/Question";
+import ExamModal from "components/Exam/Modal";
 import { LoadingIcon } from "components/CustomIcons";
 
+import { ExamRecord } from "db/models/Exam";
 import type { QuestionRecord } from "db/models/Question";
 
 export type RawQuestion = Omit<QuestionRecord<true>, '_id' | 'answers'> & {
@@ -24,29 +26,35 @@ const CreateQuestions: NextPage = () => {
     const [uploading, setUploading] = useState(false);
     const [exam, setExam] = useState<{class: string; subject: string; details: Omit<ExamRecord, 'questions'>;}>();
     const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
+
+
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        setUploading(true);
 
-        try {
-            const res = await fetch('/api/exam', {
-                method: "POST",
-                body: JSON.stringify({
-                    questions,
-                    exam: cookie.lastSavedExam,
-                })
-            });
-
-            const { success, data, message, error } = await res.json();
-
-            if (success === true) {
-                console.log({ message, data })
-            } else throw new Error(error);
-        } catch (error) {
-            console.error(error);
+        if (exam !== undefined) {
+            saveQuestions();
+            setUploading(true);
+    
+            try {
+                const res = await fetch('/api/exam', {
+                    method: "POST",
+                    body: JSON.stringify({
+                        questions,
+                        exam: exam.details,
+                    })
+                });
+    
+                const { success, data, message, error } = await res.json();
+    
+                if (success === true) {
+                    console.log({ message, data })
+                } else throw new Error(error);
+            } catch (error) {
+                console.error(error);
+            }
+    
+            setUploading(false);
         }
-
-        setUploading(false);
     }
 
     return (
