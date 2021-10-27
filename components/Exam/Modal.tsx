@@ -1,11 +1,11 @@
 import useSWR from "swr";
+import { format } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
 import { CalendarIcon } from "@heroicons/react/solid";
 import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
-import Select, { SelectOption } from "components/Select";
-import { format } from "date-fns";
 import { ExamRecord } from "db/models/Exam";
+import Select, { SelectOption } from "components/Select";
 
 
 const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
