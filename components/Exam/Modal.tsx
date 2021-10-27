@@ -147,14 +147,12 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                                 in mins
                             </span>
                         </div>
-                        <div className="flex gap-5 item-center justify-end pt-4">
-                            <button
-                                type="submit"
-                                className="inline-flex justify-center px-4 py-2 text-xs font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            >
-                            </button>
-                        </div>
+                        <button
+                            type="submit"
+                            className="flex gap-4 items-center justify-center mt-7 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-blue-400 hover:bg-blue-500 focus:ring-blue-500"
+                        >
                             Continue
+                        </button>
                     </form>
                 </Transition.Child>
             </Dialog>
