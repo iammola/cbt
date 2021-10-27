@@ -54,7 +54,6 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
                                                     "font-medium": selected,
                                                     "font-normal": !selected,
                                                 })}>
-                                                    {/* {console.log({ selected, active, option })} */}
                                                     {option.name}
                                                 </span>
                                                 {selected === true && (
