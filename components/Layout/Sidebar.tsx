@@ -10,7 +10,18 @@ const Sidebar: FunctionComponent = () => {
                 year={2021}
                 events={[{ date: 3, count: 5 }, { date: 15, count: 1 }, { date: 18, count: 2 }]}
             />
-            <Schedule />
+            <Schedule
+                title="Today"
+                schedules={[{
+                    name: "Physics",
+                    time: 3600000,
+                    questions: 50
+                }, {
+                    name: "Mathematics",
+                    time: 7200000,
+                    questions: 100
+                }]}
+            />
         </aside>
     )
 }
