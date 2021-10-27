@@ -8,6 +8,7 @@ const Sidebar: FunctionComponent = () => {
             <Calendar
                 month={9}
                 year={2021}
+                events={[{ date: 3, count: 5 }, { date: 15, count: 1 }, { date: 18, count: 2 }]}
             />
         </aside>
     )
