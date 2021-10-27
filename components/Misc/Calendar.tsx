@@ -83,7 +83,11 @@ const Calendar: FunctionComponent<CalendarProps> = ({ month, year }) => {
 
 type CalendarProps = {
     month: number;
-    year: number
+    year: number;
+    events?: {
+        date: number;
+        count: number;
+    }[]
 }
 
 export default Calendar;
