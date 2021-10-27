@@ -22,6 +22,7 @@ const CreateQuestions: NextPage = () => {
         maxLength: undefined
     }), []);
     const [uploading, setUploading] = useState(false);
+    const [exam, setExam] = useState<{class: string; subject: string; details: Omit<ExamRecord, 'questions'>;}>();
     const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -100,6 +101,9 @@ const CreateQuestions: NextPage = () => {
                     </button>
                 </div>
             </form>
+            {exam === undefined && (
+                <ExamModal onSubmit={setExam} />
+            )}
         </section>
     );
 }
