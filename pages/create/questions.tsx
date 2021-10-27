@@ -24,7 +24,7 @@ const CreateQuestions: NextPage = () => {
         maxLength: undefined
     }), []);
     const [uploading, setUploading] = useState(false);
-    const [exam, setExam] = useState<{class: string; subject: string; details: Omit<ExamRecord, 'questions'>;}>();
+    const [exam, setExam] = useState<{ class: string; subject: string; details: Omit<ExamRecord, 'questions'>; }>();
     const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
 
 
@@ -34,7 +34,7 @@ const CreateQuestions: NextPage = () => {
         if (exam !== undefined) {
             saveQuestions();
             setUploading(true);
-    
+
             try {
                 const res = await fetch('/api/exam', {
                     method: "POST",
@@ -43,16 +43,16 @@ const CreateQuestions: NextPage = () => {
                         exam: exam.details,
                     })
                 });
-    
+
                 const { success, data, message, error } = await res.json();
-    
+
                 if (success === true) {
                     console.log({ message, data })
                 } else throw new Error(error);
             } catch (error) {
                 console.error(error);
             }
-    
+
             setUploading(false);
         }
     }
