@@ -1,14 +1,20 @@
-import { FunctionComponent } from "react";
+import useSWR from "swr";
+import { FunctionComponent, useMemo } from "react";
+import { startOfMonth, lastDayOfMonth } from "date-fns";
 
+import { EventRecord } from "db/models/Event";
 import { Calendar, Schedule } from "components/Misc";
 
 const Sidebar: FunctionComponent = () => {
+    const date = useMemo(() => new Date(), []);
+    const { data: events } = useSWR(`/api/events?from=${startOfMonth(date).getTime()}&to=${lastDayOfMonth(date).getTime()}`, url => fetch(url).then(res => res.json()));
+
     return (
         <aside className="flex flex-col flex-shrink-0 gap-8 py-7 px-4 w-80 h-full overflow-y-auto">
             <Calendar
-                month={9}
-                year={2021}
-                events={[{ date: 3, count: 5 }, { date: 15, count: 1 }, { date: 18, count: 2 }]}
+                month={date.getMonth()}
+                year={date.getFullYear()}
+                events={events?.data?.map(({ date, events }: EventRecord) => ({ date: date.getDate(), count: events.length }))}
             />
             <Schedule
                 title="Today"
