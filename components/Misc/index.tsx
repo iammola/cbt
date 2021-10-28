@@ -1,4 +1,2 @@
-import Calendar from "./Calendar";
-import Schedule from "./Schedule";
-
-export { Calendar, Schedule };
+export { default as Calendar } from "./Calendar";
+export { default as Schedule } from "./Schedule";

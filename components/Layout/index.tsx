@@ -1,4 +1,2 @@
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-
-export { Navbar, Sidebar };
+export { default as Navbar } from "./Navbar";
+export { default as Sidebar } from "./Sidebar";
