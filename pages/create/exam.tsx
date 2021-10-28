@@ -51,7 +51,7 @@ const CreateQuestions: NextPage = () => {
             setUploading(true);
 
             try {
-                const res = await fetch('/api/exam', {
+                const res = await fetch('/api/exams', {
                     method: "POST",
                     body: JSON.stringify({
                         questions,
