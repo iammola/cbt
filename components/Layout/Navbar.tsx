@@ -91,6 +91,15 @@ const Navbar: FunctionComponent = () => {
                     <div className="flex items-center justify-center h-full pl-3">
                         <ChevronDownIcon className="w-5 h-5 flex-shrink-0 text-gray-600" />
                     </div>
+                        <div className="hidden group-focus:block absolute -bottom-14 -right-2 z-10 py-2 w-40 rounded-md shadow-xl bg-white overflow-hidden">
+                            <span
+                                onClick={logout}
+                                className="flex gap-3 py-2 px-5 text-sm min-w-max w-full text-gray-600 hover:bg-gray-200"
+                            >
+                                <LogoutIcon className="w-5 h-5" />
+                                Log out
+                            </span>
+                        </div>
                 </div>
             )}
         </header>
