@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { format } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
 import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
@@ -11,7 +10,6 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
     const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
 
-    const [date, setDate] = useState(0);
     const [duration, setDuration] = useState(0);
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
     const [selectedSubject, setSelectedSubject] = useState({ _id: "", name: "Select class first" });
@@ -52,7 +50,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                 class: selectedClass.name,
                 subject: selectedSubject.name,
                 details: {
-                    date, duration,
+                    duration,
                     SubjectID: selectedSubject._id as any
                 },
             });
@@ -120,46 +118,28 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                             }}
                             handleChange={setSelectedSubject}
                         />
-                        <div className="flex items-center justify-between gap-4 w-full">
-                            <div className="flex flex-col gap-2.5">
-                                <label
-                                    htmlFor="date"
-                                    className="text-sm text-gray-600 font-semibold"
-                                >
-                                    Date
-                                </label>
-                                <input
-                                    required
-                                    id="date"
-                                    type="date"
-                                    value={date === 0 ? '' : format(new Date(date), 'yyyy-MM-dd')}
-                                    onChange={({ target: { valueAsNumber } }) => setDate(isNaN(valueAsNumber) ? 0 : valueAsNumber)}
-                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
-                                />
-                            </div>
-                            <div className="flex flex-col gap-2.5 relative">
-                                <label
-                                    htmlFor="duration"
-                                    className="text-sm text-gray-600 font-semibold"
-                                >
-                                    Duration
-                                </label>
-                                <input
-                                    min={15}
-                                    step={1}
-                                    required
-                                    pattern="\d+"
-                                    id="duration"
-                                    type="number"
-                                    inputMode="numeric"
-                                    value={duration === 0 ? '' : duration}
-                                    onChange={({ target: { valueAsNumber } }) => setDuration(valueAsNumber)}
-                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
-                                />
-                                <span className="absolute bottom-4 right-0 z-10 flex items-center pr-2 pointer-events-none text-gray-500 text-xs">
-                                    mins
-                                </span>
-                            </div>
+                        <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                            <label
+                                htmlFor="duration"
+                                className="text-sm text-gray-600 font-semibold"
+                            >
+                                Duration
+                            </label>
+                            <input
+                                min={15}
+                                step={1}
+                                required
+                                pattern="\d+"
+                                id="duration"
+                                type="number"
+                                inputMode="numeric"
+                                value={duration === 0 ? '' : duration}
+                                onChange={({ target: { valueAsNumber } }) => setDuration(valueAsNumber)}
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                            />
+                            <span className="absolute bottom-4 right-0 z-10 flex items-center pr-2 pointer-events-none text-gray-500 text-xs">
+                                mins
+                            </span>
                         </div>
                         <button
                             type="submit"
