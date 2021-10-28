@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
+import { LogoutIcon } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { FunctionComponent, useEffect, useState } from "react";
 
@@ -7,8 +9,9 @@ import { classNames } from "utils";
 import UserImage from "components/UserImage";
 
 const Navbar: FunctionComponent = () => {
+    const router = useRouter();
     const [online, setOnline] = useState(false);
-    const [{ account }] = useCookies(['account']);
+    const [{ account }, , removeCookies] = useCookies(['account']);
 
     useEffect(() => {
         const toggleOnline = () => setOnline(navigator.onLine);
@@ -21,6 +24,11 @@ const Navbar: FunctionComponent = () => {
             window.removeEventListener('offline', toggleOnline);
         }
     }, []);
+
+    function logout() {
+        removeCookies('account');
+        router.push('/');
+    }
 
     return (
         <header className="flex gap-4 items-center justify-between w-full h-[4.5rem] px-6">
