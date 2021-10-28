@@ -6,7 +6,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { FunctionComponent, useEffect, useState } from "react";
 
 import { classNames } from "utils";
-import UserImage from "components/UserImage";
+import UserImage from "components/Misc/UserImage";
 
 const Navbar: FunctionComponent = () => {
     const router = useRouter();

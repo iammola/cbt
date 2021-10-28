@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
 import { AnswerRecord } from "db/models/Answer";
-import { OuterCircleIcon, CircleOutlineIcon } from "components/CustomIcons";
+import { OuterCircleIcon, CircleOutlineIcon } from "components/Misc/CustomIcons";
 
 const Answer: FunctionComponent<AnswerProps> = ({ id, letter, answer, isCorrect, deleteOption, handleChange }) => {
     return (

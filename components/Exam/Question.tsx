@@ -3,7 +3,7 @@ import { PlusSmIcon } from '@heroicons/react/outline';
 
 import Select from 'components/Select';
 import Answer from 'components/Exam/Answer';
-import { CircleIcon, LineIcon } from 'components/CustomIcons';
+import { CircleIcon, LineIcon } from 'components/Misc/CustomIcons';
 
 import { RawQuestion } from 'pages/create/exam';
 import { QuestionRecord } from 'db/models/Question';

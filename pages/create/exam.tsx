@@ -6,7 +6,7 @@ import { ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
 
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
-import { LoadingIcon } from "components/CustomIcons";
+import { LoadingIcon } from "components/Misc/CustomIcons";
 
 import { ExamRecord } from "db/models/Exam";
 import type { QuestionRecord } from "db/models/Question";

@@ -9,7 +9,7 @@ import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react
 
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
-import { LoadingIcon } from 'components/CustomIcons';
+import { LoadingIcon } from 'components/Misc/CustomIcons';
 
 const Home: NextPage = () => {
     const router = useRouter();

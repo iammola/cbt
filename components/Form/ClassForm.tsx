@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
-import { LoadingIcon } from "components/CustomIcons";
+import { LoadingIcon } from "components/Misc/CustomIcons";
 
 const ClassForm: NextPage = () => {
     const { mutate } = useSWRConfig();
