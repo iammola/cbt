@@ -88,9 +88,8 @@ const Navbar: FunctionComponent = () => {
                             {account.access}
                         </span>
                     </div>
-                    <div className="flex items-center justify-center h-full pl-3">
+                    <button className="flex items-center justify-center h-full ml-3 p-[0.1rem] rounded-md relative group hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
                         <ChevronDownIcon className="w-5 h-5 flex-shrink-0 text-gray-600" />
-                    </div>
                         <div className="hidden group-focus:block absolute -bottom-14 -right-2 z-10 py-2 w-40 rounded-md shadow-xl bg-white overflow-hidden">
                             <span
                                 onClick={logout}
@@ -100,6 +99,7 @@ const Navbar: FunctionComponent = () => {
                                 Log out
                             </span>
                         </div>
+                    </button>
                 </div>
             )}
         </header>
