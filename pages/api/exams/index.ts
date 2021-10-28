@@ -36,14 +36,14 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
     return [success, status, message];
 }
 
-export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, 400, ""];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
-    } else [success, status, message] = method === "POST" ? await createExam(JSON.parse(body)) : [false, status, message];
+    } else[success, status, message] = await (method === "POST" ? createExam(JSON.parse(body)) : [success, status, message]);
 
     if (typeof message !== "object") message = { message };
 
