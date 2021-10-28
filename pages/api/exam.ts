@@ -28,7 +28,6 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
 
         [success, status, message] = [true, 201, { data, message: "Success" }];
     } catch (error) {
-        
         [status, message] = [400, { error, message: "Couldn't CREATE Exam" }];
     }
 
