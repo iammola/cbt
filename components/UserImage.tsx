@@ -12,7 +12,8 @@ const UserImage: FunctionComponent<UserImageProps> = ({ image, placeholder, clas
             src={image ?? ''}
             alt={placeholder}
             onError={() => setLoadImage(false)}
-            className={classNames("object-cover", className)}
+            objectFit="cover"
+            className={className}
         />
     ) : (
         <span className={classNames("flex items-center justify-center h-full w-full text-white font-medium overflow-hidden", className, {

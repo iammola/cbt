@@ -64,7 +64,7 @@ const Home: NextPage = () => {
                             alt="Panda"
                             src={Image1}
                             layout="fill"
-                            className="object-cover"
+                            objectFit="cover"
                         />
                         <div className="absolute z-1 bg-blue-400/60 w-full h-full"></div>
                     </div>
