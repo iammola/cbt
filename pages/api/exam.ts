@@ -7,7 +7,7 @@ import { AnswerModel } from "db/models/Answer";
 import { QuestionModel } from "db/models/Question";
 import { ExamModel, ExamRecord } from "db/models/Exam";
 
-import { RawQuestion } from "pages/create/questions";
+import { RawQuestion } from "pages/create/exam";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
