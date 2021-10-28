@@ -3,8 +3,7 @@ import { Schema, Model, model, models } from "mongoose";
 import { QuestionRecord } from "./Question";
 
 export type ExamRecord<P = false> = {
-    date: number;
-    duration: number
+    duration: number;
     SubjectID: P extends true ? string : Schema.Types.ObjectId;
     questions: (P extends true ? QuestionRecord<P> : string)[];
 } & (P extends true ? { _id: string } : {})
@@ -16,9 +15,6 @@ const ExamSchema = new Schema<ExamRecord>({
     }, SubjectID: {
         type: Schema.Types.ObjectId,
         required: [true, 'Exam subject required'],
-    }, date: {
-        type: Number,
-        required: [true, 'Exam Date required'],
     }, questions: [{
         type: Schema.Types.ObjectId,
         ref: 'Question',
