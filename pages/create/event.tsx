@@ -8,7 +8,7 @@ import Select, { SelectOption } from "components/Select";
 
 const CreateEvent: NextPage = () => {
     const [name, setName] = useState('');
-    const [date, setDate] = useState<number>();
+    const [date, setDate] = useState<Date | null>(null);
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
     const [selectedSubject, setSelectedSubject] = useState({ _id: "", name: "Select class first" });
 
@@ -110,8 +110,8 @@ const CreateEvent: NextPage = () => {
                                 id="date"
                                 type="date"
                                 min={format(startOfTomorrow(), 'yyyy-MM-dd')}
-                                value={date === undefined ? '' : format(new Date(date), 'yyyy-MM-dd')}
-                                onChange={({ target: { valueAsNumber } }) => setDate(isNaN(valueAsNumber) ? 0 : valueAsNumber)}
+                                value={date === null ? '' : format(date, 'yyyy-MM-dd')}
+                                onChange={({ target: { valueAsDate } }) => setDate(valueAsDate)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
