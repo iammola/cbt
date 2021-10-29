@@ -28,7 +28,7 @@ const CreateSession: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({ name, alias, current, terms })
             });
-            const { success, error, data, message } = await res.json();
+            const { success, error } = await res.json();
 
             setSuccess(success);
 

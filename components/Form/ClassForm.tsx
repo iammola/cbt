@@ -22,7 +22,7 @@ const ClassForm: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({ name, alias })
             });
-            const { success, message, data, error } = await res.json();
+            const { success, error } = await res.json();
 
             setSuccess(success);
 
