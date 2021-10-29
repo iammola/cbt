@@ -31,7 +31,7 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
 
     function changeType(type: QuestionRecord['type']) {
         setQuestionType(questionTypes.find(({ _id }) => _id === type) ?? questionTypes[0]);
-        
+
         const { question, answers } = record;
         const newRecord = {
             type,
