@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
+import { hoursToSeconds } from 'date-fns';
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
 
@@ -50,7 +51,8 @@ const Home: NextPage = () => {
                 setTimeout(router.push, 155e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
                 setCookies("account", JSON.stringify(data), {
                     path: '/',
-                    sameSite: true
+                    sameSite: true,
+                    maxAge: hoursToSeconds(5)
                 });
             } else throw new Error(error);
         } catch (error) {
