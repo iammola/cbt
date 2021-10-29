@@ -61,7 +61,7 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
             <span className="text-2xl text-center pl-10 flex-grow font-medium">
                 Question {number}
             </span>
-            <div className="flex flex-col gap-20 w-full relative">
+            <div className="flex flex-col gap-14 sm:gap-20 w-full relative">
                 <div className="flex flex-col lg:flex-row items-start gap-y-4 lg:gap-y-0 gap-x-0 lg:gap-x-6 pl-[34px]">
                     <span className="absolute left-0 z-0 flex flex-col items-center justify-start w-[22px] h-[calc(100%+2px)] pt-1.5">
                         <CircleIcon className="drop-shadow-2xl text-gray-600 flex-shrink-0" />

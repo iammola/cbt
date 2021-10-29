@@ -85,7 +85,7 @@ const CreateQuestions: NextPage = () => {
                 </div>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col items-center justify-start gap-10 w-full flex-grow p-10"
+                    className="flex flex-col items-center justify-start gap-10 w-full flex-grow py-10 px-5 sm:px-10"
                 >
                     <section className="flex flex-col items-center justify-center gap-14 w-full h-full">
                         {questions.map((question, i) => (
@@ -97,7 +97,7 @@ const CreateQuestions: NextPage = () => {
                                 />
                                 <div
                                     aria-hidden="true"
-                                    className="w-full px-20"
+                                    className="w-full px-14 sm:px-20"
                                 >
                                     <hr />
                                 </div>
