@@ -59,7 +59,10 @@ const CreateEvent: NextPage = () => {
                 const { success, message, data, error } = await res.json();
 
                 if (success === true) {
-                    console.log({ message, data });
+                    setName('');
+                    setDate(null);
+                    setSelectedClass({ _id: "", name: "Loading classes..." });
+                    setSelectedSubject({ _id: "", name: "Select class first" });
                 } else throw new Error(error);
             } catch (error) {
                 console.log({ error });
