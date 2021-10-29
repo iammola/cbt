@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
-import { FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
+import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
 
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
@@ -23,6 +23,14 @@ const Home: NextPage = () => {
     const focusPrevious = (index: number) => setActive(--index >= 0 ? index : 0);
 
     const focusNext = (index: number) => setActive(++index < code.length ? index : 0);
+
+    function handlePaste(e: ClipboardEvent<HTMLInputElement>) {
+        const pasted = e.clipboardData.getData('text');
+        if (/^\d{6}$/.test(pasted)) {
+            setCode(pasted.split(''));
+            setActive(5);
+        }
+    }
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -85,6 +93,7 @@ const Home: NextPage = () => {
                                 key={pos}
                                 value={number}
                                 focus={pos === active}
+                                handlePaste={handlePaste}
                                 focusPrevious={() => pos !== 0 && focusPrevious(pos)}
                                 focusNext={() => pos !== (code.length - 1) && focusNext(pos)}
                                 handleChange={val => setCode(code.map((number, i) => pos === i ? val : number))}
@@ -127,7 +136,7 @@ const Home: NextPage = () => {
     )
 }
 
-const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPrevious, handleChange }) => {
+const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPrevious, handlePaste, handleChange }) => {
     const ref = useRef<HTMLInputElement>(null);
 
     function onChange(v: string) {
@@ -159,6 +168,7 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
             value={value ?? ''}
             inputMode="numeric"
             onKeyDown={onKeyDown}
+            onPaste={handlePaste}
             onBeforeInput={validateCharacter}
             onChange={e => onChange(e.target.value.slice(-1))}
             className="text-lg sm:text-xl md:text-2xl text-gray-700 font-bold border rounded-md sm:p-3 md:p-4 w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white"
@@ -172,6 +182,7 @@ type InputProps = {
     focusNext(): void;
     focusPrevious(): void;
     handleChange(e: string): void;
+    handlePaste(e: ClipboardEvent<HTMLInputElement>): void;
 }
 
 export default Home;
