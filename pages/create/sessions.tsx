@@ -155,10 +155,10 @@ const CreateSession: NextPage = () => {
                             Add Term
                         </span>
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex min-w-80 w-full">
                         <label
                             htmlFor="current"
-                            className="flex gap-3 p-2"
+                            className="flex items-center gap-3 p-2 w-full"
                         >
                             <input
                                 id="current"
