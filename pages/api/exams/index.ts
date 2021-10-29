@@ -26,7 +26,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
     return [success, status, message];
 }
 
-async function createExam({ exam: { duration, ...exam }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: CreateQuestion[] }): Promise<RouteResponse> {
+async function createExam({ exam: { duration, ...exam }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
@@ -34,6 +34,7 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
     try {
         const data = await session.withTransaction(async () => await ExamModel.create([{
             ...exam,
+            created: { by, at: new Date() },
             duration: minutesToMilliseconds(duration),
             questions: (await QuestionModel.create(await Promise.all(questions.map(async ({ answers, ...question }) => ({
                 ...question,
@@ -57,14 +58,14 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
     return [success, status, message];
 }
 
-export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ body, query, method, cookies }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "POST" ? createExam(JSON.parse(body)) : getExams(query as any));
+    } else[success, status, message] = await (method === "POST" ? createExam(JSON.parse(body), JSON.parse(cookies.account)._id) : getExams(query as any));
 
     if (typeof message !== "object") message = { message };
 
