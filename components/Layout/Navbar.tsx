@@ -65,6 +65,13 @@ const Navbar: FunctionComponent = () => {
                         </>
                     ) : (account?.access === "Teacher") && (
                         <>
+                            <li className="relative h-full cursor-pointer">
+                                <Link href="/create/exam">
+                                    <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
+                                        Create an Exam
+                                    </a>
+                                </Link>
+                            </li>
                         </>
                     )}
                     <li className="relative h-full cursor-pointer">
