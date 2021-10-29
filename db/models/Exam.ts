@@ -12,7 +12,18 @@ const ExamSchema = new Schema<ExamRecord>({
     }, questions: [{
         type: Schema.Types.ObjectId,
         ref: 'Question',
-    }],
+    }], created: {
+        _id: false,
+        type: {
+            at: {
+                type: Date,
+                required: [true, 'Created at required']
+            }, by: {
+                type: Schema.Types.ObjectId,
+                required: [true, 'Created by required']
+            }
+        },
+    }
 });
 
 export const ExamModel = models.Exam as Model<ExamRecord> ?? model('Exam', ExamSchema);
