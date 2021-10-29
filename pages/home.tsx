@@ -12,7 +12,7 @@ const Home: NextPage = () => {
             </Head>
             <section className="flex flex-col items-center justify-start w-screen divide-y-[1.5px] divide-gray-200">
                 <Navbar />
-                <main className="flex divide-x-[1.5px] divide-gray-200 w-full h-full">
+                <main className="flex flex-col md:flex-row divide-x-[1.5px] divide-gray-200 w-full h-full">
                     <section className="flex-grow w-full h-full"></section>
                     <Sidebar />
                 </main>

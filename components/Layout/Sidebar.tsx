@@ -17,7 +17,7 @@ const Sidebar: FunctionComponent = () => {
     const { data: schedule } = useSWR(account !== undefined ? `/api/${account.access.toLowerCase()}s/${account._id}/schedule?date=${startOfToday().getTime()}` : null, url => url !== null && fetch(url).then(res => res.json()));
 
     return (
-        <aside className="flex flex-col flex-shrink-0 gap-8 py-7 px-4 w-80 h-full overflow-y-auto">
+        <aside className="flex flex-col flex-shrink-0 gap-8 py-7 px-4 w-full lg:w-80 h-full overflow-y-auto">
             <button
                 onClick={() => { removeCookies('account'); setTimeout(router.push, 15e2, '/') }}
                 className="flex gap-3 items-center justify-center w-full rounded-md text-white bg-blue-500 hover:bg-blue-600 py-2 px-3 -mt-4"
