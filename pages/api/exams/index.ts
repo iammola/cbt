@@ -7,7 +7,6 @@ import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
 
 import { RawQuestion } from "pages/create/exam";
 
-type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
 async function getExams({ select = '', date }: { select: string; date: string }): Promise<RouteResponse> {
     await connect();

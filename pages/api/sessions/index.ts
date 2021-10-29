@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "db";
 import { SessionModel } from "db/models";
 
-type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
 async function createSession(session: SessionRecord): Promise<RouteResponse> {
     await connect();

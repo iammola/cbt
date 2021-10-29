@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "db";
 import { SubjectModel, TeacherModel } from "db/models";
 
-type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 
 async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<RouteResponse> {
     await connect();
