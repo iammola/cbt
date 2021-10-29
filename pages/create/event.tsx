@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { format, startOfTomorrow } from "date-fns";
 
 import Select, { SelectOption } from "components/Select";
@@ -42,6 +42,30 @@ const CreateEvent: NextPage = () => {
 
         if (_id !== "") fetchSubjects();
     }, [selectedClass]);
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        if (selectedClass._id !== "" && selectedSubject._id !== "") {
+            try {
+                const res = await fetch('/api/events', {
+                    method: "POST",
+                    body: JSON.stringify({
+                        date,
+                        event: { name, subject: selectedSubject._id }
+                    })
+                });
+
+                const { success, message, data, error } = await res.json();
+
+                if (success === true) {
+                    console.log({ message, data });
+                } else throw new Error(error);
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+    }
 
     return (
         <>
