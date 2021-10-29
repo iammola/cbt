@@ -96,7 +96,7 @@ const CreateTeachers: NextPage = () => {
                 <title>Create Teacher Profile | CBT | Grand Regal School</title>
                 <meta name="description" content="Teacher Registration | GRS CBT" />
             </Head>
-            <section className="flex flex-col md:flex-row items-center justify-center gap-y-20 md:gap-y-0 gap-x-0 md:gap-x-10 p-10 w-screen min-h-screen">
+            <section className="flex items-center justify-center bg-gradient-to-tr from-purple-400 to-pink-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"

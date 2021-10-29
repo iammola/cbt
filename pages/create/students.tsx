@@ -106,14 +106,14 @@ const CreateStudents: NextPage = () => {
                 <title>Create Student Profile | CBT | Grand Regal School</title>
                 <meta name="description" content="Student Registration | GRS CBT" />
             </Head>
-            <section className="flex flex-col md:flex-row items-center justify-center gap-y-20 md:gap-y-0 gap-x-0 md:gap-x-10 p-10 w-screen min-h-screen">
+            <section className="flex items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
                 >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
-                        <span className="text-purple-500">Student Profile</span>
+                        <span className="text-indigo-500">Student Profile</span>
                     </h1>
                     <div className="flex flex-col gap-2.5 min-w-80 w-full">
                         <label
@@ -128,7 +128,7 @@ const CreateStudents: NextPage = () => {
                             id="fullName"
                             value={fullName}
                             onChange={({ target: { value } }) => setFullName(value)}
-                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
+                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
@@ -147,7 +147,7 @@ const CreateStudents: NextPage = () => {
                                 id="initials"
                                 value={initials}
                                 onChange={({ target: { value } }) => setInitials(value)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
                         <div className="flex flex-col gap-2.5">
@@ -163,7 +163,7 @@ const CreateStudents: NextPage = () => {
                                 type="email"
                                 value={email}
                                 onChange={({ target: { value } }) => setEmail(value)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
                     </div>
@@ -181,7 +181,7 @@ const CreateStudents: NextPage = () => {
                                 id="firstName"
                                 value={firstName}
                                 onChange={({ target: { value } }) => setFirstName(value)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
                         <div className="flex flex-col gap-2.5">
@@ -197,18 +197,18 @@ const CreateStudents: NextPage = () => {
                                 id="lastName"
                                 value={lastName}
                                 onChange={({ target: { value } }) => setLastName(value)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
                     </div>
                     <Select
                         label="Class"
                         colorPallette={{
-                            activeCheckIconColor: "text-purple-600",
-                            inactiveCheckIconColor: "text-purple-800",
-                            activeOptionColor: "text-purple-900 bg-purple-100",
-                            buttonBorderColor: "focus-visible:border-purple-500",
-                            buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
+                            activeCheckIconColor: "text-indigo-600",
+                            inactiveCheckIconColor: "text-indigo-800",
+                            activeOptionColor: "text-indigo-900 bg-indigo-100",
+                            buttonBorderColor: "focus-visible:border-indigo-500",
+                            buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
                         }}
                         options={classes?.data}
                         selected={selectedClass}
@@ -248,7 +248,7 @@ const CreateStudents: NextPage = () => {
                     <button
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
-                            "bg-purple-400 hover:bg-purple-500 focus:ring-purple-500": success === undefined,
+                            "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
                             "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}

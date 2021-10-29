@@ -73,7 +73,7 @@ const CreateEvent: NextPage = () => {
                 <title>Create Event | CBT | Grand Regal School</title>
                 <meta name="description" content="Event Registration | GRS CBT" />
             </Head>
-            <section className="flex flex-col items-center justify-center gap-2 w-screen">
+            <section className="flex items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
