@@ -1,10 +1,13 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
-import { FormEvent, useEffect, useState } from "react";
 import { format, startOfTomorrow } from "date-fns";
+import { FormEvent, useEffect, useState } from "react";
+import { CheckIcon, XIcon } from "@heroicons/react/outline";
 
+import { classNames } from "utils";
 import Select, { SelectOption } from "components/Select";
+import { LoadingIcon } from "components/Misc/CustomIcons";
 
 const CreateEvent: NextPage = () => {
     const [name, setName] = useState('');
@@ -157,8 +160,21 @@ const CreateEvent: NextPage = () => {
                     </div>
                     <button
                         type="submit"
-                        className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-purple-400 hover:bg-purple-500 focus:ring-purple-500"
+                        className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
+                            "bg-purple-400 hover:bg-purple-500 focus:ring-purple-500": success === undefined,
+                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
+                        })}
                     >
+                        {loading === true && (
+                            <LoadingIcon className="animate-spin w-5 h-5" />
+                        )}
+                        {success === true && (
+                            <CheckIcon className="w-5 h-5" />
+                        )}
+                        {success === false && (
+                            <XIcon className="w-5 h-5" />
+                        )}
                         Create Event
                     </button>
                 </form>
