@@ -1,9 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type AnswerRecord<P = false> = {
-    isCorrect?: boolean;
-    answer: string
-} & (P extends true ? { _id: string } : {})
 
 const AnswerSchema = new Schema<AnswerRecord>({
     isCorrect: {

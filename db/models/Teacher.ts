@@ -1,17 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type TeacherRecord<P = false> = {
-    name: {
-        title: "Mr." | "Mrs." | "Ms." | "Dr." | "Master";
-        initials: string;
-        fullName: string;
-        firstName: string;
-        lastName: string;
-    };
-    email: string;
-    subjects: Schema.Types.ObjectId[];
-    code: string;
-} & (P extends true ? { _id: string } : {})
 
 const TeacherSchema = new Schema<TeacherRecord>({
     name: {

@@ -1,28 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import { AnswerRecord } from "db/models/Answer";
-
-export type QuestionRecord<P = false> = {
-    question: string;
-} & ({
-    type: "Multiple choice" | "Checkboxes";
-    answers: (P extends true ? AnswerRecord<P> : string)[];
-    maxLength: undefined;
-    minLength: undefined;
-} | {
-    type: "Short Answer" | "Long Answer";
-    answers: undefined;
-    maxLength: number;
-    minLength: number;
-}) & ({
-    type: "Checkboxes";
-    max: number;
-    min: number;
-} | {
-    type: "Short Answer" | "Long Answer" | "Multiple choice";
-    max: undefined;
-    min: undefined;
-}) & (P extends true ? { _id: string } : {});
 
 const QuestionSchema = new Schema<QuestionRecord>({
     question: {

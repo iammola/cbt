@@ -1,10 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type ClassRecord<P = false> = {
-    name: string;
-    alias: string;
-    subjects: Schema.Types.ObjectId[];
-} & (P extends true ? { _id: string } : {})
 
 const ClassSchema = new Schema<ClassRecord>({
     name: {

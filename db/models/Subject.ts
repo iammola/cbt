@@ -1,9 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type SubjectRecord<P = false> = {
-    name: string;
-    alias: string;
-} & (P extends true ? { _id: string } : {})
 
 const SubjectSchema = new Schema<SubjectRecord>({
     name: {

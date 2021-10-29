@@ -1,17 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type TermRecord<P = false> = {
-    name: string;
-    alias: string;
-    current?: boolean;
-} & (P extends true ? { _id: string } : {})
-
-export type SessionRecord<P = false> = {
-    name: string;
-    alias: string;
-    current?: boolean;
-    terms: TermRecord<P>[];
-} & (P extends true ? { _id: string } : {})
 
 const SessionSchema = new Schema<SessionRecord>({
     name: {

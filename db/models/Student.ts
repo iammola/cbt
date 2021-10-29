@@ -1,23 +1,5 @@
 import { Schema, Model, model, models } from "mongoose";
 
-export type StudentRecord<P = false> = {
-    name: {
-        initials: string;
-        fullName: string;
-        firstName: string;
-        lastName: string;
-    };
-    email: string;
-    academic: {
-        session: Schema.Types.ObjectId;
-        terms: {
-            term: Schema.Types.ObjectId;
-            class: Schema.Types.ObjectId;
-            subjects: Schema.Types.ObjectId[];
-        }[];
-    }[];
-    code: string;
-} & (P extends true ? { _id: string } : {})
 
 const StudentSchema = new Schema<StudentRecord>({
     name: {

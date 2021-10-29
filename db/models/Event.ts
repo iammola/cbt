@@ -1,13 +1,6 @@
 import { isFuture } from "date-fns";
 import { Schema, Model, model, models } from "mongoose";
 
-export type EventRecord<P = false> = {
-    date: Date;
-    events: {
-        name: string;
-        subject: Schema.Types.ObjectId;
-    }[];
-} & (P extends true ? { _id: string } : {})
 
 const EventSchema = new Schema<EventRecord>({
     date: {
