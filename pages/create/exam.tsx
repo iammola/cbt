@@ -8,7 +8,7 @@ import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
 import { LoadingIcon } from "components/Misc/CustomIcons";
 
-import { CreateQuestion, ExamRecord } from "types";
+import { CreateQuestion } from "types";
 
 const CreateQuestions: NextPage = () => {
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
