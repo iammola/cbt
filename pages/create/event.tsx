@@ -1,9 +1,48 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
+import { useEffect, useState } from "react";
+import { format, startOfTomorrow } from "date-fns";
 
-import Select from "components/Select";
+import Select, { SelectOption } from "components/Select";
 
 const CreateEvent: NextPage = () => {
+    const [name, setName] = useState('');
+    const [date, setDate] = useState<number>();
+    const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
+    const [selectedSubject, setSelectedSubject] = useState({ _id: "", name: "Select class first" });
+
+    const [subjects, setSubjects] = useState<SelectOption[]>();
+    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+
+    useEffect(() => {
+        setSelectedClass({
+            _id: "",
+            name: (error !== undefined && classes === undefined) ? "Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
+        });
+    }, [classes, error]);
+
+    useEffect(() => {
+        const { _id } = selectedClass;
+
+        async function fetchSubjects() {
+            setSelectedSubject({ _id: "", name: "Loading subjects..." });
+            try {
+                const res = await fetch(`/api/classes/${_id}/subjects`);
+                const { success, data, message, error } = await res.json();
+
+                if (success === true) {
+                    setSubjects(data.subjects);
+                    setSelectedSubject({ _id: "", name: "Select subject" });
+                } else throw new Error(error);
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+
+        if (_id !== "") fetchSubjects();
+    }, [selectedClass]);
+
     return (
         <>
             <Head>
@@ -25,9 +64,9 @@ const CreateEvent: NextPage = () => {
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
                         }}
-                        options={undefined}
-                        selected={{ _id: "", name: "Select a Class" }}
-                        handleChange={() => { }}
+                        options={classes?.data}
+                        selected={selectedClass}
+                        handleChange={setSelectedClass}
                     />
                     <Select
                         label="Subjects"
@@ -38,9 +77,9 @@ const CreateEvent: NextPage = () => {
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
                         }}
-                        options={undefined}
-                        selected={{ _id: "", name: "Select a Subject" }}
-                        handleChange={() => { }}
+                        options={subjects}
+                        selected={selectedSubject}
+                        handleChange={setSelectedSubject}
                     />
                     <div className="flex items-center justify-between gap-4 w-full">
                         <div className="flex flex-col gap-2.5">
@@ -54,6 +93,8 @@ const CreateEvent: NextPage = () => {
                                 required
                                 id="name"
                                 type="text"
+                                value={name}
+                                onChange={({ target: { value } }) => setName(value)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -68,6 +109,9 @@ const CreateEvent: NextPage = () => {
                                 required
                                 id="date"
                                 type="date"
+                                min={format(startOfTomorrow(), 'yyyy-MM-dd')}
+                                value={date === undefined ? '' : format(new Date(date), 'yyyy-MM-dd')}
+                                onChange={({ target: { valueAsNumber } }) => setDate(isNaN(valueAsNumber) ? 0 : valueAsNumber)}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-purple-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
