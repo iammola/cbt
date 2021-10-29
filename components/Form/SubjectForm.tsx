@@ -47,9 +47,8 @@ const SubjectForm: NextPage = () => {
                 setSelectedClass({
                     _id: "",
                     name: "Select class"
-                })
+                });
 
-                console.log({ message, data });
                 mutate(`/api/classes/${selectedClass._id}/subjects`);
             } else throw new Error(error);
         } catch (error) {

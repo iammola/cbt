@@ -30,8 +30,6 @@ const ClassForm: NextPage = () => {
                 setName('');
                 setAlias('');
                 mutate('/api/classes?select=name');
-
-                console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });

@@ -59,8 +59,6 @@ const CreateStudents: NextPage = () => {
                     name: "Select class"
                 })
                 setSelectedSubjects([]);
-
-                console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });
@@ -90,7 +88,6 @@ const CreateStudents: NextPage = () => {
                 if (success === true) {
                     setSubjects(data.subjects);
                     setSubjectsLoadingState(undefined);
-                    console.log({ message, data });
                 } else throw new Error(error);
             } catch (error) {
                 console.log({ error });
