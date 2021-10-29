@@ -19,13 +19,13 @@ async function getSubjects(id: string, select: string): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createSubject(id: string, subjectData: SubjectRecord): Promise<RouteResponse> {
+async function createSubject(id: string, subject: SubjectRecord): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, 501, ""];
 
     try {
         if (await ClassModel.exists({ _id: id }) === true) {
-            const data = await SubjectModel.create(subjectData);
+            const data = await SubjectModel.create(subject);
             await ClassModel.findByIdAndUpdate(id, {
                 $addToSet: { subjects: data._id }
             }, { runValidators: true });
