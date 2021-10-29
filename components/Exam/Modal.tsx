@@ -118,7 +118,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                             }}
                             handleChange={setSelectedSubject}
                         />
-                        <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                        <div className="flex flex-col gap-2.5 min-w-80 w-full relative">
                             <label
                                 htmlFor="duration"
                                 className="text-sm text-gray-600 font-semibold"
