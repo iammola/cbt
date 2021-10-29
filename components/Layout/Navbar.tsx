@@ -46,20 +46,27 @@ const Navbar: FunctionComponent = () => {
                         </Link>
                         <span className="w-full h-[0.165rem] absolute top-0 inset-x-0 bg-blue-700 rounded-full drop-shadow-xl" />
                     </li>
-                    <li className="relative h-full cursor-pointer">
-                        <Link href="/exams">
-                            <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
-                                Exams
-                            </a>
-                        </Link>
-                    </li>
-                    <li className="relative h-full cursor-pointer">
-                        <Link href="/results">
-                            <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
-                                Results
-                            </a>
-                        </Link>
-                    </li>
+                    {account?.access === "Student" ? (
+                        <>
+                            <li className="relative h-full cursor-pointer">
+                                <Link href="/exams">
+                                    <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
+                                        Exams
+                                    </a>
+                                </Link>
+                            </li>
+                            <li className="relative h-full cursor-pointer">
+                                <Link href="/results">
+                                    <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
+                                        Results
+                                    </a>
+                                </Link>
+                            </li>
+                        </>
+                    ) : (account?.access === "Teacher") && (
+                        <>
+                        </>
+                    )}
                     <li className="relative h-full cursor-pointer">
                         <Link href="/schedule">
                             <a className="flex items-center justify-center text-sm tracking-wider px-7 h-full text-gray-400">
