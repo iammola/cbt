@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { connect } from "db";
-import { SessionModel } from "db/models/Session";
-import { StudentModel, StudentRecord } from "db/models/Student";
+import { SessionModel, StudentModel } from "db/models";
 
 type RouteResponse = [boolean, number, string | Record<string, any> & { error?: unknown, message: string }];
 

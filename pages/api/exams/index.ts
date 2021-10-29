@@ -3,10 +3,7 @@ import { minutesToMilliseconds } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { connect } from "db";
-import { EventModel } from "db/models/Event";
-import { AnswerModel } from "db/models/Answer";
-import { QuestionModel } from "db/models/Question";
-import { ExamModel, ExamRecord } from "db/models/Exam";
+import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
 
 import { RawQuestion } from "pages/create/exam";
 
