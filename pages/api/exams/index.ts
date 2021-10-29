@@ -13,7 +13,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
 
     try {
         const eventRecords = await EventModel.findOne({ date: new Date(+date) }).select('events').lean() ?? { events: [] };
-        const data = await ExamModel.find({ SubjectID: { $in: eventRecords.events.map(({ subject }) => subject) } }).select(select).lean();
+        const data = await ExamModel.find({ SubjectID: eventRecords.events.map(({ subject }) => subject) }).select(select).lean();
         [success, status, message] = [true, 200, {
             data: data.map(({ questions, ...item }) => ({ ...item, questions: questions.length })),
             message: "Success"

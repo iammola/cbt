@@ -12,7 +12,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<R
     try {
         const data = await TeacherModel.create({
             ...teacher,
-            subjects: (await SubjectModel.find({ _id: { $in: subjects } }).select('_id').lean()).map(({ _id }: any) => _id)
+            subjects: (await SubjectModel.find({ _id: subjects }).select('_id').lean()).map(({ _id }: any) => _id)
         });
         [success, status, message] = [true, 201, { data, message: "Created" }];
     } catch (error) {
