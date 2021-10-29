@@ -25,7 +25,9 @@ const Home: NextPage = () => {
     const focusNext = (index: number) => setActive(++index < code.length ? index : 0);
 
     function handlePaste(e: ClipboardEvent<HTMLInputElement>) {
+        e.preventDefault();
         const pasted = e.clipboardData.getData('text');
+
         if (/^\d{6}$/.test(pasted)) {
             setCode(pasted.split(''));
             setActive(5);
