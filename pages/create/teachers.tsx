@@ -39,6 +39,9 @@ const CreateTeachers: NextPage = () => {
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
     const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
 
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState<boolean | undefined>();
+
     useEffect(() => {
         if (typeof subjectsData === 'string') {
             if (error !== undefined && classes === undefined) setSubjectsData("⚠️ Error loading subjects");
@@ -70,6 +73,7 @@ const CreateTeachers: NextPage = () => {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
 
         try {
             const res = await fetch('/api/teachers', {
@@ -82,12 +86,17 @@ const CreateTeachers: NextPage = () => {
             });
             const { success, error, message, data } = await res.json();
 
+            setSuccess(success);
+
             if (success === true) {
                 console.log({ message, data });
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });
         }
+
+        setLoading(false);
+        setTimeout(setSuccess, 15e2, undefined);
     }
 
     return (
