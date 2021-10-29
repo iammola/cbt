@@ -74,7 +74,10 @@ const CreateEvent: NextPage = () => {
                 <meta name="description" content="Event Registration | GRS CBT" />
             </Head>
             <section className="flex flex-col items-center justify-center gap-2 w-screen">
-                <form className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+                >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create an</span>{' '}
                         <span className="text-purple-500">Event</span>
