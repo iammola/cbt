@@ -1,3 +1,4 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
 import { useCookies } from "react-cookie";
@@ -12,6 +13,7 @@ import { CreateQuestion } from "types";
 
 const CreateQuestions: NextPage = () => {
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
+    const { data: currentSession } = useSWR('/api/sessions/current', url => fetch(url).then(res => res.json()));
 
     const recordTemplate = useMemo<CreateQuestion>(() => ({
         question: "",
@@ -75,7 +77,22 @@ const CreateQuestions: NextPage = () => {
             </Head>
             <section className="flex flex-col items-center justify-center gap-2 w-screen">
                 <div className="flex items-center justify-start gap-2 text-gray-400 pt-7 pb-2 px-10 w-full text-sm font-medium">
-                    <span>2021/2022 Third Term</span>
+                    <span>
+                        {currentSession !== undefined ? (
+                            currentSession.data !== null ? (
+                                <>
+                                    <span className="inline-block sm:hidden">
+                                        {currentSession.data.alias}{' '}
+                                        {currentSession.data.terms[0].alias}
+                                    </span>
+                                    <span className="hidden sm:inline-block">
+                                        {currentSession.data.name}{' '}
+                                        {currentSession.data.terms[0].name}
+                                    </span>{' '}Term
+                                </>
+                            ) : "No Current Session"
+                        ) : "Loading Session"}
+                    </span>
                     <ChevronRightIcon className="w-5 h-5 text-gray-500" />
                     <span>{exam?.class ?? "Select Class"}</span>
                     <ChevronRightIcon className="w-5 h-5 text-gray-500" />
