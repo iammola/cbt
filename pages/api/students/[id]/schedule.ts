@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ExamModel, EventModel, SessionModel, StudentModel } from "db/models";
@@ -7,7 +8,7 @@ import { RouteResponse } from "types";
 
 async function getSchedule({ id, date }: { id: string, date: string }): Promise<RouteResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, 501, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const currentSession = await SessionModel.findOne({ current: true, terms: { $elemMatch: { current: true } } }).select('-_id terms._id').lean();
@@ -30,23 +31,29 @@ async function getSchedule({ id, date }: { id: string, date: string }): Promise<
                     name: events?.events.find(event => event.subject === SubjectID)?.name ?? ''
                 }));
 
-                [success, status, message] = [true, 200, { data, message: "Success" }];
-            } else[success, status, message] = [false, 400, "Invalid ID"];
+                [success, status, message] = [true, StatusCodes.CREATED, {
+                    data,
+                    message: ReasonPhrases.CREATED
+                }];
+            } else[success, status, message] = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
         }
     } catch (error) {
-        [status, message] = [400, { error, message: "Couldn't GET Session" }];
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
     }
 
     return [success, status, message];
 }
 
 export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, 400, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
-        [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
+        [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await getSchedule(query as { id: string, date: string });
 
     if (typeof message !== "object") message = { message };

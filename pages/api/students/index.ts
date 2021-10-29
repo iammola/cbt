@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { SessionModel, StudentModel } from "db/models";
@@ -7,7 +8,7 @@ import { StudentRecord, RouteResponse } from "types";
 
 async function createStudent({ academic, ...student }: Pick<StudentRecord, 'email' | 'name'> & { academic: { class: string; subject: string; } }): Promise<RouteResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, 501, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }).select('terms');
@@ -22,21 +23,27 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
                 }]
             }]
         });
-        [success, status, message] = [true, 201, { data, message: "Created" }];
+        [success, status, message] = [true, StatusCodes.CREATED, {
+            data,
+            message: ReasonPhrases.CREATED
+        }];
     } catch (error) {
-        [status, message] = [400, { error, message: "Couldn't CREATE Class" }];
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
     }
 
     return [success, status, message];
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, 400, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
-        [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
+        [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createStudent(JSON.parse(body)) : [success, status, message]);
 
     if (typeof message !== "object") message = { message };

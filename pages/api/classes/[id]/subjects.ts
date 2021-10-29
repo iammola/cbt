@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ClassModel, SubjectModel } from "db/models";
@@ -7,13 +8,19 @@ import { RouteResponse, SubjectRecord } from "types";
 
 async function getSubjects(id: string, select: string): Promise<RouteResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, 501, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await ClassModel.findById(id).populate('subjects').select(`-_id subjects`);
-        [success, status, message] = [true, 201, { data, message: "Created" }];
+        [success, status, message] = [true, StatusCodes.OK, {
+            data,
+            message: ReasonPhrases.OK
+        }];
     } catch (error) {
-        [status, message] = [400, { error, message: "Couldn't GET subjects" }];
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
     }
 
     return [success, status, message];
@@ -21,7 +28,7 @@ async function getSubjects(id: string, select: string): Promise<RouteResponse> {
 
 async function createSubject(id: string, subject: SubjectRecord): Promise<RouteResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, 501, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         if (await ClassModel.exists({ _id: id }) === true) {
@@ -30,10 +37,16 @@ async function createSubject(id: string, subject: SubjectRecord): Promise<RouteR
                 $addToSet: { subjects: data._id }
             }, { runValidators: true });
 
-            [success, status, message] = [true, 201, { data, message: "Created" }];
-        } else[success, status, message] = [false, 400, "Class does not exist"];
+            [success, status, message] = [true, StatusCodes.CREATED, {
+                data,
+                message: ReasonPhrases.CREATED
+            }];
+        } else[status, message] = [StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
     } catch (error) {
-        [status, message] = [400, { error, message: "Couldn't CREATE subject" }];
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
     }
 
     return [success, status, message];
@@ -41,12 +54,12 @@ async function createSubject(id: string, subject: SubjectRecord): Promise<RouteR
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
     const { id, select } = query as { id: string; select: string };
-    let [success, status, message]: RouteResponse = [false, 400, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
-        [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
+        [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createSubject(id, JSON.parse(body)) : getSubjects(id, select))
 
     if (typeof message !== "object") message = { message };

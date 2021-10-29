@@ -1,6 +1,7 @@
 import { startSession } from "mongoose";
 import { minutesToMilliseconds } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
@@ -9,14 +10,14 @@ import { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
 async function getExams({ select = '', date }: { select: string; date: string }): Promise<RouteResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, 501, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const eventRecords = await EventModel.findOne({ date: new Date(+date) }).select('events').lean() ?? { events: [] };
         const data = await ExamModel.find({ SubjectID: eventRecords.events.map(({ subject }) => subject) }).select(select).lean();
-        [success, status, message] = [true, 200, {
+        [success, status, message] = [true, StatusCodes.OK, {
             data: data.map(({ questions, ...item }) => ({ ...item, questions: questions.length })),
-            message: "Success"
+            message: ReasonPhrases.OK
         }];
     } catch (error) {
         [status, message] = [400, { error, message: "Couldn't GET exams" }];
@@ -28,7 +29,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
 async function createExam({ exam: { duration, ...exam }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: CreateQuestion[] }): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
-    let [success, status, message]: RouteResponse = [false, 501, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await session.withTransaction(async () => await ExamModel.create([{
@@ -40,9 +41,15 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
             }))), { session })).map(({ _id }) => _id)
         }], { session }));
 
-        [success, status, message] = [true, 201, { data, message: "Success" }];
+        [success, status, message] = [true, StatusCodes.CREATED, {
+            data,
+            message: ReasonPhrases.CREATED
+        }];
     } catch (error) {
-        [status, message] = [400, { error, message: "Couldn't CREATE Exam" }];
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
     }
 
     session.endSession();
@@ -51,12 +58,12 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
 }
 
 export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, 400, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
-        [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
+        [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createExam(JSON.parse(body)) : getExams(query as any));
 
     if (typeof message !== "object") message = { message };
