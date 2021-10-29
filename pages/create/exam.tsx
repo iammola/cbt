@@ -13,7 +13,7 @@ import { CreateQuestion, ExamRecord } from "types";
 const CreateQuestions: NextPage = () => {
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
 
-    const recordTemplate = useMemo<RawQuestion>(() => ({
+    const recordTemplate = useMemo<CreateQuestion>(() => ({
         question: "",
         type: "Multiple choice",
         answers: [{ answer: "", isCorrect: true }, { answer: "" }],
@@ -24,7 +24,7 @@ const CreateQuestions: NextPage = () => {
     }), []);
     const [uploading, setUploading] = useState(false);
     const [exam, setExam] = useState<{ class: string; subject: string; details: Omit<ExamRecord, 'questions'>; }>();
-    const [questions, setQuestions] = useState<RawQuestion[]>([{ ...recordTemplate }]);
+    const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
 
     function saveQuestions() {
         if (exam !== undefined) {

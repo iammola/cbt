@@ -132,8 +132,8 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
 
 type QuestionProps = {
     number: number;
-    record: RawQuestion;
-    onChange(question: Partial<RawQuestion>): void;
+    record: CreateQuestion;
+    onChange(question: Partial<CreateQuestion>): void;
 }
 
 export default Question;

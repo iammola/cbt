@@ -25,7 +25,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
     return [success, status, message];
 }
 
-async function createExam({ exam: { duration, ...exam }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: RawQuestion[] }): Promise<RouteResponse> {
+async function createExam({ exam: { duration, ...exam }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: CreateQuestion[] }): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, 501, ""];
