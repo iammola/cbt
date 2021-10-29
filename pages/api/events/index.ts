@@ -12,7 +12,7 @@ async function createEvent({ date, event }: { date: Date; event: { name: string;
     try {
         let data = await EventModel.findOneAndUpdate({ date }, {
             $push: { events: event }
-        }, { runValidators: true }).select('date').lean();
+        }, { runValidators: true }).select('date -_id').lean();
 
         if (data === null) data = await EventModel.create({
             date,
