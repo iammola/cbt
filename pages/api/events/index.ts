@@ -5,6 +5,28 @@ import { EventModel } from "db/models";
 
 import { RouteResponse } from "types";
 
+async function createEvent({ date, event }: { date: Date; event: { name: string; subject: string } }): Promise<RouteResponse> {
+    await connect();
+    let [success, status, message]: RouteResponse = [false, 400, ""];
+
+    try {
+        let data = await EventModel.findOneAndUpdate({ date }, {
+            $push: { events: event }
+        }, { runValidators: true }).select('date').lean();
+
+        if (data === null) data = await EventModel.create({
+            date,
+            events: [event]
+        });
+
+        [success, status, message] = [true, 201, { data, message: "Created" }];
+    } catch (error) {
+
+    }
+
+    return [success, status, message];
+}
+
 async function getEvents({ from, to, exact }: { from: string; to: string; exact?: string; }): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, 400, ""];
