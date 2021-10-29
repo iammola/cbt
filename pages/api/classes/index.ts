@@ -19,7 +19,7 @@ async function getClasses(select: string = ''): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createClass(item: typeof ClassModel.schema.obj): Promise<RouteResponse> {
+async function createClass(item: ClassRecord): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, 501, ""];
 

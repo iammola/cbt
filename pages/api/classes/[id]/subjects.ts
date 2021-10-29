@@ -19,7 +19,7 @@ async function getSubjects(id: string, select: string): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createSubject(id: string, subjectData: typeof SubjectModel.schema.obj): Promise<RouteResponse> {
+async function createSubject(id: string, subjectData: SubjectRecord): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, 501, ""];
 
