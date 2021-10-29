@@ -16,6 +16,7 @@ const Navbar: FunctionComponent = () => {
     useEffect(() => {
         const toggleOnline = () => setOnline(navigator.onLine);
 
+        toggleOnline();
         window.addEventListener('online', toggleOnline);
         window.addEventListener('offline', toggleOnline);
 
