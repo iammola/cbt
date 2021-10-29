@@ -6,6 +6,26 @@ import { SessionModel } from "db/models";
 
 import { SessionRecord, RouteResponse } from "types";
 
+async function getSessions(select: string): Promise<RouteResponse> {
+    await connect();
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+
+    try {
+        const data = await SessionModel.find({}).select(select);
+        [success, status, message] = [true, StatusCodes.OK, {
+            data,
+            message: ReasonPhrases.OK
+        }];
+    } catch (error) {
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
+    }
+
+    return [success, status, message];
+}
+
 async function createSession(session: SessionRecord): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
