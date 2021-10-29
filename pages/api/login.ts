@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { StudentModel, TeacherModel } from "db/models";
@@ -14,20 +15,26 @@ async function findUser(model: typeof TeacherModel | typeof StudentModel, access
 }
 
 export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, 400, ""];
+    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "POST";
 
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
-        [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
+        [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else {
         const { code }: { code: string } = JSON.parse(body);
+
         try {
             const data = await Promise.any([findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)]);
-            [success, status, message] = [true, 200, { data, message: "Success" }];
+            [success, status, message] = [true, StatusCodes.OK, {
+                data,
+                message: ReasonPhrases.OK
+            }];
         } catch (error) {
-            if (error instanceof AggregateError === true) [status, message] = [400, "Failed"];
-            else[status, message] = [403, "Forbidden"];
+            [status, message] = [error instanceof AggregateError === true ? StatusCodes.BAD_REQUEST : StatusCodes.FORBIDDEN, {
+                error,
+                message: error instanceof AggregateError === true ? ReasonPhrases.BAD_REQUEST : ReasonPhrases.FORBIDDEN
+            }];
         }
     }
 
