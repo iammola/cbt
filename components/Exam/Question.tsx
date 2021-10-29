@@ -5,8 +5,7 @@ import Select from 'components/Select';
 import Answer from 'components/Exam/Answer';
 import { CircleIcon, LineIcon } from 'components/Misc/CustomIcons';
 
-import { RawQuestion } from 'pages/create/exam';
-import { QuestionRecord } from 'db/models/Question';
+import { QuestionRecord, CreateQuestion } from 'types';
 
 const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }) => {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

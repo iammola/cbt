@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "db";
 import { StudentModel, TeacherModel } from "db/models";
 
+import { RouteResponse } from "types";
 
 async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Mola" | "Teacher" | "Student", code: string) {
     await connect();

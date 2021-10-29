@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "db";
 import { SubjectModel, TeacherModel } from "db/models";
 
+import { TeacherRecord, RouteResponse } from "types";
 
 async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<RouteResponse> {
     await connect();

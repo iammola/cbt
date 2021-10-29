@@ -5,8 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "db";
 import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
 
-import { RawQuestion } from "pages/create/exam";
-
+import { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
 async function getExams({ select = '', date }: { select: string; date: string }): Promise<RouteResponse> {
     await connect();

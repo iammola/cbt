@@ -2,9 +2,9 @@ import useSWR from "swr";
 import { Dialog, Transition } from "@headlessui/react";
 import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
-import { ExamRecord } from "db/models/Exam";
 import Select, { SelectOption } from "components/Select";
 
+import { ExamRecord } from "types";
 
 const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();

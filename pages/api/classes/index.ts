@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "db";
 import { ClassModel } from "db/models";
 
+import { RouteResponse, ClassRecord } from "types";
 
 async function getClasses(select: string = ''): Promise<RouteResponse> {
     await connect();

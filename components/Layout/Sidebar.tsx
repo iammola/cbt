@@ -3,8 +3,9 @@ import { useCookies } from "react-cookie";
 import { FunctionComponent, useMemo } from "react";
 import { startOfMonth, startOfToday, lastDayOfMonth } from "date-fns";
 
-import { EventRecord } from "db/models/Event";
 import { Calendar, Schedule } from "components/Misc";
+
+import { EventRecord } from "types";
 
 const Sidebar: FunctionComponent = () => {
     const date = useMemo(() => new Date(), []);

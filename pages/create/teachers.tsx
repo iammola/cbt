@@ -4,8 +4,7 @@ import { NextPage } from "next";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import Select from "components/Select";
-import { ClassRecord } from "db/models/Class";
-import { SubjectRecord } from "db/models/Subject";
+import { ClassRecord, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
     const [email, setEmail] = useState('');
