@@ -1,5 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
+import { SessionRecord } from "types";
 
 const SessionSchema = new Schema<SessionRecord>({
     name: {

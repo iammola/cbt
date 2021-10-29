@@ -1,5 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
+import { QuestionRecord } from "types";
 
 const QuestionSchema = new Schema<QuestionRecord>({
     question: {
