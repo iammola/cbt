@@ -158,7 +158,7 @@ type ExamModalProps = {
     onSubmit(v: {
         class: string;
         subject: string;
-        details: Omit<ExamRecord, 'questions'>;
+        details: Pick<ExamRecord, 'duration' | 'SubjectID'>;
     }): void
 }
 
