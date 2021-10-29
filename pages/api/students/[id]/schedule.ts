@@ -47,7 +47,7 @@ export default async function handler({ body, query, method }: NextApiRequest, r
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [405, `Method ${method ?? ''} Not Allowed`];
-    }
+    } else[success, status, message] = await getSchedule(query as { id: string, date: string });
 
     if (typeof message !== "object") message = { message };
 
