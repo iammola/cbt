@@ -86,6 +86,10 @@ export type ExamRecord<P = false> = RecordId<P> & {
     duration: number;
     SubjectID: P extends true ? string : Schema.Types.ObjectId;
     questions: (P extends true ? QuestionRecord<P> : string)[];
+    created: {
+        at: Date;
+        by: Schema.Types.ObjectId;
+    }
 };
 
 
