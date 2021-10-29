@@ -89,7 +89,15 @@ const CreateTeachers: NextPage = () => {
             setSuccess(success);
 
             if (success === true) {
-                console.log({ message, data });
+                setEmail('');
+                setFullName('');
+                setLastName('');
+                setInitials('');
+                setFirstName('');
+                setSelectedTitle({
+                    _id: "",
+                    name: "Select title"
+                });
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });
