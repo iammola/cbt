@@ -60,7 +60,7 @@ export default async function handler({ method, query, body }: NextApiRequest, r
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "POST" ? createSession(JSON.parse(body)) : [success, status, message]);
+    } else[success, status, message] = await (method === "POST" ? createSession(JSON.parse(body)) : getSessions(query.select as string));
 
     if (typeof message !== "object") message = { message };
 
