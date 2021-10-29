@@ -22,8 +22,8 @@ const CreateQuestions: NextPage = () => {
         minLength: undefined,
         maxLength: undefined
     }), []);
+    const [exam, setExam] = useState<any>();
     const [uploading, setUploading] = useState(false);
-    const [exam, setExam] = useState<{ class: string; subject: string; details: Omit<ExamRecord, 'questions'>; }>();
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
 
     function saveQuestions() {
