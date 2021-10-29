@@ -15,6 +15,9 @@ const CreateEvent: NextPage = () => {
     const [subjects, setSubjects] = useState<SelectOption[]>();
     const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
 
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState<boolean | undefined>();
+
     useEffect(() => {
         setSelectedClass({
             _id: "",
@@ -45,6 +48,7 @@ const CreateEvent: NextPage = () => {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
 
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
             try {
@@ -58,6 +62,8 @@ const CreateEvent: NextPage = () => {
 
                 const { success, message, data, error } = await res.json();
 
+                setSuccess(success);
+
                 if (success === true) {
                     setName('');
                     setDate(null);
@@ -67,6 +73,9 @@ const CreateEvent: NextPage = () => {
             } catch (error) {
                 console.log({ error });
             }
+
+            setLoading(false);
+            setTimeout(setSuccess, 15e2, undefined);
         }
     }
 
