@@ -25,8 +25,10 @@ const CreateQuestions: NextPage = () => {
         maxLength: undefined
     }), []);
     const [exam, setExam] = useState<any>();
-    const [uploading, setUploading] = useState(false);
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
+    
+    const [uploading, setUploading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     function saveQuestions() {
         if (exam !== undefined) {
@@ -57,6 +59,8 @@ const CreateQuestions: NextPage = () => {
                 });
 
                 const { success, data, message, error } = await res.json();
+
+                setSuccess(success);
 
                 if (success === true) {
                     console.log({ message, data })
