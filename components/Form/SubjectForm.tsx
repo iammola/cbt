@@ -14,7 +14,7 @@ const SubjectForm: NextPage = () => {
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
-    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedClass, setSelectedClass] = useState({
         _id: "",

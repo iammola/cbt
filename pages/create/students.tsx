@@ -21,7 +21,7 @@ const CreateStudents: NextPage = () => {
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
     const [subjects, setSubjects] = useState<{ _id: string; name: string; }[]>([]);
-    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
 
@@ -33,7 +33,7 @@ const CreateStudents: NextPage = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('/api/students', {
+            const res = await fetch('/api/students/', {
                 method: "POST",
                 body: JSON.stringify({
                     email,

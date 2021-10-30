@@ -13,7 +13,7 @@ import { CreateQuestion } from "types";
 
 const CreateQuestions: NextPage = () => {
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
-    const { data: currentSession } = useSWR('/api/sessions/current', url => fetch(url).then(res => res.json()));
+    const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     const recordTemplate = useMemo<CreateQuestion>(() => ({
         question: "",
@@ -50,7 +50,7 @@ const CreateQuestions: NextPage = () => {
             setUploading(true);
 
             try {
-                const res = await fetch('/api/exams', {
+                const res = await fetch('/api/exams/', {
                     method: "POST",
                     body: JSON.stringify({
                         questions,

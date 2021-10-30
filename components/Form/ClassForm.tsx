@@ -18,7 +18,7 @@ const ClassForm: NextPage = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('/api/classes', {
+            const res = await fetch('/api/classes/', {
                 method: "POST",
                 body: JSON.stringify({ name, alias })
             });

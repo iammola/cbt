@@ -8,7 +8,7 @@ import { ExamRecord } from "types";
 
 const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
-    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [duration, setDuration] = useState(0);
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });

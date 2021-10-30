@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('/api/login', {
+            const res = await fetch('/api/login/', {
                 method: "POST",
                 body: JSON.stringify({ code: code.join('') })
             });

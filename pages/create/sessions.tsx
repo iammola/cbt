@@ -24,7 +24,7 @@ const CreateSession: NextPage = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('/api/sessions', {
+            const res = await fetch('/api/sessions/', {
                 method: "POST",
                 body: JSON.stringify({ name, alias, current, terms })
             });

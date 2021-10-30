@@ -13,8 +13,8 @@ const Sidebar: FunctionComponent = () => {
     const router = useRouter();
     const date = useMemo(() => new Date(), []);
     const [{ account }, , removeCookies] = useCookies(['account']);
-    const { data: events } = useSWR(`/api/events?from=${startOfMonth(date).getTime()}&to=${lastDayOfMonth(date).getTime()}`, url => fetch(url).then(res => res.json()));
-    const { data: schedule } = useSWR(account !== undefined ? `/api/${account.access.toLowerCase()}s/${account._id}/schedule?date=${startOfToday().getTime()}` : null, url => url !== null && fetch(url).then(res => res.json()));
+    const { data: events } = useSWR(`/api/events/?from=${startOfMonth(date).getTime()}&to=${lastDayOfMonth(date).getTime()}`, url => fetch(url).then(res => res.json()));
+    const { data: schedule } = useSWR(account !== undefined ? `/api/${account.access.toLowerCase()}s/${account._id}/schedule/?date=${startOfToday().getTime()}` : null, url => url !== null && fetch(url).then(res => res.json()));
 
     return (
         <aside className="flex flex-col flex-shrink-0 gap-8 py-7 px-4 w-full lg:w-80 h-full overflow-y-auto">

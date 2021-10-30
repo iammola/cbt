@@ -16,7 +16,7 @@ const CreateEvent: NextPage = () => {
     const [selectedSubject, setSelectedSubject] = useState({ _id: "", name: "Select class first" });
 
     const [subjects, setSubjects] = useState<SelectOption[]>();
-    const { data: classes, error } = useSWR('/api/classes?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
@@ -55,7 +55,7 @@ const CreateEvent: NextPage = () => {
 
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
             try {
-                const res = await fetch('/api/events', {
+                const res = await fetch('/api/events/', {
                     method: "POST",
                     body: JSON.stringify({
                         date,

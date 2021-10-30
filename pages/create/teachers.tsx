@@ -80,7 +80,7 @@ const CreateTeachers: NextPage = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('/api/teachers', {
+            const res = await fetch('/api/teachers/', {
                 method: "POST",
                 body: JSON.stringify({
                     email,
