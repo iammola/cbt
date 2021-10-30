@@ -4,3 +4,7 @@ export function classNames(...arg: (string | string[] | { [key: string]: any } |
         return acc;
     }, [])].flat().join(' ');
 }
+
+export function generateCode() {
+    return Math.floor(1e5 + Math.random() * 9e5);
+}
