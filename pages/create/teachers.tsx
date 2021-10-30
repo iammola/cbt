@@ -102,6 +102,7 @@ const CreateTeachers: NextPage = () => {
                     _id: "",
                     name: "Select title"
                 });
+                setSelectedSubjects([]);
             } else throw new Error(error);
         } catch (error) {
             console.log({ error });
