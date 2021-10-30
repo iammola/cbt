@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
+import { generateCode } from "utils";
+
 import { connect } from "db";
 import { SessionModel, StudentModel } from "db/models";
 
@@ -13,8 +15,9 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
     try {
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }).select('terms');
 
-        const data = await StudentModel.create({
+        const { code, ...data } = await StudentModel.create({
             ...student,
+            code: generateCode(),
             academic: currentSession === null ? [] : [{
                 session: currentSession._id,
                 terms: [{

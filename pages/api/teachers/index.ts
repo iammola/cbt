@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
+import { generateCode } from "utils";
+
 import { connect } from "db";
 import { SubjectModel, TeacherModel } from "db/models";
 
@@ -11,8 +13,9 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<R
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await TeacherModel.create({
+        const { code, ...data } = await TeacherModel.create({
             ...teacher,
+            code: generateCode(),
             subjects: (await SubjectModel.find({ _id: subjects }).select('_id').lean()).map(({ _id }: any) => _id)
         });
         [success, status, message] = [true, StatusCodes.CREATED, {
