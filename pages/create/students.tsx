@@ -44,7 +44,7 @@ const CreateStudents: NextPage = () => {
                     }
                 })
             });
-            const { success, error, message, data } = await res.json();
+            const { success, error } = await res.json();
 
             setSuccess(success);
 

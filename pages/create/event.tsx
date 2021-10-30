@@ -35,7 +35,7 @@ const CreateEvent: NextPage = () => {
             setSelectedSubject({ _id: "", name: "Loading subjects..." });
             try {
                 const res = await fetch(`/api/classes/${_id}/subjects`);
-                const { success, data, message, error } = await res.json();
+                const { success, data, error } = await res.json();
 
                 if (success === true) {
                     setSubjects(data.subjects);
@@ -63,7 +63,7 @@ const CreateEvent: NextPage = () => {
                     })
                 });
 
-                const { success, message, data, error } = await res.json();
+                const { success, error } = await res.json();
 
                 setSuccess(success);
 

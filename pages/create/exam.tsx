@@ -58,7 +58,7 @@ const CreateQuestions: NextPage = () => {
                     })
                 });
 
-                const { success, data, message, error } = await res.json();
+                const { success, error } = await res.json();
 
                 setSuccess(success);
 
