@@ -3,7 +3,7 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { useCookies } from "react-cookie";
 import { FormEvent, Fragment, useMemo, useState } from "react";
-import { ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
+import { CheckIcon, ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
 
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
@@ -140,6 +140,9 @@ const CreateQuestions: NextPage = () => {
                         >
                             {uploading === true && (
                                 <LoadingIcon className="animate-spin w-5 h-5" />
+                            )}
+                            {success === true && (
+                                <CheckIcon className="ww-5 h-5" />
                             )}
                             Save Exam
                         </button>
