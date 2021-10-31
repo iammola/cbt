@@ -28,7 +28,7 @@ const CreateQuestions: NextPage = () => {
     }), []);
     const [exam, setExam] = useState<any>();
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
-    
+
     const [uploading, setUploading] = useState(false);
     const [success, setSuccess] = useState(false);
 
