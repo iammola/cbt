@@ -36,7 +36,7 @@ const CreateQuestions: NextPage = () => {
         if (exam !== undefined) {
             setCookies('savedExams', JSON.stringify(obj ?? {
                 ...(savedExams ?? {}),
-                [exam.details.SubjectID as any]: { exam, questions }
+                [exam.details.SubjectID]: { exam, questions }
             }), {
                 path: '/',
                 sameSite: true,
