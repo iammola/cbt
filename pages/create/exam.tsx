@@ -9,6 +9,7 @@ import { CheckIcon, ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid"
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
 import { LoadingIcon } from "components/Misc/CustomIcons";
+import Notification, { NotificationProps } from "components/Misc/Notification";
 
 import { CreateQuestion } from "types";
 
@@ -31,6 +32,7 @@ const CreateQuestions: NextPage = () => {
 
     const [uploading, setUploading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [notifications, setNotifications] = useState<Omit<NotificationProps, 'removeIcon'>[]>([]);
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
@@ -156,6 +158,15 @@ const CreateQuestions: NextPage = () => {
                     <ExamModal onSubmit={setExam} />
                 )}
             </section>
+            <div className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
+                {notifications.map((notification, idx) => (
+                    <Notification
+                        {...notification}
+                        key={notification.message}
+                        removeIcon={() => setNotifications(notifications.filter((_, i) => i !== idx))}
+                    />
+                ))}
+            </div>
         </>
     );
 }
