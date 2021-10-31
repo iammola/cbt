@@ -32,7 +32,7 @@ const CreateQuestions: NextPage = () => {
     const [uploading, setUploading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    function saveQuestions(obj?: { [key: string]: any }) {
+    function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
             setCookies('savedExams', JSON.stringify(obj ?? {
                 ...(savedExams ?? {}),
@@ -66,10 +66,10 @@ const CreateQuestions: NextPage = () => {
 
                 if (success === true) {
                     router.reload();
-                    if (savedExams !== undefined) saveQuestions(Object.fromEntries(Object.entries(savedExams).filter(([key]) => key === exam.details.SubjectID as any)));
+                    if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams).filter(([key]) => key === exam.details.SubjectID as any)));
                 } else throw new Error(error);
             } catch (error) {
-                saveQuestions();
+                saveExam();
                 console.error(error);
             }
 
