@@ -1,9 +1,15 @@
-import { FunctionComponent } from "react";
+import { ComponentProps, FunctionComponent } from "react";
+const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, Icon }) => {
 
-const Notification: FunctionComponent = () => {
     return (
         <></>
     );
+}
+
+type NotificationProps = {
+    message: string;
+    timeout: number;
+    Icon(props: ComponentProps<'svg'>): void;
 }
 
 export default Notification;
