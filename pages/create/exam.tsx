@@ -66,6 +66,7 @@ const CreateQuestions: NextPage = () => {
 
                 if (success === true) {
                     router.reload();
+                    if (savedExams !== undefined) saveQuestions(Object.fromEntries(Object.entries(savedExams).filter(([key]) => key === exam.details.SubjectID as any)));
                 } else throw new Error(error);
             } catch (error) {
                 saveQuestions();
