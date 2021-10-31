@@ -5,6 +5,13 @@ import { ComponentProps, Fragment, FunctionComponent, useState } from "react";
 const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, Icon }) => {
     const [show, setShow] = useState(true);
 
+    const timer = setTimeout(closeNotification, timeout);
+
+    function closeNotification() {
+        setShow(false);
+        clearTimeout(timer);
+    }
+
     return (
         <Transition
             appear
