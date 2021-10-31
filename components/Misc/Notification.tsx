@@ -1,4 +1,5 @@
 import { Transition } from "@headlessui/react";
+import { XIcon } from "@heroicons/react/solid";
 import { ComponentProps, Fragment, FunctionComponent, useState } from "react";
 
 const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, Icon }) => {
