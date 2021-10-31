@@ -32,9 +32,9 @@ const CreateQuestions: NextPage = () => {
     const [uploading, setUploading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    function saveQuestions() {
+    function saveQuestions(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
-            setCookies('savedExams', JSON.stringify({
+            setCookies('savedExams', JSON.stringify(obj ?? {
                 ...(savedExams ?? {}),
                 [exam.details.SubjectID as any]: { exam, questions }
             }), {
