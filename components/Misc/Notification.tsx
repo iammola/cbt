@@ -21,7 +21,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
 type NotificationProps = {
     message: string;
     timeout: number;
-    Icon(props: ComponentProps<'svg'>): void;
+    Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 
 export default Notification;
