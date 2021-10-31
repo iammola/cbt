@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FormEvent, Fragment, useMemo, useState } from "react";
 import { CheckIcon, ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon, XCircleIcon, BellIcon } from "@heroicons/react/outline";
 
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
@@ -67,12 +68,26 @@ const CreateQuestions: NextPage = () => {
                 setSuccess(success);
 
                 if (success === true) {
-                    router.reload();
-                    if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams).filter(([key]) => key === exam.details.SubjectID as any)));
+                    setTimeout(router.reload, 35e2);
+                    setNotifications([...notifications, {
+                        message: "Upload Success... Reloading",
+                        timeout: 3e3,
+                        Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
+                    }]);
+                    saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
                 } else throw new Error(error);
             } catch (error) {
                 saveExam();
                 console.error(error);
+                setNotifications([...notifications, {
+                    message: "Upload Failed... Try again",
+                    timeout: 5e3,
+                    Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
+                }, {
+                    message: "Exam Saved Locally",
+                    timeout: 3e3,
+                    Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
+                }]);
             }
 
             setUploading(false);
