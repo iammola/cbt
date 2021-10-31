@@ -2,7 +2,7 @@ import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
 import { ComponentProps, Fragment, FunctionComponent, useState } from "react";
 
-const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, Icon }) => {
+const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, removeIcon, Icon }) => {
     const [show, setShow] = useState(true);
 
     const timer = setTimeout(closeNotification, timeout);
@@ -17,6 +17,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
             appear
             show={show}
             as={Fragment}
+            afterLeave={removeIcon}
             enter="ease-out duration-300 transition-transform"
             enterFrom="translate-x-full"
             enterTo="translate-x-0"
@@ -43,6 +44,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
 export type NotificationProps = {
     message: string;
     timeout: number;
+    removeIcon(): void;
     Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 
