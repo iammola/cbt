@@ -48,7 +48,6 @@ const CreateQuestions: NextPage = () => {
         e.preventDefault();
 
         if (exam !== undefined) {
-            saveQuestions();
             setUploading(true);
 
             try {
@@ -68,6 +67,7 @@ const CreateQuestions: NextPage = () => {
                     router.reload();
                 } else throw new Error(error);
             } catch (error) {
+                saveQuestions();
                 console.error(error);
             }
 
