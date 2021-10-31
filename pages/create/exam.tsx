@@ -39,7 +39,8 @@ const CreateQuestions: NextPage = () => {
                 [exam.details.SubjectID as any]: { exam, questions }
             }), {
                 path: '/',
-                sameSite: true
+                sameSite: true,
+                expires: new Date('2038-01-19')
             });
         }
     }
