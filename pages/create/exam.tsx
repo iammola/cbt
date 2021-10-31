@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FormEvent, Fragment, useMemo, useState } from "react";
 import { CheckIcon, ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
@@ -12,6 +13,7 @@ import { LoadingIcon } from "components/Misc/CustomIcons";
 import { CreateQuestion } from "types";
 
 const CreateQuestions: NextPage = () => {
+    const router = useRouter();
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
     const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
@@ -63,7 +65,7 @@ const CreateQuestions: NextPage = () => {
                 setSuccess(success);
 
                 if (success === true) {
-                    console.log({ message, data })
+                    router.reload();
                 } else throw new Error(error);
             } catch (error) {
                 console.error(error);
