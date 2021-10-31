@@ -31,9 +31,9 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
                 message: ReasonPhrases.OK
             }];
         } catch (error) {
-            [status, message] = [error instanceof AggregateError === true ? StatusCodes.BAD_REQUEST : StatusCodes.FORBIDDEN, {
+            [status, message] = [StatusCodes.BAD_REQUEST, {
                 error,
-                message: error instanceof AggregateError === true ? ReasonPhrases.BAD_REQUEST : ReasonPhrases.FORBIDDEN
+                message: ReasonPhrases.BAD_REQUEST
             }];
         }
     }
