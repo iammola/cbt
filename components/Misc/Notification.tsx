@@ -1,12 +1,13 @@
 import { Transition } from "@headlessui/react";
-import { ComponentProps, Fragment, FunctionComponent } from "react";
+import { ComponentProps, Fragment, FunctionComponent, useState } from "react";
 
 const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, Icon }) => {
+    const [show, setShow] = useState(true);
 
     return (
         <Transition
             appear
-            show
+            show={show}
             as={Fragment}
             enter="ease-out duration-300 transition-transform"
             enterFrom="translate-x-full"
