@@ -9,7 +9,7 @@ import { Calendar, Schedule } from "components/Misc";
 
 import { EventRecord } from "types";
 
-const Sidebar: FunctionComponent = () => {
+const ScheduleInfo: FunctionComponent = () => {
     const router = useRouter();
     const date = useMemo(() => new Date(), []);
     const [{ account }, , removeCookies] = useCookies(['account']);
@@ -38,4 +38,4 @@ const Sidebar: FunctionComponent = () => {
     )
 }
 
-export default Sidebar;
+export default ScheduleInfo;
