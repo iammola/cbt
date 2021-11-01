@@ -65,7 +65,7 @@ MenuItem.List = function List({ expand, children }) {
 
 interface MenuItem extends FunctionComponent {
     List: FunctionComponent<{ expand: boolean; }>;
-    Main: FunctionComponent<{ toggleExpand?: () => void }>;
+    Main: FunctionComponent;
 }
 
 export default Menu;
