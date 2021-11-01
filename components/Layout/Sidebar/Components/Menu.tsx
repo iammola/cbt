@@ -32,7 +32,11 @@ const MenuItem: MenuItem = ({ children }) => {
     const [expand, setExpand] = useState(false);
     const toggleExpand = () => setExpand(!expand);
 
-    return typeof children === 'function' ? children({ expand, toggleExpand }) : children;
+    return (
+        <li className="w-full">
+            {typeof children === 'function' ? children({ expand, toggleExpand }) : children}
+        </li>
+    );
 }
 
 MenuItem.Main = function Main({ children }) {
