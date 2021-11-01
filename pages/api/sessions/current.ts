@@ -16,9 +16,9 @@ async function getCurrentSession(): Promise<RouteResponse> {
             data,
             message: ReasonPhrases.OK
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

@@ -16,9 +16,9 @@ async function getSubjects(id: string, select: string): Promise<RouteResponse> {
             data,
             message: ReasonPhrases.OK
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }
@@ -42,9 +42,9 @@ async function createSubject(id: string, subject: SubjectRecord): Promise<RouteR
                 message: ReasonPhrases.CREATED
             }];
         } else[status, message] = [StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

@@ -30,9 +30,9 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
             data,
             message: ReasonPhrases.CREATED
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

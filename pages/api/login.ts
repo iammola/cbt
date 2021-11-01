@@ -33,9 +33,9 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
                 data,
                 message: ReasonPhrases.OK
             }];
-        } catch (error) {
+        } catch (error: any) {
             [status, message] = [StatusCodes.BAD_REQUEST, {
-                error: (error as any).message,
+                error: error.message,
                 message: ReasonPhrases.BAD_REQUEST
             }];
         }

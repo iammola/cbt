@@ -25,9 +25,9 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
                 },
                 message: ReasonPhrases.OK
             }];
-        } catch (error) {
+        } catch (error: any) {
             [status, message] = [StatusCodes.INTERNAL_SERVER_ERROR, {
-                error,
+                error: error.message,
                 time: (Date.now() - start) / 1e3,
                 message: ReasonPhrases.INTERNAL_SERVER_ERROR
             }]
