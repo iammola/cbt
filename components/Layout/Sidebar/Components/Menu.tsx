@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { DocumentReportIcon, HomeIcon } from "@heroicons/react/outline";
 import { Fragment, FunctionComponent, ReactNode, useState } from "react";
+
+import { classNames } from "utils";
 
 const Menu: FunctionComponent = () => {
     return (
@@ -10,19 +13,56 @@ const Menu: FunctionComponent = () => {
                 Menu
             </span>
             <ul className="flex flex-col gap-y-2 items-center justify-center w-full">
-                <li className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 cursor-pointer">
-                    <HomeIcon className="w-6 h-6 ml-3" />
-                    <span className="text-sm">
-                        Dashboard
-                    </span>
-                </li>
-                <li className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 cursor-pointer">
-                    <DocumentReportIcon className="w-6 h-6 ml-3" />
-                    <span className="text-sm">
-                        Exams
-                    </span>
-                    <ChevronDownIcon className="w-5 h-5 ml-auto text-gray-600" />
-                </li>
+                <MenuItem>
+                    <MenuItem.Main>
+                        <Link href="/">
+                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 cursor-pointer">
+                                <HomeIcon className="w-6 h-6 ml-3" />
+                                <span className="text-sm block truncate">
+                                    Dashboard
+                                </span>
+                            </a>
+                        </Link>
+                    </MenuItem.Main>
+                </MenuItem>
+                <MenuItem>
+                    {({ expand, toggleExpand }) => (
+                        <>
+                            <MenuItem.Main>
+                                <div
+                                    onClick={toggleExpand}
+                                    className={classNames("flex gap-2.5 items-center justify-start w-full rounded-lg py-2.5 pr-3 cursor-pointer", {
+                                        "text-gray-800 bg-gray-100": expand,
+                                        "text-gray-600 hover:text-gray-800 hover:bg-gray-100": expand === false
+                                    })}
+                                >
+                                    <DocumentReportIcon className="w-6 h-6 ml-3" />
+                                    <span className="text-sm block truncate">
+                                        Exams
+                                    </span>
+                                    <ChevronDownIcon className="w-5 h-5 ml-auto text-gray-600" />
+                                </div>
+                            </MenuItem.Main>
+                            <MenuItem.List expand={expand}>
+                                <li className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                    <span className="text-sm block truncate">
+                                        Create an Exam
+                                    </span>
+                                </li>
+                                <li className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 cursor-pointer">
+                                    <span className="text-sm block truncate">
+                                        View Exams
+                                    </span>
+                                </li>
+                                <li className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 cursor-pointer">
+                                    <span className="text-sm block truncate">
+                                        Edit Exams
+                                    </span>
+                                </li>
+                            </MenuItem.List>
+                        </>
+                    )}
+                </MenuItem>
             </ul>
         </nav>
     );
