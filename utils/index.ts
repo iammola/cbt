@@ -14,7 +14,7 @@ export function generateCode() {
  * @param iterable promise return value
  * @returns The first Promise that resolves or an Error if they all reject
  */
-export function promiseAnyPolyfill<T>(iterable: Iterable<T | PromiseLike<T>>): Promise<T> {
+export function promiseAny<T>(iterable: Iterable<T | PromiseLike<T>>): Promise<T> {
     return Promise.all(
         [...iterable].map(promise => new Promise((resolve, reject) =>
             Promise.resolve(promise).then(reject, resolve)
