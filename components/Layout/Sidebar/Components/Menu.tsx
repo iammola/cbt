@@ -27,4 +27,16 @@ const Menu: FunctionComponent = () => {
     );
 }
 
+const MenuItem: MenuItem = ({ children }) => {
+    const [expand, setExpand] = useState(false);
+    const toggleExpand = () => setExpand(!expand);
+
+    return typeof children === 'function' ? children({ expand, toggleExpand }) : children;
+}
+
+interface MenuItem extends FunctionComponent {
+    List: FunctionComponent<{ expand: boolean; }>;
+    Main: FunctionComponent<{ toggleExpand?: () => void }>;
+}
+
 export default Menu;
