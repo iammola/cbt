@@ -19,8 +19,11 @@ async function getExams({ select = '', date }: { select: string; date: string })
             data: data.map(({ questions, ...item }) => ({ ...item, questions: questions.length })),
             message: ReasonPhrases.OK
         }];
-    } catch (error) {
-        [status, message] = [400, { error, message: "Couldn't GET exams" }];
+    } catch (error: any) {
+        [status, message] = [400, {
+            error: error.message,
+            message: "Couldn't GET exams"
+        }];
     }
 
     return [success, status, message];
@@ -46,9 +49,9 @@ async function createExam({ exam: { duration, ...exam }, questions }: { exam: Om
             data,
             message: ReasonPhrases.CREATED
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

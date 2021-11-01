@@ -16,9 +16,9 @@ async function getClasses(select: string = ''): Promise<RouteResponse> {
             data,
             message: ReasonPhrases.OK
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }
@@ -36,9 +36,9 @@ async function createClass(item: ClassRecord): Promise<RouteResponse> {
             data,
             message: ReasonPhrases.CREATED
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

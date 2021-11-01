@@ -16,9 +16,9 @@ async function getSessions(select: string): Promise<RouteResponse> {
             data,
             message: ReasonPhrases.OK
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }
@@ -43,9 +43,9 @@ async function createSession(session: SessionRecord): Promise<RouteResponse> {
             data,
             message: ReasonPhrases.CREATED
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

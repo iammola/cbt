@@ -35,9 +35,9 @@ async function getSchedule({ id, date }: { id: string, date: string }): Promise<
                 }];
             } else[success, status, message] = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
         }
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

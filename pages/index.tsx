@@ -1,3 +1,4 @@
+import useSWR from 'swr';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -14,6 +15,8 @@ import { LoadingIcon } from 'components/Misc/CustomIcons';
 const Home: NextPage = () => {
     const router = useRouter();
     const [, setCookies] = useCookies(['account']);
+    const { data: dbState } = useSWR('/api/ping/', url => fetch(url).then(res => res.json()));
+
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
@@ -134,6 +137,16 @@ const Home: NextPage = () => {
                     </a>
                 </Link>
             </footer>
+            <abbr
+                title={`is ${dbState?.data.state ?? 'unknown'}`}
+                className={classNames("w-3 h-3 fixed top-5 left-5 rounded-full shadow-md ring-2 ring-white transition-colors animate-pulse", {
+                    "bg-red-400": dbState?.data.code === 0,
+                    "bg-green-400": dbState?.data.code === 1,
+                    "bg-yellow-400": dbState?.data.code === 2,
+                    "bg-pink-400": dbState?.data.code === 3,
+                    "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data.code),
+                })}
+            ></abbr>
         </>
     )
 }

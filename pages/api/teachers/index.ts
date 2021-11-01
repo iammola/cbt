@@ -22,9 +22,9 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<R
             data,
             message: ReasonPhrases.CREATED
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }

@@ -21,7 +21,7 @@ async function createEvent({ date, event }: { date: Date; event: { name: string;
         });
 
         [success, status, message] = [true, 201, { data, message: "Created" }];
-    } catch (error) {
+    } catch (error: any) {
 
     }
 
@@ -38,9 +38,9 @@ async function getEvents({ from, to, exact }: { from: string; to: string; exact?
             data,
             message: ReasonPhrases.OK
         }];
-    } catch (error) {
+    } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
-            error,
+            error: error.message,
             message: ReasonPhrases.BAD_REQUEST
         }];
     }
