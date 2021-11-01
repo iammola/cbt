@@ -35,7 +35,7 @@ const MenuItem: MenuItem = ({ children }) => {
     return typeof children === 'function' ? children({ expand, toggleExpand }) : children;
 }
 
-MenuItem.Main = function Main({ toggleExpand, children }) {
+MenuItem.Main = function Main({ children }) {
     return (
         <>
             {children}
