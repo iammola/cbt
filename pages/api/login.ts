@@ -6,6 +6,8 @@ import { StudentModel, TeacherModel } from "db/models";
 
 import { RouteResponse } from "types";
 
+import { promiseAny } from "utils";
+
 async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Mola" | "Teacher" | "Student", code: string) {
     const data = await model.findOne({ code }).select('name email').lean();
     if (data === null) throw new Error('User does not exist');
@@ -25,7 +27,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
 
         try {
             await connect();
-            const data = await Promise.any([findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)]);
+            const data = await (Promise.any ?? promiseAny)([findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)]);
 
             [success, status, message] = [true, StatusCodes.OK, {
                 data,
