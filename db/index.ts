@@ -13,7 +13,9 @@ let cached = global.mongoose ?? {};
 
 export async function connect(): Promise<MongoObject['conn']> {
     cached.promise ??= mongoose.connect(MONGODB_URI, {
-        bufferCommands: false
+        bufferCommands: false,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
     });
 
     return cached.conn ??= await cached.promise;
