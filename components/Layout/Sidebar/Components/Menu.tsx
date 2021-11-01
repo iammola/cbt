@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactNode, useState } from "react";
+import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { DocumentReportIcon, HomeIcon } from "@heroicons/react/outline";
-import { Transition } from "@headlessui/react";
 
 const Menu: FunctionComponent = () => {
     return (
