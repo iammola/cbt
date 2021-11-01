@@ -1,7 +1,7 @@
-import { FunctionComponent, ReactNode, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { DocumentReportIcon, HomeIcon } from "@heroicons/react/outline";
+import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 const Menu: FunctionComponent = () => {
     return (
@@ -52,6 +52,7 @@ MenuItem.List = function List({ expand, children }) {
         <Transition
             appear
             show={expand}
+            as={Fragment}
             enter="ease-out duration-200 transition-transform origin-top"
             enterFrom="scale-y-0"
             enterTo="scale-y-100"
