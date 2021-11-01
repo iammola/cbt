@@ -93,10 +93,10 @@ MenuItem.List = function List({ expand, children }) {
             appear
             show={expand}
             as={Fragment}
-            enter="ease-out duration-200 transition-transform origin-top"
+            enter="ease-out transition-transform origin-top"
             enterFrom="scale-y-0"
             enterTo="scale-y-100"
-            leave="ease-in duration-200 transition-transform origin-top"
+            leave="ease-in transition-transform origin-top"
             leaveFrom="scale-y-100"
             leaveTo="scale-y-0"
         >
