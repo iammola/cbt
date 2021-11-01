@@ -111,7 +111,8 @@ MenuItem.List = function List({ expand, children }) {
 type RenderChildren = (o: { expand: boolean; toggleExpand(): void }) => ReactNode;
 
 interface MenuItem extends FunctionComponent<{ children: RenderChildren | ReturnType<RenderChildren> }> {
-    List: FunctionComponent<{ expand: boolean; }>;
+    List: FunctionComponent<Pick<Parameters<RenderChildren>[0], 'expand'>>;
+    Panel: FunctionComponent<Pick<Parameters<RenderChildren>[0], 'expand'>>;
     Main: FunctionComponent;
 }
 
