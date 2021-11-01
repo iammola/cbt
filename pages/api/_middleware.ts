@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware({ cookies, nextUrl: { pathname } }: NextRequest) {
-    if (pathname !== "/api/login/" && cookies.account === undefined) return NextResponse.redirect('/');
+    if (["/api/login/", "/api/ping/"].includes(pathname) === false && cookies.account === undefined) return NextResponse.redirect('/');
 }
