@@ -1,6 +1,7 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { DocumentReportIcon, HomeIcon } from "@heroicons/react/outline";
+import { Transition } from "@headlessui/react";
 
 const Menu: FunctionComponent = () => {
     return (
@@ -32,6 +33,34 @@ const MenuItem: MenuItem = ({ children }) => {
     const toggleExpand = () => setExpand(!expand);
 
     return typeof children === 'function' ? children({ expand, toggleExpand }) : children;
+}
+
+MenuItem.Main = function Main({ toggleExpand, children }) {
+    return (
+        <li
+            onClick={toggleExpand}
+            className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 cursor-pointer"
+        >
+            {children}
+        </li>
+    )
+}
+
+MenuItem.List = function List({ expand, children }) {
+    return (
+        <Transition
+            appear
+            show={expand}
+            enter="ease-out duration-200 transition-transform"
+            enterFrom="scale-y-0"
+            enterTo="scale-y-100"
+            leave="ease-in duration-200 transition-transform"
+            leaveFrom="scale-y-100"
+            leaveTo="scale-y-0"
+        >
+            {children}
+        </Transition>
+    )
 }
 
 interface MenuItem extends FunctionComponent {
