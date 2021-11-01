@@ -108,6 +108,29 @@ MenuItem.List = function List({ expand, children }) {
     )
 }
 
+MenuItem.Panel = function Panel({ expand, children }) {
+    return (
+        <Transition
+            appear
+            show={expand}
+            as={Fragment}
+            enter="ease-out transition origin-top-left"
+            enterFrom="scale-0 opacity-0"
+            enterTo="scale-100 opacity-100"
+            leave="ease-in transition origin-top-left"
+            leaveFrom="scale-100 opacity-100"
+            leaveTo="scale-0 opacity-0"
+        >
+            <ul className="bg-white w-60 absolute left-10 pl-10 pr-4 py-5 rounded-lg shadow-lg">
+                <div className="flex flex-col gap-y-2 relative w-full">
+                    {children}
+                    <div className="absolute inset-0 -left-3 w-px bg-gray-200 h-full"></div>
+                </div>
+            </ul>
+        </Transition>
+    )
+}
+
 type RenderChildren = (o: { expand: boolean; toggleExpand(): void }) => ReactNode;
 
 interface MenuItem extends FunctionComponent<{ children: RenderChildren | ReturnType<RenderChildren> }> {
