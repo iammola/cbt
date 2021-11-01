@@ -13,11 +13,14 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else {
+        let start = Date.now();
+
         try {
             const db = await connect();
             [success, status, message] = [true, StatusCodes.OK, {
                 data: {
                     code: db.connection.readyState,
+                    time: (Date.now() - start) / 1e3,
                     state: db.STATES[db.connection.readyState]
                 },
                 message: ReasonPhrases.OK
@@ -25,6 +28,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
         } catch (error) {
             [status, message] = [StatusCodes.INTERNAL_SERVER_ERROR, {
                 error,
+                time: (Date.now() - start) / 1e3,
                 message: ReasonPhrases.INTERNAL_SERVER_ERROR
             }]
         }
