@@ -1,12 +1,17 @@
 import Image from "next/image";
 import { FunctionComponent } from "react";
 
+import { classNames } from "utils";
+
 import BrandIcon from "/public/favicon.ico"
 
 const Brand: FunctionComponent<BrandProps> = ({ open }) => {
     return (
-        <div className="w-full pl-5 pr-4 py-3 flex gap-3 items-center justify-start">
-            <div className="relative w-9 h-9">
+        <div className={classNames("w-full flex gap-3 items-center", {
+            "pl-5 pr-4 py-3 justify-start": open,
+            "p-3 justify-center": open === false
+        })}>
+            <div className="relative w-9 h-9 flex-shrink-0">
                 <Image
                     layout="fill"
                     src={BrandIcon}
@@ -14,7 +19,9 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
                     objectFit="cover"
                 />
             </div>
-            <span className="text-sm font-bold tracking-tight">
+            <span className={classNames("text-sm font-bold tracking-tight", {
+                "hidden": open === false
+            })}>
                 Grand Regal School
             </span>
         </div>
