@@ -6,7 +6,7 @@ import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
 
-const Menu: FunctionComponent = () => {
+const Menu: FunctionComponent<MenuProps> = ({ open }) => {
     return (
         <nav className="flex-grow w-full px-5">
             <span className="inline-block text-gray-600 text-xs font-semibold uppercase tracking-wider pb-4">
@@ -113,6 +113,10 @@ type RenderChildren = (o: { expand: boolean; toggleExpand(): void }) => ReactNod
 interface MenuItem extends FunctionComponent<{ children: RenderChildren | ReturnType<RenderChildren> }> {
     List: FunctionComponent<{ expand: boolean; }>;
     Main: FunctionComponent;
+}
+
+type MenuProps = {
+    open: boolean;
 }
 
 export default Menu;
