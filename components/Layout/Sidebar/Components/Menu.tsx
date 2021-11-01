@@ -60,7 +60,10 @@ MenuItem.List = function List({ expand, children }) {
             leaveFrom="scale-y-100"
             leaveTo="scale-y-0"
         >
-            {children}
+            <ul className="flex flex-col gap-y-2 relative pl-9 overflow-y-hidden">
+                {children}
+                <div className="absolute inset-0 left-6 w-px bg-gray-200 h-full"></div>
+            </ul>
         </Transition>
     )
 }
