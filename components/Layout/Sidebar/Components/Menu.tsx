@@ -51,10 +51,10 @@ MenuItem.List = function List({ expand, children }) {
         <Transition
             appear
             show={expand}
-            enter="ease-out duration-200 transition-transform"
+            enter="ease-out duration-200 transition-transform origin-top"
             enterFrom="scale-y-0"
             enterTo="scale-y-100"
-            leave="ease-in duration-200 transition-transform"
+            leave="ease-in duration-200 transition-transform origin-top"
             leaveFrom="scale-y-100"
             leaveTo="scale-y-0"
         >
