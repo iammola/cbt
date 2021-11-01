@@ -24,15 +24,18 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
         const { code }: { code: string } = JSON.parse(body);
 
         try {
-            await connect();
-            const data = await Promise.any([findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)]);
+            const db = await connect();
+            console.log(db.connection.readyState);
+            const data = await Promise.any([findUser(TeacherModel, "Teacher", code)/* , findUser(StudentModel, "Student", code) */]);
+            console.log(data.access);
+
             [success, status, message] = [true, StatusCodes.OK, {
                 data,
                 message: ReasonPhrases.OK
             }];
         } catch (error) {
             [status, message] = [StatusCodes.BAD_REQUEST, {
-                error,
+                error: (error as any).message,
                 message: ReasonPhrases.BAD_REQUEST
             }];
         }
