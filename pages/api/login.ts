@@ -24,10 +24,8 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
         const { code }: { code: string } = JSON.parse(body);
 
         try {
-            const db = await connect();
-            console.log(db.connection.readyState);
-            const data = await Promise.any([findUser(TeacherModel, "Teacher", code)/* , findUser(StudentModel, "Student", code) */]);
-            console.log(data.access);
+            await connect();
+            const data = await Promise.any([findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)]);
 
             [success, status, message] = [true, StatusCodes.OK, {
                 data,
