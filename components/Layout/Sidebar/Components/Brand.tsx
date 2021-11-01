@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 
 import BrandIcon from "/public/favicon.ico"
 
-const Brand: FunctionComponent = () => {
+const Brand: FunctionComponent<BrandProps> = ({ open }) => {
     return (
         <div className="w-full pl-5 pr-4 py-3 flex gap-3 items-center justify-start">
             <div className="relative w-9 h-9">
@@ -19,6 +19,10 @@ const Brand: FunctionComponent = () => {
             </span>
         </div>
     );
+}
+
+type BrandProps = {
+    open: boolean;
 }
 
 export default Brand;
