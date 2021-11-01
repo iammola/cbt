@@ -37,12 +37,9 @@ const MenuItem: MenuItem = ({ children }) => {
 
 MenuItem.Main = function Main({ toggleExpand, children }) {
     return (
-        <li
-            onClick={toggleExpand}
-            className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 cursor-pointer"
-        >
+        <>
             {children}
-        </li>
+        </>
     )
 }
 
