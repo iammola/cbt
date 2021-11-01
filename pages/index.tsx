@@ -139,7 +139,7 @@ const Home: NextPage = () => {
             </footer>
             <abbr
                 title={`is ${dbState?.data.state ?? 'unknown'}`}
-                className={classNames("w-3 h-3 fixed top-5 left-5 rounded-full shadow-md ring-2 ring-white transition-colors", {
+                className={classNames("w-3 h-3 fixed top-5 left-5 rounded-full shadow-md ring-2 ring-white transition-colors animate-pulse", {
                     "bg-red-400": dbState?.data.code === 0,
                     "bg-green-400": dbState?.data.code === 1,
                     "bg-yellow-400": dbState?.data.code === 2,
