@@ -18,6 +18,8 @@ const Navbar: FunctionComponent = () => {
                     <UserImage
                         src={PFP}
                         layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
                         className="rounded-full"
                         initials={{
                             text: "AA",
