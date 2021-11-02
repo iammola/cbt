@@ -7,7 +7,7 @@ import { CheckIcon, XIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import Select, { SelectOption } from "components/Select";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
 const CreateEvent: NextPage = () => {
     const [name, setName] = useState('');

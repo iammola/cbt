@@ -4,7 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
-import { HomeIcon, FileTextIcon } from "components/Misc/CustomIcons";
+import { HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
     return (

@@ -4,7 +4,7 @@ import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { useState, FormEvent, useMemo, useEffect } from "react";
 
 import { classNames } from "utils";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
 const CreateSession: NextPage = () => {
     const termTemplate = useMemo(() => ({

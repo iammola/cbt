@@ -9,7 +9,7 @@ import { CheckCircleIcon, XCircleIcon, BellIcon } from "@heroicons/react/outline
 
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 import Notification, { NotificationProps } from "components/Misc/Notification";
 
 import { CreateQuestion } from "types";

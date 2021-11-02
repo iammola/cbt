@@ -10,7 +10,7 @@ import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useSta
 
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
-import { LoadingIcon } from 'components/Misc/CustomIcons';
+import { LoadingIcon } from 'components/Misc/Icons';
 
 const Home: NextPage = () => {
     const router = useRouter();

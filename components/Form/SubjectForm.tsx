@@ -6,7 +6,7 @@ import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { classNames } from "utils";
 
 import Select from "components/Select";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
 const SubjectForm: NextPage = () => {
     const { mutate } = useSWRConfig();

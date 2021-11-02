@@ -6,7 +6,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
 import { ClassRecord, SubjectRecord } from "types";
 
