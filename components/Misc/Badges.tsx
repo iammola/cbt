@@ -8,5 +8,15 @@ const Badges: Badges = ({ children }) => {
     )
 }
 
+Badges.Beta = function Beta() {
+    return (
+        <Badges
+            text="beta"
+            className="bg-purple-600"
+        />
+    );
+}
+
 interface Badges extends FunctionComponent<{ className: string; text: string }> {
+    Beta: FunctionComponent;
 }
