@@ -3,8 +3,8 @@ import { FunctionComponent, useState } from 'react';
 
 import { classNames } from "utils";
 
-const UserImage: FunctionComponent<UserImageProps> = ({ image, placeholder, className }) => {
     const [loadImage, setLoadImage] = useState(image !== undefined && image.length > 0);
+const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) => {
 
     return loadImage === true ? (
         <Image
