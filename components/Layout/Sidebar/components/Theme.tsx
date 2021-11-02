@@ -7,6 +7,19 @@ import { MoonIcon as MoonOutlineIcon, SunIcon as SunOutlineIcon } from "componen
 const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     const [active, setActive] = useState(0);
     const [hovered, setHovered] = useState(active);
+    const themes = [{
+        label: "Light",
+        Icon: {
+            solid: SunSolidIcon,
+            outline: SunOutlineIcon
+        }
+    }, {
+        label: "Dark",
+        Icon: {
+            solid: MoonSolidIcon,
+            outline: MoonOutlineIcon
+        }
+    }];
 
     useEffect(() => { setHovered(active); }, [active]);
 
