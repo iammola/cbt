@@ -76,14 +76,10 @@ const Navbar: FunctionComponent = () => {
                             <Badges.Soon />
                         </li>
                         <Divide className="w-full p-2" />
-<<<<<<< HEAD
                         <li
                             onClick={logout}
                             className="flex gap-3 items-center justify-start text-xs text-gray-800 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50"
                         >
-=======
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
->>>>>>> parent of c60d099 (added `font-medium` style to menu)
                             <span className="w-max inline-block">
                                 Log out
                             </span>
