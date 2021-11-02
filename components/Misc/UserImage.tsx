@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 import { FunctionComponent, useState } from 'react';
 
 import { classNames } from "utils";
@@ -25,10 +25,11 @@ const UserImage: FunctionComponent<UserImageProps> = ({ image, placeholder, clas
     );
 }
 
-interface UserImageProps {
-    image?: string;
-    className?: string;
-    placeholder: string;
+type UserImageProps = ImageProps & {
+    initials: {
+        text: string;
+        className?: string;
+    }
 }
 
 export default UserImage;
