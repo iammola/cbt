@@ -46,20 +46,20 @@ const Navbar: FunctionComponent = () => {
                     className="absolute right-0 top-20 w-60 bg-white rounded-xl shadow-md px-5 py-6 origin-top-right transition-transform"
                 >
                     <ul className="flex flex-col items-start justify-center gap-3">
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
                             <span className="w-max inline-block">
                                 Profile settings
                             </span>
                             <Badges.Soon />
                         </li>
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
                             <span className="w-max inline-block">
                                 View profile
                             </span>
                             <Badges.Soon />
                         </li>
                         <Divide className="w-full p-2" />
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
                             <UsersIcon className="w-5 h-5" />
                             <span className="w-max inline-block">
                                 View students
@@ -67,7 +67,7 @@ const Navbar: FunctionComponent = () => {
                             <Badges.Soon />
                         </li>
                         <Divide className="w-full p-2" />
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
                             <span className="w-max inline-block">
                                 Log out
                             </span>
