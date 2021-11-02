@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 
+import PFP from "/public/PFP.jpg";
 import UserImage from "components/Misc/UserImage";
 import { BellIcon, CommentTextIcon } from "components/Misc/CustomIcons";
 
@@ -13,6 +14,16 @@ const Navbar: FunctionComponent = () => {
                 <div className="p-3 rounded-full text-gray-600 hover:text-gray-800 hover:bg-gray-50 cursor-pointer">
                     <BellIcon className="w-5 h-5" />
                 </div>
+                <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                    <UserImage
+                        src={PFP}
+                        layout="fill"
+                        className="rounded-full"
+                        initials={{
+                            text: "AA",
+                            className: "rounded-full bg-yellow-300"
+                        }}
+                    />
                 </div>
             </div>
         </header>
