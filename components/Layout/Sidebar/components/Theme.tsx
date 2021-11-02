@@ -34,7 +34,28 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                 Theme
             </span>
             <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
+                {themes.map(({ label, Icon }, themeIdx) => (
+                    <div
+                        key={themeIdx}
+                        onClick={() => setActive(themeIdx)}
+                        onMouseEnter={() => setHovered(themeIdx)}
+                        onMouseLeave={() => setHovered(active)}
+                        className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
                     >
+                        {active === themeIdx ? (
+                            <Icon.solid className="w-5 h-5 flex-shrink-0" />
+                        ) : (
+                            <Icon.outline className="w-5 h-5 flex-shrink-0" />
+                        )}
+                        <span
+                            className={classNames("text-sm", {
+                                "hidden": open === false
+                            })}
+                        >
+                            {label}
+                        </span>
+                    </div>
+                ))}
                 <div
                     className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full transition-all", {
                         "pr-1 left-1": hovered === 0,
