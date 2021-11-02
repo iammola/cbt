@@ -11,6 +11,14 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
 
     return (
         <div className="w-full">
+            <span
+                className={classNames("w-full inline-block text-gray-600 text-xs font-semibold uppercase tracking-wider pb-4", {
+                    "text-center": open === false,
+                    "pl-5": open === true,
+                })}
+            >
+                Theme
+            </span>
             <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
                 <div
                     onClick={() => setActive(0)}
