@@ -1,8 +1,10 @@
 import { FunctionComponent } from "react";
 
+import { classNames } from "utils";
+
 const Badges: Badges = ({ className, text }) => {
     return (
-        <span className="inline-block p-3 rounded-full text-white text-xs uppercase">
+        <span className={classNames("inline-block py-1 px-3 rounded-full text-white text-[0.6rem] font-medium tracking-wider", className)}>
             {text}
         </span>
     )
