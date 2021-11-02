@@ -1,11 +1,13 @@
-import { FunctionComponent } from "react";
 import { Transition } from "@headlessui/react";
+import { FunctionComponent, useState } from "react";
 
 import PFP from "/public/PFP.jpg";
 import { Badges, Divide, UserImage } from "components/Misc";
 import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 
 const Navbar: FunctionComponent = () => {
+    const [show, setShow] = useState(false);
+
     return (
         <header className="flex gap-4 items-center justify-between shadow-sm h-[6rem] w-full px-6 relative">
             <div className="flex gap-5 flex-grow items-center justify-end pl-10 h-full relative">
@@ -31,7 +33,7 @@ const Navbar: FunctionComponent = () => {
                 </div>
                 <Transition
                     appear
-                    show
+                    show={show}
                     enter="ease-out"
                     enterFrom="scale-0"
                     enterTo="scale-100"
