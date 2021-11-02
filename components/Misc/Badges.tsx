@@ -11,7 +11,7 @@ const Badges: Badges = ({ className, text }) => {
 Badges.Beta = function Beta() {
     return (
         <Badges
-            text="beta"
+            text="Beta"
             className="bg-purple-600"
         />
     );
@@ -20,8 +20,8 @@ Badges.Beta = function Beta() {
 Badges.Soon = function Soon() {
     return (
         <Badges
-            text="soon"
             className="bg-red-600"
+            text="Soon"
         />
     );
 }
