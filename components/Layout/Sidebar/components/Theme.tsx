@@ -26,7 +26,7 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     return (
         <div className="w-full">
             <span
-                className={classNames("w-full inline-block text-gray-600 text-xs font-semibold uppercase tracking-wider pb-4", {
+                className={classNames("w-full inline-block text-gray-400 text-[0.6rem] font-semibold uppercase tracking-wider pb-4", {
                     "text-center": open === false,
                     "pl-5": open === true,
                 })}

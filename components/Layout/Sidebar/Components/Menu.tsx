@@ -15,7 +15,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
             })}
         >
             <span
-                className={classNames("w-full inline-block text-gray-600 text-xs font-semibold uppercase tracking-wider pb-4", {
+                className={classNames("w-full inline-block text-gray-400 text-[0.6rem] font-semibold uppercase tracking-wider pb-4", {
                     "text-center": open === false
                 })}
             >
