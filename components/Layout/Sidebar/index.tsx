@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
 
-import { Brand, Menu, Toggle } from "./components";
+import { Brand, Menu, Theme, Toggle } from "./components";
 
 import { Divide } from "components/Misc";
 
@@ -22,6 +22,7 @@ const Sidebar: FunctionComponent = () => {
             <Divide className="w-[85%] max-w-full" />
             <Menu open={open} />
             <Divide className="w-[85%] max-w-full" />
+            <Theme />
         </aside>
     );
 }
