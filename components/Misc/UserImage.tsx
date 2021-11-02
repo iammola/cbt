@@ -14,9 +14,9 @@ const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) =>
             onLoadingComplete={() => setError(false)}
         />
     ) : (
-            "text-sm": placeholder.length === 2,
             "text-xs": placeholder.length > 2
         <span className={classNames("flex items-center justify-center h-full w-full text-white font-medium overflow-hidden", initials.className, {
+            "text-sm": initials.text.length < 3,
         })}>
             {placeholder}
         </span>
