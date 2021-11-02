@@ -20,8 +20,8 @@ Badges.Beta = function Beta() {
 Badges.Soon = function Soon() {
     return (
         <Badges
-            className="bg-red-600"
             text="Soon"
+            className="bg-pink-500"
         />
     );
 }
