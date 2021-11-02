@@ -11,7 +11,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
         <nav
             className={classNames("flex-grow w-full", {
                 "px-5": open === true,
-                "px-2": open === false,
+                "px-1 sm:px-4": open === false,
             })}
         >
             <span
