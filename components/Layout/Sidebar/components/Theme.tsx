@@ -34,44 +34,7 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                 Theme
             </span>
             <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
-                <div
-                    onClick={() => setActive(0)}
-                    onMouseEnter={() => setHovered(0)}
-                    onMouseLeave={() => setHovered(active)}
-                    className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
-                >
-                    {active === 0 ? (
-                        <SunSolidIcon className="w-5 h-5 flex-shrink-0" />
-                    ) : (
-                        <SunOutlineIcon className="w-5 h-5 flex-shrink-0" />
-                    )}
-                    <span
-                        className={classNames("text-sm", {
-                            "hidden": open === false
-                        })}
                     >
-                        Light
-                    </span>
-                </div>
-                <div
-                    onClick={() => setActive(1)}
-                    onMouseEnter={() => setHovered(1)}
-                    onMouseLeave={() => setHovered(active)}
-                    className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
-                >
-                    {active === 1 ? (
-                        <MoonSolidIcon className="w-5 h-5 flex-shrink-0" />
-                    ) : (
-                        <MoonOutlineIcon className="w-5 h-5 flex-shrink-0" />
-                    )}
-                    <span
-                        className={classNames("text-sm", {
-                            "hidden": open === false
-                        })}
-                    >
-                        Dark
-                    </span>
-                </div>
                 <div
                     className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full transition-all", {
                         "pr-1 left-1": hovered === 0,
