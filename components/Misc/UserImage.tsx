@@ -6,7 +6,7 @@ import { classNames } from "utils";
 const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) => {
     const [error, setError] = useState(false);
 
-    return loadImage === true ? (
+    return error === false ? (
         <Image
             layout="fill"
             alt={placeholder}
