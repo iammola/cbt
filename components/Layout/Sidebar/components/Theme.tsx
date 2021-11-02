@@ -9,7 +9,12 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
 
     return (
         <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
-            <div className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer">
+            <div
+                onClick={() => setActive(0)}
+                onMouseEnter={() => setHovered(0)}
+                onMouseLeave={() => setHovered(active)}
+                className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
+            >
                 <SunIcon className="w-5 h-5 flex-shrink-0" />
                 <span
                     className={classNames("text-sm", {
@@ -19,7 +24,12 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                     Light
                 </span>
             </div>
-            <div className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer">
+            <div
+                onClick={() => setActive(1)}
+                onMouseEnter={() => setHovered(1)}
+                onMouseLeave={() => setHovered(active)}
+                className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
+            >
                 <MoonIcon className="w-5 h-5 flex-shrink-0" />
                 <span
                     className={classNames("text-sm", {
