@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 
 import PFP from "/public/PFP.jpg";
-import { Divide, UserImage } from "components/Misc";
+import { Badges, Divide, UserImage } from "components/Misc";
 import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 
 const Navbar: FunctionComponent = () => {
@@ -34,11 +34,13 @@ const Navbar: FunctionComponent = () => {
                             <span className="w-max inline-block">
                                 Profile settings
                             </span>
+                            <Badges.Soon />
                         </li>
                         <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
                             <span className="w-max inline-block">
                                 View profile
                             </span>
+                            <Badges.Soon />
                         </li>
                         <Divide className="w-full p-2" />
                         <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
@@ -46,6 +48,7 @@ const Navbar: FunctionComponent = () => {
                             <span className="w-max inline-block">
                                 View students
                             </span>
+                            <Badges.Soon />
                         </li>
                         <Divide className="w-full p-2" />
                         <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
