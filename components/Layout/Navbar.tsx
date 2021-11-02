@@ -17,7 +17,10 @@ const Navbar: FunctionComponent = () => {
                 <div className="p-3 rounded-full text-gray-600 hover:text-gray-800 hover:bg-gray-50 cursor-pointer">
                     <BellIcon className="w-5 h-5" />
                 </div>
-                <div className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer">
+                <div
+                    onClick={() => setShow(!show)}
+                    className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer"
+                >
                     <UserImage
                         src={PFP}
                         layout="fill"
