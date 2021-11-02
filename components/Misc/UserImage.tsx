@@ -8,12 +8,10 @@ const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) =>
 
     return error === false ? (
         <Image
-            layout="fill"
-            alt={placeholder}
-            src={image ?? ''}
-            objectFit="cover"
-            className={className}
-            onError={() => setLoadImage(false)}
+            {...props}
+            alt={props.alt ?? ''}
+            onError={() => setError(true)}
+            onLoadingComplete={() => setError(false)}
         />
     ) : (
         <span className={classNames("flex items-center justify-center h-full w-full text-white font-medium overflow-hidden", className, {
