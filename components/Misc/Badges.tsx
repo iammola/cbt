@@ -28,9 +28,19 @@ Badges.Soon = function Soon() {
     );
 }
 
+Badges.New = function New() {
+    return (
+        <Badges
+            text="New"
+            className="bg-green-500"
+        />
+    );
+}
+
 interface Badges extends FunctionComponent<{ className: string; text: string }> {
     Beta: FunctionComponent;
     Soon: FunctionComponent;
+    New: FunctionComponent;
 }
 
 export default Badges;
