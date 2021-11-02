@@ -14,10 +14,12 @@ const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) =>
             onLoadingComplete={() => setError(false)}
         />
     ) : (
-        <span className={classNames("flex items-center justify-center h-full w-full text-white font-medium overflow-hidden", initials.className, {
-            "text-sm": initials.text.length < 3,
-            "text-xs": initials.text.length > 2
-        })}>
+        <span
+            className={classNames("flex items-center justify-center h-full w-full text-white font-medium overflow-hidden", initials.className, {
+                "text-sm": initials.text.length < 3,
+                "text-xs": initials.text.length > 2
+            })}
+        >
             {initials.text}
         </span>
     );
