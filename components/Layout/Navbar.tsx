@@ -1,4 +1,5 @@
 import { FunctionComponent } from "react";
+import { Transition } from "@headlessui/react";
 
 import PFP from "/public/PFP.jpg";
 import { Badges, Divide, UserImage } from "components/Misc";
@@ -28,7 +29,17 @@ const Navbar: FunctionComponent = () => {
                         }}
                     />
                 </div>
-                <div className="absolute right-0 top-20 w-60 bg-white rounded-xl shadow-md px-5 py-6">
+                <Transition
+                    appear
+                    show
+                    enter="ease-out"
+                    enterFrom="scale-0"
+                    enterTo="scale-100"
+                    leave="ease-in"
+                    leaveFrom="scale-100"
+                    leaveTo="scale-0"
+                    className="absolute right-0 top-20 w-60 bg-white rounded-xl shadow-md px-5 py-6 origin-top-right transition-transform"
+                >
                     <ul className="flex flex-col items-start justify-center gap-3">
                         <li className="flex gap-3 items-center justify-start text-xs text-gray-500 p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
                             <span className="w-max inline-block">
@@ -57,7 +68,7 @@ const Navbar: FunctionComponent = () => {
                             </span>
                         </li>
                     </ul>
-                </div>
+                </Transition>
             </div>
         </header>
     )
