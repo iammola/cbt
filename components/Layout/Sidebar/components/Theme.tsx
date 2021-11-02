@@ -57,9 +57,9 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                     </div>
                 ))}
                 <div
-                    className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full transition-all", {
+                    className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full duration-500 transition-all", {
                         "pr-1 left-1": hovered === 0,
-                        "pl-1 right-1": hovered === 1
+                        "pl-1 left-[calc(50%-0.25rem)]": hovered === 1
                     })}
                 >
                     <span className="inline-block bg-white rounded-full w-full h-full"></span>
