@@ -11,9 +11,9 @@ const Sidebar: FunctionComponent = () => {
 
     return (
         <aside
-                "w-screen sm:w-[20rem]": open,
-                "w-20 sm:w-[6.5rem]": open === false
             className={classNames("flex flex-col gap-5 items-center justify-start py-5 px-3 max-w-full h-screen bg-white rounded-xl shadow-sm z-50 ", {
+                "fixed sm:relative inset-0 w-screen sm:w-[20rem]": open,
+                "relative w-20 sm:w-[6.5rem]": open === false
             })}
         >
             <Toggle
