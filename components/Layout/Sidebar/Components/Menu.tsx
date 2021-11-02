@@ -24,7 +24,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
             <ul className="flex flex-col gap-y-2 items-center justify-center w-full">
                 <MenuItem>
                     <MenuItem.Main>
-                        <Link href="/">
+                        <Link href="/home">
                             <a
                                 className={classNames("flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5", {
                                     "justify-start pr-3": open === true,
