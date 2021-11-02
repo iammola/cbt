@@ -5,6 +5,7 @@ import { MoonIcon, SunIcon } from "components/Misc/CustomIcons";
 
 const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     const [active, setActive] = useState(0);
+    const [hovered, setHovered] = useState(active);
 
     return (
         <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
@@ -30,8 +31,8 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
             </div>
             <div
                 className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full transition-all", {
-                    "pr-1 left-1": active === 0,
-                    "pl-1 right-1": active === 1
+                    "pr-1 left-1": hovered === 0,
+                    "pl-1 right-1": hovered === 1
                 })}
             >
                 <span className="inline-block bg-white rounded-full w-full h-full"></span>
