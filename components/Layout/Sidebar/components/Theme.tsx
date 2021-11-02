@@ -26,6 +26,9 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                     Dark
                 </span>
             </div>
+            <div className="absolute inset-y-0 z-[-1] w-1/2 h-full pr-1 py-1 rounded-full">
+                <span className="inline-block bg-white rounded-full w-full h-full"></span>
+            </div>
         </div>
     );
 }
