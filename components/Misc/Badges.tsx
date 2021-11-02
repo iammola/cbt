@@ -30,3 +30,5 @@ interface Badges extends FunctionComponent<{ className: string; text: string }> 
     Beta: FunctionComponent;
     Soon: FunctionComponent;
 }
+
+export default Badges;
