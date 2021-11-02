@@ -22,7 +22,7 @@ const Sidebar: FunctionComponent = () => {
             <Divide className="w-[85%] max-w-full" />
             <Menu open={open} />
             <Divide className="w-[85%] max-w-full" />
-            <Theme />
+            <Theme open={open} />
         </aside>
     );
 }
