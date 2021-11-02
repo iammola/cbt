@@ -8,30 +8,40 @@ import { classNames } from "utils";
 
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
     return (
-        <nav className={classNames("flex-grow w-full", {
-            "px-5": open === true,
-            "px-2": open === false,
-        })}>
-            <span className={classNames("w-full inline-block text-gray-600 text-xs font-semibold uppercase tracking-wider pb-4", {
-                "text-center": open === false
-            })}>
+        <nav
+            className={classNames("flex-grow w-full", {
+                "px-5": open === true,
+                "px-2": open === false,
+            })}
+        >
+            <span
+                className={classNames("w-full inline-block text-gray-600 text-xs font-semibold uppercase tracking-wider pb-4", {
+                    "text-center": open === false
+                })}
+            >
                 Menu
             </span>
             <ul className="flex flex-col gap-y-2 items-center justify-center w-full">
                 <MenuItem>
                     <MenuItem.Main>
                         <Link href="/">
-                            <a className={classNames("flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5", {
-                                "justify-start pr-3": open === true,
-                                "justify-center sm:py-3": open === false,
-                            })}>
-                                <HomeIcon className={classNames("flex-shrink-0 w-6 h-6", {
-                                    "ml-3": open === true
-                                })} />
-                                <span className={classNames("text-sm truncate", {
-                                    "hidden": open === false,
-                                    "block": open === true
-                                })}>
+                            <a
+                                className={classNames("flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5", {
+                                    "justify-start pr-3": open === true,
+                                    "justify-center sm:py-3": open === false,
+                                })}
+                            >
+                                <HomeIcon
+                                    className={classNames("flex-shrink-0 w-6 h-6", {
+                                        "ml-3": open === true
+                                    })}
+                                />
+                                <span
+                                    className={classNames("text-sm truncate", {
+                                        "hidden": open === false,
+                                        "block": open === true
+                                    })}
+                                >
                                     Dashboard
                                 </span>
                             </a>
@@ -49,18 +59,24 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                         "justify-center": open === false,
                                     })}
                                 >
-                                    <DocumentReportIcon className={classNames("flex-shrink-0 w-6 h-6", {
-                                        "ml-3": open === true
-                                    })} />
-                                    <span className={classNames("text-sm truncate", {
-                                        "hidden": open === false,
-                                        "block": open === true
-                                    })}>
+                                    <DocumentReportIcon
+                                        className={classNames("flex-shrink-0 w-6 h-6", {
+                                            "ml-3": open === true
+                                        })}
+                                    />
+                                    <span
+                                        className={classNames("text-sm truncate", {
+                                            "hidden": open === false,
+                                            "block": open === true
+                                        })}
+                                    >
                                         Exams
                                     </span>
-                                    <ChevronDownIcon className={classNames("flex-shrink-0 w-5 h-5 ml-auto text-gray-600", {
-                                        "hidden": open === false
-                                    })} />
+                                    <ChevronDownIcon
+                                        className={classNames("flex-shrink-0 w-5 h-5 ml-auto text-gray-600", {
+                                            "hidden": open === false
+                                        })}
+                                    />
                                 </div>
                             </MenuItem.Main>
                             {open === true ? (

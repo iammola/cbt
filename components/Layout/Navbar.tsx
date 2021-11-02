@@ -163,14 +163,18 @@ const Navbar: FunctionComponent = () => {
                                         />
                                         <span className="flex absolute bottom-0.5 right-0.5 h-2.5 w-2.5 -mt-1 -mr-1">
                                             <span className="absolute h-full w-full rounded-full ring ring-white" />
-                                            <span className={classNames("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", {
-                                                "bg-green-500": online,
-                                                "bg-red-500": !online
-                                            })} />
-                                            <span className={classNames("relative inline-flex rounded-full h-full w-full", {
-                                                "bg-green-600": online,
-                                                "bg-red-600": !online
-                                            })} />
+                                            <span
+                                                className={classNames("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", {
+                                                    "bg-green-500": online,
+                                                    "bg-red-500": !online
+                                                })}
+                                            />
+                                            <span
+                                                className={classNames("relative inline-flex rounded-full h-full w-full", {
+                                                    "bg-green-600": online,
+                                                    "bg-red-600": !online
+                                                })}
+                                            />
                                         </span>
                                     </div>
                                     <span className="text-gray-700 font-semibold block truncate">
@@ -199,14 +203,18 @@ const Navbar: FunctionComponent = () => {
                         />
                         <span className="flex absolute bottom-0.5 right-0.5 h-2.5 w-2.5 -mt-1 -mr-1">
                             <span className="absolute h-full w-full rounded-full ring ring-white" />
-                            <span className={classNames("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", {
-                                "bg-green-500": online,
-                                "bg-red-500": !online
-                            })} />
-                            <span className={classNames("relative inline-flex rounded-full h-full w-full", {
-                                "bg-green-600": online,
-                                "bg-red-600": !online
-                            })} />
+                            <span
+                                className={classNames("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", {
+                                    "bg-green-500": online,
+                                    "bg-red-500": !online
+                                })}
+                            />
+                            <span
+                                className={classNames("relative inline-flex rounded-full h-full w-full", {
+                                    "bg-green-600": online,
+                                    "bg-red-600": !online
+                                })}
+                            />
                         </span>
                     </div>
                     <div className="hidden md:flex flex-grow justify-center flex-col h-full">

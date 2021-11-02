@@ -7,10 +7,12 @@ import BrandIcon from "/public/favicon.ico"
 
 const Brand: FunctionComponent<BrandProps> = ({ open }) => {
     return (
-        <div className={classNames("w-full flex gap-3 items-center", {
-            "pl-5 pr-4 py-3 justify-start": open,
-            "p-3 justify-center": open === false
-        })}>
+        <div
+            className={classNames("w-full flex gap-3 items-center", {
+                "pl-5 pr-4 py-3 justify-start": open,
+                "p-3 justify-center": open === false
+            })}
+        >
             <div className="relative w-9 h-9 flex-shrink-0">
                 <Image
                     layout="fill"
@@ -19,9 +21,11 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
                     objectFit="cover"
                 />
             </div>
-            <span className={classNames("text-sm font-bold tracking-tight", {
-                "hidden": open === false
-            })}>
+            <span
+                className={classNames("text-sm font-bold tracking-tight", {
+                    "hidden": open === false
+                })}
+            >
                 Grand Regal School
             </span>
         </div>
