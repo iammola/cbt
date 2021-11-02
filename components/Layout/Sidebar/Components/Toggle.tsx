@@ -7,7 +7,7 @@ const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
     return (
         <div
             onClick={toggleOpen}
-            className={classNames("bg-white absolute p-1 rounded-full shadow-md text-gray-600 cursor-pointer transition-transform hover:scale-105", {
+            className={classNames("bg-white absolute z-50 top-8 p-1 rounded-full drop-shadow-sm text-gray-600 cursor-pointer transition-transform hover:scale-105", {
                 "sm:-right-4 right-8": open,
                 "-right-12": open === false
             })}
