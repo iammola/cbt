@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 import { Transition } from "@headlessui/react";
 import { FunctionComponent, useState } from "react";
 
@@ -6,7 +8,14 @@ import { Badges, Divide, UserImage } from "components/Misc";
 import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 
 const Navbar: FunctionComponent = () => {
+    const router = useRouter();
     const [show, setShow] = useState(false);
+    const [, , removeCookies] = useCookies(['account']);
+
+    function logout() {
+        removeCookies('account');
+        setTimeout(router.push, 15e2, '/');
+    }
 
     return (
         <header className="flex gap-4 items-center justify-between shadow-sm h-[6rem] w-full px-6 relative">
