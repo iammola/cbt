@@ -20,9 +20,9 @@ async function getExams({ select = '', date }: { select: string; date: string })
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
-        [status, message] = [400, {
+        [status, message] = [StatusCodes.BAD_REQUEST, {
             error: error.message,
-            message: "Couldn't GET exams"
+            message: ReasonPhrases.BAD_REQUEST
         }];
     }
 
