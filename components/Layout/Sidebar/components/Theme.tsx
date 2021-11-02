@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { classNames } from "utils";
 import { MoonIcon, SunIcon } from "components/Misc/CustomIcons";
@@ -6,6 +6,8 @@ import { MoonIcon, SunIcon } from "components/Misc/CustomIcons";
 const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     const [active, setActive] = useState(0);
     const [hovered, setHovered] = useState(active);
+
+    useEffect(() => { setHovered(active); }, [active]);
 
     return (
         <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
