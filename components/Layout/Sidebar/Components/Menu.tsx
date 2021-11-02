@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { DocumentReportIcon, HomeIcon } from "@heroicons/react/outline";
 import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
+import { HomeIcon, FileTextIcon } from "components/Misc/CustomIcons";
 
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
     return (
@@ -59,7 +59,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                         "justify-center": open === false,
                                     })}
                                 >
-                                    <DocumentReportIcon
+                                    <FileTextIcon
                                         className={classNames("flex-shrink-0 w-6 h-6", {
                                             "ml-3": open === true
                                         })}
