@@ -1,7 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react";
+import { MoonIcon as MoonSolidIcon, SunIcon as SunSolidIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
-import { MoonIcon, SunIcon } from "components/Misc/CustomIcons";
+import { MoonIcon as MoonOutlineIcon, SunIcon as SunOutlineIcon } from "components/Misc/CustomIcons";
 
 const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     const [active, setActive] = useState(0);
@@ -26,7 +27,11 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                     onMouseLeave={() => setHovered(active)}
                     className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
                 >
-                    <SunIcon className="w-5 h-5 flex-shrink-0" />
+                    {active === 0 ? (
+                        <SunSolidIcon className="w-5 h-5 flex-shrink-0" />
+                    ) : (
+                        <SunOutlineIcon className="w-5 h-5 flex-shrink-0" />
+                    )}
                     <span
                         className={classNames("text-sm", {
                             "hidden": open === false
@@ -41,7 +46,11 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                     onMouseLeave={() => setHovered(active)}
                     className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
                 >
-                    <MoonIcon className="w-5 h-5 flex-shrink-0" />
+                    {active === 1 ? (
+                        <MoonSolidIcon className="w-5 h-5 flex-shrink-0" />
+                    ) : (
+                        <MoonOutlineIcon className="w-5 h-5 flex-shrink-0" />
+                    )}
                     <span
                         className={classNames("text-sm", {
                             "hidden": open === false
