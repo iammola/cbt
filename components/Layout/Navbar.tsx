@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
 
 import PFP from "/public/PFP.jpg";
-import UserImage from "components/Misc/UserImage";
 import { BellIcon, CommentTextIcon } from "components/Misc/CustomIcons";
+import { UserImage } from "components/Misc";
 
 const Navbar: FunctionComponent = () => {
     return (
