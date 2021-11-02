@@ -29,7 +29,7 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                 </span>
             </div>
             <div
-                className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full", {
+                className={classNames("absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full transition-all", {
                     "pr-1 left-1": active === 0,
                     "pl-1 right-1": active === 1
                 })}
