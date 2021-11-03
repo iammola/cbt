@@ -11,7 +11,7 @@ async function getSubjects(id: string, select: string): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await ClassModel.findById(id).populate('subjects').select(`-_id subjects`);
+        const data = await ClassModel.findById(id).populate('subjects', select).select(`-_id subjects`);
         [success, status, message] = [true, StatusCodes.OK, {
             data,
             message: ReasonPhrases.OK
