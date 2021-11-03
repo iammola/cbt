@@ -50,7 +50,7 @@ const Home: NextPage = () => {
 
             setSuccess(success);
             if (success === true) {
-                setTimeout(router.push, 155e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
+                setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
                 setCookies("account", JSON.stringify(data), {
                     path: '/',
                     sameSite: true
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
         }
 
         setLoading(false);
-        setTimeout(setSuccess, 15e2, undefined);
+        setTimeout(setSuccess, 5e2, undefined);
     }
 
     return (
