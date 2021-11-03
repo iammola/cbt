@@ -4,7 +4,14 @@ import { classNames } from "utils";
 
 const Subjects: Subjects = ({ items }) => {
     return (
-        <></>
+        <div className="flex flex-col items-start justify-start gap-4 w-full divide-y divide-gray-200">
+            {items.map(item => (
+                <Subjects.Item
+                    {...item}
+                    key={item.name}
+                />
+            ))}
+        </div>
     );
 }
 
