@@ -2,9 +2,8 @@ import { FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
 
-import { Brand, Menu, Theme, Toggle } from "./components";
-
 import { Divide } from "components/Misc";
+import { Brand, Menu, Theme, Toggle } from "./components";
 
 const Sidebar: FunctionComponent = () => {
     const [open, setOpen] = useState(false);
