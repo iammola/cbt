@@ -14,7 +14,11 @@ const Tests: NextPage = () => {
                 <Sidebar />
                 <main className="flex flex-col flex-grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
                     <Navbar />
-                    <section className="w-full flex-grow bg-gray-50"></section>
+                    <section className="flex flex-col gap-5 items-start justify-center w-full py-7 px-6 flex-grow bg-gray-50">
+                        <h2 className="text-5xl font-bold text-gray-700">
+                            Dashboard
+                        </h2>
+                    </section>
                 </main>
             </section>
         </>
