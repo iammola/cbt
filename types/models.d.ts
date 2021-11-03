@@ -52,6 +52,7 @@ type UserRecord<P = false, T = never> = RecordId<P> & {
         firstName: string;
         lastName: string;
     };
+    image: string;
     email: string;
     code: string;
 }
