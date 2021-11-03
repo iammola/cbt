@@ -14,7 +14,7 @@ const Navbar: FunctionComponent = () => {
 
     function logout() {
         removeCookies('account');
-        setTimeout(router.push, 15e2, '/');
+        setTimeout(router.push, 5e2, '/');
     }
 
     return (
