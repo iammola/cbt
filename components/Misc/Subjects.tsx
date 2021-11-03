@@ -6,4 +6,11 @@ const Subjects: FunctionComponent = (props) => {
     );
 }
 
+type SubjectItem = {
+    name: string;
+    subjects: { name: string; }[];
+}[];
+
+interface Subjects extends FunctionComponent<{ items: SubjectItem }> { }
+
 export default Subjects;
