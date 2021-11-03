@@ -6,6 +6,12 @@ const Subjects: Subjects = ({ items }) => {
     );
 }
 
+Subjects.Item = function Item({ name, subjects }) {
+    return (
+        <></>
+    )
+}
+
 type SubjectItem = {
     name: string;
     subjects: { name: string; }[];
