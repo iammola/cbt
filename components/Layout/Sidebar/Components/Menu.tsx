@@ -4,6 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
+import { Badges } from "components/Misc"
 import { HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
@@ -94,11 +95,13 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                         <span className="text-sm block truncate">
                                             View Exams
                                         </span>
+                                        <Badges.Soon />
                                     </li>
                                     <li className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 cursor-pointer">
                                         <span className="text-sm block truncate">
                                             Edit Exams
                                         </span>
+                                        <Badges.Soon />
                                     </li>
                                 </MenuItem.List>
                             ) : (
@@ -118,6 +121,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                                 <span className="text-sm block truncate">
                                                     View Exams
                                                 </span>
+                                                <Badges.Soon />
                                             </a>
                                         </Link>
                                     </li>
@@ -127,6 +131,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                                 <span className="text-sm block truncate">
                                                     Edit Exams
                                                 </span>
+                                                <Badges.Soon />
                                             </a>
                                         </Link>
                                     </li>
