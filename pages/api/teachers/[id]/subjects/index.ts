@@ -6,7 +6,7 @@ import { TeacherModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
-async function getTeacherSubjects(id: string, select: string): Promise<RouteResponse> {
+async function getTeacherSubjects(id: string): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
@@ -28,14 +28,14 @@ async function getTeacherSubjects(id: string, select: string): Promise<RouteResp
 }
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
-    const { id, select } = query as { id: string; select: string; };
+    const { id } = query as { id: string };
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else [success, status, message] = await getTeacherSubjects(id, select);
+    } else[success, status, message] = await getTeacherSubjects(id);
 
     if (typeof message !== "object") message = { message };
 
