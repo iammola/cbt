@@ -14,7 +14,7 @@ Badges.Beta = function Beta() {
     return (
         <Badges
             text="Beta"
-            className="bg-purple-600"
+            className="text-indigo-800 bg-indigo-50"
         />
     );
 }
@@ -23,7 +23,7 @@ Badges.Soon = function Soon() {
     return (
         <Badges
             text="Soon"
-            className="bg-pink-500"
+            className="text-pink-800 bg-pink-50"
         />
     );
 }
@@ -32,7 +32,7 @@ Badges.New = function New() {
     return (
         <Badges
             text="New"
-            className="bg-green-500"
+            className="text-blue-800 bg-blue-50"
         />
     );
 }
