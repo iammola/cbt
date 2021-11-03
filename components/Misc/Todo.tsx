@@ -1,11 +1,17 @@
 import { FunctionComponent } from "react";
-import { formatDistance } from "date-fns";
+import { compareAsc, formatDistance, isFuture } from "date-fns";
 
 import { classNames } from "utils";
 
 const Todo: Todo = ({ items }) => {
     return (
         <div className="flex flex-wrap flex-row items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
+            {items.filter(a => isFuture(new Date(a.date))).sort((a, b) => compareAsc(new Date(a.date), new Date(b.date))).map((item, i) => (
+                <Todo.Item
+                    key={i}
+                    {...item}
+                />
+            ))}
         </div>
     );
 }
