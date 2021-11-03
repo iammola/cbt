@@ -56,6 +56,9 @@ const StudentSchema = new Schema<StudentRecord>({
         required: [true, 'User Login Code required'],
         unique: true,
         select: false,
+    }, image: {
+        type: String,
+        trim: true
     }
 });
 
