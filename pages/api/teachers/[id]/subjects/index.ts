@@ -27,14 +27,15 @@ async function getTeacherSubjects(id: string, select: string): Promise<RouteResp
     return [success, status, message];
 }
 
-export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
+    const { id, select } = query as { id: string; select: string; };
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else [success, status, message] = await getTeacherSubjects(id, select);
 
     if (typeof message !== "object") message = { message };
 
