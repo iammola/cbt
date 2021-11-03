@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 
-const Subjects: FunctionComponent = (props) => {
+const Subjects: Subjects = ({ items }) => {
     return (
         <></>
     );
@@ -11,6 +11,8 @@ type SubjectItem = {
     subjects: { name: string; }[];
 }[];
 
-interface Subjects extends FunctionComponent<{ items: SubjectItem }> { }
+interface Subjects extends FunctionComponent<{ items: SubjectItem }> {
+    Item: FunctionComponent<SubjectItem>;
+}
 
 export default Subjects;
