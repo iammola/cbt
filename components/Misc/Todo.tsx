@@ -7,7 +7,7 @@ const Todo: Todo = ({ items }) => {
     const filtered = items.filter(a => isFuture(new Date(a.date))).sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)));
 
     return (
-        <div className="flex flex-wrap flex-row items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
+        <div className="flex flex-wrap flex-row flex-grow items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
             {filtered.map((item, i) => (
                 <Todo.Item
                     key={i}
