@@ -9,9 +9,9 @@ const Subjects: Subjects = ({ items }) => {
 type SubjectItem = {
     name: string;
     subjects: { name: string; }[];
-}[];
+};
 
-interface Subjects extends FunctionComponent<{ items: SubjectItem }> {
+interface Subjects extends FunctionComponent<{ items: SubjectItem[] }> {
     Item: FunctionComponent<SubjectItem>;
 }
 
