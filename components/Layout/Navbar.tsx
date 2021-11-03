@@ -3,7 +3,6 @@ import { useCookies } from "react-cookie";
 import { Transition } from "@headlessui/react";
 import { FunctionComponent, useState } from "react";
 
-import PFP from "/public/PFP.jpg";
 import { Badges, Divide, UserImage } from "components/Misc";
 import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 
@@ -31,7 +30,7 @@ const Navbar: FunctionComponent = () => {
                     className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer"
                 >
                     <UserImage
-                        src={PFP}
+                        src={account?.image ?? 'https://source.unsplash.com/featured/?random'}
                         layout="fill"
                         objectFit="cover"
                         objectPosition="center"
