@@ -34,7 +34,6 @@ const Navbar: FunctionComponent = () => {
                         src={PFP}
                         layout="fill"
                         objectFit="cover"
-                        placeholder="blur"
                         objectPosition="center"
                         className="rounded-full"
                         initials={{
