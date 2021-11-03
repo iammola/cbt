@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import { ClassRecord } from "types";
+import type { ClassRecord } from "types";
 
 const ClassSchema = new Schema<ClassRecord>({
     name: {

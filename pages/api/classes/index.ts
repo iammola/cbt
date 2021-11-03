@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ClassModel } from "db/models";
 
-import { RouteResponse, ClassRecord } from "types";
+import type { RouteResponse, ClassRecord } from "types";
 
 async function getClasses(select: string = ''): Promise<RouteResponse> {
     await connect();

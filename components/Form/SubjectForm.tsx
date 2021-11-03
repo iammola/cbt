@@ -1,5 +1,5 @@
 import useSWR, { useSWRConfig } from "swr";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 

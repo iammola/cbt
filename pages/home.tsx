@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 import { Todo, Subjects } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";

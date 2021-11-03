@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FormEvent, Fragment, useMemo, useState } from "react";
@@ -12,7 +12,7 @@ import Question from "components/Exam/Question";
 import { LoadingIcon } from "components/Misc/Icons";
 import Notification, { NotificationProps } from "components/Misc/Notification";
 
-import { CreateQuestion } from "types";
+import type { CreateQuestion } from "types";
 
 const CreateQuestions: NextPage = () => {
     const router = useRouter();

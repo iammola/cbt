@@ -4,7 +4,7 @@ import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "rea
 
 import Select, { SelectOption } from "components/Select";
 
-import { ExamRecord } from "types";
+import type { ExamRecord } from "types";
 
 const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();

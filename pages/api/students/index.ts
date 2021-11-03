@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { generateCode } from "utils";
@@ -6,7 +6,7 @@ import { generateCode } from "utils";
 import { connect } from "db";
 import { SessionModel, StudentModel } from "db/models";
 
-import { StudentRecord, RouteResponse } from "types";
+import type { StudentRecord, RouteResponse } from "types";
 
 async function createStudent({ academic, ...student }: Pick<StudentRecord, 'email' | 'name'> & { academic: { class: string; subject: string; } }): Promise<RouteResponse> {
     await connect();

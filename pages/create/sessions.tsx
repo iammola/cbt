@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { useState, FormEvent, useMemo, useEffect } from "react";
 

@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import { ExamRecord } from "types";
+import type { ExamRecord } from "types";
 
 const ExamSchema = new Schema<ExamRecord>({
     duration: {

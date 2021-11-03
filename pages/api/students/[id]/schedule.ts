@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ExamModel, EventModel, SessionModel, StudentModel } from "db/models";
 
-import { RouteResponse } from "types";
+import type { RouteResponse } from "types";
 
 async function getSchedule({ id, date }: { id: string, date: string }): Promise<RouteResponse> {
     await connect();

@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { StudentModel, TeacherModel } from "db/models";
 
-import { RouteResponse } from "types";
+import type { RouteResponse } from "types";
 
 import { promiseAny } from "utils";
 

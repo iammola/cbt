@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { generateCode } from "utils";
@@ -6,7 +6,7 @@ import { generateCode } from "utils";
 import { connect } from "db";
 import { SubjectModel, TeacherModel } from "db/models";
 
-import { TeacherRecord, RouteResponse } from "types";
+import type { TeacherRecord, RouteResponse } from "types";
 
 async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<RouteResponse> {
     await connect();

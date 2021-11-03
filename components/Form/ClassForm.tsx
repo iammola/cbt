@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { useSWRConfig } from 'swr';
 import { FormEvent, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";

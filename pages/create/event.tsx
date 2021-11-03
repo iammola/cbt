@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { format, startOfTomorrow } from "date-fns";
 import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";

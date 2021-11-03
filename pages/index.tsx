@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from '@heroicons/react/solid';

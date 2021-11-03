@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { SessionModel } from "db/models";
 
-import { SessionRecord, RouteResponse } from "types";
+import type { SessionRecord, RouteResponse } from "types";
 
 async function getSessions(select: string): Promise<RouteResponse> {
     await connect();

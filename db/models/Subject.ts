@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import { SubjectRecord } from "types";
+import type { SubjectRecord } from "types";
 
 const SubjectSchema = new Schema<SubjectRecord>({
     name: {
