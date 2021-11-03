@@ -75,6 +75,20 @@ const Navbar: FunctionComponent = () => {
                             </span>
                             <Badges.Soon />
                         </li>
+                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                            <BellIcon className="w-5 h-5" />
+                            <span className="w-max inline-block">
+                                Notifications
+                            </span>
+                            <Badges.Soon />
+                        </li>
+                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                            <CommentTextIcon className="w-5 h-5" />
+                            <span className="w-max inline-block">
+                                Messages
+                            </span>
+                            <Badges.Soon />
+                        </li>
                         <Divide className="w-full p-2" />
                         <li
                             onClick={logout}
