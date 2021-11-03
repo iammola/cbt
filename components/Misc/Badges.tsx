@@ -4,7 +4,7 @@ import { classNames } from "utils";
 
 const Badges: Badges = ({ className, text }) => {
     return (
-        <span className={classNames("inline-block py-1 px-2 rounded-full text-white text-[0.6rem] font-medium tracking-wider", className)}>
+        <span className={classNames("inline-block py-1 px-2.5 rounded-full text-xs font-medium", className)}>
             {text}
         </span>
     )
