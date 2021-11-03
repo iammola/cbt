@@ -10,7 +10,7 @@ import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
     const [show, setShow] = useState(false);
-    const [, , removeCookies] = useCookies(['account']);
+    const [{ account }, , removeCookies] = useCookies(['account']);
 
     function logout() {
         removeCookies('account');
@@ -38,7 +38,7 @@ const Navbar: FunctionComponent = () => {
                         objectPosition="center"
                         className="rounded-full"
                         initials={{
-                            text: "AA",
+                            text: account?.name.initials ?? '',
                             className: "rounded-full bg-yellow-300"
                         }}
                     />
