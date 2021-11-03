@@ -22,7 +22,7 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
                 />
             </div>
             <span
-                className={classNames("text-sm font-bold tracking-tight", {
+                className={classNames("tracking-wider", {
                     "hidden": open === false
                 })}
             >
