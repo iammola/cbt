@@ -1,10 +1,15 @@
+import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
+import { useCookies } from "react-cookie";
 
 import { Todo, Subjects } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 
 const Home: NextPage = () => {
+    const [{ account }] = useCookies(['account']);
+    const { data: subjectsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/subjects/extend?select=name _id` : null, url => url !== null && fetch(url).then(res => res.json()));
+
     const todoItems = [{
         name: "Physics",
         date: new Date("August 2021"),
@@ -21,41 +26,6 @@ const Home: NextPage = () => {
         name: "English Language",
         date: new Date('10 December 2020'),
         class: "Upper Key Stage 2"
-    }];
-
-    const subjectsItems = [{
-        name: "Key Stage 1",
-        subjects: [{
-            name: "Physics"
-        }, {
-            name: "Mathematics"
-        }, {
-            name: "Civic Education"
-        }, {
-            name: "English Language"
-        }]
-    }, {
-        name: "Key Stage 2",
-        subjects: [{
-            name: "FInancial Accounting"
-        }, {
-            name: "Mathematics"
-        }, {
-            name: "Further Mathematics"
-        }, {
-            name: "English Language"
-        }]
-    }, {
-        name: "Upper Key Stage 2",
-        subjects: [{
-            name: "Biology"
-        }, {
-            name: "Mathematics"
-        }, {
-            name: "Pre-Vocational Studies"
-        }, {
-            name: "Basic Science and Technology"
-        }]
     }];
 
     return (
