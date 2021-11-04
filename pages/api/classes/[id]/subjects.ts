@@ -26,21 +26,28 @@ async function getSubjects(id: string, select: string): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createSubject(id: string, subject: SubjectRecord): Promise<RouteResponse> {
+async function createSubject(id: string, { name, alias }: SubjectRecord): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        if (await ClassModel.exists({ _id: id }) === true) {
-            const data = await SubjectModel.create(subject);
-            await ClassModel.findByIdAndUpdate(id, {
-                $addToSet: { subjects: data._id }
-            }, { runValidators: true });
+        const selectedClass = await ClassModel.findById(id, '-_id subjects').lean();
 
-            [success, status, message] = [true, StatusCodes.CREATED, {
-                data,
-                message: ReasonPhrases.CREATED
-            }];
+        if (selectedClass !== null) {
+            const alreadyExists = await SubjectModel.exists({ $or: [{ name }, { alias }], _id: selectedClass.subjects });
+
+            if (alreadyExists === false) {
+                const data = await SubjectModel.create({ name, alias });
+
+                await ClassModel.findByIdAndUpdate(id, {
+                    $addToSet: { subjects: data._id }
+                }, { runValidators: true });
+
+                [success, status, message] = [true, StatusCodes.CREATED, {
+                    data,
+                    message: ReasonPhrases.CREATED
+                }];
+            } else throw new Error('Class already linked to subject with same name or alias');
         } else throw new Error('Class does not exist');
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
