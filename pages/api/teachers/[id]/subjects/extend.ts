@@ -11,7 +11,7 @@ async function getExtendedTeacherSubjects(id: string, select: string): Promise<R
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const teacher = await TeacherModel.findById(id).populate('subjects', select).select('-_id subjects').lean();
+        const teacher = await TeacherModel.findById(id, '-_id subjects').populate('subjects', select).lean();
         const classes = await ClassModel.find({}, {
             _id: 0, name: 1,
             subjects: teacher?.subjects.map(({ _id }) => _id) ?? []
