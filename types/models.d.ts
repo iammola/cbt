@@ -11,7 +11,7 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     question: string;
 } & ({
     type: "Multiple choice" | "Checkboxes";
-    answers: (P extends true ? AnswerRecord<P> : string)[];
+    answers: (P extends true ? AnswerRecord<P, I> : string)[];
     maxLength: undefined;
     minLength: undefined;
 } | {
@@ -88,7 +88,7 @@ export type EventRecord<P = false, I = false> = RecordId<P, I> & {
 export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
     SubjectID: P extends true ? string : Schema.Types.ObjectId;
-    questions: (P extends true ? QuestionRecord<P> : string)[];
+    questions: (P extends true ? QuestionRecord<P, I> : string)[];
     created: {
         at: Date;
         by: Schema.Types.ObjectId;
@@ -102,7 +102,7 @@ export type SessionRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
     current?: boolean;
-    terms: TermRecord<P>[];
+    terms: TermRecord<P, I>[];
 };
 
 export type TermRecord<P = false, I = false> = RecordId<P, I> & {
