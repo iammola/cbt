@@ -55,7 +55,7 @@ type TodoItem = {
     date: Date;
 }
 
-interface Todo extends FunctionComponent<{ items: TodoItem[]; }> {
+interface Todo extends FunctionComponent<{ items?: TodoItem[]; }> {
     Item: FunctionComponent<TodoItem>;
 }
 
