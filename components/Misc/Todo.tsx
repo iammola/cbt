@@ -47,8 +47,8 @@ Todo.Item = function Item({ name, ...props }) {
                 <span className="block truncate text-sm text-gray-600">
                     {props.class}
                 </span>
-                    {date[0].toUpperCase()}{date.slice(1)}
                 <span className="block truncate text-xs text-gray-500">
+                    Deadline {date}
                 </span>
             </div>
         </div>
