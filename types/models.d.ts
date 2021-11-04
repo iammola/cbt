@@ -1,11 +1,12 @@
 
-export type AnswerRecord<P = false> = RecordId<P> & {
 type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
+
+export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
     answer: string
     isCorrect?: boolean;
 };
 
-export type QuestionRecord<P = false> = RecordId<P> & {
+export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     question: string;
 } & ({
     type: "Multiple choice" | "Checkboxes";
@@ -30,13 +31,13 @@ export type QuestionRecord<P = false> = RecordId<P> & {
 
 /* Class and Subject */
 
-export type ClassRecord<P = false> = RecordId<P> & {
+export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
     subjects: Schema.Types.ObjectId[];
 };
 
-export type SubjectRecord<P = false> = RecordId<P> & {
+export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
 };
@@ -44,7 +45,7 @@ export type SubjectRecord<P = false> = RecordId<P> & {
 
 /* Student and Teacher */
 
-type UserRecord<P = false, T = never> = RecordId<P> & {
+type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
     name: {
         title: T;
         initials: string;
@@ -57,11 +58,11 @@ type UserRecord<P = false, T = never> = RecordId<P> & {
     code: string;
 }
 
-export type TeacherRecord<P = false> = UserRecord<P, "Mr." | "Mrs." | "Ms." | "Dr." | "Master"> & {
     subjects: Schema.Types.ObjectId[];
+export type TeacherRecord<P = false, I = false> = UserRecord<P, "Mr." | "Mrs." | "Ms." | "Dr." | "Master"> & {
 };
 
-export type StudentRecord<P = false> = UserRecord<P> & {
+export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
     academic: {
         session: Schema.Types.ObjectId;
         terms: {
@@ -75,7 +76,7 @@ export type StudentRecord<P = false> = UserRecord<P> & {
 
 /* Student and Teacher */
 
-export type EventRecord<P = false> = RecordId<P> & {
+export type EventRecord<P = false, I = false> = RecordId<P, I> & {
     date: Date;
     events: {
         name: string;
@@ -83,7 +84,7 @@ export type EventRecord<P = false> = RecordId<P> & {
     }[];
 };
 
-export type ExamRecord<P = false> = RecordId<P> & {
+export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
     SubjectID: P extends true ? string : Schema.Types.ObjectId;
     questions: (P extends true ? QuestionRecord<P> : string)[];
@@ -96,14 +97,14 @@ export type ExamRecord<P = false> = RecordId<P> & {
 
 /* Session and Term */
 
-export type SessionRecord<P = false> = RecordId<P> & {
+export type SessionRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
     current?: boolean;
     terms: TermRecord<P>[];
 };
 
-export type TermRecord<P = false> = RecordId<P> & {
+export type TermRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
     current?: boolean;
