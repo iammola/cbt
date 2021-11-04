@@ -12,10 +12,11 @@ async function getTeacherEvents(id: string): Promise<RouteResponse> {
 
     try {
         const teacher = await TeacherModel.findById(id, '-_id subjects').lean();
-        const classes = await ClassModel.find({}, {
-            name: 1,
-            subjects: teacher?.subjects.map(({ _id }) => _id) ?? []
-        }).lean();
+        const classes = await ClassModel.find({
+            subjects: {
+                $in: teacher?.subjects ?? []
+            }
+        }, "-_id name subjects.$").lean();
 
         const events = await EventModel.find({ date: { $gte: new Date() } }, {
             date: 1,
