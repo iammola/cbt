@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FormEvent, Fragment, useMemo, useState } from "react";
 import { CheckIcon, ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
-import { CheckCircleIcon, XCircleIcon, BellIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon } from "@heroicons/react/outline";
 
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
@@ -87,6 +87,10 @@ const CreateQuestions: NextPage = () => {
                     message: "Exam Saved Locally",
                     timeout: 3e3,
                     Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
+                }, {
+                    message: error.message,
+                    timeout: 5e3,
+                    Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 text-red-700" })
                 }]);
             }
 
