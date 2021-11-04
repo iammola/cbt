@@ -1,3 +1,4 @@
+import type { Schema } from "mongoose";
 
 type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
 
