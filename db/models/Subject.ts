@@ -6,12 +6,10 @@ const SubjectSchema = new Schema<SubjectRecord>({
     name: {
         type: String,
         required: [true, 'Subject name required'],
-        unique: true,
         trim: true,
     }, alias: {
         type: String,
         required: [true, 'Subject alias required'],
-        unique: true,
         trim: true,
     }
 });
