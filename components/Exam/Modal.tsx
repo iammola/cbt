@@ -34,7 +34,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                     setSubjects(data.subjects);
                     setSelectedSubject({ _id: "", name: "Select subject" });
                 } else throw new Error(error);
-            } catch (error) {
+            } catch (error: any) {
                 console.log({ error });
             }
         }

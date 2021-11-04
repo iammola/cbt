@@ -38,7 +38,7 @@ const CreateSession: NextPage = () => {
                 setCurrent(false);
                 setTerms([{ ...termTemplate }]);
             } else throw new Error(error);
-        } catch (error) {
+        } catch (error: any) {
             console.log({ error });
         }
 

@@ -56,7 +56,7 @@ const Home: NextPage = () => {
                     sameSite: true
                 });
             } else throw new Error(error);
-        } catch (error) {
+        } catch (error: any) {
             console.log({ error });
         }
 

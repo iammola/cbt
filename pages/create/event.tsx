@@ -41,7 +41,7 @@ const CreateEvent: NextPage = () => {
                     setSubjects(data.subjects);
                     setSelectedSubject({ _id: "", name: "Select subject" });
                 } else throw new Error(error);
-            } catch (error) {
+            } catch (error: any) {
                 console.log({ error });
             }
         }
@@ -73,7 +73,7 @@ const CreateEvent: NextPage = () => {
                     setSelectedClass({ _id: "", name: "Loading classes..." });
                     setSelectedSubject({ _id: "", name: "Select class first" });
                 } else throw new Error(error);
-            } catch (error) {
+            } catch (error: any) {
                 console.log({ error });
             }
 

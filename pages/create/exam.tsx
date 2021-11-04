@@ -76,7 +76,7 @@ const CreateQuestions: NextPage = () => {
                     }]);
                     saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
                 } else throw new Error(error);
-            } catch (error) {
+            } catch (error: any) {
                 saveExam();
                 console.error(error);
                 setNotifications([...notifications, {

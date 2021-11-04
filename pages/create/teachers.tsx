@@ -67,7 +67,7 @@ const CreateTeachers: NextPage = () => {
                     };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
-            } catch (error) {
+            } catch (error: any) {
                 console.log({ error });
             }
         }
@@ -104,7 +104,7 @@ const CreateTeachers: NextPage = () => {
                 });
                 setSelectedSubjects([]);
             } else throw new Error(error);
-        } catch (error) {
+        } catch (error: any) {
             console.log({ error });
         }
 

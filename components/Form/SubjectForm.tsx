@@ -51,7 +51,7 @@ const SubjectForm: NextPage = () => {
 
                 mutate(`/api/classes/${selectedClass._id}/subjects`);
             } else throw new Error(error);
-        } catch (error) {
+        } catch (error: any) {
             console.log({ error });
         }
 
