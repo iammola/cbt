@@ -8,7 +8,7 @@ import { Navbar, Sidebar } from "components/Layout";
 
 const Home: NextPage = () => {
     const [{ account }] = useCookies(['account']);
-    const { data: eventsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/events` : null, url => url !== null && fetch(url).then(res => res.json()));
+    // const { data: eventsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/events` : null, url => url !== null && fetch(url).then(res => res.json()));
     const { data: subjectsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/subjects/extend?select=name _id` : null, url => url !== null && fetch(url).then(res => res.json()));
 
     return (
@@ -27,10 +27,10 @@ const Home: NextPage = () => {
                         </h2>
                         <div className="grid grid-cols-1 xl:grid-cols-12 grid-row-2 xl:grid-rows-6 gap-5 flex-grow w-full rounded-lg">
                             <div className="flex flex-col items-start justify-center col-start-1 col-end-2 xl:col-end-10 row-start-1 row-end-2 xl:row-end-5 rounded-3xl shadow-md px-7 py-8 bg-white">
-                                <h5 className="font-semibold text-gray-700 pl-1 pb-4">
+                                {/* <h5 className="font-semibold text-gray-700 pl-1 pb-4">
                                     Exams to Register
                                 </h5>
-                                <Todo items={eventsItems?.data} />
+                                <Todo items={eventsItems?.data} /> */}
                             </div>
                             <div className="col-start-1 xl:col-start-10 col-end-2 xl:col-end-13 row-start-2 xl:row-start-1 row-end-3 xl:row-end-7 rounded-3xl shadow-md px-7 py-8 bg-white">
                                 <h5 className="font-semibold text-gray-700 pl-1 pb-4">
