@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
-import { OuterCircleIcon, CircleOutlineIcon } from "components/Misc/CustomIcons";
+import { OuterCircleIcon, CircleOutlineIcon } from "components/Misc/Icons";
 
-import { AnswerRecord } from "types";
+import type { AnswerRecord } from "types";
 
 const Answer: FunctionComponent<AnswerProps> = ({ id, letter, answer, isCorrect, deleteOption, handleChange }) => {
     return (

@@ -1,13 +1,13 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { format, startOfTomorrow } from "date-fns";
 import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import Select, { SelectOption } from "components/Select";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
 const CreateEvent: NextPage = () => {
     const [name, setName] = useState('');

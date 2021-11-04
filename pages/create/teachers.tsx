@@ -1,14 +1,14 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
-import { ClassRecord, SubjectRecord } from "types";
+import type { ClassRecord, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
     const [email, setEmail] = useState('');

@@ -1,10 +1,10 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { useSWRConfig } from 'swr';
 import { FormEvent, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
-import { LoadingIcon } from "components/Misc/CustomIcons";
+import { LoadingIcon } from "components/Misc/Icons";
 
 const ClassForm: NextPage = () => {
     const { mutate } = useSWRConfig();

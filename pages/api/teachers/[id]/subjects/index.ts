@@ -2,16 +2,17 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel } from "db/models";
+import { TeacherModel } from "db/models";
 
-import type { RouteResponse, ClassRecord } from "types";
+import type { RouteResponse } from "types";
 
-async function getClasses(select: string = ''): Promise<RouteResponse> {
+async function getTeacherSubjects(id: string): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await ClassModel.find({}).select(select);
+        const data = await TeacherModel.findById(id).select('-_id subjects').lean();
+
         [success, status, message] = [true, StatusCodes.OK, {
             data,
             message: ReasonPhrases.OK
@@ -26,34 +27,15 @@ async function getClasses(select: string = ''): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createClass(item: ClassRecord): Promise<RouteResponse> {
-    await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-
-    try {
-        const data = await ClassModel.create(item);
-        [success, status, message] = [true, StatusCodes.CREATED, {
-            data,
-            message: ReasonPhrases.CREATED
-        }];
-    } catch (error: any) {
-        [status, message] = [StatusCodes.BAD_REQUEST, {
-            error: error.message,
-            message: ReasonPhrases.BAD_REQUEST
-        }];
-    }
-
-    return [success, status, message];
-}
-
-export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
+    const { id } = query as { id: string };
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "POST" ? createClass(JSON.parse(body)) : getClasses(query.select as string));
+    } else[success, status, message] = await getTeacherSubjects(id);
 
     if (typeof message !== "object") message = { message };
 

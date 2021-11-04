@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 import ClassForm from "components/Form/ClassForm";
 import SubjectForm from "components/Form/SubjectForm";

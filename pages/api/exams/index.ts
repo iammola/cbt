@@ -1,12 +1,12 @@
 import { startSession } from "mongoose";
 import { minutesToMilliseconds } from "date-fns";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
 
-import { RouteResponse, ExamRecord, CreateQuestion } from "types";
+import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
 async function getExams({ select = '', date }: { select: string; date: string }): Promise<RouteResponse> {
     await connect();

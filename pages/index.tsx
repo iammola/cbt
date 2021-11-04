@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
@@ -10,7 +10,7 @@ import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useSta
 
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
-import { LoadingIcon } from 'components/Misc/CustomIcons';
+import { LoadingIcon } from 'components/Misc/Icons';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
 
             setSuccess(success);
             if (success === true) {
-                setTimeout(router.push, 155e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
+                setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
                 setCookies("account", JSON.stringify(data), {
                     path: '/',
                     sameSite: true
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
         }
 
         setLoading(false);
-        setTimeout(setSuccess, 15e2, undefined);
+        setTimeout(setSuccess, 5e2, undefined);
     }
 
     return (

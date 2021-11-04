@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { EventModel } from "db/models";
 
-import { RouteResponse } from "types";
+import type { RouteResponse } from "types";
 
 async function createEvent({ date, event }: { date: Date; event: { name: string; subject: string } }): Promise<RouteResponse> {
     await connect();

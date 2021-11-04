@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import { AnswerRecord } from "types";
+import type { AnswerRecord } from "types";
 
 const AnswerSchema = new Schema<AnswerRecord>({
     isCorrect: {

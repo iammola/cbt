@@ -50,17 +50,21 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
                                     >
                                         {({ selected, active }) => (
                                             <>
-                                                <span className={classNames("block truncate", {
-                                                    "font-medium": selected,
-                                                    "font-normal": !selected,
-                                                })}>
+                                                <span
+                                                    className={classNames("block truncate", {
+                                                        "font-medium": selected,
+                                                        "font-normal": !selected,
+                                                    })}
+                                                >
                                                     {option.name}
                                                 </span>
                                                 {selected === true && (
-                                                    <span className={classNames("absolute inset-y-0 left-0 flex items-center pl-3", {
-                                                        [pallette.activeCheckIconColor]: active,
-                                                        [pallette.inactiveCheckIconColor]: !active
-                                                    })} >
+                                                    <span
+                                                        className={classNames("absolute inset-y-0 left-0 flex items-center pl-3", {
+                                                            [pallette.activeCheckIconColor]: active,
+                                                            [pallette.inactiveCheckIconColor]: !active
+                                                        })}
+                                                    >
                                                         <CheckIcon className="w-5 h-5" aria-hidden="true" />
                                                     </span>
                                                 )}

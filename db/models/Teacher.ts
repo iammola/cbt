@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import { TeacherRecord } from "types";
+import type { TeacherRecord } from "types";
 
 const TeacherSchema = new Schema<TeacherRecord>({
     name: {
@@ -46,6 +46,9 @@ const TeacherSchema = new Schema<TeacherRecord>({
         required: [true, 'User Login Code required'],
         unique: true,
         select: false,
+    }, image: {
+        type: String,
+        trim: true
     }
 });
 

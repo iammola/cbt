@@ -1,7 +1,7 @@
 import { isFuture } from "date-fns";
 import { Schema, Model, model, models } from "mongoose";
 
-import { EventRecord } from "types";
+import type { EventRecord } from "types";
 
 const EventSchema = new Schema<EventRecord>({
     date: {

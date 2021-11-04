@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 
-import { RouteResponse } from "types";
+import type { RouteResponse } from "types";
 
 export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
