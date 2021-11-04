@@ -39,7 +39,7 @@ export const CalendarIllustration: FunctionComponent<ComponentProps<'svg'>> = (p
 export const MeditatingIllustration: FunctionComponent<ComponentProps<'svg'>> = (props) => {
     return (
         <svg
-        {...props}
+            {...props}
             fill="none"
             viewBox="0 0 357 283"
             xmlns="http://www.w3.org/2000/svg"
