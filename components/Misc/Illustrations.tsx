@@ -111,6 +111,7 @@ export const StandingChatIllustration: FunctionComponent<ComponentProps<'svg'>> 
 export const StandingWithPencilIllustration: FunctionComponent<ComponentProps<'svg'>> = (props) => {
     return (
         <svg
+            {...props}
             fill="none"
             viewBox="0 0 265 322"
             xmlns="http://www.w3.org/2000/svg"
