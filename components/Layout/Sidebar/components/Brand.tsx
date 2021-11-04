@@ -5,6 +5,8 @@ import { classNames } from "utils";
 
 import BrandIcon from "/public/favicon.ico"
 
+import type { BrandProps } from "types";
+
 const Brand: FunctionComponent<BrandProps> = ({ open }) => {
     return (
         <div
@@ -30,10 +32,6 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
             </span>
         </div>
     );
-}
-
-type BrandProps = {
-    open: boolean;
 }
 
 export default Brand;

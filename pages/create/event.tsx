@@ -6,8 +6,10 @@ import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
-import Select, { SelectOption } from "components/Select";
+import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
+
+import type { SelectOption } from "types";
 
 const CreateEvent: NextPage = () => {
     const [name, setName] = useState('');

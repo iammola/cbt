@@ -4,6 +4,8 @@ import { SelectorIcon, CheckIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 
+import type { SelectProps } from "types";
+
 const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options, selected, className, handleChange }) => {
     const pallette = colorPallette ?? {
         activeCheckIconColor: "text-yellow-600",
@@ -79,26 +81,6 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
             </Listbox>
         </div>
     );
-}
-
-export type SelectOption = {
-    _id: any;
-    name: string;
-}
-
-type SelectProps = {
-    label?: string;
-    className?: string;
-    colorPallette?: {
-        buttonBorderColor: string;
-        activeOptionColor: string;
-        activeCheckIconColor: string;
-        buttonOffsetFocusColor: string;
-        inactiveCheckIconColor: string;
-    };
-    selected: SelectOption;
-    options?: SelectProps['selected'][];
-    handleChange(T: SelectProps['selected']): void;
 }
 
 export default Select;

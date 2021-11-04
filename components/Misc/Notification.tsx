@@ -1,6 +1,8 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { ComponentProps, Fragment, FunctionComponent, useState } from "react";
+import { Fragment, FunctionComponent, useState } from "react";
+
+import type { NotificationProps } from "types";
 
 const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, removeIcon, Icon }) => {
     const [show, setShow] = useState(true);
@@ -39,13 +41,6 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
             </div>
         </Transition>
     );
-}
-
-export type NotificationProps = {
-    message: string;
-    timeout: number;
-    removeIcon(): void;
-    Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 
 export default Notification;

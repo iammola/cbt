@@ -1,7 +1,9 @@
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
 import { FunctionComponent, useState } from 'react';
 
 import { classNames } from "utils";
+
+import type { UserImageProps } from 'types';
 
 const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) => {
     const [error, setError] = useState(false);
@@ -23,13 +25,6 @@ const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) =>
             {initials.text}
         </span>
     );
-}
-
-type UserImageProps = ImageProps & {
-    initials: {
-        text: string;
-        className?: string;
-    }
 }
 
 export default UserImage;

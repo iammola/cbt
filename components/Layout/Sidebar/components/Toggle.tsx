@@ -3,6 +3,8 @@ import { ChevronRightIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
+import type { ToggleProps } from "types";
+
 const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
     return (
         <div
@@ -22,11 +24,6 @@ const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
             )}
         </div>
     );
-}
-
-type ToggleProps = {
-    open: boolean;
-    toggleOpen(): void;
 }
 
 export default Toggle;

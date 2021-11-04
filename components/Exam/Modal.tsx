@@ -2,9 +2,9 @@ import useSWR from "swr";
 import { Dialog, Transition } from "@headlessui/react";
 import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
-import Select, { SelectOption } from "components/Select";
+import Select from "components/Select";
 
-import type { ExamRecord } from "types";
+import type { ExamModalProps, SelectOption } from "types";
 
 const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
@@ -152,14 +152,6 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
             </Dialog>
         </Transition>
     );
-}
-
-type ExamModalProps = {
-    onSubmit(v: {
-        class: string;
-        subject: string;
-        details: Pick<ExamRecord, 'duration' | 'SubjectID'>;
-    }): void
 }
 
 export default ExamModal;

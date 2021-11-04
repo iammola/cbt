@@ -5,7 +5,7 @@ import Select from 'components/Select';
 import Answer from 'components/Exam/Answer';
 import { CircleIcon, LineIcon } from 'components/Misc/Icons';
 
-import { QuestionRecord, CreateQuestion } from 'types';
+import type { QuestionRecord, QuestionProps } from 'types';
 
 const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }) => {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -128,12 +128,6 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
             </div>
         </section>
     );
-}
-
-type QuestionProps = {
-    number: number;
-    record: CreateQuestion;
-    onChange(question: Partial<CreateQuestion>): void;
 }
 
 export default Question;

@@ -4,6 +4,8 @@ import { MoonIcon as MoonSolidIcon, SunIcon as SunSolidIcon } from "@heroicons/r
 import { classNames } from "utils";
 import { MoonIcon as MoonOutlineIcon, SunIcon as SunOutlineIcon } from "components/Misc/Icons";
 
+import type { ThemeProps } from "types";
+
 const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     const [active, setActive] = useState(0);
     const [hovered, setHovered] = useState(active);
@@ -67,10 +69,6 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
             </div>
         </div>
     );
-}
-
-type ThemeProps = {
-    open: boolean;
 }
 
 export default Theme;

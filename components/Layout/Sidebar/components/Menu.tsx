@@ -7,6 +7,8 @@ import { classNames } from "utils";
 import { Badges } from "components/Misc"
 import { HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
+import type { MenuProps } from "types";
+
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
     return (
         <nav
@@ -215,10 +217,6 @@ interface MenuItem extends FunctionComponent<{ children: RenderChildren | Return
     List: FunctionComponent<Pick<Parameters<RenderChildren>[0], 'expand'>>;
     Panel: FunctionComponent<Pick<Parameters<RenderChildren>[0], 'expand'>>;
     Main: FunctionComponent;
-}
-
-type MenuProps = {
-    open: boolean;
 }
 
 export default Menu;

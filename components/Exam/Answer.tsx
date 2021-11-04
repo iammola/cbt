@@ -3,7 +3,7 @@ import { XIcon } from "@heroicons/react/solid";
 
 import { OuterCircleIcon, CircleOutlineIcon } from "components/Misc/Icons";
 
-import type { AnswerRecord } from "types";
+import type { AnswerProps } from "types";
 
 const Answer: FunctionComponent<AnswerProps> = ({ id, letter, answer, isCorrect, deleteOption, handleChange }) => {
     return (
@@ -46,13 +46,6 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, letter, answer, isCorrect,
             />
         </>
     );
-}
-
-type AnswerProps = AnswerRecord & {
-    id: string;
-    letter: string;
-    deleteOption(): void;
-    handleChange(answer: Partial<AnswerRecord>): void;
 }
 
 export default Answer;

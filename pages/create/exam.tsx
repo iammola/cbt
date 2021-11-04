@@ -10,9 +10,9 @@ import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon } from "@
 import ExamModal from "components/Exam/Modal";
 import Question from "components/Exam/Question";
 import { LoadingIcon } from "components/Misc/Icons";
-import Notification, { NotificationProps } from "components/Misc/Notification";
+import Notification from "components/Misc/Notification";
 
-import type { CreateQuestion } from "types";
+import type { CreateQuestion, NotificationProps } from "types";
 
 const CreateQuestions: NextPage = () => {
     const router = useRouter();
