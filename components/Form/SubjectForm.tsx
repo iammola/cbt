@@ -32,27 +32,29 @@ const SubjectForm: NextPage = () => {
         e.preventDefault();
         setLoading(true);
 
-        try {
-            const res = await fetch(`/api/classes/${selectedClass._id}/subjects`, {
-                method: "POST",
-                body: JSON.stringify({ name, alias })
-            });
-            const { success, error } = await res.json();
-
-            setSuccess(success);
-
-            if (success === true) {
-                setName('');
-                setAlias('');
-                setSelectedClass({
-                    _id: "",
-                    name: "Select class"
+        if (selectedClass._id !== '') {
+            try {
+                const res = await fetch(`/api/classes/${selectedClass._id}/subjects`, {
+                    method: "POST",
+                    body: JSON.stringify({ name, alias })
                 });
+                const { success, error } = await res.json();
 
-                mutate(`/api/classes/${selectedClass._id}/subjects`);
-            } else throw new Error(error);
-        } catch (error: any) {
-            console.log({ error });
+                setSuccess(success);
+
+                if (success === true) {
+                    setName('');
+                    setAlias('');
+                    setSelectedClass({
+                        _id: "",
+                        name: "Select class"
+                    });
+
+                    mutate(`/api/classes/${selectedClass._id}/subjects`);
+                } else throw new Error(error);
+            } catch (error: any) {
+                console.log({ error });
+            }
         }
 
         setLoading(false);
