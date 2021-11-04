@@ -2,7 +2,7 @@ import { FunctionComponent, useState, useMemo } from 'react';
 import { PlusSmIcon } from '@heroicons/react/outline';
 
 import Select from 'components/Select';
-import Answer from 'components/Exam/Answer';
+import { Answer } from 'components/Exam';
 import { CircleIcon, LineIcon } from 'components/Misc/Icons';
 
 import type { QuestionRecord, QuestionProps } from 'types';
