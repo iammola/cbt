@@ -44,11 +44,11 @@ Todo.Item = function Item({ name, ...props }) {
                 <span className="block truncate font-medium text-sm tracking-wide text-gray-700">
                     {name}
                 </span>
-                <span className="block truncate text-sm text-gray-500">
+                <span className="block truncate text-sm text-gray-600">
                     {props.class}
                 </span>
-                <span className="block truncate text-xs text-gray-400">
                     {date[0].toUpperCase()}{date.slice(1)}
+                <span className="block truncate text-xs text-gray-500">
                 </span>
             </div>
         </div>
