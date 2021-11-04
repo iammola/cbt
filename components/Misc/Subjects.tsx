@@ -11,6 +11,11 @@ const Subjects: Subjects = ({ items }) => {
                     key={item.name}
                 />
             ))}
+            {items === undefined && (
+                <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
+                    Loading Subjects...
+                </div>
+            )}
         </div>
     );
 }
