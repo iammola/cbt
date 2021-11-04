@@ -53,7 +53,7 @@ const Home: NextPage = () => {
                                 <h5 className="font-semibold text-gray-700 pl-1 pb-4">
                                     Subjects
                                 </h5>
-                                <Subjects items={subjectsItems} />
+                                <Subjects items={subjectsItems?.data} />
                             </div>
                         </div>
                     </section>
