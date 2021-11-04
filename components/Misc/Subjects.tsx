@@ -32,7 +32,7 @@ Subjects.Item = function Item({ name, subjects }) {
                         <span className="text-xs text-gray-500 font-medium">
                             {++i}.
                         </span>
-                        <div className={classNames("flex flex-shrink-0 items-center justify-center rounded-full shadow-md w-9 h-9 text-xs text-white font-medium", colors[Math.floor(Math.random() * colors.length)])}>
+                        <div className={classNames("flex flex-shrink-0 items-center justify-center rounded-full shadow-md w-9 h-9 text-xs text-white font-medium uppercase", colors[Math.floor(Math.random() * colors.length)])}>
                             {name.split(' ', 2).map(word => word[0])}
                         </div>
                         <div className="block truncate font-medium text-xs tracking-wider text-gray-700">
