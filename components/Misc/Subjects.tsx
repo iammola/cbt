@@ -50,7 +50,7 @@ type SubjectItem = {
     subjects: { name: string; }[];
 };
 
-interface Subjects extends FunctionComponent<{ items: SubjectItem[] }> {
+interface Subjects extends FunctionComponent<{ items?: SubjectItem[] }> {
     Item: FunctionComponent<SubjectItem>;
 }
 
