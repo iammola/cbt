@@ -41,7 +41,7 @@ async function createSubject(id: string, subject: SubjectRecord): Promise<RouteR
                 data,
                 message: ReasonPhrases.CREATED
             }];
-        } else[status, message] = [StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
+        } else throw new Error('Class does not exist');
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
             error: error.message,
