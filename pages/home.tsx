@@ -8,25 +8,8 @@ import { Navbar, Sidebar } from "components/Layout";
 
 const Home: NextPage = () => {
     const [{ account }] = useCookies(['account']);
+    const { data: eventsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/events` : null, url => url !== null && fetch(url).then(res => res.json()));
     const { data: subjectsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/subjects/extend?select=name _id` : null, url => url !== null && fetch(url).then(res => res.json()));
-
-    const todoItems = [{
-        name: "Physics",
-        date: new Date("August 2021"),
-        class: "Key Stage 1"
-    }, {
-        name: "Mathematics",
-        date: new Date("10 December 2004"),
-        class: "Senior College 2"
-    }, {
-        name: "Civic Education",
-        date: new Date(),
-        class: "Early Years 2"
-    }, {
-        name: "English Language",
-        date: new Date('10 December 2020'),
-        class: "Upper Key Stage 2"
-    }];
 
     return (
         <>
@@ -47,7 +30,7 @@ const Home: NextPage = () => {
                                 <h5 className="font-semibold text-gray-700 pl-1 pb-4">
                                     Exams to Register
                                 </h5>
-                                <Todo items={todoItems} />
+                                <Todo items={eventsItems?.data} />
                             </div>
                             <div className="col-start-1 xl:col-start-10 col-end-2 xl:col-end-13 row-start-2 xl:row-start-1 row-end-3 xl:row-end-7 rounded-3xl shadow-md px-7 py-8 bg-white">
                                 <h5 className="font-semibold text-gray-700 pl-1 pb-4">
