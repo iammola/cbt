@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 
 import { classNames } from "utils";
+import { MeditatingIllustration } from "components/Misc/Illustrations";
 
 const Subjects: Subjects = ({ items }) => {
     return (
@@ -13,6 +14,7 @@ const Subjects: Subjects = ({ items }) => {
             ))}
             {items === undefined && (
                 <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
+                    <MeditatingIllustration className="w-32 h-32" />
                     Loading Subjects...
                 </div>
             )}
