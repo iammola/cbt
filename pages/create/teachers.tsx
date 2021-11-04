@@ -121,7 +121,7 @@ const CreateTeachers: NextPage = () => {
             <section className="flex items-center justify-center bg-gradient-to-tr from-purple-400 to-pink-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white max-w-[75%]"
                 >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
@@ -245,7 +245,7 @@ const CreateTeachers: NextPage = () => {
                                             <span className="text-xs w-full font-medium text-gray-600">
                                                 {name}
                                             </span>
-                                            <div className="flex gap-x-4 gap-y-3 w-full text-sm text-gray-700">
+                                            <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm text-gray-700">
                                                 {subjects.map(({ _id, name }) => (
                                                     <label
                                                         key={_id}
