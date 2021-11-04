@@ -1,6 +1,6 @@
-type RecordId<P = false> = (P extends true ? { _id: string } : {});
 
 export type AnswerRecord<P = false> = RecordId<P> & {
+type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
     answer: string
     isCorrect?: boolean;
 };
