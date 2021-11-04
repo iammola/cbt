@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { compareAsc, formatDistance, isFuture } from "date-fns";
 
 import { classNames } from "utils";
-import { CalendarIllustration } from "components/Misc/Illustrations";
+import { CalendarIllustration, StandingChatIllustration } from "components/Misc/Illustrations";
 
 const Todo: Todo = ({ items }) => {
     const filtered = items?.filter(a => isFuture(new Date(a.date))).sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)));
@@ -19,6 +19,12 @@ const Todo: Todo = ({ items }) => {
                 <div className="flex flex-col gap-1 items-center justify-center w-full h-full text-sm text-gray-600">
                     <CalendarIllustration className="w-28 h-28" />
                     nothing to see here
+                </div>
+            )}
+            {filtered === undefined && (
+                <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
+                    <StandingChatIllustration className="w-32 h-32" />
+                    Loading Exams...
                 </div>
             )}
         </div>
