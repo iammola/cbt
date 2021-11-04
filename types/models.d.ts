@@ -35,7 +35,7 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
 export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
-    subjects: Schema.Types.ObjectId[];
+    subjects: (P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId)[];
 };
 
 export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
@@ -59,8 +59,8 @@ type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
     code: string;
 }
 
-    subjects: Schema.Types.ObjectId[];
 export type TeacherRecord<P = false, I = false> = UserRecord<P, "Mr." | "Mrs." | "Ms." | "Dr." | "Master"> & {
+    subjects: (P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId)[];
 };
 
 export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
