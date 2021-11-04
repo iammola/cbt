@@ -5,7 +5,7 @@ import { classNames } from "utils";
 const Subjects: Subjects = ({ items }) => {
     return (
         <div className="flex xl:flex-col flex-wrap items-start justify-start gap-4 w-full xl:divide-y xl:divide-gray-200">
-            {items.map(item => (
+            {items?.map(item => (
                 <Subjects.Item
                     {...item}
                     key={item.name}
