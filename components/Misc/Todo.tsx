@@ -5,17 +5,17 @@ import { classNames } from "utils";
 import { CalendarIllustration } from "components/Misc/Illustrations";
 
 const Todo: Todo = ({ items }) => {
-    const filtered = items.filter(a => isFuture(new Date(a.date))).sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)));
+    const filtered = items?.filter(a => isFuture(new Date(a.date))).sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)));
 
     return (
         <div className="flex flex-wrap flex-row flex-grow items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
-            {filtered.map((item, i) => (
+            {filtered?.map((item, i) => (
                 <Todo.Item
                     key={i}
                     {...item}
                 />
             ))}
-            {filtered.length === 0 && (
+            {filtered?.length === 0 && (
                 <div className="flex flex-col gap-1 items-center justify-center w-full h-full text-sm text-gray-600">
                     <CalendarIllustration className="w-28 h-28" />
                     nothing to see here
