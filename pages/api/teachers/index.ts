@@ -13,7 +13,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<R
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const { code, ...data } = await TeacherModel.create({
+        const data = await TeacherModel.create({
             ...teacher,
             code: generateCode(),
             subjects: (await SubjectModel.find({ _id: subjects }).select('_id').lean()).map(({ _id }: any) => _id)
