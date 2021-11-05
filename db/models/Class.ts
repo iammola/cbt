@@ -13,10 +13,7 @@ const ClassSchema = new Schema<ClassRecord>({
         required: [true, 'Class alias is required'],
         unique: true,
         trim: true,
-    }, subjects: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Subject',
-    }],
+    },
 });
 
 export const ClassModel = models.Class as Model<ClassRecord> ?? model('Class', ClassSchema);

@@ -35,7 +35,6 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
 export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
-    subjects: (P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId)[];
 };
 
 export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
