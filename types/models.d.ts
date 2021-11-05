@@ -38,9 +38,13 @@ export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
 };
 
 export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
-    name: string;
-    alias: string;
-};
+    class: Schema.Types.ObjectId;
+    subjects: (RecordId<P, I> & {
+        name: string;
+        alias: string;
+        teachers: Schema.Types.ObjectId[];
+    })[];
+}
 
 
 /* Student and Teacher */

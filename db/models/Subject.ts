@@ -3,14 +3,27 @@ import { Schema, Model, model, models } from "mongoose";
 import type { SubjectRecord } from "types";
 
 const SubjectSchema = new Schema<SubjectRecord>({
-    name: {
-        type: String,
-        required: [true, 'Subject name required'],
-        trim: true,
-    }, alias: {
-        type: String,
-        required: [true, 'Subject alias required'],
-        trim: true,
+    class: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'Class needed'],
+        unique: true,
+    }, subjects: {
+        type: [{
+            name: {
+                type: String,
+                required: [true, 'Subject name required'],
+                unique: true,
+                trim: true,
+            }, alias: {
+                type: String,
+                required: [true, 'Subject alias required'],
+                unique: true,
+                trim: true,
+            }, teachers: [{
+                type: Schema.Types.ObjectId,
+                ref: 'Teacher',
+            }]
+        }]
     }
 });
 
