@@ -17,6 +17,15 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
             ...teacher,
             code: generateCode()
         });
+        await SubjectModel.updateMany({ class: Object.keys(subjects) as any[] }, {
+            $addToSet: { "subjects.$[i].teachers": data._id }
+        }, {
+            runValidators: true,
+            arrayFilters: [{
+                "i._id": Object.values(subjects).flat()
+            }]
+        });
+
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
             message: ReasonPhrases.CREATED
