@@ -11,15 +11,13 @@ async function getTeacherClassSubject(id: any, classID: any, select: any): Promi
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = await SubjectModel.find({
+        const subjects = (await SubjectModel.find({
             class: classID,
             "subjects.teachers": id
-        }, select).lean();
-
-        const data = subjects.map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item)).flat();
+        }, select).lean()).map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item)).flat();
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data,
+            data: { subjects },
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
