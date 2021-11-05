@@ -255,11 +255,11 @@ const CreateTeachers: NextPage = () => {
                                                         <input
                                                             id={_id}
                                                             type="checkbox"
-                                                            checked={selectedSubjects[classID].includes(_id)}
+                                                            checked={(selectedSubjects[classID] ?? []).includes(_id)}
                                                             onChange={({ target: { checked } }) => {
                                                                 checked === true ? setSelectedSubjects({
                                                                     ...selectedSubjects,
-                                                                    [classID]: [...selectedSubjects[classID], _id]
+                                                                    [classID]: [...(selectedSubjects[classID] ?? []), _id]
                                                                 }) : setSelectedSubjects(Object.fromEntries(
                                                                     Object.entries(selectedSubjects).map(
                                                                         ([key, selected]) => [key, key === classID ? selected.filter(i => i !== _id) : selected]
