@@ -59,9 +59,7 @@ type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
     code: string;
 }
 
-export type TeacherRecord<P = false, I = false> = UserRecord<P, "Mr." | "Mrs." | "Ms." | "Dr." | "Master"> & {
-    subjects: (P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId)[];
-};
+export type TeacherRecord<P = false, I = false> = UserRecord<P, I, "Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
 
 export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
     academic: {
