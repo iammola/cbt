@@ -2,20 +2,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SubjectModel, TeacherModel } from "db/models";
+import { SubjectModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
-async function getTeacherSubjects(id: string): Promise<RouteResponse> {
+async function getTeacherClassSubject(id: any, classID: any, select: any): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = await SubjectModel.find({ "subjects.teacher": id }, '-class').lean();
-        const data = subjects.map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(item => (item as any)._id)).flat();
+        const subjects = (await SubjectModel.find({
+            class: classID,
+            "subjects.teachers": id
+        }, select).lean()).map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item)).flat();
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data,
+            data: { subjects },
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
@@ -29,14 +31,13 @@ async function getTeacherSubjects(id: string): Promise<RouteResponse> {
 }
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
-    const { id } = query as { id: string };
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-    const allowedMethods = ["POST", "GET"];
+    const allowedMethods = "GET";
 
-    if (allowedMethods.includes(method ?? '') === false) {
+    if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await getTeacherSubjects(id);
+    } else[success, status, message] = await getTeacherClassSubject(query.id, query.classID, query.select);
 
     if (typeof message !== "object") message = { message };
 

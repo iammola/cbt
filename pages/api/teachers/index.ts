@@ -8,16 +8,27 @@ import { SubjectModel, TeacherModel } from "db/models";
 
 import type { TeacherRecord, RouteResponse } from "types";
 
-async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<RouteResponse> {
+async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await TeacherModel.create({
             ...teacher,
-            code: generateCode(),
-            subjects: (await SubjectModel.find({ _id: subjects }).select('_id').lean()).map(({ _id }: any) => _id)
+            code: generateCode()
         });
+
+        Object.entries(subjects).map(async ([classID, subjects]) => await SubjectModel.updateOne({
+            class: classID as any,
+        }, {
+            $addToSet: { "subjects.$[i].teachers": data._id }
+        }, {
+            runValidators: true,
+            arrayFilters: [{
+                "subjects.i._id": subjects
+            }]
+        }).lean());
+
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
             message: ReasonPhrases.CREATED

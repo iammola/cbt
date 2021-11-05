@@ -2,25 +2,21 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, TeacherModel } from "db/models";
+import { ClassModel, SubjectModel } from "db/models";
 
-import type { RouteResponse, TeacherRecord } from "types";
+import type { RouteResponse } from "types";
 
-async function getExtendedTeacherSubjects(id: string, select: string): Promise<RouteResponse> {
+async function getExtendedTeacherSubjects(id: any): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const teacher = await TeacherModel.findById(id, '-_id subjects').populate('subjects', select).lean() as TeacherRecord<true, true>;
-        const classes = await ClassModel.find({
-            subjects: {
-                $in: teacher?.subjects.map(({ _id }) => _id) ?? []
-            }
-        }, "-_id name subjects.$").lean();
+        const subjects = await SubjectModel.find({ "subjects.teachers": id }, "-_id").lean();
+        const classes = await ClassModel.find({ _id: subjects.map(item => item.class) }, 'name').lean();
 
-        const data = classes.map(({ name, ...item }) => ({
+        const data = classes.map(({ name, ...classItem }) => ({
             name,
-            subjects: item.subjects.map(subject => teacher?.subjects.find(({ _id }) => _id.equals(subject)))
+            subjects: subjects.find(item => (classItem as any)._id.equals(item.class))?.subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item) ?? [],
         }));
 
         [success, status, message] = [true, StatusCodes.OK, {
@@ -38,14 +34,13 @@ async function getExtendedTeacherSubjects(id: string, select: string): Promise<R
 }
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
-    const { id, select } = query as { [K in "id" | "select"]: string; };
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await getExtendedTeacherSubjects(id, select)
+    } else[success, status, message] = await getExtendedTeacherSubjects(query.id)
 
     if (typeof message !== "object") message = { message };
 
