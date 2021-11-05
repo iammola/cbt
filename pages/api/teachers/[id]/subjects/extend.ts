@@ -16,7 +16,7 @@ async function getExtendedTeacherSubjects(id: any): Promise<RouteResponse> {
 
         const data = classes.map(({ name, ...classItem }) => ({
             name,
-            subjects: subjects.find(item => (classItem as any)._id.equals(item.class))?.subjects.filter(({ teachers }) => teachers.find(teacher => (classItem as any)._id.equals(teacher))) ?? [],
+            subjects: subjects.find(item => (classItem as any)._id.equals(item.class))?.subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item) ?? [],
         }));
 
         [success, status, message] = [true, StatusCodes.OK, {
