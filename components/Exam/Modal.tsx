@@ -42,7 +42,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
         }
 
         if (_id !== "") fetchSubjects();
-    }, [selectedClass]);
+    }, [account?._id, selectedClass]);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
