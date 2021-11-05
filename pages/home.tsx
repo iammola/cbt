@@ -9,7 +9,7 @@ import { Navbar, Sidebar } from "components/Layout";
 const Home: NextPage = () => {
     const [{ account }] = useCookies(['account']);
     // const { data: eventsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/events` : null, url => url !== null && fetch(url).then(res => res.json()));
-    const { data: subjectsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/subjects/extend?select=name _id` : null, url => url !== null && fetch(url).then(res => res.json()));
+    const { data: subjectsItems } = useSWR(account !== undefined ? `/api/teachers/${account._id}/subjects/extend` : null, url => url !== null && fetch(url).then(res => res.json()));
 
     return (
         <>
