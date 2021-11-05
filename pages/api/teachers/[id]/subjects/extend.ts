@@ -14,9 +14,9 @@ async function getExtendedTeacherSubjects(id: any, select: string): Promise<Rout
         const subjects = await SubjectModel.find({ "subjects.teachers": id }, "-_id").lean();
         const classes = await ClassModel.find({ _id: subjects.map(item => item.class) }, 'name').lean();
 
-        const data = classes.map(({ _id, name }) => ({
+        const data = classes.map(({ name, ...classItem }) => ({
             name,
-            subjects: subjects.find(item => _id.equals(item.class))?.subjects.filter(({ teachers }) => teachers.find(teacher => _id.equals(teacher))) ?? [],
+            subjects: subjects.find(item => item.class.equals((classItem as any)._id))?.subjects.filter(({ teachers }) => teachers.find(teacher => teacher.equals((classItem as any)._id))) ?? [],
         }));
 
         [success, status, message] = [true, StatusCodes.OK, {

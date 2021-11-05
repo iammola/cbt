@@ -31,7 +31,7 @@ async function getTeacherEvents(id: string): Promise<RouteResponse> {
 
         const data = events.reduce((acc, { events, date }) => [...acc, ...events.map(({ name, subject }) => ({
             name, date,
-            class: classes.find(({ _id }) => subjects.find(item => _id.equals(item.class)))?.name ?? ''
+            class: classes.find(cur => subjects.find(item => (cur as any)._id.equals(item.class)))?.name ?? ''
         }))], [] as { name: string; date: Date; class: string; }[]);
 
         [success, status, message] = [true, StatusCodes.OK, {
