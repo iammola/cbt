@@ -40,8 +40,8 @@ const CreateTeachers: NextPage = () => {
 
     const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
-    const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
-    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
+    const [selectedSubjects, setSelectedSubjects] = useState<{ [key: string]: string[] }>({});
+    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>['subjects']; }[] | string>('');
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
@@ -63,7 +63,7 @@ const CreateTeachers: NextPage = () => {
 
                     return {
                         _id, name,
-                        subjects: data.subjects as SubjectRecord<true>[]
+                        subjects: data.subjects as SubjectRecord<true>['subjects']
                     };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
@@ -102,7 +102,7 @@ const CreateTeachers: NextPage = () => {
                     _id: "",
                     name: "Select title"
                 });
-                setSelectedSubjects([]);
+                setSelectedSubjects({});
             } else throw new Error(error);
         } catch (error: any) {
             console.log({ error });
@@ -237,9 +237,9 @@ const CreateTeachers: NextPage = () => {
                                 </span>
                             ) : (
                                 subjectsData.length > 0 ? (
-                                    subjectsData.map(({ _id, name, subjects }) => (
+                                    subjectsData.map(({ _id: classID, name, subjects }) => (
                                         <div
-                                            key={_id}
+                                            key={classID}
                                             className="flex flex-col gap-2"
                                         >
                                             <span className="text-xs w-full font-medium text-gray-600">
@@ -255,8 +255,19 @@ const CreateTeachers: NextPage = () => {
                                                         <input
                                                             id={_id}
                                                             type="checkbox"
-                                                            checked={selectedSubjects.includes(_id)}
-                                                            onChange={({ target: { checked } }) => checked === true ? setSelectedSubjects([...selectedSubjects, _id]) : setSelectedSubjects(selectedSubjects.filter(selected => selected !== _id))}
+                                                            checked={selectedSubjects[classID].includes(_id)}
+                                                            onChange={({ target: { checked } }) => {
+                                                                checked === true ? setSelectedSubjects({
+                                                                    ...selectedSubjects,
+                                                                    [classID]: [...selectedSubjects[classID], _id]
+                                                                }) : setSelectedSubjects(Object.fromEntries(
+                                                                    Object.entries(selectedSubjects).map(
+                                                                        ([key, selected]) => [key, key === classID ? selected.filter(i => i !== _id) : selected]
+                                                                    ).filter(
+                                                                        ([, selected]) => selected.length > 0
+                                                                    )
+                                                                ))
+                                                            }}
                                                         />
                                                         {name}
                                                     </label>
