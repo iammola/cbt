@@ -38,7 +38,7 @@ async function createSubject(id: any, { name, alias }: SubjectRecord['subjects']
         if (data === null) throw new Error('Class does not exist');
 
         [success, status, message] = [true, StatusCodes.CREATED, {
-            data,
+            data: { name, alias },
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {
