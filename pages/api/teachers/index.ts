@@ -17,14 +17,13 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
             ...teacher,
             code: generateCode()
         });
-        await SubjectModel.updateMany({ class: Object.keys(subjects) as any[] }, {
-            $addToSet: { "subjects.$[i].teachers": data._id }
+
+        Object.entries(subjects).map(async ([classID, subjects]) => await SubjectModel.updateOne({
+            class: classID as any,
+            "subjects._id": subjects,
         }, {
-            runValidators: true,
-            arrayFilters: [{
-                "i._id": Object.values(subjects).flat()
-            }]
-        });
+            $addToSet: { "subjects.$[].teachers": data._id }
+        }, { runValidators: true }).lean());
 
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
