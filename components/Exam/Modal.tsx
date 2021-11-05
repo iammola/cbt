@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { useCookies } from "react-cookie";
 import { Dialog, Transition } from "@headlessui/react";
 import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
@@ -7,8 +8,9 @@ import Select from "components/Select";
 import type { ExamModalProps, SelectOption } from "types";
 
 const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
+    const [{ account }] = useCookies(['account']);
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
-    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => url !== null && fetch(url).then(res => res.json()));
 
     const [duration, setDuration] = useState(0);
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
@@ -27,7 +29,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
         async function fetchSubjects() {
             setSelectedSubject({ _id: "", name: "Loading subjects..." });
             try {
-                const res = await fetch(`/api/classes/${_id}/subjects`);
+                const res = await fetch(`/api/teachers/${account._id}/classes/${_id}/subjects`);
                 const { success, data, error } = await res.json();
 
                 if (success === true) {
