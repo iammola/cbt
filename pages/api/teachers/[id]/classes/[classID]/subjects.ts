@@ -13,7 +13,7 @@ async function getTeacherClassSubject(id: any, classID: any, select: any): Promi
     try {
         const subjects = await SubjectModel.find({
             class: classID,
-            "subjects.teacher": id
+            "subjects.teachers": id
         }, select);
 
         const data = subjects.map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item)).flat();

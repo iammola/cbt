@@ -11,7 +11,7 @@ async function getTeacherClasses(id: any, select: any): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const classes = (await SubjectModel.find({ "subjects.teacher": id }, 'class').lean()).map(item => item.class);
+        const classes = (await SubjectModel.find({ "subjects.teachers": id }, 'class').lean()).map(item => item.class);
         const data = await ClassModel.find({ _id: classes }, select);
 
         [success, status, message] = [true, StatusCodes.OK, {
