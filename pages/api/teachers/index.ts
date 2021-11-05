@@ -8,7 +8,7 @@ import { SubjectModel, TeacherModel } from "db/models";
 
 import type { TeacherRecord, RouteResponse } from "types";
 
-async function createTeacher({ subjects, ...teacher }: TeacherRecord): Promise<RouteResponse> {
+async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
