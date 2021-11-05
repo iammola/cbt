@@ -28,7 +28,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
         try {
             await connect();
             const promises = [findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)];
-            const data = await Promise.any?.(promises) ?? promiseAny(promises);
+            const data = await (Promise.any?.(promises) ?? promiseAny(promises));
 
             [success, status, message] = [true, StatusCodes.OK, {
                 data,
