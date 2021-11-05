@@ -20,10 +20,14 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
 
         Object.entries(subjects).map(async ([classID, subjects]) => await SubjectModel.updateOne({
             class: classID as any,
-            "subjects._id": subjects,
         }, {
-            $addToSet: { "subjects.$[].teachers": data._id }
-        }, { runValidators: true }).lean());
+            $addToSet: { "subjects.$[i].teachers": data._id }
+        }, {
+            runValidators: true,
+            arrayFilters: [{
+                "subjects.i._id": subjects
+            }]
+        }).lean());
 
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
