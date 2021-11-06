@@ -70,12 +70,14 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
                     <span className="w-max font-medium">
                         {/* Choose  */}Question Type:
                     </span>
-                    <Select
-                        className="-mt-5"
-                        selected={questionType}
-                        options={questionTypes}
-                        handleChange={({ _id }) => changeType(_id)}
-                    />
+                    <div className="w-80">
+                        <Select
+                            className="-mt-5"
+                            selected={questionType}
+                            options={questionTypes}
+                            handleChange={({ _id }) => changeType(_id)}
+                        />
+                    </div>
                 </div>
                 <div className="flex flex-col items-start gap-6 pl-[34px]">
                     <span className="absolute left-0 z-0 flex flex-col items-center justify-start w-[22px] h-[calc(100%+2px)] pt-2">
