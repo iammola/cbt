@@ -5,7 +5,7 @@ import { classNames } from "utils";
 
 import type { AnswerProps } from "types";
 
-const Answer: FunctionComponent<AnswerProps> = ({ id, number: count, answer, isCorrect, deleteOption, handleChange }) => {
+const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect, deleteOption, handleChange }) => {
     return (
         <>
             <input
@@ -26,7 +26,7 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, number: count, answer, isC
                 required
                 type="text"
                 value={answer}
-                placeholder={`Option ${count}`}
+                placeholder={`Option ${number}`}
                 onChange={({ target: { value } }) => handleChange({ answer: value })}
                 className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm border-b-2 border-transparent focus:bg-gray-50 hover:border-gray-200 focus:border-indigo-300 focus:outline-none"
             />
