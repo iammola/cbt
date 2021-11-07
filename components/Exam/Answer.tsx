@@ -1,17 +1,34 @@
 import { FunctionComponent } from "react";
+import { XIcon } from "@heroicons/react/outline";
 
+import { classNames } from "utils";
 
 import type { AnswerProps } from "types";
 
+const Answer: FunctionComponent<AnswerProps> = ({ id, number: count, answer, isCorrect, deleteOption, handleChange }) => {
     return (
         <>
+            <input
+                id={id}
+                type="checkbox"
+                className="hidden"
+                checked={isCorrect ?? false}
+                onChange={({ target: { checked } }) => handleChange({ isCorrect: checked })}
+            />
             <label
                 htmlFor={id}
+                className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
+                    "bg-gray-400": isCorrect,
+                    "bg-white": isCorrect === false
+                })}
+            />
             <input
                 required
                 type="text"
                 value={answer}
+                placeholder={`Option ${count}`}
                 onChange={({ target: { value } }) => handleChange({ answer: value })}
+                className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm border-b-2 border-transparent focus:bg-gray-50 hover:border-gray-200 focus:border-indigo-300 focus:outline-none"
             />
             <span
                 onClick={deleteOption}
