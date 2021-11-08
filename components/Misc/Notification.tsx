@@ -14,9 +14,7 @@ type NotificationsHook = [
 
 export function useNotifications(): NotificationsHook {
     const notifications = useMemo<Item[]>(() => [], []);
-
     const addNotification: NotificationsHook[0] = useCallback(items => notifications.push(...[items].flat()), [notifications]);
-
     const removeNotification: NotificationsHook[1] = useCallback(idx => notifications.splice(idx, 1), [notifications]);
 
     const Notifications: NotificationsHook[2] = useCallback(() => (
