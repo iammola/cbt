@@ -233,7 +233,7 @@ const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, upload
             </div>
             <button
                 type="button"
-                onClick={save}
+                onClick={() => save()}
                 className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
             >
                 {saved === true && (
