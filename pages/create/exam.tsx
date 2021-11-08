@@ -3,9 +3,6 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { FormEvent, Fragment, useMemo, useState } from "react";
-import { CheckIcon, ChevronRightIcon, PlusSmIcon } from "@heroicons/react/solid";
-import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon } from "@heroicons/react/outline";
 
 import { LoadingIcon } from "components/Misc/Icons";
 import Notification from "components/Misc/Notification";
@@ -102,55 +99,9 @@ const CreateQuestions: NextPage = () => {
                 <title>Create Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Exam Registration | GRS CBT" />
             </Head>
-            <section className="flex flex-col items-center justify-center gap-2 w-screen">
-                <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col items-center justify-start gap-10 w-full flex-grow py-10 px-5 sm:px-10"
-                >
-                    <section className="flex flex-col items-center justify-center gap-14 w-full h-full">
-                        {questions.map((question, i) => (
-                            <Fragment key={i}>
-                                <Question
-                                    number={i + 1}
-                                    record={question}
-                                    onChange={newQuestion => setQuestions(questions.map((item, questionIdx) => questionIdx === i ? ({ ...item, ...newQuestion }) : item))}
-                                />
-                                <div
-                                    aria-hidden="true"
-                                    className="w-full px-14 sm:px-20"
-                                >
-                                    <hr />
                                 </div>
-                            </Fragment>
                         ))}
-                    </section>
-                    <div className="flex items-center justify-center gap-7 w-full">
-                        <button
-                            type="button"
-                            onClick={() => setQuestions([...questions, { ...recordTemplate }])}
-                            className="flex items-center justify-center gap-2 py-3 px-7 rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-600"
-                        >
-                            <PlusSmIcon className="w-5 h-5 text-white" />
-                            Add Question
-                        </button>
-                        <button
-                            type="submit"
-                            className="flex items-center justify-center gap-2 py-3 px-7 rounded-lg shadow-md text-white bg-green-500 hover:bg-green-600"
-                        >
-                            {uploading === true && (
-                                <LoadingIcon className="animate-spin w-5 h-5" />
-                            )}
-                            {success === true && (
-                                <CheckIcon className="ww-5 h-5" />
-                            )}
-                            Save Exam
-                        </button>
                     </div>
-                </form>
-                {exam === undefined && (
-                    <ExamModal onSubmit={setExam} />
-                )}
-            </section>
             <div className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
                 {notifications.map((notification, idx) => (
                     <Notification
