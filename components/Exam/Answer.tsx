@@ -5,7 +5,7 @@ import { classNames } from "utils";
 
 import type { AnswerProps } from "types";
 
-const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect, deleteOption, handleChange }) => {
+const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
     return (
         <>
             <input
@@ -31,7 +31,7 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect,
                 className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm border-b-2 border-transparent focus:bg-gray-50 hover:border-gray-200 focus:border-indigo-300 focus:outline-none"
             />
             <span
-                onClick={deleteOption}
+                onClick={deleteAnswer}
                 className="group relative p-2 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-200"
             >
                 <XIcon className="w-5 h-5" />

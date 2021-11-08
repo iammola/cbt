@@ -37,7 +37,7 @@ export type QuestionProps = {
 export type AnswerProps = AnswerRecord & {
     id: string;
     letter: string;
-    deleteOption(): void;
+    deleteAnswer(): void;
     handleChange(answer: Partial<AnswerRecord>): void;
 }
 
