@@ -4,7 +4,7 @@ import type { CreateQuestion, AnswerRecord } from ".";
 export type NotificationProps = {
     message: string;
     timeout: number;
-    removeIcon(): void;
+    remove(): void;
     Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 
