@@ -50,6 +50,7 @@ const CreateQuestions: NextPage = () => {
                 expires: new Date('2038-01-19')
             });
             setTimeout(addNotification, 15e2, {
+                id: `Saved locally ${'exam?.details.SubjectID'} - ${questions.length}`,
                 message: "Saved Locally",
                 timeout: 3e3,
                 Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
@@ -81,6 +82,7 @@ const CreateQuestions: NextPage = () => {
                 if (success === true) {
                     setTimeout(router.reload, 35e2);
                     addNotification({
+                        id: "",
                         message: "Upload Success... Reloading",
                         timeout: 3e3,
                         Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
@@ -90,6 +92,7 @@ const CreateQuestions: NextPage = () => {
             } catch (error: any) {
                 saveExam();
                 addNotification({
+                    id: `Failed ${exam.details.SubjectID} - ${error.message}`,
                     message: "Upload Failed... Try again",
                     timeout: 5e3,
                     Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
