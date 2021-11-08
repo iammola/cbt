@@ -190,16 +190,8 @@ const CreateQuestions: NextPage = () => {
             </form>
             {exam === undefined && (
                 <ExamModal onSubmit={setExam} />
-            <div className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
-                {notifications.map((notification, idx) => (
-                    <Notification
-                        {...notification}
-                        key={notification.message}
-                        removeIcon={() => setNotifications(notifications.filter((_, i) => i !== idx))}
-                    />
-                ))}
-            </div>
             )}
+            <Notifications />
         </>
     );
 }
