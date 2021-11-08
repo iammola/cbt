@@ -204,7 +204,7 @@ const CreateQuestions: NextPage = () => {
     );
 }
 
-const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, uploaded }) => {
+const Bar: FunctionComponent<BarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
     const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     return (
@@ -238,6 +238,9 @@ const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, upload
                 onClick={() => save()}
                 className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
             >
+                {modified === true && (
+                    <span className="w-2 h-2 rounded-full bg-indigo-300" />
+                )}
                 {saved === true && (
                     <CheckIcon className="w-5 h-5" />
                 )}
@@ -262,6 +265,7 @@ const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, upload
 type BarProps = {
     save(): void;
     saved: boolean;
+    modified: boolean;
     uploaded: boolean;
     uploading: boolean;
     exam?: { class: string; subject: string };
