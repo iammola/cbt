@@ -32,7 +32,7 @@ export function useNotifications(): NotificationsHook {
     return [addNotification, removeNotification, Notifications];
 }
 
-const Item: FunctionComponent<NotificationProps> = ({ timeout, message, remove, Icon }) => {
+const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
     const timer = setTimeout(closeNotification, timeout);
