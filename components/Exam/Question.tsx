@@ -5,7 +5,7 @@ import { Answer } from 'components/Exam';
 
 import type { QuestionProps } from 'types';
 
-const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }) => {
+const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, insertQuestionBelow, insertQuestionAbove }) => {
     return (
         <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
             <input
@@ -44,13 +44,19 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
                 </span>
             </ul>
             <div className="flex items-center justify-end gap-3 w-full border-t pl-4 py-1">
-                <span className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100">
+                <span
+                    onClick={insertQuestionAbove}
+                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                >
                     <SortAscendingIcon className="w-5 h-5" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Above
                     </span>
                 </span>
-                <span className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100">
+                <span
+                    onClick={insertQuestionBelow}
+                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                >
                     <SortDescendingIcon className="w-5 h-5" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Below
