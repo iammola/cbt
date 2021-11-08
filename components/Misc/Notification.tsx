@@ -4,7 +4,37 @@ import { Fragment, FunctionComponent, useEffect, useState } from "react";
 
 import type { NotificationProps } from "types";
 
-const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, remove, Icon }) => {
+type Item = Omit<NotificationProps, "remove">;
+
+type NotificationsHook = [
+    (items: Item | Item[]) => void,
+    (idx: number) => void,
+    () => JSX.Element
+];
+
+export function useNotifications(): NotificationsHook {
+    const [notifications, setNotifications] = useState<Item[]>([]);
+
+    const addNotification: NotificationsHook[0] = items => setNotifications(notifications => [...notifications, ...[items].flat()]);
+
+    const removeNotification: NotificationsHook[1] = idx => setNotifications(notifications => notifications.filter((_, i) => i !== idx));
+
+    const Notifications: NotificationsHook[2] = () => (
+        <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
+            {notifications.map((item, i) => (
+                <Item
+                    key={i}
+                    {...item}
+                    remove={() => removeNotification(i)}
+                />
+            ))}
+        </aside>
+    );
+
+    return [addNotification, removeNotification, Notifications];
+}
+
+const Item: FunctionComponent<NotificationProps> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
     const [transitionEnd, setTransitionEnd] = useState(false);
 
