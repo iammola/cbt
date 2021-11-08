@@ -49,7 +49,7 @@ const Item: FunctionComponent<NotificationProps> = ({ timeout, message, remove, 
             appear
             show={show}
             as={Fragment}
-            afterLeave={() => setTransitionEnd(true)}
+            afterLeave={remove}
             enter="ease-out duration-300 transition-transform"
             enterFrom="translate-x-full"
             enterTo="translate-x-0"
