@@ -97,7 +97,7 @@ const CreateQuestions: NextPage = () => {
                     timeout: 5e3,
                     Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
                 });
-                setTimeout(addNotification, 5e2, {
+                setTimeout(addNotification, 1e3, {
                     message: error.message,
                     timeout: 5e3,
                     Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 text-red-700" })
