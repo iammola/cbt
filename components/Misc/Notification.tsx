@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, useCallback, useState } from "react";
+import { Fragment, FunctionComponent, useCallback, useMemo, useState } from "react";
 
 import type { NotificationProps } from "types";
 
@@ -13,11 +13,11 @@ type NotificationsHook = [
 ];
 
 export function useNotifications(): NotificationsHook {
-    const [notifications, setNotifications] = useState<Item[]>([]);
+    const notifications = useMemo<Item[]>(() => [], []);
 
-    const addNotification: NotificationsHook[0] = useCallback(items => setNotifications(notifications => [...notifications, ...[items].flat()]), [notifications]);
+    const addNotification: NotificationsHook[0] = useCallback(items => notifications.push(...[items].flat()), [notifications]);
 
-    const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications => notifications.filter((_, i) => i !== idx)), [notifications]);
+    const removeNotification: NotificationsHook[1] = useCallback(idx => notifications.splice(idx, 1), [notifications]);
 
     const Notifications: NotificationsHook[2] = useCallback(() => (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
