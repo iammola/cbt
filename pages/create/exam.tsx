@@ -90,7 +90,7 @@ const CreateQuestions: NextPage = () => {
                     if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
                 } else throw new Error(error);
             } catch (error: any) {
-                saveExam();
+                setTimeout(saveExam, 5e2);
                 addNotification({
                     id: `Failed ${exam.details.SubjectID} - ${error.message}`,
                     message: "Upload Failed... Try again",
