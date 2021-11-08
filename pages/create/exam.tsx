@@ -12,7 +12,7 @@ import { useNotifications } from "components/Misc/Notification";
 import { LoadingIcon } from "components/Misc/Icons";
 import { Modal as ExamModal, Question } from "components/Exam";
 
-import type { CreateQuestion, NotificationProps } from "types";
+import type { CreateQuestion } from "types";
 
 const CreateQuestions: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
