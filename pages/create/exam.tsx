@@ -94,10 +94,11 @@ const CreateQuestions: NextPage = () => {
                     timeout: 5e3,
                     Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
                 });
+                setTimeout(addNotification, 5e2, {
                     message: error.message,
                     timeout: 5e3,
                     Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 text-red-700" })
-                }]);
+                });
                 console.error(error);
             }
 
