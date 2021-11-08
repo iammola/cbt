@@ -28,10 +28,11 @@ const CreateQuestions: NextPage = () => {
     }), []);
     const [exam, setExam] = useState<any>();
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
-    const [notifications, setNotifications] = useState<Omit<NotificationProps, 'removeIcon'>[]>([]);
     const [instructions, setInstructions] = useState(['Answer all questions', '']);
 
     const [examState, setExamState] = useState({ saved: false, uploaded: false, uploading: false });
+    const [notifications, setNotifications] = useState<(Omit<NotificationProps, 'remove'> & { removed?: boolean; })[]>([]);
+
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
             setCookies('savedExams', JSON.stringify(obj ?? {
