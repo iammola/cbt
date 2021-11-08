@@ -26,7 +26,7 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
                             {...answer}
                             number={answerIdx + 1}
                             id={`${number}${answerIdx}`}
-                            deleteOption={() => {}}
+                            deleteAnswer={() => onChange({ answers: record.answers.filter((_, i) => i !== answerIdx) })}
                             handleChange={answer => onChange({
                                 answers: record.answers.map((value, idx) => idx === answerIdx ? { ...value, ...answer } : {
                                     ...value,
@@ -36,7 +36,10 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }
                         />
                     </li>
                 ))}
-                <span className="text-sm text-white py-2 px-4 rounded-md bg-gray-500 cursor-pointer">
+                <span
+                    onClick={() => onChange({ answers: [...record.answers, { answer: "" }] })}
+                    className="text-sm text-white py-2 px-4 rounded-md bg-gray-500 cursor-pointer"
+                >
                     Add Option
                 </span>
             </ul>
