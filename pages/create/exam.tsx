@@ -98,6 +98,13 @@ const CreateQuestions: NextPage = () => {
         }
     }
 
+    function questionActions(pos: number, count: 1 | 0 = 0, data?: CreateQuestion) {
+        const items: any[] = [...questions];
+        const replace = count === 0 ? { ...recordTemplate } : data;
+        items.splice(pos, count, replace);
+        setQuestions(items.filter(Boolean));
+    }
+
     return (
         <>
             <Head>
@@ -162,6 +169,10 @@ const CreateQuestions: NextPage = () => {
                                 key={i}
                                 number={i + 1}
                                 record={question}
+                                insertQuestionAbove={() => questionActions(i)}
+                                insertQuestionBelow={() => questionActions(i + 1)}
+                                deleteQuestion={() => questions.length > 1 && questionActions(i, 1)}
+                                onChange={newQuestion => questionActions(i, 1, { ...question, ...newQuestion })}
                             />
                         ))}
                     </div>
