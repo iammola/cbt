@@ -77,5 +77,3 @@ const Item: FunctionComponent<NotificationProps> = ({ timeout, message, remove, 
         </Transition>
     );
 }
-
-export default Notification;
