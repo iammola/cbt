@@ -16,7 +16,6 @@ import type { CreateQuestion, NotificationProps } from "types";
 const CreateQuestions: NextPage = () => {
     const router = useRouter();
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
-    const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     const recordTemplate = useMemo<CreateQuestion>(() => ({
         question: "",
