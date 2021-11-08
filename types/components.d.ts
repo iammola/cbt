@@ -31,6 +31,9 @@ export type SelectProps = {
 export type QuestionProps = {
     number: number;
     record: CreateQuestion;
+    deleteQuestion(): void;
+    insertQuestionAbove(): void;
+    insertQuestionBelow(): void;
     onChange(question: Partial<CreateQuestion>): void;
 }
 
