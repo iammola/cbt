@@ -49,6 +49,11 @@ const CreateQuestions: NextPage = () => {
                 sameSite: true,
                 expires: new Date('2038-01-19')
             });
+            setTimeout(addNotification, 15e2, {
+                message: "Saved Locally",
+                timeout: 3e3,
+                Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
+            });
             setExamState({ ...examState, saved: true });
             setTimeout(setExamState, 15e2, { ...examState, saved: false });
         }
@@ -88,11 +93,6 @@ const CreateQuestions: NextPage = () => {
                     message: "Upload Failed... Try again",
                     timeout: 5e3,
                     Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
-                }, {
-                    message: "Exam Saved Locally",
-                    timeout: 3e3,
-                    Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
-                }, {
                 });
                     message: error.message,
                     timeout: 5e3,
