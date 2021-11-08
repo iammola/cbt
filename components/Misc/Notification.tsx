@@ -1,11 +1,12 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, useState } from "react";
+import { Fragment, FunctionComponent, useEffect, useState } from "react";
 
 import type { NotificationProps } from "types";
 
-const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, removeIcon, Icon }) => {
+const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
+    const [transitionEnd, setTransitionEnd] = useState(false);
 
     const timer = setTimeout(closeNotification, timeout);
 
@@ -14,12 +15,16 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
         clearTimeout(timer);
     }
 
+    useEffect(() => {
+        if (show === false && transitionEnd === true) remove();
+    }, [transitionEnd, show, remove]);
+
     return (
         <Transition
             appear
             show={show}
             as={Fragment}
-            afterLeave={removeIcon}
+            afterLeave={() => setTransitionEnd(true)}
             enter="ease-out duration-300 transition-transform"
             enterFrom="translate-x-full"
             enterTo="translate-x-0"
