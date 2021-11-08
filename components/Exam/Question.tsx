@@ -36,12 +36,12 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, 
                         />
                     </li>
                 ))}
-                <span
+                <button
                     onClick={() => onChange({ answers: [...record.answers, { answer: "" }] })}
                     className="text-sm text-white py-2 px-4 rounded-md bg-gray-500 cursor-pointer"
                 >
                     Add Option
-                </span>
+                </button>
             </ul>
             <div className="flex items-center justify-end gap-3 w-full border-t pl-4 py-1">
                 <span
