@@ -96,7 +96,7 @@ const CreateQuestions: NextPage = () => {
                 }]);
             }
 
-            setUploading(false);
+            setExamState({ ...examState, uploading: false });
         }
     }
 
