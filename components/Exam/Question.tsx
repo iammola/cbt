@@ -37,6 +37,7 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, 
                     </li>
                 ))}
                 <button
+                    type="button"
                     onClick={() => onChange({ answers: [...record.answers, { answer: "" }] })}
                     className="text-sm text-white py-2 px-4 rounded-md bg-gray-500 hover:bg-gray-600 cursor-pointer focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white focus:outline-none"
                 >
