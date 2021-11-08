@@ -104,30 +104,6 @@ const CreateQuestions: NextPage = () => {
                 <meta name="description" content="Exam Registration | GRS CBT" />
             </Head>
             <section className="flex flex-col items-center justify-center gap-2 w-screen">
-                <div className="flex items-center justify-start gap-2 text-gray-400 pt-7 pb-2 px-10 w-full text-sm font-medium">
-                    <span>
-                        {currentSession !== undefined ? (
-                            currentSession.data !== null ? (
-                                <>
-                                    <span className="inline-block sm:hidden">
-                                        {currentSession.data.alias}{' '}
-                                        {currentSession.data.terms[0].alias}
-                                    </span>
-                                    <span className="hidden sm:inline-block">
-                                        {currentSession.data.name}{' '}
-                                        {currentSession.data.terms[0].name}
-                                    </span>{' '}Term
-                                </>
-                            ) : "No Current Session"
-                        ) : "Loading Session"}
-                    </span>
-                    <ChevronRightIcon className="w-5 h-5 text-gray-500" />
-                    <span>{exam?.class ?? "Select Class"}</span>
-                    <ChevronRightIcon className="w-5 h-5 text-gray-500" />
-                    <span>{exam?.subject ?? "Select Subject"}</span>
-                    <ChevronRightIcon className="w-5 h-5 text-gray-500" />
-                    <span className="text-gray-600">Questions</span>
-                </div>
                 <form
                     onSubmit={handleSubmit}
                     className="flex flex-col items-center justify-start gap-10 w-full flex-grow py-10 px-5 sm:px-10"
@@ -186,6 +162,38 @@ const CreateQuestions: NextPage = () => {
                 ))}
             </div>
         </>
+    );
+}
+
+const Bar: FunctionComponent<{ exam?: { class: string; subject: string }; save(): void; }> = ({ exam, save }) => {
+    const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
+
+    return (
+        <div className="flex items-center justify-end gap-6 w-full bg-white py-5 px-8 sticky left-0 top-0 rounded-b-lg drop-shadow-sm">
+            <div className="hidden md:flex items-center justify-start gap-2 flex-grow text-gray-400 w-full text-sm font-medium">
+                <span className="w-max block truncate">
+                    {currentSession !== undefined ? (
+                        currentSession.data !== null ? (
+                            <>
+                                <span className="inline-block sm:hidden">
+                                    {currentSession.data.alias}{' '}
+                                    {currentSession.data.terms[0].alias}
+                                </span>
+                                <span className="hidden sm:inline-block">
+                                    {currentSession.data.name}{' '}
+                                    {currentSession.data.terms[0].name}
+                                </span>{' '}Term
+                            </>
+                        ) : "No Current Session"
+                    ) : "Loading Session"}
+                </span>
+                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <span className="w-max block truncate">{exam?.class ?? "Select Class"}</span>
+                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <span className="w-max block truncate">{exam?.subject ?? "Select Subject"}</span>
+                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <span className="text-gray-600">Questions</span>
+            </div>
     );
 }
 
