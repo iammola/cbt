@@ -49,6 +49,8 @@ const CreateQuestions: NextPage = () => {
                 sameSite: true,
                 expires: new Date('2038-01-19')
             });
+            setExamState({ ...examState, saved: true });
+            setTimeout(setExamState, 15e2, { ...examState, saved: false });
         }
     }
 
