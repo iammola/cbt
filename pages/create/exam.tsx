@@ -73,17 +73,17 @@ const CreateQuestions: NextPage = () => {
 
                 if (success === true) {
                     setTimeout(router.reload, 35e2);
-                    setNotifications([...notifications, {
+                    addNotification({
                         message: "Upload Success... Reloading",
                         timeout: 3e3,
                         Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
-                    }]);
+                    });
                     if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
                 } else throw new Error(error);
             } catch (error: any) {
                 saveExam();
                 console.error(error);
-                setNotifications([...notifications, {
+                addNotification({
                     message: "Upload Failed... Try again",
                     timeout: 5e3,
                     Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
@@ -92,6 +92,7 @@ const CreateQuestions: NextPage = () => {
                     timeout: 3e3,
                     Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
                 }, {
+                });
                     message: error.message,
                     timeout: 5e3,
                     Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 text-red-700" })
