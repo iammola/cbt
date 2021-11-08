@@ -7,8 +7,9 @@ import { ChevronRightIcon } from "@heroicons/react/solid";
 import { FormEvent, FunctionComponent, useMemo, useState } from "react";
 import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon } from "@heroicons/react/outline";
 
+import { useNotifications } from "components/Misc/Notification";
+
 import { LoadingIcon } from "components/Misc/Icons";
-import Notification from "components/Misc/Notification";
 import { Modal as ExamModal, Question } from "components/Exam";
 
 import type { CreateQuestion, NotificationProps } from "types";
