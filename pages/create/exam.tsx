@@ -76,7 +76,7 @@ const CreateQuestions: NextPage = () => {
                         timeout: 3e3,
                         Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
                     }]);
-                    saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
+                    if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
                 } else throw new Error(error);
             } catch (error: any) {
                 saveExam();
