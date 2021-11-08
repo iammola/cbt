@@ -28,13 +28,10 @@ const CreateQuestions: NextPage = () => {
     }), []);
     const [exam, setExam] = useState<any>();
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
-
-    const [uploading, setUploading] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [notifications, setNotifications] = useState<Omit<NotificationProps, 'removeIcon'>[]>([]);
-
     const [instructions, setInstructions] = useState(['Answer all questions', '']);
 
+    const [examState, setExamState] = useState({ saved: false, uploaded: false, uploading: false });
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
             setCookies('savedExams', JSON.stringify(obj ?? {
@@ -56,7 +53,7 @@ const CreateQuestions: NextPage = () => {
         e.preventDefault();
 
         if (exam !== undefined) {
-            setUploading(true);
+            setExamState({ ...examState, uploading: true });
 
             try {
                 const res = await fetch('/api/exams/', {
@@ -69,7 +66,7 @@ const CreateQuestions: NextPage = () => {
 
                 const { success, error } = await res.json();
 
-                setSuccess(success);
+                setExamState({ ...examState, uploaded: success });
 
                 if (success === true) {
                     setTimeout(router.reload, 35e2);
