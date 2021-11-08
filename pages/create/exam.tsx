@@ -200,7 +200,7 @@ const CreateQuestions: NextPage = () => {
     );
 }
 
-const Bar: FunctionComponent<{ exam?: { class: string; subject: string }; save(): void; }> = ({ exam, save }) => {
+const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, uploaded }) => {
     const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     return (
@@ -244,6 +244,14 @@ const Bar: FunctionComponent<{ exam?: { class: string; subject: string }; save()
             </button>
         </div>
     );
+}
+
+type BarProps = {
+    save(): void;
+    saved: boolean;
+    uploaded: boolean;
+    uploading: boolean;
+    exam?: { class: string; subject: string };
 }
 
 export default CreateQuestions;
