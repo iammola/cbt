@@ -114,6 +114,7 @@ const CreateQuestions: NextPage = () => {
         const replace = count === 0 ? { ...recordTemplate } : data;
         items.splice(pos, count, replace);
         setQuestions(items.filter(Boolean));
+        setExamState({ ...examState, modified: true });
     }
 
     return (
