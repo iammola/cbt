@@ -36,7 +36,6 @@ export function useNotifications(): NotificationsHook {
 
 const Item: FunctionComponent<NotificationProps> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
-    const [transitionEnd, setTransitionEnd] = useState(false);
 
     const timer = setTimeout(closeNotification, timeout);
 
@@ -44,10 +43,6 @@ const Item: FunctionComponent<NotificationProps> = ({ timeout, message, remove, 
         setShow(false);
         clearTimeout(timer);
     }
-
-    useEffect(() => {
-        if (show === false && transitionEnd === true) remove();
-    }, [transitionEnd, show, remove]);
 
     return (
         <Transition
