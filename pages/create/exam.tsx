@@ -119,6 +119,7 @@ const CreateQuestions: NextPage = () => {
             >
                 <Bar
                     exam={exam}
+                    {...examState}
                     save={saveExam}
                 />
                 <section className="w-full flex-grow py-10 px-10 bg-indigo-100">
@@ -181,6 +182,7 @@ const CreateQuestions: NextPage = () => {
                 </section>
                 <Bar
                     exam={exam}
+                    {...examState}
                     save={saveExam}
                 />
             </form>
