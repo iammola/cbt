@@ -55,7 +55,7 @@ const CreateQuestions: NextPage = () => {
                 timeout: 3e3,
                 Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
             });
-            setExamState({ ...examState, saved: true });
+            setExamState({ ...examState, modified: false, saved: true });
             setTimeout(setExamState, 15e2, { ...examState, saved: false });
         }
     }
