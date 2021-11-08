@@ -234,7 +234,7 @@ const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, upload
             <button
                 type="button"
                 onClick={save}
-                className="py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
+                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
             >
                 {saved === true && (
                     <CheckIcon className="w-5 h-5" />
@@ -243,7 +243,7 @@ const Bar: FunctionComponent<BarProps> = ({ exam, save, saved, uploading, upload
             </button>
             <button
                 type="submit"
-                className="py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
+                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
             >
                 {uploading === true && (
                     <LoadingIcon className="animate-spin w-5 h-5" />
