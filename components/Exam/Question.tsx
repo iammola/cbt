@@ -5,7 +5,7 @@ import { Answer } from 'components/Exam';
 
 import type { QuestionProps } from 'types';
 
-const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, insertQuestionBelow, insertQuestionAbove }) => {
+const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, deleteQuestion, insertQuestionBelow, insertQuestionAbove }) => {
     return (
         <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
             <input
@@ -62,7 +62,10 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, 
                         Insert Question Below
                     </span>
                 </span>
-                <span className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100">
+                <span
+                    onClick={deleteQuestion}
+                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                >
                     <TrashIcon className="w-5 h-5" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Delete Question
