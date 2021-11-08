@@ -82,7 +82,6 @@ const CreateQuestions: NextPage = () => {
                 } else throw new Error(error);
             } catch (error: any) {
                 saveExam();
-                console.error(error);
                 addNotification({
                     message: "Upload Failed... Try again",
                     timeout: 5e3,
@@ -97,6 +96,7 @@ const CreateQuestions: NextPage = () => {
                     timeout: 5e3,
                     Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 text-red-700" })
                 }]);
+                console.error(error);
             }
 
             setExamState({ ...examState, uploading: false });
