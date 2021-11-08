@@ -19,9 +19,9 @@ export function useNotifications(): NotificationsHook {
 
     const Notifications: NotificationsHook[2] = useCallback(() => (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
-            {notifications.map((item, i) => (
+            {notifications.map(({ id, ...item }, i) => (
                 <Item
-                    key={i}
+                    key={id}
                     {...item}
                     remove={() => removeNotification(i)}
                 />
