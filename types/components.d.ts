@@ -2,6 +2,7 @@ import type { ImageProps } from "next/image";
 import type { CreateQuestion, AnswerRecord } from ".";
 
 export type NotificationProps = {
+    id: string;
     message: string;
     timeout: number;
     remove(): void;
