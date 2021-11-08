@@ -3,6 +3,9 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
+import { ChevronRightIcon } from "@heroicons/react/solid";
+import { FormEvent, FunctionComponent, useMemo, useState } from "react";
+import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon } from "@heroicons/react/outline";
 
 import { LoadingIcon } from "components/Misc/Icons";
 import Notification from "components/Misc/Notification";
@@ -29,6 +32,8 @@ const CreateQuestions: NextPage = () => {
     const [uploading, setUploading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [notifications, setNotifications] = useState<Omit<NotificationProps, 'removeIcon'>[]>([]);
+
+    const [instructions, setInstructions] = useState(['Answer all questions', '']);
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
@@ -99,9 +104,76 @@ const CreateQuestions: NextPage = () => {
                 <title>Create Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Exam Registration | GRS CBT" />
             </Head>
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center justify-start w-screen"
+            >
+                <Bar
+                    exam={exam}
+                    save={saveExam}
+                />
+                <section className="w-full flex-grow py-10 px-10 bg-indigo-100">
+                    <div className="m-auto max-w-3xl h-full space-y-5">
+                        <div className="w-full pt-6 pb-5 px-10 flex flex-col gap-3 bg-white rounded-xl shadow-sm">
+                            <ul className="mt-3">
+                                <div className="text-sm text-gray-800 mb-2 relative w-max after:absolute after:-bottom-0 after:left-0 after:w-full after:border-b after:border-gray-500">
+                                    Instructions
                                 </div>
+                                {instructions.map((instruction, idx) => (
+                                    <li
+                                        key={idx}
+                                        className="flex gap-3 justify-start items-end relative text-sm group mb-2"
+                                    >
+                                        <span className="text-xs font-semibold -ml-4 text-gray-500">
+                                            {idx + 1}.
+                                        </span>
+                                        <div className="flex-grow h-full relative">
+                                            <input
+                                                type="text"
+                                                value={instruction}
+                                                placeholder="Add Instruction"
+                                                id={`${instruction}-${idx + 1}`}
+                                                className="pt-1.5 pb-0.5 px-3 w-full focus:outline-none"
+                                                onChange={({ target: { value } }) => {
+                                                    const v = instructions.map((j, i) => i === idx ? value : j).filter(Boolean);
+                                                    v.at(-1) !== '' && v.push('');
+                                                    setInstructions(v);
+                                                }}
+                                            />
+                                            <label
+                                                htmlFor={`${instruction}-${idx + 1}`}
+                                                className="absolute left-2.5 bottom-0 w-full border-b border-gray-400 border-dotted group-focus-within:border-gray-500"
+                                            />
+                                        </div>
+                                        {idx > 0 && instructions.length > 2 && (
+                                            <span
+                                                onClick={() => setInstructions(instructions.filter((_, i) => i !== idx))}
+                                                className="w-7 h-7 p-1.5 ml-5 rounded-full cursor-pointer text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                                            >
+                                                <XIcon className="w-full h-full" />
+                                            </span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        {questions.map((question, i) => (
+                            <Question
+                                key={i}
+                                number={i + 1}
+                                record={question}
+                            />
                         ))}
                     </div>
+                </section>
+                <Bar
+                    exam={exam}
+                    save={saveExam}
+                />
+            </form>
+            {/* {exam === undefined && (
+                <ExamModal onSubmit={setExam} />
+            )} */}
             <div className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
                 {notifications.map((notification, idx) => (
                     <Notification
@@ -144,6 +216,20 @@ const Bar: FunctionComponent<{ exam?: { class: string; subject: string }; save()
                 <ChevronRightIcon className="w-5 h-5 text-gray-500" />
                 <span className="text-gray-600">Questions</span>
             </div>
+            <button
+                type="button"
+                onClick={save}
+                className="py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
+            >
+                Save
+            </button>
+            <button
+                type="submit"
+                className="py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
+            >
+                Submit
+            </button>
+        </div>
     );
 }
 
