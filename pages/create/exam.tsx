@@ -3,7 +3,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { ChevronRightIcon } from "@heroicons/react/solid";
+import { CheckIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { FormEvent, FunctionComponent, useMemo, useState } from "react";
 import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon } from "@heroicons/react/outline";
 
