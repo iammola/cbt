@@ -15,6 +15,8 @@ import { Modal as ExamModal, Question } from "components/Exam";
 import type { CreateQuestion, NotificationProps } from "types";
 
 const CreateQuestions: NextPage = () => {
+    const [addNotification, , Notifications] = useNotifications();
+
     const router = useRouter();
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
 
@@ -32,7 +34,6 @@ const CreateQuestions: NextPage = () => {
     const [instructions, setInstructions] = useState(['Answer all questions', '']);
 
     const [examState, setExamState] = useState({ saved: false, uploaded: false, uploading: false });
-    const [notifications, setNotifications] = useState<(Omit<NotificationProps, 'remove'> & { removed?: boolean; })[]>([]);
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined) {
