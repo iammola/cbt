@@ -43,7 +43,6 @@ const QuestionSchema = new Schema<QuestionRecord>({
     } */
 });
 
-export const QuestionModel = models.Question as Model<QuestionRecord> ?? model('Question', QuestionSchema);
 const QuestionsSchema = new Schema<QuestionsRecord>({
     exam: {
         type: Schema.Types.ObjectId,
@@ -51,3 +50,4 @@ const QuestionsSchema = new Schema<QuestionsRecord>({
     }, questions: [QuestionSchema]
 });
 
+export const QuestionsModel = models.Questions as Model<QuestionsRecord> ?? model('Questions', QuestionsSchema);
