@@ -28,7 +28,7 @@ async function getExam(_id: any, loggedInUser: any): Promise<RouteResponse> {
                 _id, instructions,
                 questions: await Promise.all(examQuestions?.questions.map(async item => ({
                     ...item,
-                    answers: await AnswersModel.findOne({ question: (item as any)._id }, '-_id answers').lean(),
+                    answers: (await AnswersModel.findOne({ question: (item as any)._id }, '-_id answers').lean())?.answers ?? [],
                 })) ?? []),
                 exam: {
                     class: examClass?.name ?? '',
