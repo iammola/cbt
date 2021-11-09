@@ -8,6 +8,7 @@ const ExamSchema = new Schema<ExamRecord>({
         required: [true, 'Exam duration required'],
     }, SubjectID: {
         type: Schema.Types.ObjectId,
+        ref: 'Subject',
         required: [true, 'Exam subject required'],
     }, questions: [{
         type: Schema.Types.ObjectId,

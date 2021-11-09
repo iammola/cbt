@@ -60,7 +60,7 @@ export type EventRecord<P = false, I = false> = RecordId<P, I> & {
 
 export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
-    SubjectID: P extends true ? string : Schema.Types.ObjectId;
+    SubjectID: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
     questions: (P extends true ? QuestionRecord<P, I> : string)[];
     instructions: string[];
     created: {
