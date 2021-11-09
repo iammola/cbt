@@ -2,34 +2,6 @@ import type { Schema } from "mongoose";
 
 type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
 
-export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
-    answer: string
-    isCorrect?: boolean;
-};
-
-export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
-    question: string;
-} & ({
-    type: "Multiple choice" | "Checkboxes";
-    answers: (P extends true ? AnswerRecord<P, I> : string)[];
-    maxLength: undefined;
-    minLength: undefined;
-} | {
-    type: "Short Answer" | "Long Answer";
-    answers: undefined;
-    maxLength: number;
-    minLength: number;
-}) & ({
-    type: "Checkboxes";
-    max: number;
-    min: number;
-} | {
-    type: "Short Answer" | "Long Answer" | "Multiple choice";
-    max: undefined;
-    min: undefined;
-});
-
-
 /* Class and Subject */
 
 export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
@@ -95,6 +67,33 @@ export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
         by: Schema.Types.ObjectId;
     }
 };
+
+export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
+    answer: string
+    isCorrect?: boolean;
+};
+
+export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
+    question: string;
+} & ({
+    type: "Multiple choice" | "Checkboxes";
+    answers: (P extends true ? AnswerRecord<P, I> : string)[];
+    maxLength: undefined;
+    minLength: undefined;
+} | {
+    type: "Short Answer" | "Long Answer";
+    answers: undefined;
+    maxLength: number;
+    minLength: number;
+}) & ({
+    type: "Checkboxes";
+    max: number;
+    min: number;
+} | {
+    type: "Short Answer" | "Long Answer" | "Multiple choice";
+    max: undefined;
+    min: undefined;
+});
 
 
 /* Session and Term */
