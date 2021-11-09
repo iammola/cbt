@@ -6,7 +6,6 @@ import { AnswersModel, ClassModel, ExamModel, QuestionsModel, SubjectsModel } fr
 
 import type { RouteResponse } from "types";
 
-export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
 async function getExam(_id: any, loggedInUser: any): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
@@ -48,13 +47,14 @@ async function getExam(_id: any, loggedInUser: any): Promise<RouteResponse> {
     return [success, status, message];
 }
 
+export default async function handler({ cookies, query, method }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else[success, status, message] = await getExam(query.id, JSON.parse(cookies.account)?._id);
 
     if (typeof message !== "object") message = { message };
 
