@@ -12,6 +12,9 @@ const ExamSchema = new Schema<ExamRecord>({
     }, questions: [{
         type: Schema.Types.ObjectId,
         ref: 'Question',
+    }], instructions: [{
+        type: String,
+        trim: true,
     }], created: {
         _id: false,
         type: {

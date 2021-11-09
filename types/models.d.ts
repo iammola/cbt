@@ -62,10 +62,11 @@ export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
     SubjectID: P extends true ? string : Schema.Types.ObjectId;
     questions: (P extends true ? QuestionRecord<P, I> : string)[];
+    instructions: string[];
     created: {
         at: Date;
         by: Schema.Types.ObjectId;
-    }
+    };
 };
 
 export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
