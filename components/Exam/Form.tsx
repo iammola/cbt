@@ -17,10 +17,6 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
         question: "",
         type: "Multiple choice",
         answers: [{ answer: "", isCorrect: true }, { answer: "" }],
-        max: undefined,
-        min: undefined,
-        minLength: undefined,
-        maxLength: undefined
     }), []);
     const [exam, setExam] = useState<ExamDetails | undefined>(props.exam ?? undefined);
     const [questions, setQuestions] = useState<CreateQuestion[]>(props.questions ?? [{ ...recordTemplate }]);
