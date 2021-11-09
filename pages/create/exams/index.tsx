@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { CheckIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { FormEvent, FunctionComponent, useMemo, useState } from "react";
-import { CogIcon, CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon } from "@heroicons/react/outline";
+import { CogIcon, CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon, ArrowSmUpIcon } from "@heroicons/react/outline";
 
 import { useNotifications } from "components/Misc/Notification";
 
@@ -198,6 +198,15 @@ const CreateExams: NextPage = () => {
                         <CogIcon className="w-6 h-6" />
                         <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                             Change Settings
+                        </span>
+                    </div>
+                    <div
+                        onClick={() => scrollTo({ behavior: "smooth", top: 0 })}
+                        className="fixed right-4 bottom-24 rounded-full p-2 bg-white text-indigo-700 cursor-pointer group"
+                    >
+                        <ArrowSmUpIcon className="w-6 h-6" />
+                        <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+                            Scroll to Top
                         </span>
                     </div>
                 </section>
