@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { CheckIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { FormEvent, FunctionComponent, useMemo, useState } from "react";
-import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon } from "@heroicons/react/outline";
+import { CogIcon, CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon } from "@heroicons/react/outline";
 
 import { useNotifications } from "components/Misc/Notification";
 
@@ -134,7 +134,7 @@ const CreateExams: NextPage = () => {
                     {...examState}
                     save={saveExam}
                 />
-                <section className="w-full flex-grow py-10 px-10 bg-indigo-100">
+                <section className="w-full flex-grow py-10 px-10 bg-indigo-100 relative">
                     <div className="m-auto max-w-3xl h-full space-y-5">
                         <div className="w-full pt-6 pb-5 px-10 flex flex-col gap-3 bg-white rounded-xl shadow-sm">
                             <ul className="mt-3">
@@ -190,6 +190,12 @@ const CreateExams: NextPage = () => {
                                 onChange={newQuestion => questionActions(i, 1, { ...question, ...newQuestion })}
                             />
                         ))}
+                    </div>
+                    <div className="absolute right-4 top-4 rounded-full p-2 bg-white text-indigo-700 cursor-pointer group">
+                        <CogIcon className="w-6 h-6" />
+                        <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+                            Change Settings
+                        </span>
                     </div>
                 </section>
                 <Bar
