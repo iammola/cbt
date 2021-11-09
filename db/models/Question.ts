@@ -7,14 +7,6 @@ const QuestionSchema = new Schema<QuestionRecord>({
         type: String,
         trim: true,
         required: [true, 'Question required'],
-    }, min: {
-        type: Number,
-        default: undefined,
-    }, max: {
-        type: Number,
-        required: [function (this: QuestionRecord) {
-            return this.type === "Checkboxes";
-        }, 'Checkbox Questions require a max-length'],
     }, minLength: {
         type: Number,
         required: [function (this: QuestionRecord) {
@@ -31,7 +23,15 @@ const QuestionSchema = new Schema<QuestionRecord>({
             values: ["Multiple choice", "Checkboxes", "Short Answer", "Long Answer"]
         }
     }
-    /* , answers: [{
+    /* , min: {
+        type: Number,
+        default: undefined,
+    }, max: {
+        type: Number,
+        required: [function (this: QuestionRecord) {
+            return this.type === "Checkboxes";
+        }, 'Checkbox Questions require a max-length'],
+    }, answers: [{
         type: [Schema.Types.ObjectId],
         required: [function (this: QuestionRecord) {
             return ["Multiple choice", "Checkboxes"].includes(this.type)
@@ -40,7 +40,7 @@ const QuestionSchema = new Schema<QuestionRecord>({
             return ["Multiple choice", "Checkboxes"].includes(this.type) ? ((this.answers ?? []).length) > 1 : this.answers === undefined
         }, "Invalid answer value"],
         ref: "Answer"
-    } */
+    }] */
 });
 
 const QuestionsSchema = new Schema<QuestionsRecord>({
