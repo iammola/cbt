@@ -137,7 +137,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                                 inputMode="numeric"
                                 value={duration === 0 ? '' : duration}
                                 onChange={({ target: { valueAsNumber } }) => setDuration(valueAsNumber)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                             <span className="absolute bottom-4 right-0 z-10 flex items-center pr-2 pointer-events-none text-gray-500 text-xs">
                                 mins
