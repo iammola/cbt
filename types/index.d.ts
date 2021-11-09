@@ -4,7 +4,7 @@ export * from "./components";
 import { AnswersRecord, ExamRecord, QuestionRecord } from "./models";
 
 export type CreateQuestion = QuestionRecord & {
-    answers: Omit<AnswersRecord<true>['answers'][number], '_id'>[];
+    answers: AnswersRecord['answers'][];
 };
 
 export type ExamDetails = {
