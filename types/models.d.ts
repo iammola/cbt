@@ -48,7 +48,7 @@ export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
 };
 
 
-/* Event and Exam */
+/* Event and Exam and Answer and Question */
 
 export type EventRecord<P = false, I = false> = RecordId<P, I> & {
     date: Date;
