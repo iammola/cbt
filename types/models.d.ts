@@ -81,21 +81,11 @@ export type AnswersRecord<P = false, I = false> = RecordId<P, I> & {
 export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     question: string;
 } & ({
-    type: "Multiple choice" | "Checkboxes";
-    maxLength: undefined;
-    minLength: undefined;
+    type: "Multiple choice" | "Short Answer" | "Long Answer";
 } | {
-    type: "Short Answer" | "Long Answer";
-    maxLength: number;
-    minLength: number;
-}) & ({
     type: "Checkboxes";
-    max: number;
-    min: number;
-} | {
-    type: "Short Answer" | "Long Answer" | "Multiple choice";
-    max: undefined;
-    min: undefined;
+    maxLength?: M;
+    minLength?: M;
 });
 
 export type QuestionsRecord<P = false, I = false> = RecordId<P, I> & {
