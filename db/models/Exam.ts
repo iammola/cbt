@@ -23,6 +23,7 @@ const ExamSchema = new Schema<ExamRecord>({
                 required: [true, 'Created at required']
             }, by: {
                 type: Schema.Types.ObjectId,
+                ref: 'Teacher',
                 required: [true, 'Created by required']
             }
         },
