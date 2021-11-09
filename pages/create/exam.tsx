@@ -235,6 +235,7 @@ const Bar: FunctionComponent<BarProps> = ({ exam, save, modified, saved, uploadi
             <button
                 type="button"
                 onClick={() => save()}
+                title={modified === true ? "Changes made. Don't forget to save" : saved === true ? "No changes made." : ""}
                 className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
             >
                 {modified === true && (
