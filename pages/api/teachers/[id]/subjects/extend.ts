@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, SubjectModel } from "db/models";
+import { ClassModel, SubjectsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -11,7 +11,7 @@ async function getExtendedTeacherSubjects(id: any): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = await SubjectModel.find({ "subjects.teachers": id }, "-_id").lean();
+        const subjects = await SubjectsModel.find({ "subjects.teachers": id }, "-_id").lean();
         const classes = await ClassModel.find({ _id: subjects.map(item => item.class) }, 'name').lean();
 
         const data = classes.map(({ name, ...classItem }) => ({

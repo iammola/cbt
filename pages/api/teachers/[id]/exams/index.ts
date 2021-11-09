@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, QuestionsModel, SubjectModel } from "db/models";
+import { ExamModel, QuestionsModel, SubjectsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -13,7 +13,7 @@ async function getExams(id: any): Promise<RouteResponse> {
     try {
         const exam = await ExamModel.find({ "created.by": id }, '-instructions').populate('created.by').lean();
 
-        const subjects = await SubjectModel.find({ "subjects._id": exam.map(({ SubjectID }) => SubjectID) }, '-_id class subjects._id subjects.name').lean();
+        const subjects = await SubjectsModel.find({ "subjects._id": exam.map(({ SubjectID }) => SubjectID) }, '-_id class subjects._id subjects.name').lean();
 
         const data = exam.map(async ({ _id, SubjectID, ...exam }: any) => {
             const questions =  (await QuestionsModel.findOne({ exam: _id }, '-_id questions._id').lean())?.questions.length;

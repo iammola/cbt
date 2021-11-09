@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SubjectModel } from "db/models";
+import { SubjectsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -11,7 +11,7 @@ async function getTeacherClassSubject(id: any, classID: any, select: any): Promi
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = (await SubjectModel.find({
+        const subjects = (await SubjectsModel.find({
             class: classID,
             "subjects.teachers": id
         }, select).lean()).map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item)).flat();

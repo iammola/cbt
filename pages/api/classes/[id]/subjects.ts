@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SubjectModel } from "db/models";
+import { SubjectsModel } from "db/models";
 
 import type { RouteResponse, SubjectRecord } from "types";
 
@@ -11,7 +11,7 @@ async function getSubjects(id: any, select: string): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await SubjectModel.findOne({ class: id }, { _id: 0, class: 0 });
+        const data = await SubjectsModel.findOne({ class: id }, { _id: 0, class: 0 });
         [success, status, message] = [true, StatusCodes.OK, {
             data,
             message: ReasonPhrases.OK
@@ -26,12 +26,12 @@ async function getSubjects(id: any, select: string): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createSubject(id: any, { name, alias }: SubjectRecord['subjects'][number]): Promise<RouteResponse> {
+async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await SubjectModel.findOneAndUpdate({ class: id }, {
+        const data = await SubjectsModel.findOneAndUpdate({ class: id }, {
             $push: { subjects: { name, alias } }
         }, { runValidators: true }).lean();
 
