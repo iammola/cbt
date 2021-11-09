@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
+import { ExamModel, EventModel, AnswersModel, QuestionsModel } from "db/models";
 
 import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
@@ -37,16 +37,26 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
     try {
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
-        const data = await session.withTransaction(async () => await ExamModel.create([{
-            SubjectID,
-            instructions,
-            created: { by, at: new Date() },
-            duration: minutesToMilliseconds(duration),
-            questions: (await QuestionModel.create(await Promise.all(questions.map(async ({ answers, ...question }) => ({
-                ...question,
-                answers: (await AnswerModel.create(answers, { session })).map(({ _id }) => _id)
-            }))), { session })).map(({ _id }) => _id)
-        }], { session }));
+        const data = await session.withTransaction(async () => {
+            const [{ _id }] = await ExamModel.create([{
+                SubjectID,
+                instructions,
+                created: { by, at: new Date() },
+                duration: minutesToMilliseconds(duration),
+            }], { session });
+
+            const [items] = await QuestionsModel.create([{
+                exam: _id,
+                questions: questions.map(({ answers, ...question }) => question)
+            }], { session });
+
+            await AnswersModel.create(items.questions.map(({ _id }: any, i) => ({
+                question: _id,
+                answers: questions[i].answers
+            })), { session });
+
+            return _id;
+        });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
