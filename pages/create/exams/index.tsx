@@ -193,7 +193,7 @@ const CreateExams: NextPage = () => {
                     </div>
                     <div
                         onClick={() => setExamState({ ...examState, details: false })}
-                        className="absolute right-4 top-4 rounded-full p-2 bg-white text-indigo-700 cursor-pointer group"
+                        className="fixed right-4 top-24 rounded-full p-2 bg-white text-indigo-700 cursor-pointer group"
                     >
                         <CogIcon className="w-6 h-6" />
                         <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
