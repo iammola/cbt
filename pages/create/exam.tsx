@@ -49,7 +49,7 @@ const CreateQuestions: NextPage = () => {
                 sameSite: true,
                 expires: new Date('2038-01-19')
             });
-            setTimeout(addNotification, 15e2, {
+            addNotification({
                 id: `Saved locally ${exam.details.SubjectID} - ${questions.length}`,
                 message: "Saved Locally",
                 timeout: 3e3,
