@@ -27,4 +27,4 @@ const SubjectsSchema = new Schema<SubjectsRecord>({
     }, subjects: [SubjectSchema]
 });
 
-export const SubjectModel = models.Subject as Model<SubjectRecord> ?? model('Subject', SubjectSchema);
+export const SubjectsModel = models.Subjects as Model<SubjectsRecord> ?? model('Subjects', SubjectsSchema);
