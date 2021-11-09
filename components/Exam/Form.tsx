@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FormEvent, FunctionComponent, useMemo, useState } from "react";
