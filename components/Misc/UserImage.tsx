@@ -8,7 +8,7 @@ import type { UserImageProps } from 'types';
 const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) => {
     const [error, setError] = useState(false);
 
-    return error === false ? (
+    return (error === false && Boolean(props.src) === true) ? (
         <Image
             {...props}
             alt={props.alt ?? ''}
