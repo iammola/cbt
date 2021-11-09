@@ -131,7 +131,7 @@ const Home: NextPage = () => {
                     <span className="block sm:inline">© 2021 Grand Regal School.</span>{' '}
                     <span className="block sm:inline">All rights reserved.</span>
                 </span>
-                <Link href="#">
+                <Link href="https://github.com/iammola/">
                     <a className="inline-block transition-transform origin-center font-medium tracking-wide text-gray-200 hover:underline">
                         Site by @a.mola
                     </a>
