@@ -70,7 +70,10 @@ const CreateQuestions: NextPage = () => {
                     method: "POST",
                     body: JSON.stringify({
                         questions,
-                        exam: exam.details,
+                        exam: {
+                            ...exam.details,
+                            instructions: instructions.filter(Boolean)
+                        }
                     })
                 });
 
