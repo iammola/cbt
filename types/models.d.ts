@@ -65,7 +65,7 @@ export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     instructions: string[];
     created: {
         at: Date;
-        by: Schema.Types.ObjectId;
+        by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
     };
 };
 
