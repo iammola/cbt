@@ -1,3 +1,4 @@
+import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
 import type { CreateQuestion, AnswerRecord, ExamDetails } from ".";
 
