@@ -30,7 +30,7 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, 
                             handleChange={answer => onChange({
                                 answers: record.answers.map((value, idx) => idx === answerIdx ? { ...value, ...answer } : {
                                     ...value,
-                                    isCorrect: (answer.isCorrect === true && record.type === "Multiple choice") ? false : value.isCorrect
+                                    isCorrect: (answer.isCorrect === true && record.type === "Multiple choice") ? undefined : value.isCorrect
                                 })
                             })}
                         />

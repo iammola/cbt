@@ -13,7 +13,7 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect,
                 type="checkbox"
                 className="hidden"
                 checked={isCorrect ?? false}
-                onChange={({ target: { checked } }) => handleChange({ isCorrect: checked })}
+                onChange={({ target: { checked } }) => handleChange({ isCorrect: checked === true ? true : undefined })}
             />
             <label
                 htmlFor={id}
