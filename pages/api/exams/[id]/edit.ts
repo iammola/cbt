@@ -1,3 +1,4 @@
+import { millisecondsToMinutes } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -32,7 +33,10 @@ async function getExam(_id: any, loggedInUser: any): Promise<RouteResponse> {
                 exam: {
                     class: examClass?.name ?? '',
                     subject: classSubjects?.subjects.find(({ _id }: any) => _id.equals(SubjectID))?.name ?? '',
-                    details: { duration, SubjectID }
+                    details: {
+                        SubjectID,
+                        duration: millisecondsToMinutes(duration),
+                    }
                 }
             },
             message: ReasonPhrases.OK
