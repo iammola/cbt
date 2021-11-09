@@ -1,10 +1,10 @@
 export * from "./models";
 export * from "./components";
 
-import { ExamRecord, QuestionRecord } from "./models";
+import { AnswersRecord, ExamRecord, QuestionRecord } from "./models";
 
-export type CreateQuestion = Omit<QuestionRecord, 'answers'> & {
-    answers: Omit<NonNullable<QuestionRecord<true>['answers']>[number], '_id'>[];
+export type CreateQuestion = QuestionRecord & {
+    answers: Omit<AnswersRecord<true>['answers'][number], '_id'>[];
 };
 
 export type ExamDetails = {
