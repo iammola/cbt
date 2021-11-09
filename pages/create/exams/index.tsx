@@ -14,7 +14,7 @@ import { Modal as ExamModal, Question } from "components/Exam";
 
 import type { CreateQuestion } from "types";
 
-const CreateQuestions: NextPage = () => {
+const CreateExams: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
 
     const router = useRouter();
@@ -274,4 +274,4 @@ type BarProps = {
     exam?: { class: string; subject: string };
 }
 
-export default CreateQuestions;
+export default CreateExams;
