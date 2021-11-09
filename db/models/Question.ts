@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import type { QuestionRecord } from "types";
+import type { QuestionRecord, QuestionsRecord } from "types";
 
 const QuestionSchema = new Schema<QuestionRecord>({
     question: {
@@ -44,3 +44,10 @@ const QuestionSchema = new Schema<QuestionRecord>({
 });
 
 export const QuestionModel = models.Question as Model<QuestionRecord> ?? model('Question', QuestionSchema);
+const QuestionsSchema = new Schema<QuestionsRecord>({
+    exam: {
+        type: Schema.Types.ObjectId,
+        ref: 'Exam'
+    }, questions: [QuestionSchema]
+});
+
