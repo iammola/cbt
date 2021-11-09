@@ -1,10 +1,10 @@
 export * from "./models";
 export * from "./components";
 
-import { AnswersRecord, ExamRecord, QuestionRecord } from "./models";
+import { AnswerRecord, ExamRecord, QuestionRecord } from "./models";
 
 export type CreateQuestion = QuestionRecord & {
-    answers: AnswersRecord['answers'][];
+    answers: AnswerRecord[];
 };
 
 export type ExamDetails = {
