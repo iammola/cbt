@@ -1,5 +1,5 @@
 import type { ImageProps } from "next/image";
-import type { CreateQuestion, AnswerRecord } from ".";
+import type { CreateQuestion, AnswerRecord, ExamDetails } from ".";
 
 export type NotificationProps = {
     id: string;
@@ -80,4 +80,20 @@ export type UserImageProps = ImageProps & {
         text: string;
         className?: string;
     }
+}
+
+export type BarProps = {
+    save(): void;
+    saved: boolean;
+    modified: boolean;
+    uploaded: boolean;
+    uploading: boolean;
+    exam?: ExamDetails;
+}
+
+export type FormProps = {
+    _id: string;
+    exam: ExamDetails;
+    instructions: string[];
+    questions: CreateQuestion[];
 }
