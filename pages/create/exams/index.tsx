@@ -207,9 +207,13 @@ const CreateExams: NextPage = () => {
                     save={saveExam}
                 />
             </form>
-            {exam === undefined && (
-                <ExamModal onSubmit={setExam} />
-            )}
+            <ExamModal
+                onSubmit={d => {
+                    setExam(d);
+                    setExamState({ ...examState, details: true });
+                }}
+                open={exam === undefined || examState.details === false}
+            />
             <Notifications />
         </>
     );
