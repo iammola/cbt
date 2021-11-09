@@ -64,11 +64,7 @@ export type ToggleProps = {
 
 export type ExamModalProps = {
     open: boolean;
-    onSubmit(v: {
-        class: string;
-        subject: string;
-        details: Pick<ExamRecord, 'duration' | 'SubjectID'>;
-    }): void;
+    onSubmit(v: ExamDetails): void;
 }
 
 export type DivideProps = {
