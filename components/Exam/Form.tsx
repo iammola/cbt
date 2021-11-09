@@ -26,7 +26,7 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
     const [questions, setQuestions] = useState<CreateQuestion[]>(props.questions ?? [{ ...recordTemplate }]);
     const [instructions, setInstructions] = useState(props.instructions ?? ['Answer all questions', '']);
 
-    const [examState, setExamState] = useState({ details: false, modified: false, saved: false, uploaded: false, uploading: false });
+    const [examState, setExamState] = useState({ details: Boolean(props.exam), modified: false, saved: false, uploaded: false, uploading: false });
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined && examState.modified === true) {
