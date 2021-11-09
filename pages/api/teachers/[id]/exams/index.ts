@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import type { RouteResponse } from "types";
 
-export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
