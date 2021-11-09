@@ -33,7 +33,7 @@ const CreateExams: NextPage = () => {
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
     const [instructions, setInstructions] = useState(['Answer all questions', '']);
 
-    const [examState, setExamState] = useState({ modified: false, saved: false, uploaded: false, uploading: false });
+    const [examState, setExamState] = useState({ details: false, modified: false, saved: false, uploaded: false, uploading: false });
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined && examState.modified === true) {
