@@ -33,7 +33,7 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
         if (exam !== undefined && examState.modified === true) {
             setCookies('savedExams', JSON.stringify(obj ?? {
                 ...(savedExams ?? {}),
-                [exam.details.SubjectID]: {
+                [exam.details.SubjectID as unknown as string]: {
                     exam,
                     questions,
                     lastSaved: new Date().toISOString()
@@ -83,7 +83,7 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
                         timeout: 3e3,
                         Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
                     });
-                    if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID)));
+                    if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID as unknown as string)));
                 } else throw new Error(error);
             } catch (error: any) {
                 setTimeout(saveExam, 5e2);
