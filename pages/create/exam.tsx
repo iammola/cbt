@@ -50,7 +50,7 @@ const CreateQuestions: NextPage = () => {
                 expires: new Date('2038-01-19')
             });
             setTimeout(addNotification, 15e2, {
-                id: `Saved locally ${'exam?.details.SubjectID'} - ${questions.length}`,
+                id: `Saved locally ${exam.details.SubjectID} - ${questions.length}`,
                 message: "Saved Locally",
                 timeout: 3e3,
                 Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
