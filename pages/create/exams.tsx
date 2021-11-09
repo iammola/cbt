@@ -1,6 +1,8 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 
+import { Form } from "components/Exam";
+
 const CreateExams: NextPage = () => {
     return (
         <>
@@ -8,6 +10,7 @@ const CreateExams: NextPage = () => {
                 <title>Create Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Exam Registration | GRS CBT" />
             </Head>
+            <Form />
         </>
     );
 }
