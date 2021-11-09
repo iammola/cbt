@@ -13,9 +13,10 @@ const AnswerSchema = new Schema<AnswerRecord>({
     }
 });
 
-export const AnswerModel = models.Answer as Model<AnswerRecord> ?? model('Answer', AnswerSchema);
 const AnswersSchema = new Schema<AnswersRecord>({
     question: {
         type: Schema.Types.ObjectId,
     }, answers: [AnswerSchema],
 });
+
+export const AnswersModel = models.Answers as Model<AnswersRecord> ?? model('Answers', AnswersSchema);
