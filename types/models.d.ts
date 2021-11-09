@@ -86,7 +86,6 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     minLength: undefined;
 } | {
     type: "Short Answer" | "Long Answer";
-    answers: undefined;
     maxLength: number;
     minLength: number;
 }) & ({
