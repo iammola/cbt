@@ -7,7 +7,7 @@ import Select from "components/Select";
 
 import type { ExamModalProps, SelectOption } from "types";
 
-const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
+const ExamModal: FunctionComponent<ExamModalProps> = ({ open, onSubmit }) => {
     const [{ account }] = useCookies(['account']);
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
     const { data: classes, error } = useSWR(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => url !== null && fetch(url).then(res => res.json()));
@@ -48,7 +48,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
         e.preventDefault();
 
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
-            props.onSubmit({
+            onSubmit({
                 class: selectedClass.name,
                 subject: selectedSubject.name,
                 details: {
@@ -60,7 +60,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     }
 
     return (
-        <Transition show appear as={Fragment}>
+        <Transition show={open} appear as={Fragment}>
             <Dialog
                 as="section"
                 onClose={() => { }}
