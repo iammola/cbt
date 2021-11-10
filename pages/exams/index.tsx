@@ -74,7 +74,61 @@ const Exams: NextPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+                                {(exams?.data as ExamRow[])?.map(({ subject, duration, questions, created: { at, by }, ...exam }, examIdx) => (
+                                    <tr
+                                        key={examIdx}
+                                        className="text-sm font-medium"
+                                    >
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {examIdx + 1}.
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {exam.class}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="flex flex-col">
+                                                <span className="text-sm text-gray-900">
+                                                    {subject}
+                                                </span>
+                                                <span className="text-sm text-gray-500">
+                                                    {duration} mins - {questions} questions
+                                                </span>
                                             </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {(() => {
+                                                const date = formatRelative(new Date(at), new Date());
+                                                return date[0].toUpperCase() + date.slice(1)
+                                            })()}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="flex items-center gap-4">
+                                                <div className="flex-shrink-0 h-10 w-10 relative">
+                                                    <UserImage
+                                                        src=""
+                                                        layout="fill"
+                                                        objectFit="cover"
+                                                        objectPosition="center"
+                                                        className="rounded-full"
+                                                        initials={{
+                                                            text: by.name.initials,
+                                                            className: "rounded-full bg-indigo-300"
+                                                        }}
+                                                    />
+                                                </div>
+                                                <span>
+                                                    {by.name.fullName}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
+                                            <Link href={`/edit/exams/${exam._id}`}>
+                                                <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
+                                                    Edit
+                                                </a>
+                                            </Link>
+                                        </td>
+                                        {/* 
                                     <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
                                         <Link href="/exams/loops">
                                             <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
@@ -87,6 +141,9 @@ const Exams: NextPage = () => {
                                             Delete
                                         </span>
                                     </td>
+                                    */}
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </section>
@@ -95,5 +152,17 @@ const Exams: NextPage = () => {
         </>
     );
 }
+
+type ExamRow = {
+    _id: string;
+    class: string;
+    questions: number;
+    subject: string;
+    created: {
+        at: Date;
+        by: any
+    };
+    duration: number;
+};
 
 export default Exams;
