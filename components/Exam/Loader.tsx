@@ -7,7 +7,7 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
             <Dialog
                 as="section"
                 onClose={() => { }}
-                className="flex items-center justify-center fixed z-50 inset-0 h-screen w-full p-8 backdrop-blur-md"
+                className="flex items-center justify-center fixed z-50 inset-0 h-screen w-full p-8 backdrop-blur-sm"
             >
                 <Transition.Child
                     as={Fragment}
