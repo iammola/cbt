@@ -6,7 +6,6 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { AnswersModel, ExamModel, QuestionsModel } from "db/models";
 
-export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
 import type { CreateQuestion, ExamRecord, RouteResponse } from "types";
 
 type RequestBody = {
@@ -77,13 +76,14 @@ async function updateExam(id: any, { exam: { duration, SubjectID, instructions }
     return [success, status, message];
 }
 
+export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["GET", "PUT"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else[success, status, message] = await (method === "PUT" ? updateExam(query.id, JSON.parse(body)) : [success, status, message])
 
     if (typeof message !== "object") message = { message };
 
