@@ -65,6 +65,7 @@ export type ToggleProps = {
 
 export type ExamModalProps = {
     open: boolean;
+    isEdit: boolean;
     onSubmit(v: ExamDetails): void;
 }
 
