@@ -15,7 +15,7 @@ const CreateExam: NextPage = () => {
                 <title>Edit Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Exam Editing | GRS CBT" />
             </Head>
-            <Form {...exam?.data} />
+            <Form data={exam?.data} />
             <Loader show={exam === undefined} />
         </>
     );
