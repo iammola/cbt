@@ -25,10 +25,12 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
     const [examState, setExamState] = useState({ details: true, modified: false, saved: false, uploaded: false, uploading: false });
 
     useEffect(() => {
-        setExam(props.exam);
-        if (props.questions !== undefined) setQuestions(props.questions);
-        if (props.instructions !== undefined) setInstructions([...props.instructions, '']);
-    }, [props]);
+        if (data !== undefined) {
+            setExam(data.exam);
+            setQuestions(data.questions);
+            setInstructions([...data.instructions, '']);
+        }
+    }, [data]);
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined && examState.modified === true) {
@@ -61,7 +63,7 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
             setExamState({ ...examState, uploading: true });
 
             try {
-                const [url, method] = props._id === undefined ? ["/api/exams/", "POST"] : [`/api/exams/${props._id}/`, "PUT"];
+                const [url, method] = data?._id === undefined ? ["/api/exams/", "POST"] : [`/api/exams/${data._id}/`, "PUT"];
                 const res = await fetch(url, {
                     method,
                     body: JSON.stringify({
