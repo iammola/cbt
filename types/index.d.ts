@@ -3,8 +3,8 @@ export * from "./components";
 
 import { AnswerRecord, ExamRecord, QuestionRecord } from "./models";
 
-export type CreateQuestion = QuestionRecord & {
-    answers: AnswerRecord[];
+export type CreateQuestion<P = false, I = false> = QuestionRecord<P, I> & {
+    answers: AnswerRecord<P, I>[];
 };
 
 export type ExamDetails = {
