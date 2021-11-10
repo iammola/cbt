@@ -31,7 +31,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
     return [success, status, message];
 }
 
-async function createExam({ exam: { duration, SubjectID, instructions }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
+async function createExam({ exam: { duration, SubjectID, instructions }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
