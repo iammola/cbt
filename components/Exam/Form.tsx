@@ -8,7 +8,7 @@ import { useNotifications } from "components/Misc/Notification";
 
 import type { CreateQuestion, ExamDetails, FormProps } from "types";
 
-const Form: FunctionComponent<Partial<FormProps>> = (props) => {
+const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
     const router = useRouter();
     const [addNotification, , Notifications] = useNotifications();
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
