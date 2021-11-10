@@ -28,9 +28,9 @@ async function getExams(id: any): Promise<RouteResponse> {
             };
         }));
 
-        [success, status, message] = [true, StatusCodes.CREATED, {
+        [success, status, message] = [true, StatusCodes.OK, {
             data,
-            message: ReasonPhrases.CREATED
+            message: ReasonPhrases.OK
         }];
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
