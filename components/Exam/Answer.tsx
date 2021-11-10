@@ -1,35 +1,37 @@
 import { FunctionComponent } from "react";
-import { XIcon } from "@heroicons/react/solid";
+import { XIcon } from "@heroicons/react/outline";
 
-import { OuterCircleIcon, CircleOutlineIcon } from "components/Misc/Icons";
+import { classNames } from "utils";
 
 import type { AnswerProps } from "types";
 
-const Answer: FunctionComponent<AnswerProps> = ({ id, letter, answer, isCorrect, deleteOption, handleChange }) => {
+const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
     return (
         <>
+            <input
+                id={id}
+                type="checkbox"
+                className="hidden"
+                checked={isCorrect ?? false}
+                onChange={({ target: { checked } }) => handleChange({ isCorrect: checked === true ? true : undefined })}
+            />
             <label
                 htmlFor={id}
-                className="flex items-center justify-start gap-[inherit]"
-            >
-                {isCorrect === true ? (
-                    <OuterCircleIcon className="flex-shrink-0 text-blue-500" />
-                ) : (
-                    <CircleOutlineIcon className="flex-shrink-0 text-gray-500" />
-                )}
-                <span>
-                    {letter}.
-                </span>
-            </label>
+                className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
+                    "bg-gray-400": isCorrect,
+                    "bg-white": isCorrect === false
+                })}
+            />
             <input
                 required
                 type="text"
                 value={answer}
+                placeholder={`Option ${number}`}
                 onChange={({ target: { value } }) => handleChange({ answer: value })}
-                className="w-full border rounded-lg transition-shadow focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white focus:outline-none py-3 pl-5"
+                className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm border-b-2 border-transparent focus:bg-gray-50 hover:border-gray-200 focus:border-indigo-300 focus:outline-none"
             />
             <span
-                onClick={deleteOption}
+                onClick={deleteAnswer}
                 className="group relative p-2 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-200"
             >
                 <XIcon className="w-5 h-5" />
@@ -37,13 +39,6 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, letter, answer, isCorrect,
                     Delete Option
                 </span>
             </span>
-            <input
-                id={id}
-                type="checkbox"
-                className="hidden"
-                checked={isCorrect ?? false}
-                onChange={({ target: { checked } }) => handleChange({ isCorrect: checked })}
-            />
         </>
     );
 }

@@ -9,9 +9,9 @@ const ExamSchema = new Schema<ExamRecord>({
     }, SubjectID: {
         type: Schema.Types.ObjectId,
         required: [true, 'Exam subject required'],
-    }, questions: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Question',
+    }, instructions: [{
+        type: String,
+        trim: true,
     }], created: {
         _id: false,
         type: {
@@ -20,6 +20,7 @@ const ExamSchema = new Schema<ExamRecord>({
                 required: [true, 'Created at required']
             }, by: {
                 type: Schema.Types.ObjectId,
+                ref: 'Teacher',
                 required: [true, 'Created by required']
             }
         },

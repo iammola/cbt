@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, EventModel, SessionModel, StudentModel } from "db/models";
+import { ExamModel, EventModel, SessionModel, StudentModel, QuestionsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -23,11 +23,15 @@ async function getSchedule({ id, date }: { id: string, date: string }): Promise<
                     events: { $elemMatch: { subject: subjects } }
                 }).select('events').lean();
 
-                const data = (await ExamModel.find({ SubjectID: subjects }).select('-_id').lean()).map(({ duration, questions, SubjectID }) => ({
-                    time: duration,
-                    questions: questions.length,
-                    name: events?.events.find(event => event.subject === SubjectID)?.name ?? ''
-                }));
+                const data = (await ExamModel.find({ SubjectID: subjects }).select('-_id').lean()).map(async ({ _id, duration, SubjectID }: any) => {
+                    const questions = (await QuestionsModel.findOne({ exam: _id }, 'questions._id'))?.questions.length;
+
+                    return {
+                        questions,
+                        time: duration,
+                        name: events?.events.find(event => event.subject === SubjectID)?.name ?? ''
+                    };
+                });
 
                 [success, status, message] = [true, StatusCodes.CREATED, {
                     data,

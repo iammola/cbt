@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, EventModel, AnswerModel, QuestionModel } from "db/models";
+import { ExamModel, EventModel, AnswersModel, QuestionsModel } from "db/models";
 
 import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
@@ -15,8 +15,10 @@ async function getExams({ select = '', date }: { select: string; date: string })
     try {
         const eventRecords = await EventModel.findOne({ date: new Date(+date) }).select('events').lean() ?? { events: [] };
         const data = await ExamModel.find({ SubjectID: eventRecords.events.map(({ subject }) => subject) }).select(select).lean();
+        const questions = (await QuestionsModel.findOne({ exam: (data as any)._id }, 'questions._id').lean())?.questions.length;
+
         [success, status, message] = [true, StatusCodes.OK, {
-            data: data.map(({ questions, ...item }) => ({ ...item, questions: questions.length })),
+            data: data.map(item => ({ ...item, questions })),
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
@@ -29,7 +31,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
     return [success, status, message];
 }
 
-async function createExam({ exam: { duration, SubjectID }, questions }: { exam: Omit<ExamRecord, 'questions'>; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
+async function createExam({ exam: { duration, SubjectID, instructions }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
@@ -37,18 +39,26 @@ async function createExam({ exam: { duration, SubjectID }, questions }: { exam: 
     try {
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
-        const data = await session.withTransaction(async () => await ExamModel.create([{
-            SubjectID,
-            created: { by, at: new Date() },
-            duration: minutesToMilliseconds(duration),
-            questions: (await QuestionModel.create(await Promise.all(questions.map(async ({ answers, ...question }) => ({
-                ...question,
-                answers: (await AnswerModel.create(answers, { session })).map(({ _id }) => _id)
-            }))), { session })).map(({ _id }) => _id)
-        }], { session }));
+        await session.withTransaction(async () => {
+            const [{ _id }] = await ExamModel.create([{
+                SubjectID,
+                instructions,
+                created: { by, at: new Date() },
+                duration: minutesToMilliseconds(duration),
+            }], { session });
+
+            const [items] = await QuestionsModel.create([{
+                exam: _id,
+                questions: questions.map(({ answers, ...question }) => question)
+            }], { session });
+
+            await AnswersModel.create(items.questions.map(({ _id }: any, i) => ({
+                question: _id,
+                answers: questions[i].answers
+            })), { session });
+        });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
-            data,
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {

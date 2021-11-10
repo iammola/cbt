@@ -1,132 +1,79 @@
-import { FunctionComponent, useState, useMemo } from 'react';
-import { PlusSmIcon } from '@heroicons/react/outline';
+import { FunctionComponent } from 'react';
+import { SortAscendingIcon, SortDescendingIcon, TrashIcon } from '@heroicons/react/outline';
 
-import Select from 'components/Select';
 import { Answer } from 'components/Exam';
-import { CircleIcon, LineIcon } from 'components/Misc/Icons';
 
-import type { QuestionRecord, QuestionProps } from 'types';
+import type { QuestionProps } from 'types';
 
-const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange }) => {
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const questionTypes = useMemo(() => [{
-        _id: "Multiple choice",
-        name: "Multiple Choice Single Answer"
-    }, {
-        _id: "Checkboxes",
-        name: "Multiple Choice Multiple Answer"
-    }, {
-        _id: "Short Answer",
-        name: "Short Answer"
-    }, {
-        _id: "Long Answer",
-        name: "Long Answer"
-    }], []);
-
-    const [questionType, setQuestionType] = useState(questionTypes.find(({ _id }) => _id === record.type) ?? questionTypes[0]);
-
-    const addOption = () => onChange({ answers: [...record.answers, { answer: "" }] });
-
-    const removeOption = (optionIdx: number) => onChange({ answers: record.answers.filter((_, i) => i !== optionIdx) });
-
-    function changeType(type: QuestionRecord['type']) {
-        setQuestionType(questionTypes.find(({ _id }) => _id === type) ?? questionTypes[0]);
-
-        const { question, answers } = record;
-        const newRecord = {
-            type,
-            question,
-            max: undefined,
-            min: undefined,
-            answers: undefined,
-            maxLength: undefined,
-            minLength: undefined,
-        };
-
-        if (type === "Multiple choice") onChange({
-            ...newRecord,
-            answers,
-        });
-
-        if (type === "Checkboxes") onChange({
-            ...newRecord,
-            min: 1,
-            answers,
-            max: answers.filter(({ isCorrect }) => isCorrect).length,
-        });
-    }
-
+const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, deleteQuestion, insertQuestionBelow, insertQuestionAbove }) => {
     return (
-        <section className="flex flex-col gap-12 w-full">
-            <span className="text-2xl text-center pl-10 flex-grow font-medium">
-                Question {number}
-            </span>
-            <div className="flex flex-col gap-14 sm:gap-20 w-full relative">
-                <div className="flex flex-col lg:flex-row items-start gap-y-4 lg:gap-y-0 gap-x-0 lg:gap-x-6 pl-[34px]">
-                    <span className="absolute left-0 z-0 flex flex-col items-center justify-start w-[22px] h-[calc(100%+2px)] pt-1.5">
-                        <CircleIcon className="drop-shadow-2xl text-gray-600 flex-shrink-0" />
-                        <LineIcon className="flex-grow text-gray-600 -mt-1" />
-                    </span>
-                    <span className="w-max font-medium">
-                        {/* Choose  */}Question Type:
-                    </span>
-                    <Select
-                        className="-mt-5"
-                        selected={questionType}
-                        options={questionTypes}
-                        handleChange={({ _id }) => changeType(_id)}
-                    />
-                </div>
-                <div className="flex flex-col items-start gap-6 pl-[34px]">
-                    <span className="absolute left-0 z-0 flex flex-col items-center justify-start w-[22px] h-[calc(100%+2px)] pt-2">
-                        <CircleIcon className="drop-shadow-2xl text-gray-600 flex-shrink-0" />
-                    </span>
-                    <span className="w-max font-medium">
-                        Question:
-                    </span>
-                    <div className="flex flex-col items-start justify-start gap-7 w-full">
-                        <input
-                            required
-                            type="text"
-                            value={record.question}
-                            onChange={({ target: { value } }) => onChange({ question: value })}
-                            className="w-full border rounded-lg transition-shadow focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white focus:outline-none py-4 pl-8 pr-10"
+        <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
+            <input
+                required
+                type="text"
+                value={record.question}
+                placeholder={`Question ${number} `}
+                onChange={({ target: { value } }) => onChange({ question: value })}
+                className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm border-b-2 border-transparent focus:bg-gray-50 focus:border-b-2 focus:border-indigo-300 focus:outline-none"
+            />
+            <ul className="flex flex-col items-start justify-start gap-3 w-full my-5 pl-4">
+                {record.answers.map((answer, answerIdx) => (
+                    <li
+                        key={answerIdx}
+                        className="flex items-center justify-start gap-4 w-full"
+                    >
+                        <Answer
+                            {...answer}
+                            number={answerIdx + 1}
+                            id={`${number}${answerIdx}`}
+                            deleteAnswer={() => onChange({ answers: record.answers.filter((_, i) => i !== answerIdx) })}
+                            handleChange={answer => onChange({
+                                answers: record.answers.map((value, idx) => idx === answerIdx ? { ...value, ...answer } : {
+                                    ...value,
+                                    isCorrect: (answer.isCorrect === true && record.type === "Multiple choice") ? undefined : value.isCorrect
+                                })
+                            })}
                         />
-                        <ul className="flex flex-col items-start justify-start gap-5 w-full pl-6 pr-4 md:pr-8 xl:pr-14 2xl:pr-20">
-                            {record.answers.map((answer, answerIdx) => (
-                                <li
-                                    key={answerIdx}
-                                    className="flex items-center justify-start gap-4 w-full"
-                                >
-                                    <Answer
-                                        {...answer}
-                                        letter={letters[answerIdx]}
-                                        id={`${number}${letters[answerIdx]}`}
-                                        deleteOption={() => removeOption(answerIdx)}
-                                        handleChange={answer => onChange({
-                                            answers: record.answers.map((value, idx) => idx === answerIdx ? { ...value, ...answer } : {
-                                                ...value,
-                                                isCorrect: (answer.isCorrect === true && questionType._id === "Multiple choice") ? false : value.isCorrect
-                                            })
-                                        })}
-                                    />
-                                </li>
-                            ))}
-                        </ul>
-                        <button
-                            type="button"
-                            onClick={addOption}
-                            className="flex items-center gap-5 ml-10 py-3 px-4 rounded-md transition-shadow hover:ring-2 hover:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            <span className="p-2 rounded-full bg-blue-600">
-                                <PlusSmIcon className="w-5 h-5 text-white" />
-                            </span>
-                            Add Option
-                        </button>
-                    </div>
-                </div>
+                    </li>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => onChange({ answers: [...record.answers, { answer: "" }] })}
+                    className="text-sm text-white py-2 px-4 rounded-md bg-gray-500 hover:bg-gray-600 cursor-pointer focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white focus:outline-none"
+                >
+                    Add Option
+                </button>
+            </ul>
+            <div className="flex items-center justify-end gap-3 w-full border-t pl-4 py-1">
+                <span
+                    onClick={insertQuestionAbove}
+                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                >
+                    <SortAscendingIcon className="w-5 h-5" />
+                    <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+                        Insert Question Above
+                    </span>
+                </span>
+                <span
+                    onClick={insertQuestionBelow}
+                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                >
+                    <SortDescendingIcon className="w-5 h-5" />
+                    <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+                        Insert Question Below
+                    </span>
+                </span>
+                <span
+                    onClick={deleteQuestion}
+                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                >
+                    <TrashIcon className="w-5 h-5" />
+                    <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+                        Delete Question
+                    </span>
+                </span>
             </div>
-        </section>
+        </div>
     );
 }
 

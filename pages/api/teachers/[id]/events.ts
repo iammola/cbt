@@ -2,21 +2,21 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, EventModel, SubjectModel } from "db/models";
+import { ClassModel, EventModel, SubjectsModel } from "db/models";
 
-import type { RouteResponse, SubjectRecord } from "types";
+import type { RouteResponse, SubjectsRecord } from "types";
 
 async function getTeacherEvents(id: string): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = (await SubjectModel.find({ "subjects.teachers": id }).lean()).reduce((acc, item) => {
+        const subjects = (await SubjectsModel.find({ "subjects.teachers": id }).lean()).reduce((acc, item) => {
             return [...acc, {
                 class: item.class,
                 subjects: item.subjects.filter(({ teachers }) => teachers?.find(teacher => teacher.toString() === id)).map(item => (item as any)._id)
             }];
-        }, [] as SubjectRecord[]);;
+        }, [] as SubjectsRecord[]);;
 
         const classes = await ClassModel.find({
             subjects: {

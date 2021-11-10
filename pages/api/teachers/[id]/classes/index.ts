@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, SubjectModel } from "db/models";
+import { ClassModel, SubjectsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -11,7 +11,7 @@ async function getTeacherClasses(id: any, select: any): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const classes = (await SubjectModel.find({ "subjects.teachers": id }, 'class').lean()).map(item => item.class);
+        const classes = (await SubjectsModel.find({ "subjects.teachers": id }, 'class').lean()).map(item => item.class);
         const data = await ClassModel.find({ _id: classes }, select);
 
         [success, status, message] = [true, StatusCodes.OK, {

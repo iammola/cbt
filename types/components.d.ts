@@ -1,10 +1,12 @@
+import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
-import type { CreateQuestion, AnswerRecord } from ".";
+import type { CreateQuestion, AnswerRecord, ExamDetails } from ".";
 
 export type NotificationProps = {
+    id: string;
     message: string;
     timeout: number;
-    removeIcon(): void;
+    remove(): void;
     Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 
@@ -31,13 +33,16 @@ export type SelectProps = {
 export type QuestionProps = {
     number: number;
     record: CreateQuestion;
+    deleteQuestion(): void;
+    insertQuestionAbove(): void;
+    insertQuestionBelow(): void;
     onChange(question: Partial<CreateQuestion>): void;
 }
 
 export type AnswerProps = AnswerRecord & {
     id: string;
-    letter: string;
-    deleteOption(): void;
+    number: number;
+    deleteAnswer(): void;
     handleChange(answer: Partial<AnswerRecord>): void;
 }
 
@@ -59,11 +64,9 @@ export type ToggleProps = {
 }
 
 export type ExamModalProps = {
-    onSubmit(v: {
-        class: string;
-        subject: string;
-        details: Pick<ExamRecord, 'duration' | 'SubjectID'>;
-    }): void
+    open: boolean;
+    isEdit: boolean;
+    onSubmit(v: ExamDetails): void;
 }
 
 export type DivideProps = {
@@ -75,4 +78,20 @@ export type UserImageProps = ImageProps & {
         text: string;
         className?: string;
     }
+}
+
+export type BarProps = {
+    save(): void;
+    saved: boolean;
+    modified: boolean;
+    uploaded: boolean;
+    uploading: boolean;
+    exam?: ExamDetails;
+}
+
+export type FormProps = {
+    _id: string;
+    exam: ExamDetails;
+    instructions: string[];
+    questions: CreateQuestion<true>[];
 }

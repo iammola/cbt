@@ -41,7 +41,7 @@ const CreateTeachers: NextPage = () => {
     const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedSubjects, setSelectedSubjects] = useState<{ [key: string]: string[] }>({});
-    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>['subjects']; }[] | string>('');
+    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
@@ -63,7 +63,7 @@ const CreateTeachers: NextPage = () => {
 
                     return {
                         _id, name,
-                        subjects: data.subjects as SubjectRecord<true>['subjects']
+                        subjects: data.subjects as SubjectRecord<true>[]
                     };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));

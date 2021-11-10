@@ -2,34 +2,6 @@ import type { Schema } from "mongoose";
 
 type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
 
-export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
-    answer: string
-    isCorrect?: boolean;
-};
-
-export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
-    question: string;
-} & ({
-    type: "Multiple choice" | "Checkboxes";
-    answers: (P extends true ? AnswerRecord<P, I> : string)[];
-    maxLength: undefined;
-    minLength: undefined;
-} | {
-    type: "Short Answer" | "Long Answer";
-    answers: undefined;
-    maxLength: number;
-    minLength: number;
-}) & ({
-    type: "Checkboxes";
-    max: number;
-    min: number;
-} | {
-    type: "Short Answer" | "Long Answer" | "Multiple choice";
-    max: undefined;
-    min: undefined;
-});
-
-
 /* Class and Subject */
 
 export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
@@ -38,12 +10,14 @@ export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
 };
 
 export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
+    name: string;
+    alias: string;
+    teachers: Schema.Types.ObjectId[];
+}
+
+export type SubjectsRecord<P = false, I = false> = RecordId<P, I> & {
     class: Schema.Types.ObjectId;
-    subjects: (RecordId<P, I> & {
-        name: string;
-        alias: string;
-        teachers: Schema.Types.ObjectId[];
-    })[];
+    subjects: SubjectRecord<P, I>[];
 }
 
 
@@ -76,7 +50,7 @@ export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
 };
 
 
-/* Event and Exam */
+/* Event and Exam and Answer and Question */
 
 export type EventRecord<P = false, I = false> = RecordId<P, I> & {
     date: Date;
@@ -88,12 +62,37 @@ export type EventRecord<P = false, I = false> = RecordId<P, I> & {
 
 export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
-    SubjectID: P extends true ? string : Schema.Types.ObjectId;
-    questions: (P extends true ? QuestionRecord<P, I> : string)[];
+    SubjectID: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
+    instructions: string[];
     created: {
         at: Date;
-        by: Schema.Types.ObjectId;
-    }
+        by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
+    };
+};
+
+export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
+    answer: string
+    isCorrect?: boolean;
+};
+
+export type AnswersRecord<P = false, I = false> = RecordId<P, I> & {
+    question: Schema.Types.ObjectId;
+    answers: AnswerRecord<P, I>[];
+};
+
+export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
+    question: string;
+} & ({
+    type: "Multiple choice" | "Short Answer" | "Long Answer";
+} | {
+    type: "Checkboxes";
+    maxLength?: M;
+    minLength?: M;
+});
+
+export type QuestionsRecord<P = false, I = false> = RecordId<P, I> & {
+    exam: Schema.Types.ObjectId;
+    questions: QuestionRecord<P, I>[];
 };
 
 

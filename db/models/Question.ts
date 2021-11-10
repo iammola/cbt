@@ -1,20 +1,12 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import type { QuestionRecord } from "types";
+import type { QuestionRecord, QuestionsRecord } from "types";
 
 const QuestionSchema = new Schema<QuestionRecord>({
     question: {
         type: String,
         trim: true,
         required: [true, 'Question required'],
-    }, min: {
-        type: Number,
-        default: undefined,
-    }, max: {
-        type: Number,
-        required: [function (this: QuestionRecord) {
-            return this.type === "Checkboxes";
-        }, 'Checkbox Questions require a max-length'],
     }, minLength: {
         type: Number,
         required: [function (this: QuestionRecord) {
@@ -30,6 +22,15 @@ const QuestionSchema = new Schema<QuestionRecord>({
             message: "Invalid Question type",
             values: ["Multiple choice", "Checkboxes", "Short Answer", "Long Answer"]
         }
+    }
+    /* , min: {
+        type: Number,
+        default: undefined,
+    }, max: {
+        type: Number,
+        required: [function (this: QuestionRecord) {
+            return this.type === "Checkboxes";
+        }, 'Checkbox Questions require a max-length'],
     }, answers: [{
         type: [Schema.Types.ObjectId],
         required: [function (this: QuestionRecord) {
@@ -39,7 +40,14 @@ const QuestionSchema = new Schema<QuestionRecord>({
             return ["Multiple choice", "Checkboxes"].includes(this.type) ? ((this.answers ?? []).length) > 1 : this.answers === undefined
         }, "Invalid answer value"],
         ref: "Answer"
-    }]
+    }] */
 });
 
-export const QuestionModel = models.Question as Model<QuestionRecord> ?? model('Question', QuestionSchema);
+const QuestionsSchema = new Schema<QuestionsRecord>({
+    exam: {
+        type: Schema.Types.ObjectId,
+        ref: 'Exam'
+    }, questions: [QuestionSchema]
+});
+
+export const QuestionsModel = models.Questions as Model<QuestionsRecord> ?? model('Questions', QuestionsSchema);

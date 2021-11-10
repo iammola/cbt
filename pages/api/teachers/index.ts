@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { generateCode } from "utils";
 
 import { connect } from "db";
-import { SubjectModel, TeacherModel } from "db/models";
+import { SubjectsModel, TeacherModel } from "db/models";
 
 import type { TeacherRecord, RouteResponse } from "types";
 
@@ -18,7 +18,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
             code: generateCode()
         });
 
-        Object.entries(subjects).map(async ([classID, subjects]) => await SubjectModel.updateOne({
+        Object.entries(subjects).map(async ([classID, subjects]) => await SubjectsModel.updateOne({
             class: classID as any,
         }, {
             $addToSet: { "subjects.$[i].teachers": data._id }

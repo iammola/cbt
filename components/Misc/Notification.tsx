@@ -1,10 +1,38 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, useState } from "react";
+import { Fragment, FunctionComponent, useCallback, useMemo, useState } from "react";
 
 import type { NotificationProps } from "types";
 
-const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, removeIcon, Icon }) => {
+type Item = Omit<NotificationProps, "remove">;
+
+type NotificationsHook = [
+    (items: Item | Item[]) => void,
+    (idx: number) => void,
+    () => JSX.Element
+];
+
+export function useNotifications(): NotificationsHook {
+    const notifications = useMemo<Item[]>(() => [], []);
+    const addNotification: NotificationsHook[0] = useCallback(items => notifications.push(...[items].flat()), [notifications]);
+    const removeNotification: NotificationsHook[1] = useCallback(idx => notifications.splice(idx, 1), [notifications]);
+
+    const Notifications: NotificationsHook[2] = useCallback(() => (
+        <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
+            {notifications.map(({ id, ...item }, i) => (
+                <Item
+                    key={id}
+                    {...item}
+                    remove={() => removeNotification(i)}
+                />
+            ))}
+        </aside>
+    ), [notifications, removeNotification]);
+
+    return [addNotification, removeNotification, Notifications];
+}
+
+const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
     const timer = setTimeout(closeNotification, timeout);
@@ -19,7 +47,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
             appear
             show={show}
             as={Fragment}
-            afterLeave={removeIcon}
+            afterLeave={remove}
             enter="ease-out duration-300 transition-transform"
             enterFrom="translate-x-full"
             enterTo="translate-x-0"
@@ -42,5 +70,3 @@ const Notification: FunctionComponent<NotificationProps> = ({ timeout, message, 
         </Transition>
     );
 }
-
-export default Notification;

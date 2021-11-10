@@ -1,6 +1,6 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import type { AnswerRecord } from "types";
+import type { AnswerRecord, AnswersRecord } from "types";
 
 const AnswerSchema = new Schema<AnswerRecord>({
     isCorrect: {
@@ -13,4 +13,10 @@ const AnswerSchema = new Schema<AnswerRecord>({
     }
 });
 
-export const AnswerModel = models.Answer as Model<AnswerRecord> ?? model('Answer', AnswerSchema);
+const AnswersSchema = new Schema<AnswersRecord>({
+    question: {
+        type: Schema.Types.ObjectId,
+    }, answers: [AnswerSchema],
+});
+
+export const AnswersModel = models.Answers as Model<AnswersRecord> ?? model('Answers', AnswersSchema);

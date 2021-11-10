@@ -7,7 +7,7 @@ import Select from "components/Select";
 
 import type { ExamModalProps, SelectOption } from "types";
 
-const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
+const ExamModal: FunctionComponent<ExamModalProps> = ({ isEdit, open, onSubmit }) => {
     const [{ account }] = useCookies(['account']);
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
     const { data: classes, error } = useSWR(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => url !== null && fetch(url).then(res => res.json()));
@@ -48,7 +48,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
         e.preventDefault();
 
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
-            props.onSubmit({
+            onSubmit({
                 class: selectedClass.name,
                 subject: selectedSubject.name,
                 details: {
@@ -60,7 +60,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
     }
 
     return (
-        <Transition show appear as={Fragment}>
+        <Transition show={open} appear as={Fragment}>
             <Dialog
                 as="section"
                 onClose={() => { }}
@@ -90,7 +90,9 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                         className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white w-full sm:w-[30rem]"
                     >
                         <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
-                            <span>Create an</span>{' '}
+                            <span>
+                                {isEdit === true ? "Edit" : "Create"} an
+                            </span>{' '}
                             <span className="text-indigo-500">Exam</span>{' '}
                             <span>🚀</span>
                         </Dialog.Title>
@@ -137,7 +139,7 @@ const ExamModal: FunctionComponent<ExamModalProps> = (props) => {
                                 inputMode="numeric"
                                 value={duration === 0 ? '' : duration}
                                 onChange={({ target: { valueAsNumber } }) => setDuration(valueAsNumber)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                             <span className="absolute bottom-4 right-0 z-10 flex items-center pr-2 pointer-events-none text-gray-500 text-xs">
                                 mins
