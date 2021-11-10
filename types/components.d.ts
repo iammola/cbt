@@ -92,5 +92,5 @@ export type FormProps = {
     _id: string;
     exam: ExamDetails;
     instructions: string[];
-    questions: CreateQuestion[];
+    questions: CreateQuestion<true>[];
 }
