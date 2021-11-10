@@ -43,12 +43,12 @@ async function updateExam(id: any, { exam: { duration, SubjectID, instructions }
                 QuestionsModel.findOneAndUpdate({ exam: id }, {
                     questions: questions.map(({ answers, ...question }) => question)
                 }, opts).lean(),
-                ...updates.map(async ({ _id, answers }) =>
+                Promise.all(updates.map(async ({ _id, answers }) =>
                     await AnswersModel.findOneAndUpdate({ question: _id as unknown as undefined }, { answers }, opts).lean()
-                ),
-                ...deletes.map(async ({ _id }) =>
+                )),
+                Promise.all(deletes.map(async ({ _id }) =>
                     await AnswersModel.findOneAndDelete({ question: _id as unknown as undefined }, opts).lean()
-                )
+                ))
             ]);
 
             const creates = updatedQuestions?.questions.map(({ _id }: any, i) => check(_id.toString()) === undefined ? {
