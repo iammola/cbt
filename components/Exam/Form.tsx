@@ -220,6 +220,4 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
     );
 }
 
-
-
 export default Form;
