@@ -74,56 +74,7 @@ const Exams: NextPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
-                                <tr className="text-sm font-medium">
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        1.
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        Key Stage 1
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="flex flex-col">
-                                            <span className="text-sm text-gray-900">
-                                                Pre-Vocational Studies
-                                            </span>
-                                            <span className="text-sm text-gray-500">
-                                                30 mins - 40 questions
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        {(() => {
-                                            const date = formatRelative(new Date('2021-11-08T12:44:06.401+00:00'), new Date());
-                                            return date[0].toUpperCase() + date.slice(1)
-                                        })()}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="flex items-center gap-4">
-                                            <div className="flex-shrink-0 h-10 w-10 relative">
-                                                <UserImage
-                                                    src=""
-                                                    layout="fill"
-                                                    objectFit="cover"
-                                                    objectPosition="center"
-                                                    className="rounded-full"
-                                                    initials={{
-                                                        text: 'AA',
-                                                        className: "rounded-full bg-indigo-300"
-                                                    }}
-                                                />
                                             </div>
-                                            <span>
-                                                Ademola Adedeji
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
-                                        <Link href="/create/exams/loops">
-                                            <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
-                                                Edit
-                                            </a>
-                                        </Link>
-                                    </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
                                         <Link href="/exams/loops">
                                             <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
@@ -136,7 +87,6 @@ const Exams: NextPage = () => {
                                             Delete
                                         </span>
                                     </td>
-                                </tr>
                             </tbody>
                         </table>
                     </section>
