@@ -1,12 +1,17 @@
+import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
 import type { NextPage } from "next";
+import { useCookies } from "react-cookie";
 import { formatRelative } from "date-fns";
 
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 
 const Exams: NextPage = () => {
+    const [{ account }] = useCookies(['account']);
+    const { data: exams } = useSWR(account !== undefined ? `/api/teachers/${account._id}/exams` : null, url => url !== null && fetch(url).then(res => res.json()));
+
     return (
         <>
             <Head>
