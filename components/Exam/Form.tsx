@@ -215,6 +215,7 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
                     setExam(d);
                     setExamState({ ...examState, details: true });
                 }}
+                isEdit={!!router.query.id}
                 open={exam === undefined || examState.details === false}
             />
             <Notifications />
