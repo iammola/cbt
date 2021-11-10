@@ -43,7 +43,7 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
                 </Transition.Child>
             </Dialog>
         </Transition>
-    )
+    );
 }
 
 export default Loader;
