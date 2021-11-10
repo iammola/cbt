@@ -53,6 +53,7 @@ const Exams: NextPage = () => {
                                             Edit
                                         </span>
                                     </th>
+                                    {/* 
                                     <th
                                         scope="col"
                                         className="relative px-6 py-3"
@@ -69,6 +70,7 @@ const Exams: NextPage = () => {
                                             Delete
                                         </span>
                                     </th>
+                                     */}
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
