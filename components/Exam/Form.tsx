@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { FormEvent, FunctionComponent, useMemo, useState } from "react";
+import { FormEvent, FunctionComponent, useEffect, useMemo, useState } from "react";
 import { CogIcon, CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon, XIcon, ArrowSmUpIcon } from "@heroicons/react/outline";
 
 import { Bar, Modal, Question } from ".";
@@ -18,11 +18,17 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
         type: "Multiple choice",
         answers: [{ answer: "", isCorrect: true }, { answer: "" }],
     }), []);
-    const [exam, setExam] = useState<ExamDetails | undefined>(props.exam ?? undefined);
-    const [questions, setQuestions] = useState<CreateQuestion[]>(props.questions ?? [{ ...recordTemplate }]);
-    const [instructions, setInstructions] = useState(props.instructions ?? ['Answer all questions', '']);
+    const [exam, setExam] = useState<ExamDetails>();
+    const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
+    const [instructions, setInstructions] = useState(['Answer all questions', '']);
 
-    const [examState, setExamState] = useState({ details: Boolean(props.exam), modified: false, saved: false, uploaded: false, uploading: false });
+    const [examState, setExamState] = useState({ details: true, modified: false, saved: false, uploaded: false, uploading: false });
+
+    useEffect(() => {
+        setExam(props.exam);
+        if (props.questions !== undefined) setQuestions(props.questions);
+        if (props.instructions !== undefined) setInstructions([...props.instructions, '']);
+    }, [props]);
 
     function saveExam(obj?: { [key: string]: any }) {
         if (exam !== undefined && examState.modified === true) {
