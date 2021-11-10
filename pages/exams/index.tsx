@@ -7,6 +7,7 @@ import { formatRelative } from "date-fns";
 
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
+import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
 
 const Exams: NextPage = () => {
     const [{ account }] = useCookies(['account']);
@@ -146,6 +147,18 @@ const Exams: NextPage = () => {
                                 ))}
                             </tbody>
                         </table>
+                        {exams?.data?.length === 0 && (
+                            <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
+                                <MeditatingIllustration className="w-60 h-60" />
+                                nothing to see here
+                            </div>
+                        )}
+                        {exams === undefined && (
+                            <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
+                                <SittingWithLaptopIllustration className="w-60 h-60" />
+                                Loading exams...
+                            </div>
+                        )}
                     </section>
                 </main>
             </section>
