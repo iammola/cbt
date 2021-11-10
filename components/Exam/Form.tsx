@@ -71,7 +71,10 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
                         exam: {
                             ...exam.details,
                             instructions: instructions.filter(Boolean)
-                        }
+                        }, original: data?.questions.map(({ _id, answers }) => ({
+                            _id,
+                            answers: answers.map(({ _id }) => _id)
+                        }))
                     })
                 });
 
