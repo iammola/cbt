@@ -7,7 +7,7 @@ import Select from "components/Select";
 
 import type { ExamModalProps, SelectOption } from "types";
 
-const ExamModal: FunctionComponent<ExamModalProps> = ({ open, onSubmit }) => {
+const ExamModal: FunctionComponent<ExamModalProps> = ({ isEdit, open, onSubmit }) => {
     const [{ account }] = useCookies(['account']);
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
     const { data: classes, error } = useSWR(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => url !== null && fetch(url).then(res => res.json()));
@@ -90,7 +90,9 @@ const ExamModal: FunctionComponent<ExamModalProps> = ({ open, onSubmit }) => {
                         className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white w-full sm:w-[30rem]"
                     >
                         <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
-                            <span>Create an</span>{' '}
+                            <span>
+                                {isEdit === true ? "Edit" : "Create"} an
+                            </span>{' '}
                             <span className="text-indigo-500">Exam</span>{' '}
                             <span>🚀</span>
                         </Dialog.Title>
