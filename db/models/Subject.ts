@@ -24,6 +24,7 @@ const SubjectsSchema = new Schema<SubjectsRecord>({
         type: Schema.Types.ObjectId,
         required: [true, 'Class needed'],
         unique: true,
+        ref: 'Class',
     }, subjects: [SubjectSchema]
 });
 
