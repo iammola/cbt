@@ -55,7 +55,7 @@ const Form: FunctionComponent<Partial<FormProps>> = (props) => {
             setExamState({ ...examState, uploading: true });
 
             try {
-                const [url, method] = props._id === undefined ?  ["/api/exams/", "POST"] : [`/api/exams/${props._id}/`, "PUT"];
+                const [url, method] = props._id === undefined ? ["/api/exams/", "POST"] : [`/api/exams/${props._id}/`, "PUT"];
                 const res = await fetch(url, {
                     method,
                     body: JSON.stringify({
