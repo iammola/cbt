@@ -39,7 +39,7 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
     try {
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
-        const data = await session.withTransaction(async () => {
+        await session.withTransaction(async () => {
             const [{ _id }] = await ExamModel.create([{
                 SubjectID,
                 instructions,
@@ -56,12 +56,9 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
                 question: _id,
                 answers: questions[i].answers
             })), { session });
-
-            return _id;
         });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
-            data,
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {
