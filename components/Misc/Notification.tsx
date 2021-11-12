@@ -7,7 +7,7 @@ import type { NotificationProps } from "types";
 type Item = Omit<NotificationProps, "remove">;
 
 type NotificationsHook = [
-    (items: Item | Item[]) => void,
+    (items: Item | Item[]) => number[],
     (idx: number) => void,
     JSX.Element
 ];
@@ -16,11 +16,12 @@ export function useNotifications(): NotificationsHook {
     const [count, setCount] = useState(0);
     const [notifications, setNotifications] = useState<(Item & { id: number; })[]>([]);
     const addNotification: NotificationsHook[0] = items => {
-        setCount(count => count + 1);
-        setNotifications([...notifications, ...[items].flat().map(item => ({
-            ...item,
-            id: count
-        }))]);
+        const newItems: (Item & { id: number; })[] = [items].flat().map(item => {
+            setCount(count => count + 1);
+            return { ...item, id: count };
+        });
+        setNotifications(notifications => [...notifications, ...newItems]);
+        return newItems.map(({ id }) => id);
     }
     const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications.filter((_, i) => i !== idx)), [notifications]);
 
