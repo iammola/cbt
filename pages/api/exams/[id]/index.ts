@@ -34,13 +34,11 @@ async function updateExam(id: any, { exam: { duration, SubjectID, instructions }
         };
 
         session.withTransaction(async () => {
-            const [, updatedQuestions] = await Promise.all([
+            const [exam] = await Promise.all([
                 ExamModel.findByIdAndUpdate(id, {
                     SubjectID,
                     instructions,
                     duration: minutesToMilliseconds(duration),
-                }, opts),
-                QuestionsModel.findOneAndUpdate({ exam: id }, {
                     questions: questions.map(({ answers, ...question }) => question)
                 }, opts).lean(),
                 Promise.all(updates.map(async ({ _id, answers }) =>
