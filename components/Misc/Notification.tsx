@@ -33,7 +33,7 @@ export function useNotifications(): NotificationsHook {
     const Notifications: NotificationsHook[2] = (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
             {notifications.map(({ id, ...item }, i) => (
-                <Item
+                <Notification
                     key={id}
                     {...item}
                     remove={() => removeNotification(i)}
@@ -45,7 +45,7 @@ export function useNotifications(): NotificationsHook {
     return [addNotification, idx => removeNotification(idx, true), Notifications];
 }
 
-const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, timeout, message, remove, Icon }) => {
+const Notification: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
     const closeNotification = useCallback(() => setShow(false), []);
