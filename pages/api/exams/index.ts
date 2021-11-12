@@ -19,7 +19,10 @@ async function getExams({ select = '', date }: { select: string; date: string })
         }).lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data: data.map(item => ({ ...item, questions })),
+            data: data.map(({ questions, ...item }) => ({
+                ...item,
+                questions: questions.length
+            })),
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
