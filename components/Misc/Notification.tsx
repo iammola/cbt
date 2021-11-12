@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, useCallback, useMemo, useState } from "react";
+import { Fragment, FunctionComponent, useCallback, useEffect, useState } from "react";
 
 import type { NotificationProps } from "types";
 
@@ -9,15 +9,22 @@ type Item = Omit<NotificationProps, "remove">;
 type NotificationsHook = [
     (items: Item | Item[]) => void,
     (idx: number) => void,
-    () => JSX.Element
+    JSX.Element
 ];
 
 export function useNotifications(): NotificationsHook {
-    const notifications = useMemo<Item[]>(() => [], []);
-    const addNotification: NotificationsHook[0] = useCallback(items => notifications.push(...[items].flat()), [notifications]);
-    const removeNotification: NotificationsHook[1] = useCallback(idx => notifications.splice(idx, 1), [notifications]);
+    const [count, setCount] = useState(0);
+    const [notifications, setNotifications] = useState<(Item & { id: number; })[]>([]);
+    const addNotification: NotificationsHook[0] = items => {
+        setCount(count => count + 1);
+        setNotifications([...notifications, ...[items].flat().map(item => ({
+            ...item,
+            id: count
+        }))]);
+    }
+    const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications.filter((_, i) => i !== idx)), [notifications]);
 
-    const Notifications: NotificationsHook[2] = useCallback(() => (
+    const Notifications: NotificationsHook[2] = (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
             {notifications.map(({ id, ...item }, i) => (
                 <Item
@@ -27,7 +34,7 @@ export function useNotifications(): NotificationsHook {
                 />
             ))}
         </aside>
-    ), [notifications, removeNotification]);
+    );
 
     return [addNotification, removeNotification, Notifications];
 }
@@ -35,12 +42,12 @@ export function useNotifications(): NotificationsHook {
 const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
-    const timer = setTimeout(closeNotification, timeout);
+    const closeNotification = useCallback(() => setShow(false), []);
 
-    function closeNotification() {
-        setShow(false);
-        clearTimeout(timer);
-    }
+    useEffect(() => {
+        const timer = setTimeout(closeNotification, timeout);
+        return () => clearTimeout(timer);
+    }, [closeNotification, timeout]);
 
     return (
         <Transition

@@ -47,7 +47,6 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
                 expires: new Date('2038-01-19')
             });
             addNotification({
-                id: `Saved locally ${exam.details.SubjectID} - ${questions.length}`,
                 message: "Saved Locally",
                 timeout: 3e3,
                 Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
@@ -85,7 +84,6 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
                 if (success === true) {
                     setTimeout(router.reload, 35e2);
                     addNotification({
-                        id: "",
                         message: "Upload Success... Reloading",
                         timeout: 3e3,
                         Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
@@ -95,7 +93,6 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
             } catch (error: any) {
                 setTimeout(saveExam, 5e2);
                 addNotification({
-                    id: `Failed ${exam.details.SubjectID} - ${error.message}`,
                     message: "Upload Failed... Try again",
                     timeout: 5e3,
                     Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
@@ -221,7 +218,7 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
                 isEdit={!!router.query.id}
                 open={exam === undefined || examState.details === false}
             />
-            <Notifications />
+            {Notifications}
         </>
     );
 }
