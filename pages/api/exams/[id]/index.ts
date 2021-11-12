@@ -50,13 +50,11 @@ async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instr
                 ))
             ]);
 
-            if (exam !== null) {
-                const creates = exam.questions.map(({ _id }, i) => check(_id.toString()) === undefined ? {
-                    question: _id,
-                    answers: questions[i].answers
-                } : 0).filter(Boolean)
-                await AnswersModel.create(creates, opts);
-            };
+            const creates = exam?.questions.map(({ _id }, i) => check(_id.toString()) === undefined ? {
+                question: _id,
+                answers: questions[i].answers
+            } : 0).filter(Boolean) ?? [];
+            await AnswersModel.create(creates, opts);
         });
 
         [success, status, message] = [true, StatusCodes.OK, {
