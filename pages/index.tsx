@@ -66,6 +66,7 @@ const Home: NextPage = () => {
                 });
             } else throw new Error(error);
         } catch (error: any) {
+            if (navigator.onLine === false) setTimeout(handleOnline, 1e3);
             addNotification({
                 message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
                 timeout: 5e3,
