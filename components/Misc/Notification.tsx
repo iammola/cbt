@@ -14,7 +14,8 @@ type NotificationsHook = [
 
 export function useNotifications(): NotificationsHook {
     const [count, setCount] = useState(0);
-    const [notifications, setNotifications] = useState<(Item & { id: number; })[]>([]);
+    const [notifications, setNotifications] = useState<(Item & Pick<NotificationProps, 'out'> & { id: number; })[]>([]);
+
     const addNotification: NotificationsHook[0] = items => {
         const newItems: (Item & { id: number; })[] = [items].flat().map(item => {
             setCount(count => count + 1);
