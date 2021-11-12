@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, EventModel, AnswersModel, QuestionsModel } from "db/models";
+import { ExamModel, EventModel, AnswersModel } from "db/models";
 
 import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
 

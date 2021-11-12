@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, QuestionsModel, SubjectsModel } from "db/models";
+import { ExamModel, SubjectsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
