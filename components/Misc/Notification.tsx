@@ -4,7 +4,7 @@ import { Fragment, FunctionComponent, useCallback, useEffect, useState } from "r
 
 import type { NotificationProps } from "types";
 
-type Item = Omit<NotificationProps, "remove">;
+type Item = Omit<NotificationProps, "remove" | "out">;
 
 type NotificationsHook = [
     (items: Item | Item[]) => number[],
