@@ -57,8 +57,18 @@ const Home: NextPage = () => {
                     path: '/',
                     sameSite: true
                 });
+                addNotification({
+                    message: "Success 👍 ...  Redirecting!! 🚀",
+                    timeout: 10e3,
+                    Icon: () => BadgeCheckIcon({ className: "w-6 h-6 text-green-600" })
+                });
             } else throw new Error(error);
         } catch (error: any) {
+            addNotification({
+                message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
+                timeout: 5e3,
+                Icon: () => BanIcon({ className: "w-6 h-6 text-red-600" })
+            });
             console.log({ error });
         }
 
