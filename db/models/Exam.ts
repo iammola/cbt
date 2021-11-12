@@ -47,7 +47,19 @@ const ExamSchema = new Schema<ExamRecord>({
                 required: [true, 'Created by required']
             }
         },
-    }
+    }, edited: [{
+        _id: false,
+        type: {
+            at: {
+                type: Date,
+                required: [true, 'Edited at required']
+            }, by: {
+                type: Schema.Types.ObjectId,
+                ref: 'Teacher',
+                required: [true, 'Edited by required']
+            }
+        }
+    }], questions: [QuestionSchema],
 });
 
 export const ExamModel = models.Exam as Model<ExamRecord> ?? model('Exam', ExamSchema);
