@@ -45,7 +45,7 @@ export function useNotifications(): NotificationsHook {
     return [addNotification, idx => removeNotification(idx, true), Notifications];
 }
 
-const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
+const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
     const closeNotification = useCallback(() => setShow(false), []);
@@ -58,7 +58,7 @@ const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, messa
     return (
         <Transition
             appear
-            show={show}
+            show={out === undefined ? show : !out}
             as={Fragment}
             afterLeave={remove}
             enter="ease-out duration-300 transition-transform"
