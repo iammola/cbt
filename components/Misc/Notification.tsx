@@ -9,7 +9,7 @@ type Item = Omit<NotificationProps, "remove">;
 type NotificationsHook = [
     (items: Item | Item[]) => void,
     (idx: number) => void,
-    () => JSX.Element
+    JSX.Element
 ];
 
 export function useNotifications(): NotificationsHook {
@@ -17,7 +17,7 @@ export function useNotifications(): NotificationsHook {
     const addNotification: NotificationsHook[0] = items => setNotifications([...notifications, ...[items].flat()]);
     const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications.filter((_, i) => i !== idx)), [notifications]);
 
-    const Notifications: NotificationsHook[2] = useCallback(() => (
+    const Notifications: NotificationsHook[2] = (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
             {notifications.map(({ id, ...item }, i) => (
                 <Item
@@ -27,7 +27,7 @@ export function useNotifications(): NotificationsHook {
                 />
             ))}
         </aside>
-    ), [notifications, removeNotification]);
+    );
 
     return [addNotification, removeNotification, Notifications];
 }
