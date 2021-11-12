@@ -23,7 +23,11 @@ export function useNotifications(): NotificationsHook {
         setNotifications(notifications => [...notifications, ...newItems]);
         return newItems.map(({ id }) => id);
     }
-    const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications.filter((_, i) => i !== idx)), [notifications]);
+
+    const removeNotification = (idx: number, ext: boolean = false) => {
+        if (ext === true) setNotifications(notifications => notifications.map(item => item.id === idx ? { ...item, out: true } : item));
+        else setNotifications(notifications => notifications.filter(({ id }) => id !== idx))
+    };
 
     const Notifications: NotificationsHook[2] = (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
