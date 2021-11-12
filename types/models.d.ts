@@ -60,15 +60,18 @@ export type EventRecord<P = false, I = false> = RecordId<P, I> & {
     }[];
 };
 
+type DateRecord<P, I> = {
+    at: Date;
+    by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
+}
+
 export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
     SubjectID: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
     instructions: string[];
-    created: {
-        at: Date;
-        by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
-    };
     questions: QuestionRecord<true, I>[];
+    created: DateRecord<P, I>;
+    edited: DateRecord<P, I>[];
 };
 
 export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
