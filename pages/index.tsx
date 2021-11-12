@@ -6,7 +6,8 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
-import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
+import { BadgeCheckIcon, BanIcon, StatusOfflineIcon, StatusOnlineIcon } from '@heroicons/react/outline';
+import { ClipboardEvent, FormEvent, FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
@@ -23,6 +24,7 @@ const Home: NextPage = () => {
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
     const [loading, setLoading] = useState(false);
+    const [online, setOnline] = useState({ o: true, i: -1 });
     const [success, setSuccess] = useState<boolean | undefined>();
 
     const focusPrevious = (index: number) => setActive(--index >= 0 ? index : 0);
@@ -75,6 +77,37 @@ const Home: NextPage = () => {
         setLoading(false);
         setTimeout(setSuccess, 5e2, undefined);
     }
+
+    const handleOnline = useCallback(() => {
+        let lastId = online.i;
+
+        if (online.o === false && navigator.onLine === true) lastId = addNotification({
+            message: "Back Online. 💯",
+            timeout: 75e2,
+            Icon: () => StatusOnlineIcon({ className: "w-6 h-6 text-blue-600" })
+        })[0];
+
+        if (online.o === true && navigator.onLine === false) lastId = addNotification({
+            message: "Offline!! Its that bad huh? 🤷‍♂️",
+            timeout: 15e3,
+            Icon: () => StatusOfflineIcon({ className: "w-6 h-6 text-red-600" })
+        })[0];
+
+        if (lastId !== -1) {
+            if (online.i !== - 1 && online.o !== navigator.onLine) removeNotification(online.i);
+            setOnline({ i: lastId, o: navigator.onLine });
+        }
+    }, [addNotification, online, removeNotification]);
+
+    useEffect(() => {
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOnline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOnline);
+        }
+    }, [handleOnline]);
 
     return (
         <>
