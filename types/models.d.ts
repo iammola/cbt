@@ -50,7 +50,7 @@ export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
 };
 
 
-/* Event and Exam and Answer and Question */
+/* Event and Exam and Answer */
 
 export type EventRecord<P = false, I = false> = RecordId<P, I> & {
     date: Date;
@@ -89,11 +89,6 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     maxLength?: number;
     minLength?: number;
 });
-
-export type QuestionsRecord<P = false, I = false> = RecordId<P, I> & {
-    exam: Schema.Types.ObjectId;
-    questions: QuestionRecord<P, I>[];
-};
 
 
 /* Session and Term */
