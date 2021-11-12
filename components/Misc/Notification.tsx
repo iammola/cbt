@@ -42,7 +42,7 @@ export function useNotifications(): NotificationsHook {
         </aside>
     );
 
-    return [addNotification, removeNotification, Notifications];
+    return [addNotification, idx => removeNotification(idx, true), Notifications];
 }
 
 const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
