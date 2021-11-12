@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, useCallback, useMemo, useState } from "react";
+import { Fragment, FunctionComponent, useCallback, useEffect, useState } from "react";
 
 import type { NotificationProps } from "types";
 
@@ -35,12 +35,12 @@ export function useNotifications(): NotificationsHook {
 const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
-    const timer = setTimeout(closeNotification, timeout);
+    const closeNotification = useCallback(() => setShow(false), []);
 
-    function closeNotification() {
-        setShow(false);
-        clearTimeout(timer);
-    }
+    useEffect(() => {
+        const timer = setTimeout(closeNotification, timeout);
+        return () => clearTimeout(timer);
+    }, [closeNotification, timeout]);
 
     return (
         <Transition
