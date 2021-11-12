@@ -44,19 +44,15 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
         await session.withTransaction(async () => {
-            const [{ _id }] = await ExamModel.create([{
+            const [{ questions: q }] = await ExamModel.create([{
                 SubjectID,
                 instructions,
                 created: { by, at: new Date() },
                 duration: minutesToMilliseconds(duration),
-            }], { session });
-
-            const [items] = await QuestionsModel.create([{
-                exam: _id,
                 questions: questions.map(({ answers, ...question }) => question)
             }], { session });
 
-            await AnswersModel.create(items.questions.map(({ _id }: any, i) => ({
+            await AnswersModel.create(q.map(({ _id }, i) => ({
                 question: _id,
                 answers: questions[i].answers
             })), { session });
