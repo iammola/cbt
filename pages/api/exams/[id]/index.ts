@@ -41,9 +41,9 @@ async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instr
                     duration: minutesToMilliseconds(duration),
                     $push: { edited: { by, at: new Date() } },
                     questions: questions.map(({ answers, ...question }) => question)
-                }, opts).lean(),
+                }, opts).select('questions').lean(),
                 Promise.all(updates.map(async ({ _id, answers }) =>
-                    await AnswersModel.findOneAndUpdate({ question: _id as unknown as undefined }, { answers }, opts).lean()
+                    await AnswersModel.findOneAndUpdate({ question: _id as unknown as undefined }, { answers }, opts).select('_id').lean()
                 )),
                 Promise.all(deletes.map(async ({ _id }) =>
                     await AnswersModel.findOneAndDelete({ question: _id as unknown as undefined }, opts).lean()
