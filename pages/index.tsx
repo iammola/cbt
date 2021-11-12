@@ -11,10 +11,12 @@ import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useSta
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
 import { LoadingIcon } from 'components/Misc/Icons';
+import { useNotifications } from 'components/Misc/Notification';
 
 const Home: NextPage = () => {
     const router = useRouter();
     const [, setCookies] = useCookies(['account']);
+    const [addNotification, removeNotification, Notifications] = useNotifications();
     const { data: dbState } = useSWR('/api/ping/', url => fetch(url).then(res => res.json()));
 
     const [active, setActive] = useState(0);
@@ -147,6 +149,7 @@ const Home: NextPage = () => {
                     "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code),
                 })}
             ></abbr>
+            {Notifications}
         </>
     )
 }
