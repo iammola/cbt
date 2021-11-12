@@ -68,6 +68,7 @@ export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
         at: Date;
         by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
     };
+    questions: QuestionRecord<true, I>[];
 };
 
 export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
