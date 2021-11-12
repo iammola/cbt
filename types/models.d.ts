@@ -17,7 +17,7 @@ export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
 
 export type SubjectsRecord<P = false, I = false> = RecordId<P, I> & {
     class: Schema.Types.ObjectId;
-    subjects: SubjectRecord<P, I>[];
+    subjects: SubjectRecord<true, I>[];
 }
 
 
@@ -77,7 +77,7 @@ export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
 
 export type AnswersRecord<P = false, I = false> = RecordId<P, I> & {
     question: Schema.Types.ObjectId;
-    answers: AnswerRecord<P, I>[];
+    answers: AnswerRecord<true, I>[];
 };
 
 export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
@@ -102,7 +102,7 @@ export type SessionRecord<P = false, I = false> = RecordId<P, I> & {
     name: string;
     alias: string;
     current?: boolean;
-    terms: TermRecord<P, I>[];
+    terms: TermRecord<true, I>[];
 };
 
 export type TermRecord<P = false, I = false> = RecordId<P, I> & {
