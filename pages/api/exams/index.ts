@@ -14,8 +14,10 @@ async function getExams({ select = '', date }: { select: string; date: string })
 
     try {
         const eventRecords = await EventModel.findOne({ date: new Date(+date) }).select('events').lean() ?? { events: [] };
-        const data = await ExamModel.find({ SubjectID: eventRecords.events.map(({ subject }) => subject) }).select(select).lean();
         const questions = (await QuestionsModel.findOne({ exam: (data as any)._id }, 'questions._id').lean())?.questions.length;
+        const data = await ExamModel.find({
+            SubjectID: eventRecords.events.map(({ subject }) => subject)
+        }).lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
             data: data.map(item => ({ ...item, questions })),
