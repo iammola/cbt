@@ -16,20 +16,18 @@ async function getExam(_id: any, loggedInUser: any): Promise<RouteResponse> {
         if (exam === null) throw new Error("Exam ID not found");
         if (loggedInUser !== exam.created.by.toString()) throw new Error("Unauthorized to access");
 
-        const { duration, instructions, SubjectID } = exam;
+        const { duration, instructions, questions, SubjectID } = exam;
 
         const classSubjects = await SubjectsModel.findOne({ "subjects._id": exam.SubjectID }, "-_id class subjects._id subjects.name").lean();
         const examClass = await ClassModel.findById(classSubjects?.class, 'name').lean();
 
-        const examQuestions = await QuestionsModel.findOne({ exam: (exam as any)._id }, '-_id questions').lean();
-
         [success, status, message] = [true, StatusCodes.OK, {
             data: {
                 _id, instructions,
-                questions: await Promise.all(examQuestions?.questions.map(async item => ({
+                questions: await Promise.all(questions.map(async item => ({
                     ...item,
                     answers: (await AnswersModel.findOne({ question: (item as any)._id }, '-_id answers').lean())?.answers ?? [],
-                })) ?? []),
+                }))),
                 exam: {
                     class: examClass?.name ?? '',
                     subject: classSubjects?.subjects.find(({ _id }: any) => _id.equals(SubjectID))?.name ?? '',
