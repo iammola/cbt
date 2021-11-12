@@ -13,8 +13,15 @@ type NotificationsHook = [
 ];
 
 export function useNotifications(): NotificationsHook {
-    const [notifications, setNotifications] = useState<Item[]>([]);
-    const addNotification: NotificationsHook[0] = items => setNotifications([...notifications, ...[items].flat()]);
+    const [count, setCount] = useState(0);
+    const [notifications, setNotifications] = useState<(Item & { id: number; })[]>([]);
+    const addNotification: NotificationsHook[0] = items => {
+        setCount(count => count + 1);
+        setNotifications([...notifications, ...[items].flat().map(item => ({
+            ...item,
+            id: count
+        }))]);
+    }
     const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications.filter((_, i) => i !== idx)), [notifications]);
 
     const Notifications: NotificationsHook[2] = (
