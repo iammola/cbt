@@ -6,21 +6,25 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
-import { ClipboardEvent, FormEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
+import { BadgeCheckIcon, BanIcon, StatusOfflineIcon, StatusOnlineIcon } from '@heroicons/react/outline';
+import { ClipboardEvent, FormEvent, FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { classNames } from 'utils';
 import Image1 from "/public/BG.jpg";
 import { LoadingIcon } from 'components/Misc/Icons';
+import { useNotifications } from 'components/Misc/Notification';
 
 const Home: NextPage = () => {
     const router = useRouter();
     const [, setCookies] = useCookies(['account']);
+    const [addNotification, removeNotification, Notifications] = useNotifications();
     const { data: dbState } = useSWR('/api/ping/', url => fetch(url).then(res => res.json()));
 
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
 
     const [loading, setLoading] = useState(false);
+    const [online, setOnline] = useState({ o: true, i: -1 });
     const [success, setSuccess] = useState<boolean | undefined>();
 
     const focusPrevious = (index: number) => setActive(--index >= 0 ? index : 0);
@@ -55,14 +59,55 @@ const Home: NextPage = () => {
                     path: '/',
                     sameSite: true
                 });
+                addNotification({
+                    message: "Success 👍 ...  Redirecting!! 🚀",
+                    timeout: 10e3,
+                    Icon: () => BadgeCheckIcon({ className: "w-6 h-6 text-green-600" })
+                });
             } else throw new Error(error);
         } catch (error: any) {
+            addNotification({
+                message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
+                timeout: 5e3,
+                Icon: () => BanIcon({ className: "w-6 h-6 text-red-600" })
+            });
             console.log({ error });
         }
 
         setLoading(false);
         setTimeout(setSuccess, 5e2, undefined);
     }
+
+    const handleOnline = useCallback(() => {
+        let lastId = online.i;
+
+        if (online.o === false && navigator.onLine === true) lastId = addNotification({
+            message: "Back Online. 💯",
+            timeout: 75e2,
+            Icon: () => StatusOnlineIcon({ className: "w-6 h-6 text-blue-600" })
+        })[0];
+
+        if (online.o === true && navigator.onLine === false) lastId = addNotification({
+            message: "Offline!! Its that bad huh? 🤷‍♂️",
+            timeout: 15e3,
+            Icon: () => StatusOfflineIcon({ className: "w-6 h-6 text-red-600" })
+        })[0];
+
+        if (lastId !== -1) {
+            if (online.i !== - 1 && online.o !== navigator.onLine) removeNotification(online.i);
+            setOnline({ i: lastId, o: navigator.onLine });
+        }
+    }, [addNotification, online, removeNotification]);
+
+    useEffect(() => {
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOnline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOnline);
+        }
+    }, [handleOnline]);
 
     return (
         <>
@@ -147,6 +192,7 @@ const Home: NextPage = () => {
                     "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code),
                 })}
             ></abbr>
+            {Notifications}
         </>
     )
 }

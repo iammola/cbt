@@ -6,6 +6,7 @@ export type NotificationProps = {
     message: string;
     timeout: number;
     remove(): void;
+    out?: boolean;
     Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 

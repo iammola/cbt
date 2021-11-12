@@ -4,30 +4,36 @@ import { Fragment, FunctionComponent, useCallback, useEffect, useState } from "r
 
 import type { NotificationProps } from "types";
 
-type Item = Omit<NotificationProps, "remove">;
+type Item = Omit<NotificationProps, "remove" | "out">;
 
 type NotificationsHook = [
-    (items: Item | Item[]) => void,
+    (items: Item | Item[]) => number[],
     (idx: number) => void,
     JSX.Element
 ];
 
 export function useNotifications(): NotificationsHook {
     const [count, setCount] = useState(0);
-    const [notifications, setNotifications] = useState<(Item & { id: number; })[]>([]);
+    const [notifications, setNotifications] = useState<(Item & Pick<NotificationProps, 'out'> & { id: number; })[]>([]);
+
     const addNotification: NotificationsHook[0] = items => {
-        setCount(count => count + 1);
-        setNotifications([...notifications, ...[items].flat().map(item => ({
-            ...item,
-            id: count
-        }))]);
+        const newItems: (Item & { id: number; })[] = [items].flat().map(item => {
+            setCount(count => count + 1);
+            return { ...item, id: count };
+        });
+        setNotifications(notifications => [...notifications, ...newItems]);
+        return newItems.map(({ id }) => id);
     }
-    const removeNotification: NotificationsHook[1] = useCallback(idx => setNotifications(notifications.filter((_, i) => i !== idx)), [notifications]);
+
+    const removeNotification = (idx: number, ext: boolean = false) => {
+        if (ext === true) setNotifications(notifications => notifications.map(item => item.id === idx ? { ...item, out: true } : item));
+        else setNotifications(notifications => notifications.filter(({ id }) => id !== idx))
+    };
 
     const Notifications: NotificationsHook[2] = (
         <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
             {notifications.map(({ id, ...item }, i) => (
-                <Item
+                <Notification
                     key={id}
                     {...item}
                     remove={() => removeNotification(i)}
@@ -36,10 +42,10 @@ export function useNotifications(): NotificationsHook {
         </aside>
     );
 
-    return [addNotification, removeNotification, Notifications];
+    return [addNotification, idx => removeNotification(idx, true), Notifications];
 }
 
-const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, message, remove, Icon }) => {
+const Notification: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, timeout, message, remove, Icon }) => {
     const [show, setShow] = useState(true);
 
     const closeNotification = useCallback(() => setShow(false), []);
@@ -52,7 +58,7 @@ const Item: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ timeout, messa
     return (
         <Transition
             appear
-            show={show}
+            show={out === undefined ? show : !out}
             as={Fragment}
             afterLeave={remove}
             enter="ease-out duration-300 transition-transform"
