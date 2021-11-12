@@ -17,7 +17,7 @@ type RequestBody = {
     }[];
 }
 
-async function updateExam(id: any, { exam: { duration, SubjectID, instructions }, questions, original }: RequestBody): Promise<RouteResponse> {
+async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instructions }, questions, original }: RequestBody): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
@@ -39,6 +39,7 @@ async function updateExam(id: any, { exam: { duration, SubjectID, instructions }
                     SubjectID,
                     instructions,
                     duration: minutesToMilliseconds(duration),
+                    $push: { edited: { by, at: new Date() } },
                     questions: questions.map(({ answers, ...question }) => question)
                 }, opts).lean(),
                 Promise.all(updates.map(async ({ _id, answers }) =>
@@ -72,14 +73,14 @@ async function updateExam(id: any, { exam: { duration, SubjectID, instructions }
     return [success, status, message];
 }
 
-export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ body, cookies, query, method }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["GET", "PUT"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "PUT" ? updateExam(query.id, JSON.parse(body)) : [success, status, message])
+    } else[success, status, message] = await (method === "PUT" ? updateExam(query.id, JSON.parse(cookies.account)._id, JSON.parse(body)) : [success, status, message])
 
     if (typeof message !== "object") message = { message };
 
