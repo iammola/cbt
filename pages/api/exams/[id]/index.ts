@@ -58,12 +58,10 @@ async function updateExam(id: any, { exam: { duration, SubjectID, instructions }
 
             await AnswersModel.create(creates, opts);
 
-            console.log(creates);
         });
 
         [success, status, message] = [true, StatusCodes.OK, {
             data: id,
-            updates, deletes,
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
