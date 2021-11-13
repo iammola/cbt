@@ -112,10 +112,10 @@ const CreateStudents: NextPage = () => {
                         <span>Create a</span>{' '}
                         <span className="text-indigo-500">Student Profile</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 w-full">
                         <label
                             htmlFor="fullName"
-                            className="text-sm text-gray-600 font-semibold"
+                            className="text-sm text-gray-600 min-w-[20rem] font-semibold"
                         >
                             Full Name
                         </label>
@@ -211,7 +211,7 @@ const CreateStudents: NextPage = () => {
                         selected={selectedClass}
                         handleChange={setSelectedClass}
                     />
-                    <div className="flex flex-col gap-2 5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2 5 min-w-[20rem] w-full">
                         <span className="text-sm text-gray-600 font-semibold">
                             Subjects
                         </span>

@@ -16,7 +16,7 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
     }
 
     return (
-        <div className={classNames("flex flex-col min-w-80 w-full relative", className)}>
+        <div className={classNames("flex flex-col min-w-[20rem] w-full relative", className)}>
             <Listbox value={selected} onChange={handleChange}>
                 <div className="relative">
                     {label !== undefined && (

@@ -66,7 +66,7 @@ const CreateSession: NextPage = () => {
                         <span>Create a</span>{' '}
                         <span className="text-yellow-500">Session</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="name"
                             className="text-sm text-gray-600 font-semibold"
@@ -82,7 +82,7 @@ const CreateSession: NextPage = () => {
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="alias"
                             className="text-sm text-gray-600 font-semibold"
@@ -98,7 +98,7 @@ const CreateSession: NextPage = () => {
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="alias"
                             className="text-sm text-gray-600 font-semibold"
@@ -155,7 +155,7 @@ const CreateSession: NextPage = () => {
                             Add Term
                         </span>
                     </div>
-                    <div className="flex min-w-80 w-full">
+                    <div className="flex min-w-[20rem] w-full">
                         <label
                             htmlFor="current"
                             className="flex items-center gap-3 p-2 w-full"

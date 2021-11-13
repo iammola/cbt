@@ -127,7 +127,7 @@ const CreateTeachers: NextPage = () => {
                         <span>Create a</span>{' '}
                         <span className="text-pink-500">Teacher Profile</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="fullName"
                             className="text-sm text-gray-600 font-semibold"
@@ -210,7 +210,7 @@ const CreateTeachers: NextPage = () => {
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="email"
                             className="text-sm text-gray-600 font-semibold"
@@ -226,7 +226,7 @@ const CreateTeachers: NextPage = () => {
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <span className="text-sm text-gray-600 font-semibold">
                             Subjects
                         </span>
