@@ -40,6 +40,7 @@ const StudentSchema = new Schema<StudentRecord>({
                 required: [true, 'Session required']
             }, terms: [{
                 type: {
+                    _id: false,
                     term: {
                         type: Schema.Types.ObjectId
                     }, class: {
