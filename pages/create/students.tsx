@@ -129,7 +129,7 @@ const CreateStudents: NextPage = () => {
                         />
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="initials"
                                 className="text-sm text-gray-600 font-semibold"
@@ -147,7 +147,7 @@ const CreateStudents: NextPage = () => {
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="email"
                                 className="text-sm text-gray-600 font-semibold"
@@ -165,7 +165,7 @@ const CreateStudents: NextPage = () => {
                         </div>
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="firstName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -181,7 +181,7 @@ const CreateStudents: NextPage = () => {
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="lastName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -215,7 +215,7 @@ const CreateStudents: NextPage = () => {
                         <span className="text-sm text-gray-600 font-semibold">
                             Subjects
                         </span>
-                        <div className="flex gap-x-4 gap-y-3 w-full text-sm">
+                        <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm">
                             {subjects.map(({ _id, name }) => (
                                 <label
                                     key={_id}
