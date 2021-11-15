@@ -75,6 +75,9 @@ const WriteExam: NextPage = () => {
                                     </li>
                                 ))}
                             </ul>
+                            <span className="inline-block text-xs font-medium text-gray-500 mt-6">
+                                2 out of 17 answered
+                            </span>
                         </div>
                     </div>
                     <div className="flex-grow h-full"></div>
