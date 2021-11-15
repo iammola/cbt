@@ -19,7 +19,7 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect,
                 htmlFor={id}
                 className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
                     "bg-gray-400": isCorrect,
-                    "bg-white": isCorrect === false
+                    "bg-white": !isCorrect
                 })}
             />
             <input
