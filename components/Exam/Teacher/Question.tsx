@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { SortAscendingIcon, SortDescendingIcon, TrashIcon } from '@heroicons/react/outline';
 
-import { Answer } from 'components/Exam';
+import { Answer } from '.';
 
 import type { QuestionProps } from 'types';
 

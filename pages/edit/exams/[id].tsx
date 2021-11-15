@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
 
-import { Form, Loader } from "components/Exam";
+import { Form, Loader } from "components/Exam/Teacher";
 
 const CreateExam: NextPage = () => {
     const router = useRouter();
