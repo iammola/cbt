@@ -34,7 +34,7 @@ const SubjectForm: NextPage = () => {
 
         if (selectedClass._id !== '') {
             try {
-                const res = await fetch(`/api/classes/${selectedClass._id}/subjects`, {
+                const res = await fetch(`/api/classes/${selectedClass._id}/subjects/`, {
                     method: "POST",
                     body: JSON.stringify({ name, alias })
                 });
