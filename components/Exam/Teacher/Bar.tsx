@@ -4,9 +4,9 @@ import { ChevronRightIcon, CheckIcon } from "@heroicons/react/solid";
 
 import { LoadingIcon } from "components/Misc/Icons";
 
-import { BarProps } from "types";
+import { TeacherBarProps } from "types";
 
-const Bar: FunctionComponent<BarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
+const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
     const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     return (

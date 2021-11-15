@@ -3,9 +3,9 @@ import { SortAscendingIcon, SortDescendingIcon, TrashIcon } from '@heroicons/rea
 
 import { Answer } from '.';
 
-import type { QuestionProps } from 'types';
+import type { TeacherQuestionProps } from 'types';
 
-const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, deleteQuestion, insertQuestionBelow, insertQuestionAbove }) => {
+const Question: FunctionComponent<TeacherQuestionProps> = ({ record, number, onChange, deleteQuestion, insertQuestionBelow, insertQuestionAbove }) => {
     return (
         <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
             <input

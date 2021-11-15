@@ -5,9 +5,9 @@ import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "rea
 
 import Select from "components/Select";
 
-import type { ExamModalProps, SelectOption } from "types";
+import type { TeacherExamModalProps, SelectOption } from "types";
 
-const ExamModal: FunctionComponent<ExamModalProps> = ({ isEdit, open, onSubmit }) => {
+const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) => {
     const [{ account }] = useCookies(['account']);
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
     const { data: classes, error } = useSWR(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => url !== null && fetch(url).then(res => res.json()));

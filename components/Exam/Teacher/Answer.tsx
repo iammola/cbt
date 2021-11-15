@@ -3,9 +3,9 @@ import { XIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 
-import type { AnswerProps } from "types";
+import type { TeacherAnswerProps } from "types";
 
-const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
+const Answer: FunctionComponent<TeacherAnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
     return (
         <>
             <input

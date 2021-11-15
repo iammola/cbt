@@ -30,7 +30,7 @@ export type SelectProps = {
     handleChange(T: SelectProps['selected']): void;
 }
 
-export type QuestionProps = {
+export type TeacherQuestionProps = {
     number: number;
     record: CreateQuestion;
     deleteQuestion(): void;
@@ -39,7 +39,7 @@ export type QuestionProps = {
     onChange(question: Partial<CreateQuestion>): void;
 }
 
-export type AnswerProps = AnswerRecord & {
+export type TeacherAnswerProps = AnswerRecord & {
     id: string;
     number: number;
     deleteAnswer(): void;
@@ -63,7 +63,7 @@ export type ToggleProps = {
     toggleOpen(): void;
 }
 
-export type ExamModalProps = {
+export type TeacherExamModalProps = {
     open: boolean;
     isEdit: boolean;
     onSubmit(v: ExamDetails): void;
@@ -80,7 +80,7 @@ export type UserImageProps = ImageProps & {
     }
 }
 
-export type BarProps = {
+export type TeacherBarProps = {
     save(): void;
     saved: boolean;
     modified: boolean;
@@ -89,7 +89,7 @@ export type BarProps = {
     exam?: ExamDetails;
 }
 
-export type FormProps = {
+export type TeacherFormProps = {
     _id: string;
     exam: ExamDetails;
     instructions: string[];
