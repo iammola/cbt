@@ -80,7 +80,61 @@ const WriteExam: NextPage = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="flex-grow h-full"></div>
+                    <div className="flex-grow h-full py-8">
+                        <div className="m-auto max-w-4xl h-full space-y-5">
+                            {Array.from({ length: 17 }).fill(undefined).map((k, i) => (
+                                <div key={i} className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
+                                    <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
+                                        Question {++i}
+                                    </p>
+                                    <ul className="flex flex-col items-start justify-start gap-3 w-full my-5 pl-4">
+                                        {[{
+                                            id: 'ID',
+                                            answered: true,
+                                            answer: "Option 1"
+                                        }, {
+                                            id: "ID2",
+                                            answer: "Option 2"
+                                        }, {
+                                            id: "ID3",
+                                            answer: "Option 3"
+                                        }, {
+                                            id: "4",
+                                            answer: "Option 4"
+                                        }].map(({ answer, id, answered }) => (
+                                            <li
+                                                key={id}
+                                                className="flex items-center justify-start gap-4 w-full -ml-5 pl-5 rounded-md hover:bg-gray-50"
+                                            >
+                                                <input
+                                                    id={id}
+                                                    value={id}
+                                                    type="checkbox"
+                                                    className="hidden"
+                                                    // readOnly
+                                                    // checked={answered ?? false}
+                                                    // onChange={({ target: { checked } }) => alert(checked)}
+                                                />
+                                                <label
+                                                    htmlFor={id}
+                                                    className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
+                                                        "bg-gray-400": answered,
+                                                        "bg-white": !answered
+                                                    })}
+                                                />
+                                                <label htmlFor={id}>
+                                                    <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
+                                                        {answer}
+                                                    </p>
+                                                </label>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
                 <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700">
                     29:30 minutes left
                 </div>
