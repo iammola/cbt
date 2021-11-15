@@ -123,7 +123,7 @@ const Exams: NextPage = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
-                                            <Link href={`/edit/exams/${exam._id}`}>
+                                            <Link href={`/exams/edit/${exam._id}`}>
                                                 <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
                                                     Edit
                                                 </a>
