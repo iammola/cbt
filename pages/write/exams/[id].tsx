@@ -10,6 +10,10 @@ const WriteExam: NextPage = () => {
             <Head>
                 <title>Subject | Event | Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Subject Exam | GRS CBT" />
+                <style>{`
+                    #main,
+                    body { overflow: unset !important; }
+                `}</style>
             </Head>
             <form className="flex flex-col items-center justify-start w-screen min-h-screen">
                 <div className="flex items-center justify-end gap-6 w-full bg-white py-3 px-8 rounded-b-lg drop-shadow-sm">
