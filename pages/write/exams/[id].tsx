@@ -70,15 +70,15 @@ const WriteExam: NextPage = () => {
                         <span className="w-max block truncate">
                             Session
                         </span>
-                        <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                        {' • '}
                         <span className="w-max block truncate">
                             Class
                         </span>
-                        <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                        {' • '}
                         <span className="w-max block truncate">
                             Subject
                         </span>
-                        <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                        {' • '}
                         <span className="text-gray-600">
                             Name
                         </span>
