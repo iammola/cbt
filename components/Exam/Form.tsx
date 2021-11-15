@@ -46,7 +46,7 @@ const Form: FunctionComponent<{ data?: FormProps; }> = ({ data }) => {
                 sameSite: true,
                 expires: new Date('2038-01-19')
             });
-            addNotification({
+            if (obj === undefined) addNotification({
                 message: "Saved Locally",
                 timeout: 3e3,
                 Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
