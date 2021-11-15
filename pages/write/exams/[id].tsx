@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { CheckIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
