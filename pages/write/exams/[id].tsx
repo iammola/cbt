@@ -64,8 +64,8 @@ const WriteExam: NextPage = () => {
                 <title>Subject | Event | Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Subject Exam | GRS CBT" />
             </Head>
-            <form className="flex flex-col items-center justify-start w-screen min-h-screen overflow-hidden">
-                <div className="flex items-center justify-end gap-6 w-full bg-white py-3 px-8 sticky left-0 top-0 rounded-b-lg drop-shadow-sm">
+            <form className="flex flex-col items-center justify-start w-screen min-h-screen">
+                <div className="flex items-center justify-end gap-6 w-full bg-white py-3 px-8 rounded-b-lg drop-shadow-sm">
                     <div className="hidden md:flex items-center justify-start gap-2 flex-grow text-gray-400 w-full text-sm font-medium">
                         <span className="w-max block truncate">
                             Session
@@ -90,58 +90,37 @@ const WriteExam: NextPage = () => {
                         Submit
                     </button>
                 </div>
-                <div className="flex flex-grow gap-3 items-center justify-center w-full h-full px-16 overflow-y-auto bg-gray-50">
-                    <div className="flex flex-col items-start justify-start h-full w-52 py-8">
-                        <div className="flex flex-col gap-3 items-start justify-center w-full h-full">
-                            <h4 className="text-xl font-bold text-gray-800">
-                                Content
-                            </h4>
-                            <ul className="flex flex-col gap-2 items-start justify-center w-full">
-                                {dummy.map(({ selected, active }, i) => (
+                <div className="flex flex-grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
+                    <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
+                        <div className="w-full bg-white rounded-xl shadow-sm py-8 px-5 ring-1 ring-gray-200 sticky top-14">
+                            <ul className="grid grid-cols-5 gap-4 items-start justify-center w-full">
+                                {[{
+                                    answered: true,
+                                    active: false,
+                                }, {
+                                    answered: true,
+                                    active: true,
+                                }, ...new Array(15).fill(undefined)].map(({ answered, active } = {}, i) => (
                                     <li
                                         key={i}
-                                        className={classNames("flex gap-3 items-center justify-start w-full py-2 px-3 -ml-3 rounded-md cursor-pointer", {
-                                            "bg-indigo-100": active,
-                                            "hover:bg-gray-200": !active
+                                        style={{ aspectRatio: '1' }}
+                                        className={classNames("flex items-center justify-center rounded-md shadow-sm cursor-pointer text-sm font-semibold tracking-wider ring-1 ring-gray-100 relative group", {
+                                            "bg-white hover:bg-gray-50 text-gray-700": !answered,
+                                            "bg-gray-500 hover:bg-gray-600 text-gray-200": active,
                                         })}
                                     >
-                                        <span
-                                            className={classNames("flex items-center justify-center flex-shrink-0 w-3.5 h-3.5 ring-2 rounded-full relative z-0", {
-                                                "bg-indigo-500": selected === true && active === true,
-                                                "bg-gray-700": selected === true && active === false,
-                                                "text-gray-700 ring-gray-700": active === false,
-                                                "text-indigo-500 ring-indigo-500": active
-                                            })}
-                                        >
-                                            {++i !== dummy.length && (
-                                                <svg
-                                                    fill="none"
-                                                    viewBox="0 0 2 10"
-                                                    preserveAspectRatio="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="absolute z-[-1] left-1/2 top-full -translate-x-1/2 h-[calc(100%+1rem)]"
-                                                >
-                                                    <line
-                                                        x1="1"
-                                                        y1="0"
-                                                        x2="1"
-                                                        y2="10"
-                                                        stroke="currentColor"
-                                                        strokeLinecap="round"
-                                                        vectorEffect="non-scaling-stroke"
-                                                    />
-                                                </svg>
-                                            )}
-                                            {selected === true && (
-                                                <CheckIcon className="w-3 h-3 text-white" />
-                                            )}
-                                        </span>
-                                        <span
-                                            className={classNames("text-sm text-gray-700", {
-                                                "text-indigo-600 font-medium": active,
-                                            })}
-                                        >
-                                            Question {i}
+                                        {++i}
+                                        {answered === true && (
+                                            <span
+                                                aria-label={`Question ${i} answered`}
+                                                className={classNames("absolute top-1.5 right-1.5 rounded-full w-1 h-1", {
+                                                    "bg-gray-200": active,
+                                                    "bg-gray-700": !active
+                                                })}
+                                            />
+                                        )}
+                                        <span className="hidden group-hover:inline absolute left-1/2 -top-9 -translate-x-1/2 p-2 rounded-md shadow-md text-xs font-normal text-gray-600 bg-white w-max">
+                                            Go to Question {i}
                                         </span>
                                     </li>
                                 ))}
