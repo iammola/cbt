@@ -95,3 +95,29 @@ export type TeacherFormProps = {
     instructions: string[];
     questions: CreateQuestion<true>[];
 }
+
+type StudentQuestionProps = {
+    id: string;
+    chosen?: string;
+    question: string;
+    onAnswer(AnswerID: string): void;
+    answers: Pick<StudentAnswerProps, 'id' | 'answer'>[];
+}
+
+type StudentAnswerProps = {
+    id: string;
+    answer: string;
+    selected: boolean;
+    handleSelect(id: string): void;
+}
+
+type StudentTimerProps = {
+    timeout: number;
+}
+
+type StudentGridProps = {
+    questions: {
+        active?: boolean;
+        answered: boolean;
+    }[];
+}
