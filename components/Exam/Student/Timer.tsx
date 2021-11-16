@@ -14,19 +14,15 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
         if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
 
         const timer = setInterval(() => {
-            if (end < new Date()) {
-                // TODO: Use this component to start exam with a function call.
-                // TODO: Report time allowed has elapsed
-               clearInterval(timer);
-               return;
-            }
-            const displayTime = formatDuration(intervalToDuration({ end, start: new Date() }));
-            setDisplay(displayTime);
-
-            if (displayTime === "") {
-                alert('Done');
-                // TODO: Trigger Modal or Submit something
+            const start = new Date();
+            
+            if (end < start) {
+                // TODO: Use this component to start exam with a function call. - Report time allowed has elapsed
                 clearInterval(timer);
+                setDisplay("Time's up!! 🙅‍♂️");
+            } else {
+                const time = formatDuration(intervalToDuration({ end, start }));
+                setDisplay(`${time} left`);
             }
         }, 1e3);
 
@@ -35,7 +31,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
 
     return (
         <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700">
-            {displayTime} left
+            {displayTime}
         </div>
     );
 }
