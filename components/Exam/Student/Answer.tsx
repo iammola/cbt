@@ -21,7 +21,10 @@ const Answer: FunctionComponent<StudentAnswerProps> = ({ id, answer, selected, h
                     "bg-white": !selected
                 })}
             />
-            <label htmlFor={id}>
+            <label
+                htmlFor={id}
+                className="w-full cursor-pointer"
+            >
                 <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
                     {answer}
                 </p>
