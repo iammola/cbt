@@ -25,6 +25,17 @@ const QuestionSchema = new Schema<QuestionRecord>({
     },
 });
 
+const DateSchema = new Schema<ExamRecord['created']>({
+    at: {
+        type: Date,
+        required: true
+    }, by: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
+        required: true
+    }
+}, { _id: false })
+
 const ExamSchema = new Schema<ExamRecord>({
     duration: {
         type: Number,
@@ -35,31 +46,10 @@ const ExamSchema = new Schema<ExamRecord>({
     }, instructions: [{
         type: String,
         trim: true,
-    }], created: {
-        _id: false,
-        type: {
-            at: {
-                type: Date,
-                required: [true, 'Created at required']
-            }, by: {
-                type: Schema.Types.ObjectId,
-                ref: 'Teacher',
-                required: [true, 'Created by required']
-            }
-        },
-    }, edited: [{
-        _id: false,
-        type: {
-            at: {
-                type: Date,
-                required: [true, 'Edited at required']
-            }, by: {
-                type: Schema.Types.ObjectId,
-                ref: 'Teacher',
-                required: [true, 'Edited by required']
-            }
-        }
-    }], questions: [QuestionSchema],
+    }],
+    created: DateSchema,
+    edited: [DateSchema],
+    questions: [QuestionSchema],
 });
 
 export const ExamModel = models.Exam as Model<ExamRecord> ?? model('Exam', ExamSchema);
