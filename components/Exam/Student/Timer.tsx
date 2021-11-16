@@ -14,6 +14,12 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
         if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
 
         const timer = setInterval(() => {
+            if (end < new Date()) {
+                // TODO: Use this component to start exam with a function call.
+                // TODO: Report time allowed has elapsed
+               clearInterval(timer);
+               return;
+            }
             const displayTime = formatDuration(intervalToDuration({ end, start: new Date() }));
             setDisplay(displayTime);
 
