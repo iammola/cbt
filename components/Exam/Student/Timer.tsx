@@ -29,7 +29,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
 
     return (
         <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700">
-            {displayTime}
+            {displayTime} left
         </div>
     );
 }
