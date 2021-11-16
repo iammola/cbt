@@ -9,11 +9,11 @@ const Question: FunctionComponent<StudentQuestionProps> = ({ id, chosen, questio
             <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
                 {question}
             </p>
-            <ul className="flex flex-col items-start justify-start gap-3 w-full my-5 pl-4">
+            <ul className="flex flex-col items-start justify-start gap-1 w-full mb-5 pl-4">
                 {answers.map((answer, answerIdx) => (
                     <li
                         key={answerIdx}
-                        className="flex items-center justify-start gap-4 w-full -ml-5 pl-5 rounded-md hover:bg-gray-50"
+                        className="flex items-center justify-start gap-4 w-full pl-5 rounded-md hover:bg-gray-50"
                     >
                         <Answer
                             {...answer}

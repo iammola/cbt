@@ -59,8 +59,8 @@ const WriteExam: NextPage = () => {
                             }))}
                         />
                     </div>
-                    <div className="flex-grow h-full py-8">
-                        <div className="m-auto max-w-4xl h-full space-y-5">
+                    <div className="flex-grow h-full px-14 py-8">
+                        <div className="max-w-5xl h-full space-y-5">
                             {questions.map((question, questionIdx) => (
                                 <Question
                                     {...question}
