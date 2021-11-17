@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { Answer } from '.';
 import type { StudentQuestionProps } from "types";
 
-const Question: FunctionComponent<StudentQuestionProps> = ({ id, chosen, question, answers, onAnswer }) => {
+const Question: FunctionComponent<StudentQuestionProps> = ({ chosen, question, answers, onAnswer }) => {
     return (
         <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
             <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
