@@ -10,7 +10,7 @@ import { BadgeCheckIcon, BanIcon, StatusOfflineIcon, StatusOnlineIcon } from '@h
 import { ClipboardEvent, FormEvent, FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { classNames } from 'utils';
-import Image1 from "/public/BG.jpg";
+import Background from "/public/BG.jpg";
 import { LoadingIcon } from 'components/Misc/Icons';
 import { useNotifications } from 'components/Misc/Notification';
 
@@ -121,8 +121,8 @@ const Home: NextPage = () => {
                     <div className="relative w-full h-full">
                         <Image
                             alt="Panda"
-                            src={Image1}
                             layout="fill"
+                            src={Background}
                             objectFit="cover"
                             placeholder="blur"
                             objectPosition="center"
@@ -194,7 +194,7 @@ const Home: NextPage = () => {
                     "bg-pink-400": dbState?.data?.code === 3,
                     "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code),
                 })}
-            ></abbr>
+            />
             {Notifications}
         </>
     )
