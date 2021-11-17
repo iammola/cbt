@@ -18,7 +18,15 @@ const QuestionSchema = new Schema<QuestionRecord>({
         type: String,
         trim: true,
         required: [true, 'Question required'],
-    }, minLength: {
+    }, answers: [{
+        type: AnswerSchema,
+        required: [function (this: QuestionRecord) {
+            return ["Multiple choice", "Checkboxes"].includes(this.type);
+        }, "Multiple choice and Checkboxes questions require answers"],
+        validate: [function (this: QuestionRecord) {
+            return ["Multiple choice", "Checkboxes"].includes(this.type) ? ((this.answers ?? []).length) > 1 : this.answers === undefined
+        }, "Invalid answer value"],
+    }], minLength: {
         type: Number,
         required: [function (this: QuestionRecord) {
             return this.type === "Long Answer";
