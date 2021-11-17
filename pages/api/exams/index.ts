@@ -33,15 +33,15 @@ async function getExams({ select = '', date }: { select: string; date: string })
     return [success, status, message];
 }
 
-async function createExam({ exam: { SubjectID, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
+async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
+        if (await ExamModel.exists({ subjectId })) throw new Error("Subject Exam already created");
 
         await ExamModel.create({
-            ...exam, SubjectID, questions,
+            ...exam, subjectId, questions,
             created: { by, at: new Date() },
         });
 

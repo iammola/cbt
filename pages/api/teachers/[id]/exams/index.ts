@@ -13,16 +13,16 @@ async function getExams(id: any): Promise<RouteResponse> {
     try {
         const exam = await ExamModel.find({ "created.by": id }, '-instructions').populate('created.by').lean();
 
-        const subjects = await SubjectsModel.find({ "subjects._id": exam.map(({ SubjectID }) => SubjectID) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
+        const subjects = await SubjectsModel.find({ "subjects._id": exam.map(({ subjectId }) => subjectId) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
 
-        const data = await Promise.all(exam.map(async ({ SubjectID, questions, ...exam }) => {
-            const item = subjects.find(({ subjects }) => subjects.find(({ _id }: any) => _id.equals(SubjectID)));
+        const data = await Promise.all(exam.map(async ({ subjectId, questions, ...exam }) => {
+            const item = subjects.find(({ subjects }) => subjects.find(({ _id }: any) => _id.equals(subjectId)));
 
             return {
                 ...exam,
                 questions: questions.length,
                 class: (item?.class as any).name,
-                subject: item?.subjects.find(({ _id }: any) => _id.equals(SubjectID))?.name,
+                subject: item?.subjects.find(({ _id }: any) => _id.equals(subjectId))?.name,
             };
         }));
 
