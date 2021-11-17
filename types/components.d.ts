@@ -104,9 +104,7 @@ type StudentQuestionProps = {
     answers: Pick<StudentAnswerProps, 'id' | 'answer'>[];
 }
 
-type StudentAnswerProps = {
-    id: string;
-    answer: string;
+type StudentAnswerProps = Omit<AnswerRecord<true>, 'isCorrect'> & {
     selected: boolean;
     handleSelect(id: string): void;
 }
