@@ -112,7 +112,7 @@ type StudentAnswerProps = {
 }
 
 type StudentTimerProps = {
-    timeout: number;
+    timeout?: number;
 }
 
 type StudentGridProps = {
