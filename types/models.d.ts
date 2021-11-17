@@ -79,11 +79,6 @@ export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
     isCorrect?: boolean;
 };
 
-export type AnswersRecord<P = false, I = false> = RecordId<P, I> & {
-    question: Schema.Types.ObjectId;
-    answers: AnswerRecord<true, I>[];
-};
-
 export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     question: string;
 } & ({
