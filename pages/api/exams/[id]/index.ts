@@ -6,27 +6,19 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel } from "db/models";
 
-import type { CreateQuestion, ExamRecord, RouteResponse } from "types";
+import type { ExamRecord, RouteResponse } from "types";
 
 type RequestBody = {
     exam: ExamRecord;
-    questions: CreateQuestion<true>[];
-    original: {
-        _id: string;
-        answers: string[];
-    }[];
+    questions: any[];
 }
 
-async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instructions }, questions, original }: RequestBody): Promise<RouteResponse> {
+async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instructions }, questions }: RequestBody): Promise<RouteResponse> {
     await connect();
     const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const check = (_id: string, arr: { _id: string; }[] = original) => arr.find(item => item._id === _id);
-        const updates = questions.filter(({ _id }) => check(_id));
-        const deletes = original.filter(({ _id }) => !check(_id, questions));
-
         const opts = {
             session,
             runValidators: true,
@@ -43,11 +35,6 @@ async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instr
                     questions: questions.map(({ answers, ...question }) => question)
                 }, opts).select('questions').lean(),
             ]);
-
-            const creates = exam?.questions.map(({ _id }, i) => check(_id.toString()) === undefined ? {
-                question: _id,
-                answers: questions[i].answers
-            } : 0).filter(Boolean) ?? [];
         });
 
         [success, status, message] = [true, StatusCodes.OK, {
