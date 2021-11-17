@@ -42,6 +42,10 @@ const QuestionSchema = new Schema<QuestionRecord>({
             values: ["Multiple choice", "Checkboxes", "Short Answer", "Long Answer"]
         }
     },
+    /*
+        min: { type: Number, default: undefined },
+        max: { type: Number, required: [function (this: QuestionRecord) { return this.type === "Checkboxes"; }, 'Checkbox Questions require a max-length'], },
+    */
 });
 
 const DateSchema = new Schema<ExamRecord['created']>({
@@ -59,7 +63,7 @@ const ExamSchema = new Schema<ExamRecord>({
     duration: {
         type: Number,
         required: [true, 'Exam duration required'],
-    }, SubjectID: {
+    }, subjectId: {
         type: Schema.Types.ObjectId,
         required: [true, 'Exam subject required'],
     }, instructions: [{

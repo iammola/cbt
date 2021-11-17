@@ -67,7 +67,7 @@ type DateRecord<P, I> = {
 
 export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
     duration: number;
-    SubjectID: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
+    subjectId: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
     instructions: string[];
     questions: QuestionRecord<true, I>[];
     created: DateRecord<P, I>;
