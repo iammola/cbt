@@ -125,7 +125,7 @@ const Home: NextPage = () => {
                             layout="fill"
                             objectFit="cover"
                         />
-                        <div className="absolute z-1 bg-blue-400/60 w-full h-full"></div>
+                        <div className="absolute z-1 bg-indigo-400/50 w-full h-full"></div>
                     </div>
                 </div>
                 <form
@@ -133,9 +133,9 @@ const Home: NextPage = () => {
                     className="flex flex-col gap-y-6 sm:gap-y-8 md:gap-y-14 justify-between py-12 px-5 md:px-8 lg:px-12 bg-white rounded-2xl shadow-xl z-0 max-w-full"
                 >
                     <h1 className="text-3xl sm:text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
-                        <span className="sm:text-blue-500">Log in</span>{' '}
+                        <span className="sm:text-indigo-500">Log in</span>{' '}
                         <span>to your</span>{' '}
-                        <span className="text-blue-500">CBT</span>{' '}
+                        <span className="text-indigo-500">CBT</span>{' '}
                         <span>account</span>
                     </h1>
                     <div className="flex items-center justify-between py-3 sm:px-3 md:px-5 sm:gap-x-4 md:gap-x-6">
@@ -154,7 +154,7 @@ const Home: NextPage = () => {
                     <button
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
-                            "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500": success === undefined,
+                            "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
                             "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}
@@ -233,7 +233,7 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
             onPaste={handlePaste}
             onBeforeInput={validateCharacter}
             onChange={e => onChange(e.target.value.slice(-1))}
-            className="text-lg sm:text-xl md:text-2xl text-gray-700 font-bold border rounded-md sm:p-3 md:p-4 w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:ring-offset-white"
+            className="text-lg sm:text-xl md:text-2xl text-gray-700 font-bold border rounded-md sm:p-3 md:p-4 w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 focus:ring-offset-white"
         />
     );
 }
