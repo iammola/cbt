@@ -16,7 +16,7 @@ export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
 }
 
 export type SubjectsRecord<P = false, I = false> = RecordId<P, I> & {
-    class: Schema.Types.ObjectId;
+    class: P extends true ? ClassRecord<P, I> : Schema.Types.ObjectId;
     subjects: SubjectRecord<true, I>[];
 }
 
