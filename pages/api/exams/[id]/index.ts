@@ -26,13 +26,13 @@ async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instr
         };
 
         session.withTransaction(async () => {
-            const [exam] = await Promise.all([
+            await Promise.all([
                 ExamModel.findByIdAndUpdate(id, {
                     SubjectID,
                     instructions,
                     duration: minutesToMilliseconds(duration),
                     $push: { edited: { by, at: new Date() } },
-                    questions: questions.map(({ answers, ...question }) => question)
+                    questions
                 }, opts).select('questions').lean(),
             ]);
         });
