@@ -121,7 +121,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                 className="flex flex-col items-center justify-start w-screen"
             >
                 <Bar
-                    exam={exam}
+                    exam={exam?.name}
                     {...examState}
                     save={saveExam}
                 />
@@ -202,7 +202,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                     </div>
                 </section>
                 <Bar
-                    exam={exam}
+                    exam={exam?.name}
                     {...examState}
                     save={saveExam}
                 />
