@@ -1,6 +1,6 @@
 import { useCookies } from "react-cookie";
 import { FunctionComponent, useEffect, useState } from "react";
-import { addMilliseconds, formatDuration, intervalToDuration } from "date-fns";
+import { addMinutes, formatDuration, intervalToDuration } from "date-fns";
 
 import type { StudentTimerProps } from "types";
 
@@ -9,7 +9,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
     const [{ examBounds }, setCookies] = useCookies(['examBounds']);
 
     useEffect(() => {
-        const end = new Date(examBounds?.end ?? addMilliseconds(new Date(), timeout));
+        const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout));
 
         if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
 
