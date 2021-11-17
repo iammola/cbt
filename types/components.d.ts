@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
-import type { CreateQuestion, AnswerRecord, ExamDetails } from ".";
+import type { CreateQuestion, AnswerRecord, ExamData, QuestionRecord } from ".";
 
 export type NotificationProps = {
     message: string;
@@ -66,7 +66,7 @@ export type ToggleProps = {
 export type TeacherExamModalProps = {
     open: boolean;
     isEdit: boolean;
-    onSubmit(v: ExamDetails): void;
+    onSubmit(v: Omit<ExamData['details'], 'instructions'>): void;
 }
 
 export type DivideProps = {
@@ -86,22 +86,12 @@ export type TeacherBarProps = {
     modified: boolean;
     uploaded: boolean;
     uploading: boolean;
-    exam?: ExamDetails;
+    exam?: ExamData['details']['name'];
 }
 
-export type TeacherFormProps = {
-    _id: string;
-    exam: ExamDetails;
-    instructions: string[];
-    questions: CreateQuestion<true>[];
-}
-
-type StudentQuestionProps = {
-    id: string;
+type StudentQuestionProps = QuestionRecord<true> & {
     chosen?: string;
-    question: string;
     onAnswer(AnswerID: string): void;
-    answers: Pick<StudentAnswerProps, 'id' | 'answer'>[];
 }
 
 type StudentAnswerProps = Omit<AnswerRecord<true>, 'isCorrect'> & {
