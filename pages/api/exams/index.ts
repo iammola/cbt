@@ -1,4 +1,3 @@
-import { minutesToMilliseconds } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -34,7 +33,7 @@ async function getExams({ select = '', date }: { select: string; date: string })
     return [success, status, message];
 }
 
-async function createExam({ exam: { duration, SubjectID, instructions }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
+async function createExam({ exam: { SubjectID, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
@@ -42,9 +41,8 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
         await ExamModel.create({
+            ...exam, SubjectID, questions,
             created: { by, at: new Date() },
-            SubjectID, questions, instructions,
-            duration: minutesToMilliseconds(duration),
         });
 
         [success, status, message] = [true, StatusCodes.CREATED, {

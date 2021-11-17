@@ -1,4 +1,3 @@
-import { millisecondsToMinutes } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -16,15 +15,13 @@ async function getExams(id: any): Promise<RouteResponse> {
 
         const subjects = await SubjectsModel.find({ "subjects._id": exam.map(({ SubjectID }) => SubjectID) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
 
-        const data = await Promise.all(exam.map(async ({ _id, SubjectID, questions, duration, created }: any) => {
+        const data = await Promise.all(exam.map(async ({ SubjectID, questions, ...exam }) => {
             const item = subjects.find(({ subjects }) => subjects.find(({ _id }: any) => _id.equals(SubjectID)));
 
             return {
-                _id,
-                created,
+                ...exam,
                 questions: questions.length,
                 class: (item?.class as any).name,
-                duration: millisecondsToMinutes(duration),
                 subject: item?.subjects.find(({ _id }: any) => _id.equals(SubjectID))?.name,
             };
         }));

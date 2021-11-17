@@ -1,5 +1,4 @@
 import { FunctionComponent } from "react";
-import { millisecondsToMinutes } from "date-fns";
 
 import { classNames } from "utils";
 
@@ -30,7 +29,7 @@ const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
                                 {name}
                             </span>
                             <span className="block truncate text-xs text-gray-400">
-                                {millisecondsToMinutes(time)} mins · {questions} questions
+                                {time} mins · {questions} questions
                             </span>
                         </div>
                     </div>

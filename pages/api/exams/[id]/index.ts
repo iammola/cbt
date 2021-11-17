@@ -1,4 +1,3 @@
-import { minutesToMilliseconds } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -7,14 +6,13 @@ import { ExamModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
-async function updateExam(_id: any, by: any, { exam: { duration, ...exam }, questions }: { exam: any; questions: any; }): Promise<RouteResponse> {
+async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; questions: any; }): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         await ExamModel.updateOne({ _id }, {
             ...exam, questions,
-            duration: minutesToMilliseconds(duration),
             $push: { edited: { by, at: new Date() } },
         }, { runValidators: true });
 
