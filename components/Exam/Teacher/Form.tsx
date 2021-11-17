@@ -85,7 +85,13 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                         timeout: 3e3,
                         Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
                     });
-                    if (savedExams !== undefined) saveExam(Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.details.SubjectID as unknown as string)));
+                    if (savedExams !== undefined) saveExam(
+                        Object.fromEntries(
+                            Object.entries(savedExams ?? {}).filter(
+                                ([key]) => key !== exam.subjectId.toString()
+                            )
+                        )
+                    );
                 } else throw new Error(error);
             } catch (error: any) {
                 setTimeout(saveExam, 5e2);
