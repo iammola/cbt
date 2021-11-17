@@ -9,24 +9,27 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
     const [{ examBounds }, setCookies] = useCookies(['examBounds']);
 
     useEffect(() => {
-        const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout));
-
-        if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
-
-        const timer = setInterval(() => {
-            const start = new Date();
-            
-            if (end < start) {
-                // TODO: Use this component to start exam with a function call. - Report time allowed has elapsed
-                clearInterval(timer);
-                setDisplay("Time's up!! 🙅‍♂️");
-            } else {
-                const time = formatDuration(intervalToDuration({ end, start }));
-                setDisplay(`${time} left`);
-            }
-        }, 1e3);
-
-        return () => clearInterval(timer);
+        if (timeout === undefined) setDisplay("Loading Timer");
+        else {
+            const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout));
+    
+            if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
+    
+            const timer = setInterval(() => {
+                const start = new Date();
+                
+                if (end < start) {
+                    // TODO: Use this component to start exam with a function call. - Report time allowed has elapsed
+                    clearInterval(timer);
+                    setDisplay("Time's up!! 🙅‍♂️");
+                } else {
+                    const time = formatDuration(intervalToDuration({ end, start }));
+                    setDisplay(`${time} left`);
+                }
+            }, 1e3);
+    
+            return () => clearInterval(timer);
+        }
     }, [setCookies, examBounds, timeout]);
 
     return (
