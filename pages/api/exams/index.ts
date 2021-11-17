@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, EventModel, AnswersModel } from "db/models";
+import { ExamModel, EventModel } from "db/models";
 
 import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
@@ -44,18 +44,13 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
         await session.withTransaction(async () => {
-            const [{ questions: q }] = await ExamModel.create([{
+            await ExamModel.create([{
                 SubjectID,
                 instructions,
                 created: { by, at: new Date() },
                 duration: minutesToMilliseconds(duration),
-                questions: questions.map(({ answers, ...question }) => question)
+                questions
             }], { session });
-
-            await AnswersModel.create(q.map(({ _id }, i) => ({
-                question: _id,
-                answers: questions[i].answers
-            })), { session });
         });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
