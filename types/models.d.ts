@@ -88,7 +88,9 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
     question: string;
 } & ({
     type: "Multiple choice" | "Short Answer" | "Long Answer";
+    answers: AnswerRecord<true, I>[];
 } | {
+    answers: never;
     type: "Checkboxes";
     maxLength?: number;
     minLength?: number;
