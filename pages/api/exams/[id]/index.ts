@@ -5,14 +5,9 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel } from "db/models";
 
-import type { ExamRecord, RouteResponse } from "types";
+import type { RouteResponse } from "types";
 
-type RequestBody = {
-    exam: ExamRecord;
-    questions: any[];
-}
-
-async function updateExam(_id: any, by: any, { exam: { duration, ...exam }, questions }: RequestBody): Promise<RouteResponse> {
+async function updateExam(_id: any, by: any, { exam: { duration, ...exam }, questions }: { exam: any; questions: any; }): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
