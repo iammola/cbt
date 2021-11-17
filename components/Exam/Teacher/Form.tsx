@@ -26,9 +26,10 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
 
     useEffect(() => {
         if (data !== undefined) {
-            setExam(data.exam);
-            setQuestions(data.questions);
-            setInstructions([...data.instructions, '']);
+            const { questions, details: { instructions, ...details } } = data;
+            setExam(details);
+            setQuestions(questions);
+            setInstructions([...instructions, '']);
         }
     }, [data]);
 
@@ -36,7 +37,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
         if (exam !== undefined && examState.modified === true) {
             setCookies('savedExams', JSON.stringify(obj ?? {
                 ...(savedExams ?? {}),
-                [exam.details.SubjectID as unknown as string]: {
+                [exam.subjectId as unknown as string]: {
                     exam,
                     questions,
                     lastSaved: new Date().toISOString()
@@ -62,13 +63,14 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
             setExamState({ ...examState, uploading: true });
 
             try {
+                const { name, ...details } = exam;
                 const [url, method] = data?._id === undefined ? ["/api/exams/", "POST"] : [`/api/exams/${data._id}/`, "PUT"];
                 const res = await fetch(url, {
                     method,
                     body: JSON.stringify({
                         questions,
                         exam: {
-                            ...exam.details,
+                            ...details,
                             instructions: instructions.filter(Boolean)
                         }
                     })
