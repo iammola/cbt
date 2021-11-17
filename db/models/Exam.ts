@@ -1,6 +1,17 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import type { ExamRecord, QuestionRecord } from "types";
+import type { AnswerRecord, ExamRecord, QuestionRecord } from "types";
+
+const AnswerSchema = new Schema<AnswerRecord>({
+    isCorrect: {
+        type: Boolean,
+        default: undefined
+    }, answer: {
+        type: String,
+        trim: true,
+        required: [true, "Answer required"],
+    }
+});
 
 const QuestionSchema = new Schema<QuestionRecord>({
     question: {
