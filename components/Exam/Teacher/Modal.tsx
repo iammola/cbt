@@ -49,12 +49,11 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
 
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
             onSubmit({
-                class: selectedClass.name,
-                subject: selectedSubject.name,
-                details: {
-                    duration,
-                    SubjectID: selectedSubject._id as any
+                name: {
+                    class: selectedClass.name,
+                    subject: selectedSubject.name,
                 },
+                duration, subjectId: selectedSubject._id as any
             });
         }
     }
