@@ -6,9 +6,9 @@ import { CogIcon, CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon,
 import { Bar, Modal, Question } from ".";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { CreateQuestion, ExamDetails, TeacherFormProps } from "types";
+import type { CreateQuestion, ExamData } from "types";
 
-const Form: FunctionComponent<{ data?: TeacherFormProps; }> = ({ data }) => {
+const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
     const router = useRouter();
     const [addNotification, , Notifications] = useNotifications();
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
