@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { AnswersModel, ExamModel } from "db/models";
+import { ExamModel } from "db/models";
 
 import type { CreateQuestion, ExamRecord, RouteResponse } from "types";
 
@@ -42,19 +42,12 @@ async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instr
                     $push: { edited: { by, at: new Date() } },
                     questions: questions.map(({ answers, ...question }) => question)
                 }, opts).select('questions').lean(),
-                Promise.all(updates.map(async ({ _id, answers }) =>
-                    await AnswersModel.findOneAndUpdate({ question: _id as unknown as undefined }, { answers }, opts).select('_id').lean()
-                )),
-                Promise.all(deletes.map(async ({ _id }) =>
-                    await AnswersModel.findOneAndDelete({ question: _id as unknown as undefined }, opts).lean()
-                ))
             ]);
 
             const creates = exam?.questions.map(({ _id }, i) => check(_id.toString()) === undefined ? {
                 question: _id,
                 answers: questions[i].answers
             } : 0).filter(Boolean) ?? [];
-            await AnswersModel.create(creates, opts);
         });
 
         [success, status, message] = [true, StatusCodes.OK, {
