@@ -124,6 +124,8 @@ const Home: NextPage = () => {
                             src={Image1}
                             layout="fill"
                             objectFit="cover"
+                            placeholder="blur"
+                            objectPosition="center"
                         />
                         <div className="absolute z-1 bg-indigo-400/50 w-full h-full"></div>
                     </div>
