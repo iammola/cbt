@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { AnswersModel, ClassModel, ExamModel, SubjectsModel } from "db/models";
+import { ClassModel, ExamModel, SubjectsModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -24,10 +24,7 @@ async function getExam(_id: any, loggedInUser: any): Promise<RouteResponse> {
         [success, status, message] = [true, StatusCodes.OK, {
             data: {
                 _id, instructions,
-                questions: await Promise.all(questions.map(async item => ({
-                    ...item,
-                    answers: (await AnswersModel.findOne({ question: (item as any)._id }, '-_id answers').lean())?.answers ?? [],
-                }))),
+                questions,
                 exam: {
                     class: examClass?.name ?? '',
                     subject: classSubjects?.subjects.find(({ _id }: any) => _id.equals(SubjectID))?.name ?? '',
