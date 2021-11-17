@@ -1,4 +1,3 @@
-import { startSession } from "mongoose";
 import { minutesToMilliseconds } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
@@ -13,32 +12,19 @@ type RequestBody = {
     questions: any[];
 }
 
-async function updateExam(id: any, by: any, { exam: { duration, SubjectID, instructions }, questions }: RequestBody): Promise<RouteResponse> {
+async function updateExam(_id: any, by: any, { exam: { duration, ...exam }, questions }: RequestBody): Promise<RouteResponse> {
     await connect();
-    const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const opts = {
-            session,
-            runValidators: true,
-            returnDocument: 'after'
-        };
-
-        session.withTransaction(async () => {
-            await Promise.all([
-                ExamModel.findByIdAndUpdate(id, {
-                    SubjectID,
-                    instructions,
-                    duration: minutesToMilliseconds(duration),
-                    $push: { edited: { by, at: new Date() } },
-                    questions
-                }, opts).select('questions').lean(),
-            ]);
-        });
+        await ExamModel.updateOne({ _id }, {
+            ...exam, questions,
+            duration: minutesToMilliseconds(duration),
+            $push: { edited: { by, at: new Date() } },
+        }, { runValidators: true });
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data: id,
+            data: _id,
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {

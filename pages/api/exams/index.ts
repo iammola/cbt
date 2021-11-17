@@ -1,4 +1,3 @@
-import { startSession } from "mongoose";
 import { minutesToMilliseconds } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
@@ -37,20 +36,15 @@ async function getExams({ select = '', date }: { select: string; date: string })
 
 async function createExam({ exam: { duration, SubjectID, instructions }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
-    const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         if (await ExamModel.exists({ SubjectID })) throw new Error("Subject Exam already created");
 
-        await session.withTransaction(async () => {
-            await ExamModel.create([{
-                SubjectID,
-                instructions,
-                created: { by, at: new Date() },
-                duration: minutesToMilliseconds(duration),
-                questions
-            }], { session });
+        await ExamModel.create({
+            created: { by, at: new Date() },
+            SubjectID, questions, instructions,
+            duration: minutesToMilliseconds(duration),
         });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
@@ -62,8 +56,6 @@ async function createExam({ exam: { duration, SubjectID, instructions }, questio
             message: ReasonPhrases.BAD_REQUEST
         }];
     }
-
-    session.endSession();
 
     return [success, status, message];
 }
