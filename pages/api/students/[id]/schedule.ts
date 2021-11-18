@@ -14,7 +14,9 @@ async function getSchedule({ id, date }: { id: string, date: string }): Promise<
         const currentSession = await SessionModel.findOne({ current: true }, { terms: { $elemMatch: { current: true } } }).lean();
 
         if (currentSession !== null) {
-            const currentStudent = await StudentModel.findById(id, { academic: { $elemMatch: { terms: { $elemMatch: { term: (currentSession.terms[0] as any)._id } } } } }).lean();
+            const currentStudent = await StudentModel.findById(id, {
+                "academic.terms.term.$": currentSession.terms[0]._id
+            }).lean();
 
             if (currentStudent !== null) {
                 const subjects = currentStudent?.academic[0].terms[0].subjects;
