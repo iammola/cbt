@@ -120,8 +120,8 @@ const Home: NextPage = () => {
                 <div className="w-full h-full absolute inset-0 z-[-1]">
                     <div className="relative w-full h-full">
                         <Image
-                            alt="Panda"
                             layout="fill"
+                            alt="The Scenes"
                             src={Background}
                             objectFit="cover"
                             placeholder="blur"
