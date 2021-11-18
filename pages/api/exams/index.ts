@@ -6,33 +6,6 @@ import { ExamModel, EventModel } from "db/models";
 
 import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
 
-async function getExams({ select = '', date }: { select: string; date: string }): Promise<RouteResponse> {
-    await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-
-    try {
-        const eventRecords = await EventModel.findOne({ date: new Date(+date) }).select('events').lean() ?? { events: [] };
-        const data = await ExamModel.find({
-            SubjectID: eventRecords.events.map(({ subject }) => subject)
-        }).lean();
-
-        [success, status, message] = [true, StatusCodes.OK, {
-            data: data.map(({ questions, ...item }) => ({
-                ...item,
-                questions: questions.length
-            })),
-            message: ReasonPhrases.OK
-        }];
-    } catch (error: any) {
-        [status, message] = [StatusCodes.BAD_REQUEST, {
-            error: error.message,
-            message: ReasonPhrases.BAD_REQUEST
-        }];
-    }
-
-    return [success, status, message];
-}
-
 async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
@@ -60,12 +33,12 @@ async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: E
 
 export default async function handler({ body, query, method, cookies }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-    const allowedMethods = ["POST", "GET"];
+    const allowedMethods = "POST";
 
-    if (allowedMethods.includes(method ?? '') === false) {
+    if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "POST" ? createExam(JSON.parse(body), JSON.parse(cookies.account)._id) : getExams(query as any));
+    } else[success, status, message] = await createExam(JSON.parse(body), JSON.parse(cookies.account)._id);
 
     if (typeof message !== "object") message = { message };
 
