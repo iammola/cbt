@@ -3,13 +3,13 @@ export * from "./components";
 
 import { AnswerRecord, ExamRecord, QuestionRecord } from "./models";
 
-export type CreateQuestion<P = false, I = false> = Omit<QuestionRecord<P, I>, 'answers'> & {
-    answers: AnswerRecord[];
+export type CreateQuestion = Omit<QuestionRecord, '_id' | 'answers'> & {
+    answers: Omit<AnswerRecord, '_id'>[];
 };
 
 export type ExamData = {
     _id: string;
-    questions: QuestionRecord<true>[];
+    questions: QuestionRecord[];
     details: Pick<ExamRecord, 'duration' | 'instructions' | 'subjectId'> & {
         name: {
             class: string;

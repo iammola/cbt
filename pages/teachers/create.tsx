@@ -41,7 +41,7 @@ const CreateTeachers: NextPage = () => {
     const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedSubjects, setSelectedSubjects] = useState<{ [key: string]: string[] }>({});
-    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
+    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord[]; }[] | string>('');
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
@@ -57,7 +57,7 @@ const CreateTeachers: NextPage = () => {
     useEffect(() => {
         async function fetchSubjects() {
             try {
-                const data = await Promise.all((classes?.data as Pick<ClassRecord<true>, '_id' | 'name'>[]).map(async ({ _id, name }) => {
+                const data = await Promise.all((classes?.data as Pick<ClassRecord, '_id' | 'name'>[]).map(async ({ _id, name }) => {
                     const res = await fetch(`/api/classes/${_id}/subjects`);
                     const { data } = await res.json();
 

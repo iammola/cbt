@@ -39,11 +39,11 @@ export type TeacherQuestionProps = {
     onChange(question: Partial<CreateQuestion>): void;
 }
 
-export type TeacherAnswerProps = AnswerRecord & {
+export type TeacherAnswerProps = Omit<AnswerRecord, '_id'> & {
     id: string;
     number: number;
     deleteAnswer(): void;
-    handleChange(answer: Partial<AnswerRecord>): void;
+    handleChange(answer: Partial<Omit<AnswerRecord, '_id'>>): void;
 }
 
 export type BrandProps = {
@@ -89,14 +89,14 @@ export type TeacherBarProps = {
     exam?: ExamData['details']['name'];
 }
 
-type StudentQuestionProps = QuestionRecord<true> & {
+type StudentQuestionProps = QuestionRecord & {
     chosen?: string;
-    onAnswer(AnswerID: string): void;
+    onAnswer(AnswerID: QuestionRecord['_id']): void;
 }
 
-type StudentAnswerProps = Omit<AnswerRecord<true>, 'isCorrect'> & {
+type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
     selected: boolean;
-    handleSelect(id: string): void;
+    handleSelect(id: AnswerRecord['_id']): void;
 }
 
 type StudentTimerProps = {
