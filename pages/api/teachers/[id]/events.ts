@@ -24,8 +24,8 @@ async function getTeacherEvents(id: string): Promise<RouteResponse> {
             }
         }, "name").lean();
 
-        const events = await EventModel.find({ date: { $gte: new Date() } }, {
-            date: 1,
+        const events = await EventModel.find({
+            date: { $gte: new Date() },
             "events.subject": subjects.map(item => item.subjects)
         }).lean();
 
