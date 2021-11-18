@@ -20,7 +20,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
         await session.withTransaction(async () => {
             const data = await TeacherModel.create([{ ...teacher, code }], { session });
 
-            await SubjectsModel.updateMany({ class: Object.keys(subjects) }, {
+            await SubjectsModel.updateMany({ class: Object.keys(subjects) as any[] }, {
                 $addToSet: { "subjects.$[i].teachers": data[0]._id }
             }, {
                 session, runValidators: true,
