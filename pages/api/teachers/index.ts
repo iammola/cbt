@@ -20,16 +20,12 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
         await session.withTransaction(async () => {
             const data = await TeacherModel.create([{ ...teacher, code }], { session });
 
-        Object.entries(subjects).map(async ([classID, subjects]) => await SubjectsModel.updateOne({
-            class: classID as any,
-        }, {
-            $addToSet: { "subjects.$[i].teachers": data._id }
-        }, {
-            runValidators: true,
-            arrayFilters: [{
-                "subjects.i._id": subjects
-            }]
-        }).lean());
+            await SubjectsModel.updateMany({ class: Object.keys(subjects) }, {
+                $addToSet: { "subjects.$[i].teachers": data[0]._id }
+            }, {
+                session, runValidators: true,
+                arrayFilters: [{ "i._id": Object.values(subjects).flat() }]
+            });
         });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
