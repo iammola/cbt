@@ -1,29 +1,29 @@
-import type { Schema } from "mongoose";
+import type { ObjectId } from "bson";
 
-type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
+type RecordId = { _id: ObjectId };
 
 /* Class and Subject */
 
-export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
+export type ClassRecord = RecordId & {
     name: string;
     alias: string;
 };
 
-export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
+export type SubjectRecord = RecordId & {
     name: string;
     alias: string;
-    teachers: Schema.Types.ObjectId[];
+    teachers: ObjectId[];
 }
 
-export type SubjectsRecord<P = false, I = false> = RecordId<P, I> & {
-    class: P extends true ? ClassRecord<P, I> : Schema.Types.ObjectId;
-    subjects: SubjectRecord<true, I>[];
+export type SubjectsRecord<P = false> = RecordId & {
+    class: P extends true ? ClassRecord : ObjectId;
+    subjects: SubjectRecord[];
 }
 
 
 /* Student and Teacher */
 
-type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
+type UserRecord<T = never> = RecordId & {
     name: {
         title: T;
         initials: string;
@@ -36,15 +36,15 @@ type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
     code: string;
 }
 
-export type TeacherRecord<P = false, I = false> = UserRecord<P, I, "Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
+export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
 
-export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
+export type StudentRecord = UserRecord & {
     academic: {
-        session: Schema.Types.ObjectId;
+        session: ObjectId;
         terms: {
-            term: Schema.Types.ObjectId;
-            class: Schema.Types.ObjectId;
-            subjects: Schema.Types.ObjectId[];
+            term: ObjectId;
+            class: ObjectId;
+            subjects: ObjectId[];
         }[];
     }[];
 };
@@ -52,38 +52,38 @@ export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
 
 /* Event and Exam and Answer */
 
-export type EventRecord<P = false, I = false> = RecordId<P, I> & {
+export type EventRecord = RecordId & {
     date: Date;
     events: {
         name: string;
-        subject: Schema.Types.ObjectId;
+        subject: ObjectId;
     }[];
 };
 
-type DateRecord<P, I> = {
+type DateRecord<P = false> = {
     at: Date;
-    by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
+    by: P extends true ? TeacherRecord : ObjectId;
 }
 
-export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
+export type ExamRecord<P = false> = RecordId & {
     duration: number;
-    subjectId: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
+    subjectId: P extends true ? SubjectRecord : ObjectId;
     instructions: string[];
-    questions: QuestionRecord<true, I>[];
-    created: DateRecord<P, I>;
-    edited: DateRecord<P, I>[];
+    questions: QuestionRecord[];
+    created: DateRecord<P>;
+    edited: DateRecord<P>[];
 };
 
-export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
+export type AnswerRecord = RecordId & {
     answer: string
     isCorrect?: boolean;
 };
 
-export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
+export type QuestionRecord = RecordId & {
     question: string;
 } & ({
     type: "Multiple choice" | "Short Answer" | "Long Answer";
-    answers: AnswerRecord<true, I>[];
+    answers: AnswerRecord[];
 } | {
     answers: never;
     type: "Checkboxes";
@@ -94,14 +94,14 @@ export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
 
 /* Session and Term */
 
-export type SessionRecord<P = false, I = false> = RecordId<P, I> & {
+export type SessionRecord = RecordId & {
     name: string;
     alias: string;
     current?: boolean;
-    terms: TermRecord<true, I>[];
+    terms: TermRecord[];
 };
 
-export type TermRecord<P = false, I = false> = RecordId<P, I> & {
+export type TermRecord = RecordId & {
     name: string;
     alias: string;
     current?: boolean;
