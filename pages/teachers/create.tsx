@@ -1,16 +1,19 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
+import { BriefcaseIcon } from "@heroicons/react/solid";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
+import { useNotifications } from "components/Misc/Notification";
 
 import type { ClassRecord, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
+    const [addNotification, , Notifications] = useNotifications();
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -85,11 +88,16 @@ const CreateTeachers: NextPage = () => {
                     subjects: selectedSubjects
                 })
             });
-            const { success, error } = await res.json();
+            const { success, data, error } = await res.json();
 
             setSuccess(success);
 
             if (success === true) {
+                addNotification({
+                    timeout: 75e2,
+                    message: `Success... ${firstName}'s code is ${data.code}`,
+                    Icon: () => BriefcaseIcon({ className: "w-5 h-5 text-indigo-600" })
+                });
                 setEmail('');
                 setFullName('');
                 setLastName('');
@@ -301,6 +309,7 @@ const CreateTeachers: NextPage = () => {
                     </button>
                 </form>
             </section>
+            {Notifications}
         </>
     );
 }
