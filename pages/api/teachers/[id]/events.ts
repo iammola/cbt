@@ -11,12 +11,10 @@ async function getTeacherEvents(id: string): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = (await SubjectsModel.find({ "subjects.teachers": id }).lean()).reduce((acc, item) => {
-            return [...acc, {
-                class: item.class,
-                subjects: item.subjects.filter(({ teachers }) => teachers?.find(teacher => teacher.toString() === id)).map(item => (item as any)._id)
-            }];
-        }, [] as SubjectsRecord[]);;
+        const subjects = (await SubjectsModel.find({ "subjects.teachers": id }).lean()).map(item => ({
+            class: item.class,
+            subjects: item.subjects.filter(({ teachers }) => teachers?.find(teacher => teacher.toString() === id)).map(({ _id }) => _id)
+        })) as (Omit<SubjectsRecord, 'subjects'> & { subjects: SubjectsRecord['_id'][] })[];
 
         const classes = await ClassModel.find({
             subjects: {
