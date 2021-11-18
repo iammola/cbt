@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { RouteResponse, SubjectsRecord } from "types";
 
 async function getExams(id: any): Promise<RouteResponse> {
     await connect();
@@ -13,7 +13,7 @@ async function getExams(id: any): Promise<RouteResponse> {
     try {
         const exam = await ExamModel.find({ "created.by": id }, '-instructions').populate('created.by').lean();
 
-        const subjects = await SubjectsModel.find({ "subjects._id": exam.map(({ subjectId }) => subjectId) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
+        const subjects: SubjectsRecord<true>[] = await SubjectsModel.find({ "subjects._id": exam.map(({ subjectId }) => subjectId) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
 
         const data = await Promise.all(exam.map(async ({ subjectId, questions, ...exam }) => {
             const item = subjects.find(({ subjects }) => subjects.find(({ _id }) => subjectId.equals(_id)));
