@@ -8,6 +8,7 @@ import { formatRelative } from "date-fns";
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
+import type { DateRecord } from "types";
 
 const Exams: NextPage = () => {
     const [{ account }] = useCookies(['account']);
@@ -171,10 +172,7 @@ type ExamRow = {
     class: string;
     questions: number;
     subject: string;
-    created: {
-        at: Date;
-        by: any
-    };
+    created: DateRecord<true>;
     duration: number;
 };
 
