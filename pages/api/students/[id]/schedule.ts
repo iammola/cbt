@@ -23,10 +23,10 @@ async function getSchedule({ id, date }: { id: string, date: string }): Promise<
                     events: { $elemMatch: { subject: subjects } }
                 }).select('events').lean();
 
-                const data = (await ExamModel.find({ SubjectID: subjects }).select('-_id').lean()).map(async ({ _id, duration, questions, SubjectID }: any) => ({
+                const data = (await ExamModel.find({ SubjectID: subjects }).select('-_id').lean()).map(async ({ duration, questions, subjectId }) => ({
                     time: duration,
                     questions: questions.length,
-                    name: events?.events.find(event => event.subject === SubjectID)?.name ?? ''
+                    name: events?.events.find(event => event.subject === subjectId)?.name ?? ''
                 }));
 
                 [success, status, message] = [true, StatusCodes.CREATED, {
