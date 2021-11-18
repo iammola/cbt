@@ -18,7 +18,7 @@ const Question: FunctionComponent<StudentQuestionProps> = ({ chosen, question, a
                         <Answer
                             {...answer}
                             handleSelect={onAnswer}
-                            selected={chosen === answer._id}
+                            selected={chosen === answer._id.toString()}
                         />
                     </li>
                 ))}

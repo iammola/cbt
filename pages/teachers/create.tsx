@@ -59,12 +59,9 @@ const CreateTeachers: NextPage = () => {
             try {
                 const data = await Promise.all((classes?.data as Pick<ClassRecord, '_id' | 'name'>[]).map(async ({ _id, name }) => {
                     const res = await fetch(`/api/classes/${_id}/subjects`);
-                    const { data } = await res.json();
+                    const { data: { subjects } } = await res.json();
 
-                    return {
-                        _id, name,
-                        subjects: data.subjects as SubjectRecord<true>[]
-                    };
+                    return { _id: _id.toString(), name, subjects };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
             } catch (error: any) {
@@ -248,21 +245,21 @@ const CreateTeachers: NextPage = () => {
                                             <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm text-gray-700">
                                                 {subjects.map(({ _id, name }) => (
                                                     <label
-                                                        key={_id}
-                                                        htmlFor={_id}
+                                                        key={_id.toString()}
+                                                        htmlFor={_id.toString()}
                                                         className="flex gap-3 p-2"
                                                     >
                                                         <input
-                                                            id={_id}
+                                                            id={_id.toString()}
                                                             type="checkbox"
-                                                            checked={(selectedSubjects[classID] ?? []).includes(_id)}
+                                                            checked={(selectedSubjects[classID] ?? []).includes(_id.toString())}
                                                             onChange={({ target: { checked } }) => {
                                                                 checked === true ? setSelectedSubjects({
                                                                     ...selectedSubjects,
-                                                                    [classID]: [...(selectedSubjects[classID] ?? []), _id]
+                                                                    [classID]: [...(selectedSubjects[classID] ?? []), _id.toString()]
                                                                 }) : setSelectedSubjects(Object.fromEntries(
                                                                     Object.entries(selectedSubjects).map(
-                                                                        ([key, selected]) => [key, key === classID ? selected.filter(i => i !== _id) : selected]
+                                                                        ([key, selected]) => [key, key === classID ? selected.filter(i => i !== _id.toString()) : selected]
                                                                     ).filter(
                                                                         ([, selected]) => selected.length > 0
                                                                     )

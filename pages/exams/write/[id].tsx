@@ -53,7 +53,7 @@ const WriteExam: NextPage = () => {
                     <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
                         <Grid
                             questions={exam?.data.questions.map(({ _id }) => ({
-                                answered: !!answeredQuestions[_id],
+                                answered: !!answeredQuestions[_id.toString()],
                             })) ?? []}
                         />
                     </div>
@@ -63,10 +63,10 @@ const WriteExam: NextPage = () => {
                                 <Question
                                     {...question}
                                     key={questionIdx}
-                                    chosen={answeredQuestions[question._id]}
+                                    chosen={answeredQuestions[question._id.toString()]}
                                     onAnswer={AnswerID => setAnsweredQuestions({
                                         ...answeredQuestions,
-                                        [question._id]: AnswerID
+                                        [question._id.toString()]: AnswerID.toString()
                                     })}
                                 />
                             ))}
