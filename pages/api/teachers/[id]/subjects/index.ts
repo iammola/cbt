@@ -12,7 +12,7 @@ async function getTeacherSubjects(id: string): Promise<RouteResponse> {
 
     try {
         const subjects = await SubjectsModel.find({ "subjects.teacher": id }, '-class').lean();
-        const data = subjects.map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(item => (item as any)._id)).flat();
+        const data = subjects.map(({ subjects }) => subjects.filter(({ teachers }) => teachers.find(teacher => teacher.equals(id))).map(({ _id }) => _id)).flat();
 
         [success, status, message] = [true, StatusCodes.OK, {
             data,

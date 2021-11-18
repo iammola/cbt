@@ -22,7 +22,7 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
                 session: currentSession._id,
                 terms: [{
                     ...academic,
-                    term: (currentSession.terms[0] as any)._id
+                    term: currentSession.terms[0]._id
                 }]
             }]
         });

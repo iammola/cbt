@@ -19,7 +19,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
         });
 
         Object.entries(subjects).map(async ([classID, subjects]) => await SubjectsModel.updateOne({
-            class: classID as any,
+            class: classID,
         }, {
             $addToSet: { "subjects.$[i].teachers": data._id }
         }, {
