@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, SubjectsModel } from "db/models";
+import { SubjectsModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { RouteResponse, SubjectsRecord } from "types";
 
 async function getExtendedTeacherSubjects(id: any): Promise<RouteResponse> {
     await connect();
