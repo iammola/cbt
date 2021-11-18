@@ -12,7 +12,7 @@ import type { MenuProps } from "types";
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
     return (
         <nav
-            className={classNames("flex-grow w-full", {
+            className={classNames("grow w-full", {
                 "px-5": open === true,
                 "px-1 sm:px-4": open === false,
             })}
@@ -35,7 +35,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                 })}
                             >
                                 <HomeIcon
-                                    className={classNames("flex-shrink-0 w-6 h-6", {
+                                    className={classNames("shrink-0 w-6 h-6", {
                                         "ml-3": open === true
                                     })}
                                 />
@@ -63,7 +63,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                     })}
                                 >
                                     <FileTextIcon
-                                        className={classNames("flex-shrink-0 w-6 h-6", {
+                                        className={classNames("shrink-0 w-6 h-6", {
                                             "ml-3": open === true
                                         })}
                                     />
@@ -76,7 +76,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                         Exams
                                     </span>
                                     <ChevronDownIcon
-                                        className={classNames("flex-shrink-0 w-5 h-5 ml-auto text-gray-600", {
+                                        className={classNames("shrink-0 w-5 h-5 ml-auto text-gray-600", {
                                             "hidden": open === false
                                         })}
                                     />

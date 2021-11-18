@@ -70,7 +70,7 @@ const Notification: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, t
         >
             <div className="flex items-center justify-start gap-6 w-96 min-h-[4rem] p-4 pl-6 border border-gray-200 bg-white rounded-lg shadow-sm">
                 <Icon />
-                <p className="flex-grow text-sm text-gray-900 block truncate">
+                <p className="grow text-sm text-gray-900 block truncate">
                     {message}
                 </p>
                 <button

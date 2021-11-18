@@ -11,7 +11,7 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
 
     return (
         <div className="flex items-center justify-end gap-6 w-full bg-white py-5 px-8 sticky left-0 top-0 rounded-b-lg drop-shadow-sm">
-            <div className="hidden md:flex items-center justify-start gap-2 flex-grow text-gray-400 w-full text-sm font-medium">
+            <div className="hidden md:flex items-center justify-start gap-2 grow text-gray-400 w-full text-sm font-medium">
                 <span className="w-max block truncate">
                     {currentSession !== undefined ? (
                         currentSession.data !== null ? (

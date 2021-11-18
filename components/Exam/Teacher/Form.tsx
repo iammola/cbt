@@ -133,7 +133,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                     {...examState}
                     save={saveExam}
                 />
-                <section className="w-full flex-grow py-10 px-10 bg-indigo-100 relative">
+                <section className="w-full grow py-10 px-10 bg-indigo-100 relative">
                     <div className="m-auto max-w-3xl h-full space-y-5">
                         <div className="w-full pt-6 pb-5 px-10 flex flex-col gap-3 bg-white rounded-xl shadow-sm">
                             <ul className="mt-3">
@@ -148,7 +148,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                                         <span className="text-xs font-semibold -ml-4 text-gray-500">
                                             {idx + 1}.
                                         </span>
-                                        <div className="flex-grow h-full relative">
+                                        <div className="grow h-full relative">
                                             <input
                                                 type="text"
                                                 value={instruction}

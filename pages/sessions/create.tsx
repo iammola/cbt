@@ -128,7 +128,7 @@ const CreateSession: NextPage = () => {
                                 />
                                 <label
                                     htmlFor={`Term${termIdx}`}
-                                    className="flex items-center flex-shrink-0 gap-3 p-2 text-sm"
+                                    className="flex items-center shrink-0 gap-3 p-2 text-sm"
                                 >
                                     <input
                                         type="checkbox"

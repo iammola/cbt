@@ -17,7 +17,7 @@ const Answer: FunctionComponent<TeacherAnswerProps> = ({ id, number, answer, isC
             />
             <label
                 htmlFor={id}
-                className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
+                className={classNames("w-3 h-3 rounded-full text-xs shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
                     "bg-gray-400": isCorrect,
                     "bg-white": !isCorrect
                 })}

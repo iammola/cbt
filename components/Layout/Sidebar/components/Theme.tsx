@@ -42,12 +42,12 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
                         onClick={() => setActive(themeIdx)}
                         onMouseEnter={() => setHovered(themeIdx)}
                         onMouseLeave={() => setHovered(active)}
-                        className="flex gap-2 items-center justify-center flex-grow text-gray-800 h-full rounded-full cursor-pointer"
+                        className="flex gap-2 items-center justify-center grow text-gray-800 h-full rounded-full cursor-pointer"
                     >
                         {active === themeIdx ? (
-                            <Icon.solid className="w-5 h-5 flex-shrink-0" />
+                            <Icon.solid className="w-5 h-5 shrink-0" />
                         ) : (
-                            <Icon.outline className="w-5 h-5 flex-shrink-0" />
+                            <Icon.outline className="w-5 h-5 shrink-0" />
                         )}
                         <span
                             className={classNames("text-sm", {
