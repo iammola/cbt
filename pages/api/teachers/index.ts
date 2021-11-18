@@ -1,3 +1,4 @@
+import { startSession } from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -10,13 +11,14 @@ import type { TeacherRecord, RouteResponse } from "types";
 
 async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<RouteResponse> {
     await connect();
+    const session = await startSession();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await TeacherModel.create({
-            ...teacher,
-            code: generateCode()
-        });
+        const code = generateCode();
+
+        await session.withTransaction(async () => {
+            const data = await TeacherModel.create([{ ...teacher, code }], { session });
 
         Object.entries(subjects).map(async ([classID, subjects]) => await SubjectsModel.updateOne({
             class: classID as any,
@@ -28,9 +30,10 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
                 "subjects.i._id": subjects
             }]
         }).lean());
+        });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
-            data,
+            data: { code },
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {
