@@ -24,7 +24,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
                 $addToSet: { "subjects.$[i].teachers": data[0]._id }
             }, {
                 session, runValidators: true,
-                arrayFilters: [{ "i._id": Object.values(subjects).flat() }]
+                arrayFilters: [{ "i._id": { $in: Object.values(subjects).flat() } }]
             });
         });
 
