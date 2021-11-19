@@ -109,3 +109,7 @@ export type StudentGridProps = {
         answered: boolean;
     }[];
 }
+
+export type StudentBarProps = {
+    exam?: ExamData['details']['name'];
+}
