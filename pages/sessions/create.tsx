@@ -133,7 +133,7 @@ const CreateSession: NextPage = () => {
                                     <input
                                         type="checkbox"
                                         id={`Term${termIdx}`}
-                                        className="accent-amber-400"
+                                        className="accent-amber-500"
                                         checked={term.current ?? false}
                                         onChange={({ target: { checked } }) => setTerms(terms.map((term, i) => ({ ...term, current: current === true && i === (checked === true ? termIdx : 0) })))}
                                     />
@@ -165,7 +165,7 @@ const CreateSession: NextPage = () => {
                                 id="current"
                                 type="checkbox"
                                 checked={current}
-                                className="accent-amber-400"
+                                className="accent-amber-500"
                                 onChange={({ target: { checked } }) => setCurrent(checked)}
                             />
                             Mark as active session
