@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { XIcon } from "@heroicons/react/outline";
+import { XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 

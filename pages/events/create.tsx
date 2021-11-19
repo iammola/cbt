@@ -3,7 +3,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { format, startOfTomorrow } from "date-fns";
 import { FormEvent, useEffect, useState } from "react";
-import { CheckIcon, XIcon } from "@heroicons/react/outline";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 import Select from "components/Select";
