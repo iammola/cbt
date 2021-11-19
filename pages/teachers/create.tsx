@@ -165,8 +165,8 @@ const CreateTeachers: NextPage = () => {
                             selected={selectedTitle}
                             handleChange={setSelectedTitle}
                             colorPallette={{
-                                activeCheckIconColor: "text-pink-600",
-                                inactiveCheckIconColor: "text-pink-800",
+                                activeCheckIconColor: "fill-pink-600",
+                                inactiveCheckIconColor: "fill-pink-800",
                                 activeOptionColor: "text-pink-900 bg-pink-100",
                                 buttonBorderColor: "focus-visible:border-pink-500",
                                 buttonOffsetFocusColor: "focus-visible:ring-offset-pink-500"
@@ -289,13 +289,13 @@ const CreateTeachers: NextPage = () => {
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Profile
                     </button>

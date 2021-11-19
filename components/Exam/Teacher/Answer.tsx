@@ -32,9 +32,9 @@ const Answer: FunctionComponent<TeacherAnswerProps> = ({ id, number, answer, isC
             />
             <span
                 onClick={deleteAnswer}
-                className="group relative p-2 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-200"
+                className="group relative p-2 rounded-full cursor-pointer hover:bg-gray-200"
             >
-                <XIcon className="w-5 h-5" />
+                <XIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
                 <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                     Delete Option
                 </span>

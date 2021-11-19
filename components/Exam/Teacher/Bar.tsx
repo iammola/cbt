@@ -28,36 +28,36 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
                         ) : "No Current Session"
                     ) : "Loading Session"}
                 </span>
-                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
                 <span className="w-max block truncate">{exam?.class ?? "Select Class"}</span>
-                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
                 <span className="w-max block truncate">{exam?.subject ?? "Select Subject"}</span>
-                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
                 <span className="text-gray-600">Questions</span>
             </div>
             <button
                 type="button"
                 onClick={() => save()}
                 title={modified === true ? "Changes made. Don't forget to save" : saved === true ? "No changes made." : ""}
-                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-md shadow-sm"
+                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-100 hover:bg-indigo-200 rounded-md shadow-sm"
             >
                 {modified === true && (
                     <span className="w-2 h-2 rounded-full bg-indigo-300" />
                 )}
                 {saved === true && (
-                    <CheckIcon className="w-5 h-5" />
+                    <CheckIcon className="w-5 h-5 fill-indigo-700" />
                 )}
                 Save
             </button>
             <button
                 type="submit"
-                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
+                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 rounded-md shadow-sm"
             >
                 {uploading === true && (
-                    <LoadingIcon className="animate-spin w-5 h-5" />
+                    <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
                 )}
                 {uploaded === true && (
-                    <CheckIcon className="w-5 h-5" />
+                    <CheckIcon className="w-5 h-5 fill-white" />
                 )}
                 Submit
             </button>

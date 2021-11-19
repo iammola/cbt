@@ -201,8 +201,8 @@ const CreateStudents: NextPage = () => {
                     <Select
                         label="Class"
                         colorPallette={{
-                            activeCheckIconColor: "text-indigo-600",
-                            inactiveCheckIconColor: "text-indigo-800",
+                            activeCheckIconColor: "fill-indigo-600",
+                            inactiveCheckIconColor: "fill-indigo-800",
                             activeOptionColor: "text-indigo-900 bg-indigo-100",
                             buttonBorderColor: "focus-visible:border-indigo-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
@@ -251,13 +251,13 @@ const CreateStudents: NextPage = () => {
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Profile
                     </button>

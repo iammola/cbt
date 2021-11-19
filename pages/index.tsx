@@ -62,7 +62,7 @@ const Home: NextPage = () => {
                 addNotification({
                     message: "Success 👍 ...  Redirecting!! 🚀",
                     timeout: 10e3,
-                    Icon: () => BadgeCheckIcon({ className: "w-6 h-6 text-green-600" })
+                    Icon: () => BadgeCheckIcon({ className: "w-6 h-6 fill-green-600" })
                 });
             } else throw new Error(error);
         } catch (error: any) {
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
             addNotification({
                 message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
                 timeout: 5e3,
-                Icon: () => BanIcon({ className: "w-6 h-6 text-red-600" })
+                Icon: () => BanIcon({ className: "w-6 h-6 fill-red-600" })
             });
             console.log({ error });
         }
@@ -85,13 +85,13 @@ const Home: NextPage = () => {
         if (online.o === false && navigator.onLine === true) lastId = addNotification({
             message: "Back Online. 💯",
             timeout: 75e2,
-            Icon: () => StatusOnlineIcon({ className: "w-6 h-6 text-blue-600" })
+            Icon: () => StatusOnlineIcon({ className: "w-6 h-6 fill-blue-600" })
         })[0];
 
         if (online.o === true && navigator.onLine === false) lastId = addNotification({
             message: "Offline!! Its that bad huh? 🤷‍♂️",
             timeout: 15e3,
-            Icon: () => StatusOfflineIcon({ className: "w-6 h-6 text-red-600" })
+            Icon: () => StatusOfflineIcon({ className: "w-6 h-6 fill-red-600" })
         })[0];
 
         if (lastId !== -1) {
@@ -162,13 +162,13 @@ const Home: NextPage = () => {
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Log In
                     </button>

@@ -141,9 +141,9 @@ const CreateSession: NextPage = () => {
                                 {terms.length > 1 && (
                                     <span
                                         onClick={() => setTerms(terms.filter((_, i) => i !== termIdx))}
-                                        className="p-1 rounded-full hover:bg-gray-300 text-gray-500 hover:text-gray-600"
+                                        className="p-1 rounded-full hover:bg-gray-300"
                                     >
-                                        <XIcon className="w-4 h-4" />
+                                        <XIcon className="w-4 h-4 fill-gray-500 hover:fill-gray-600" />
                                     </span>
                                 )}
                             </div>
@@ -178,13 +178,13 @@ const CreateSession: NextPage = () => {
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Session
                     </button>

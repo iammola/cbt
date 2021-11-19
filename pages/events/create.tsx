@@ -102,8 +102,8 @@ const CreateEvent: NextPage = () => {
                     <Select
                         label="Classes"
                         colorPallette={{
-                            activeCheckIconColor: "text-purple-600",
-                            inactiveCheckIconColor: "text-purple-800",
+                            activeCheckIconColor: "fill-purple-600",
+                            inactiveCheckIconColor: "fill-purple-800",
                             activeOptionColor: "text-purple-900 bg-purple-100",
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
@@ -115,8 +115,8 @@ const CreateEvent: NextPage = () => {
                     <Select
                         label="Subjects"
                         colorPallette={{
-                            activeCheckIconColor: "text-purple-600",
-                            inactiveCheckIconColor: "text-purple-800",
+                            activeCheckIconColor: "fill-purple-600",
+                            inactiveCheckIconColor: "fill-purple-800",
                             activeOptionColor: "text-purple-900 bg-purple-100",
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
@@ -169,13 +169,13 @@ const CreateEvent: NextPage = () => {
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Event
                     </button>

@@ -77,7 +77,7 @@ const Notification: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, t
                     onClick={closeNotification}
                     className="p-1 rounded-md hover:bg-gray-200 pointer-events-auto"
                 >
-                    <XIcon className="w-5 h-5 text-gray-500" />
+                    <XIcon className="w-5 h-5 fill-gray-500" />
                 </button>
             </div>
         </Transition>

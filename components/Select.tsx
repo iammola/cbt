@@ -8,8 +8,8 @@ import type { SelectProps } from "types";
 
 const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options, selected, className, handleChange }) => {
     const pallette = colorPallette ?? {
-        activeCheckIconColor: "text-yellow-600",
-        inactiveCheckIconColor: "text-yellow-800",
+        activeCheckIconColor: "fill-yellow-600",
+        inactiveCheckIconColor: "fill-yellow-800",
         activeOptionColor: "text-yellow-900 bg-yellow-100",
         buttonBorderColor: "focus-visible:border-indigo-500",
         buttonOffsetFocusColor: "focus-visible:ring-offset-yellow-500"
@@ -62,12 +62,15 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
                                                 </span>
                                                 {selected === true && (
                                                     <span
-                                                        className={classNames("absolute inset-y-0 left-0 flex items-center pl-3", {
-                                                            [pallette.activeCheckIconColor]: active,
-                                                            [pallette.inactiveCheckIconColor]: !active
-                                                        })}
+                                                        className="absolute inset-y-0 left-0 flex items-center pl-3"
                                                     >
-                                                        <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                                                        <CheckIcon
+                                                            aria-hidden="true"
+                                                            className={classNames("w-5 h-5", {
+                                                                [pallette.activeCheckIconColor]: active,
+                                                                [pallette.inactiveCheckIconColor]: !active
+                                                            })}
+                                                        />
                                                     </span>
                                                 )}
                                             </>

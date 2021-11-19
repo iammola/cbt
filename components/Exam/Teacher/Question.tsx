@@ -47,27 +47,27 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({ record, number, onC
             <div className="flex items-center justify-end gap-3 w-full border-t pl-4 py-1">
                 <span
                     onClick={insertQuestionAbove}
-                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                    className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <SortAscendingIcon className="w-5 h-5" />
+                    <SortAscendingIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Above
                     </span>
                 </span>
                 <span
                     onClick={insertQuestionBelow}
-                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                    className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <SortDescendingIcon className="w-5 h-5" />
+                    <SortDescendingIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Below
                     </span>
                 </span>
                 <span
                     onClick={deleteQuestion}
-                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                    className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <TrashIcon className="w-5 h-5" />
+                    <TrashIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Delete Question
                     </span>
