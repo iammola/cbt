@@ -9,9 +9,8 @@ import type { ExamData } from "types";
 
 const WriteExam: NextPage = () => {
     const router = useRouter();
-    const { data: exam } = useSWRImmutable<{ data: ExamData }>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url).then(res => res.json()));
-
     const [answeredQuestions, setAnsweredQuestions] = useState<{ [QuestionId: string]: string }>({});
+    const { data: exam } = useSWRImmutable<{ data: ExamData }>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url).then(res => res.json()));
 
     return (
         <>
