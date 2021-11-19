@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWRImmutable from "swr";
 import { FunctionComponent } from "react";
 import { ChevronRightIcon, CheckIcon } from "@heroicons/react/solid";
 
@@ -7,7 +7,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { TeacherBarProps } from "types";
 
 const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
-    const { data: currentSession } = useSWR('/api/sessions/current/', url => fetch(url).then(res => res.json()));
+    const { data: currentSession } = useSWRImmutable('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     return (
         <div className="flex items-center justify-end gap-6 w-full bg-white py-5 px-8 sticky left-0 top-0 rounded-b-lg drop-shadow-sm">
