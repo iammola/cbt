@@ -89,21 +89,21 @@ export type TeacherBarProps = {
     exam?: ExamData['details']['name'];
 }
 
-type StudentQuestionProps = QuestionRecord & {
+export type StudentQuestionProps = QuestionRecord & {
     chosen?: string;
     onAnswer(AnswerID: QuestionRecord['_id']): void;
 }
 
-type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
+export type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
     selected: boolean;
     handleSelect(id: AnswerRecord['_id']): void;
 }
 
-type StudentTimerProps = {
+export type StudentTimerProps = {
     timeout?: number;
 }
 
-type StudentGridProps = {
+export type StudentGridProps = {
     questions: {
         active?: boolean;
         answered: boolean;
