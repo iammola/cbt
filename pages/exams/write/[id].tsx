@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
 
-import { Grid, Timer, Question } from "components/Exam/Student";
+import { Bar, Grid, Timer, Question } from "components/Exam/Student";
 import type { ExamData } from "types";
 
 const WriteExam: NextPage = () => {
@@ -23,6 +23,7 @@ const WriteExam: NextPage = () => {
                 `}</style>
             </Head>
             <form className="flex flex-col items-center justify-start w-screen min-h-screen">
+                <Bar exam={exam?.data.details.name} />
                 <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
                     <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
                         <Grid
