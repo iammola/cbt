@@ -85,7 +85,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                     addNotification({
                         message: "Upload Success... Reloading",
                         timeout: 3e3,
-                        Icon: () => CheckCircleIcon({ className: "w-6 h-6 fill-green-700" }),
+                        Icon: () => CheckCircleIcon({ className: "w-6 h-6 fill-emerald-700" }),
                     });
                     if (savedExams !== undefined) saveExam(
                         Object.fromEntries(

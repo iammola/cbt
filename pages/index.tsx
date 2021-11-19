@@ -62,7 +62,7 @@ const Home: NextPage = () => {
                 addNotification({
                     message: "Success 👍 ...  Redirecting!! 🚀",
                     timeout: 10e3,
-                    Icon: () => BadgeCheckIcon({ className: "w-6 h-6 fill-green-600" })
+                    Icon: () => BadgeCheckIcon({ className: "w-6 h-6 fill-emerald-600" })
                 });
             } else throw new Error(error);
         } catch (error: any) {
@@ -157,7 +157,7 @@ const Home: NextPage = () => {
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
                             "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
-                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}
                     >
@@ -189,8 +189,8 @@ const Home: NextPage = () => {
                 title={`is ${dbState?.data?.state ?? 'unknown'}`}
                 className={classNames("w-3 h-3 fixed top-5 left-5 rounded-full shadow-md ring-2 ring-white transition-colors", {
                     "bg-red-400": dbState?.data?.code === 0,
-                    "bg-green-400": dbState?.data?.code === 1,
-                    "bg-yellow-400": dbState?.data?.code === 2,
+                    "bg-emerald-400": dbState?.data?.code === 1,
+                    "bg-amber-400": dbState?.data?.code === 2,
                     "bg-pink-400": dbState?.data?.code === 3,
                     "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code),
                 })}

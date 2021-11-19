@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { classNames } from "utils";
 
 const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
-    const colors = ["bg-blue-400", "bg-red-400", "bg-purple-400", "bg-pink-400", "bg-indigo-400", "bg-green-400", "bg-yellow-400"];
+    const colors = ["bg-blue-400", "bg-red-400", "bg-violet-400", "bg-pink-400", "bg-indigo-400", "bg-emerald-400", "bg-amber-400"];
 
     return (
         <div className="flex flex-col grow gap-2">

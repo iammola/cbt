@@ -29,7 +29,7 @@ const Subjects: Subjects = ({ items }) => {
 }
 
 Subjects.Item = function Item({ name, subjects }) {
-    const colors = ["bg-blue-400", "bg-red-400", "bg-purple-400", "bg-pink-400", "bg-indigo-400", "bg-green-400"];
+    const colors = ["bg-blue-400", "bg-red-400", "bg-violet-400", "bg-pink-400", "bg-indigo-400", "bg-emerald-400"];
 
     return (
         <div className="flex flex-col gap-3 items-start justify-start grow max-w-full xl:w-full pt-2">

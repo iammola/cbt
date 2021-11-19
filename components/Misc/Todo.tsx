@@ -33,7 +33,7 @@ const Todo: Todo = ({ items }) => {
 
 Todo.Item = function Item({ name, ...props }) {
     const date = formatDistance(new Date(props.date), new Date, { addSuffix: true });
-    const colors = ["bg-blue-400", "bg-red-400", "bg-purple-400", "bg-pink-400", "bg-indigo-400", "bg-green-400"];
+    const colors = ["bg-blue-400", "bg-red-400", "bg-violet-400", "bg-pink-400", "bg-indigo-400", "bg-emerald-400"];
 
     return (
         <div className="flex gap-4 items-center justify-start w-[31%] p-3 rounded-xl cursor-pointer hover:bg-gray-50">

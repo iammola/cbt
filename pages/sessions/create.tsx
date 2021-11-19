@@ -64,7 +64,7 @@ const CreateSession: NextPage = () => {
                 >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
-                        <span className="text-yellow-500">Session</span>
+                        <span className="text-amber-500">Session</span>
                     </h1>
                     <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
@@ -79,7 +79,7 @@ const CreateSession: NextPage = () => {
                             type="text"
                             value={name}
                             onChange={({ target: { value } }) => setName(value)}
-                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
                     <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
@@ -95,7 +95,7 @@ const CreateSession: NextPage = () => {
                             type="text"
                             value={alias}
                             onChange={({ target: { value } }) => setAlias(value)}
-                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
                     <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
@@ -116,7 +116,7 @@ const CreateSession: NextPage = () => {
                                     placeholder="Name"
                                     value={term.name}
                                     onChange={({ target: { value } }) => setTerms(terms.map((term, i) => i === termIdx ? ({ ...term, name: value }) : term))}
-                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
                                 />
                                 <input
                                     required
@@ -124,7 +124,7 @@ const CreateSession: NextPage = () => {
                                     placeholder="Alias"
                                     value={term.alias}
                                     onChange={({ target: { value } }) => setTerms(terms.map((term, i) => i === termIdx ? ({ ...term, alias: value }) : term))}
-                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-yellow-400 focus:outline-none p-3 pl-5"
+                                    className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
                                 />
                                 <label
                                     htmlFor={`Term${termIdx}`}
@@ -172,8 +172,8 @@ const CreateSession: NextPage = () => {
                     <button
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
-                            "bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-500": success === undefined,
-                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-amber-400 hover:bg-amber-500 focus:ring-amber-500": success === undefined,
+                            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}
                     >

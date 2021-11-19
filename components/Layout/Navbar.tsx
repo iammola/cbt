@@ -37,7 +37,7 @@ const Navbar: FunctionComponent = () => {
                         className="rounded-full"
                         initials={{
                             text: account?.name.initials ?? '',
-                            className: "rounded-full bg-yellow-300"
+                            className: "rounded-full bg-amber-300"
                         }}
                     />
                 </div>
