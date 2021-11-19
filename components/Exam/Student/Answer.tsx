@@ -15,7 +15,7 @@ const Answer: FunctionComponent<StudentAnswerProps> = ({ _id, answer, selected, 
             />
             <label
                 htmlFor={_id.toString()}
-                className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
+                className={classNames("w-3 h-3 rounded-full text-xs shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
                     "bg-gray-400": selected,
                     "bg-white": !selected
                 })}

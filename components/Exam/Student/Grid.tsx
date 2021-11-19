@@ -10,8 +10,7 @@ const Grid: FunctionComponent<StudentGridProps> = ({ questions }) => {
                 {questions.map(({ answered, active }, i) => (
                     <li
                         key={i}
-                        style={{ aspectRatio: '1' }}
-                        className={classNames("flex items-center justify-center rounded-md shadow-sm cursor-pointer text-sm font-semibold tracking-wider ring-1 ring-gray-100 relative group", {
+                        className={classNames("flex items-center justify-center rounded-md shadow-sm cursor-pointer text-sm font-semibold tracking-wider ring-1 ring-gray-100 relative group aspect-square", {
                             "bg-white hover:bg-gray-50 text-gray-700": !answered,
                             "bg-gray-500 hover:bg-gray-600 text-gray-200": active,
                         })}

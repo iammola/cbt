@@ -70,14 +70,14 @@ const Notification: FunctionComponent<Omit<NotificationProps, 'id'>> = ({ out, t
         >
             <div className="flex items-center justify-start gap-6 w-96 min-h-[4rem] p-4 pl-6 border border-gray-200 bg-white rounded-lg shadow-sm">
                 <Icon />
-                <p className="flex-grow text-sm text-gray-900 block truncate">
+                <p className="grow text-sm text-gray-900 block truncate">
                     {message}
                 </p>
                 <button
                     onClick={closeNotification}
                     className="p-1 rounded-md hover:bg-gray-200 pointer-events-auto"
                 >
-                    <XIcon className="w-5 h-5 text-gray-500" />
+                    <XIcon className="w-5 h-5 fill-gray-500" />
                 </button>
             </div>
         </Transition>

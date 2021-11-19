@@ -8,7 +8,7 @@ const Todo: Todo = ({ items }) => {
     const filtered = items?.filter(a => isFuture(new Date(a.date))).sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)));
 
     return (
-        <div className="flex flex-wrap flex-row flex-grow items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
+        <div className="flex flex-wrap flex-row grow items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
             {filtered?.map((item, i) => (
                 <Todo.Item
                     key={i}
@@ -33,11 +33,11 @@ const Todo: Todo = ({ items }) => {
 
 Todo.Item = function Item({ name, ...props }) {
     const date = formatDistance(new Date(props.date), new Date, { addSuffix: true });
-    const colors = ["bg-blue-400", "bg-red-400", "bg-purple-400", "bg-pink-400", "bg-indigo-400", "bg-green-400"];
+    const colors = ["bg-blue-400", "bg-red-400", "bg-violet-400", "bg-pink-400", "bg-indigo-400", "bg-emerald-400"];
 
     return (
         <div className="flex gap-4 items-center justify-start w-[31%] p-3 rounded-xl cursor-pointer hover:bg-gray-50">
-            <div className={classNames("flex flex-shrink-0 items-center justify-center rounded-full shadow-md w-10 h-10 text-sm text-white font-medium uppercase", colors[Math.floor(Math.random() * colors.length)])}>
+            <div className={classNames("flex shrink-0 items-center justify-center rounded-full shadow-md w-10 h-10 text-sm text-white font-medium uppercase", colors[Math.floor(Math.random() * colors.length)])}>
                 {name.split(' ', 2).map(word => word[0])}
             </div>
             <div className="flex flex-col gap-0.5 items-start justify-center">

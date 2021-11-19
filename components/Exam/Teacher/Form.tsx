@@ -50,7 +50,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
             if (obj === undefined) addNotification({
                 message: "Saved Locally",
                 timeout: 3e3,
-                Icon: () => BellIcon({ className: "w-6 h-6 text-blue-700" })
+                Icon: () => BellIcon({ className: "w-6 h-6 stroke-blue-700" })
             });
             setExamState({ ...examState, modified: false, saved: true });
         }
@@ -85,7 +85,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                     addNotification({
                         message: "Upload Success... Reloading",
                         timeout: 3e3,
-                        Icon: () => CheckCircleIcon({ className: "w-6 h-6 text-green-700" }),
+                        Icon: () => CheckCircleIcon({ className: "w-6 h-6 stroke-emerald-700" }),
                     });
                     if (savedExams !== undefined) saveExam(
                         Object.fromEntries(
@@ -100,12 +100,12 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                 addNotification({
                     message: "Upload Failed... Try again",
                     timeout: 5e3,
-                    Icon: () => XCircleIcon({ className: "w-6 h-6 text-red-700" }),
+                    Icon: () => XCircleIcon({ className: "w-6 h-6 stroke-red-700" }),
                 });
                 setTimeout(addNotification, 1e3, {
                     message: error.message,
                     timeout: 5e3,
-                    Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 text-red-700" })
+                    Icon: () => ExclamationCircleIcon({ className: "w-6 h-6 stroke-red-700" })
                 });
                 console.error(error);
             }
@@ -133,7 +133,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                     {...examState}
                     save={saveExam}
                 />
-                <section className="w-full flex-grow py-10 px-10 bg-indigo-100 relative">
+                <section className="w-full grow py-10 px-10 bg-indigo-100 relative">
                     <div className="m-auto max-w-3xl h-full space-y-5">
                         <div className="w-full pt-6 pb-5 px-10 flex flex-col gap-3 bg-white rounded-xl shadow-sm">
                             <ul className="mt-3">
@@ -148,7 +148,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                                         <span className="text-xs font-semibold -ml-4 text-gray-500">
                                             {idx + 1}.
                                         </span>
-                                        <div className="flex-grow h-full relative">
+                                        <div className="grow h-full relative">
                                             <input
                                                 type="text"
                                                 value={instruction}
@@ -169,9 +169,9 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                                         {idx > 0 && instructions.length > 2 && (
                                             <span
                                                 onClick={() => setInstructions(instructions.filter((_, i) => i !== idx))}
-                                                className="w-7 h-7 p-1.5 ml-5 rounded-full cursor-pointer text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                                                className="w-7 h-7 p-1.5 ml-5 rounded-full cursor-pointer hover:bg-gray-100"
                                             >
-                                                <XIcon className="w-full h-full" />
+                                                <XIcon className="w-full h-full fill-gray-500 hover:fill-gray-700" />
                                             </span>
                                         )}
                                     </li>
@@ -192,18 +192,18 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                     </div>
                     <div
                         onClick={() => setExamState({ ...examState, details: false })}
-                        className="fixed right-4 top-24 rounded-full p-2 bg-white text-indigo-700 cursor-pointer group"
+                        className="fixed right-4 top-24 rounded-full p-2 bg-white cursor-pointer group"
                     >
-                        <CogIcon className="w-6 h-6" />
+                        <CogIcon className="w-6 h-6 stroke-indigo-700" />
                         <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                             Change Settings
                         </span>
                     </div>
                     <div
                         onClick={() => scrollTo({ behavior: "smooth", top: 0 })}
-                        className="fixed right-4 bottom-24 rounded-full p-2 bg-white text-indigo-700 cursor-pointer group"
+                        className="fixed right-4 bottom-24 rounded-full p-2 bg-white cursor-pointer group"
                     >
-                        <ArrowSmUpIcon className="w-6 h-6" />
+                        <ArrowSmUpIcon className="w-6 h-6 stroke-indigo-700" />
                         <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                             Scroll to Top
                         </span>

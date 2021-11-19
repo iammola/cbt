@@ -22,9 +22,9 @@ const Exams: NextPage = () => {
             </Head>
             <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
                 <Sidebar />
-                <main className="flex flex-col flex-grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+                <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
                     <Navbar />
-                    <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 flex-grow bg-gray-50/80 overflow-y-auto">
+                    <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
                         <table className="rounded-lg shadow-md overflow-hidden min-w-full">
                             <thead className="bg-gray-200 text-gray-700">
                                 <tr>
@@ -105,7 +105,7 @@ const Exams: NextPage = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center gap-4">
-                                                <div className="flex-shrink-0 h-10 w-10 relative">
+                                                <div className="shrink-0 h-10 w-10 relative">
                                                     <UserImage
                                                         src=""
                                                         layout="fill"

@@ -100,8 +100,8 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
                             options={classes?.data}
                             selected={selectedClass}
                             colorPallette={{
-                                activeCheckIconColor: "text-indigo-600",
-                                inactiveCheckIconColor: "text-indigo-800",
+                                activeCheckIconColor: "fill-indigo-600",
+                                inactiveCheckIconColor: "fill-indigo-800",
                                 activeOptionColor: "text-indigo-900 bg-indigo-100",
                                 buttonBorderColor: "focus-visible:border-indigo-500",
                                 buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
@@ -113,8 +113,8 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
                             options={subjects}
                             selected={selectedSubject}
                             colorPallette={{
-                                activeCheckIconColor: "text-indigo-600",
-                                inactiveCheckIconColor: "text-indigo-800",
+                                activeCheckIconColor: "fill-indigo-600",
+                                inactiveCheckIconColor: "fill-indigo-800",
                                 activeOptionColor: "text-indigo-900 bg-indigo-100",
                                 buttonBorderColor: "focus-visible:border-indigo-500",
                                 buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"

@@ -25,7 +25,7 @@ const WriteExam: NextPage = () => {
             </Head>
             <form className="flex flex-col items-center justify-start w-screen min-h-screen">
                 <div className="flex items-center justify-end gap-6 w-full bg-white py-3 px-8 rounded-b-lg drop-shadow-sm">
-                    <div className="hidden md:flex items-center justify-start gap-2 flex-grow text-gray-400 w-full text-sm font-medium">
+                    <div className="hidden md:flex items-center justify-start gap-2 grow text-gray-400 w-full text-sm font-medium">
                         <span className="w-max block truncate">
                             Session
                         </span>
@@ -49,7 +49,7 @@ const WriteExam: NextPage = () => {
                         Submit
                     </button>
                 </div>
-                <div className="flex flex-grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
+                <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
                     <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
                         <Grid
                             questions={exam?.data.questions.map(({ _id }) => ({
@@ -57,7 +57,7 @@ const WriteExam: NextPage = () => {
                             })) ?? []}
                         />
                     </div>
-                    <div className="flex-grow h-full px-14 py-8">
+                    <div className="grow h-full px-14 py-8">
                         <div className="max-w-5xl h-full space-y-5">
                             {exam?.data.questions.map((question, questionIdx) => (
                                 <Question

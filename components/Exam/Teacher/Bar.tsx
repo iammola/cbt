@@ -11,7 +11,7 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
 
     return (
         <div className="flex items-center justify-end gap-6 w-full bg-white py-5 px-8 sticky left-0 top-0 rounded-b-lg drop-shadow-sm">
-            <div className="hidden md:flex items-center justify-start gap-2 flex-grow text-gray-400 w-full text-sm font-medium">
+            <div className="hidden md:flex items-center justify-start gap-2 grow text-gray-400 w-full text-sm font-medium">
                 <span className="w-max block truncate">
                     {currentSession !== undefined ? (
                         currentSession.data !== null ? (
@@ -28,11 +28,11 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
                         ) : "No Current Session"
                     ) : "Loading Session"}
                 </span>
-                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
                 <span className="w-max block truncate">{exam?.class ?? "Select Class"}</span>
-                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
                 <span className="w-max block truncate">{exam?.subject ?? "Select Subject"}</span>
-                <ChevronRightIcon className="w-5 h-5 text-gray-500" />
+                <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
                 <span className="text-gray-600">Questions</span>
             </div>
             <button
@@ -45,7 +45,7 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
                     <span className="w-2 h-2 rounded-full bg-indigo-300" />
                 )}
                 {saved === true && (
-                    <CheckIcon className="w-5 h-5" />
+                    <CheckIcon className="w-5 h-5 fill-indigo-700" />
                 )}
                 Save
             </button>
@@ -54,10 +54,10 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
                 className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
             >
                 {uploading === true && (
-                    <LoadingIcon className="animate-spin w-5 h-5" />
+                    <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                 )}
                 {uploaded === true && (
-                    <CheckIcon className="w-5 h-5" />
+                    <CheckIcon className="w-5 h-5 fill-white" />
                 )}
                 Submit
             </button>

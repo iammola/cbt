@@ -19,13 +19,13 @@ const Home: NextPage = () => {
             </Head>
             <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
                 <Sidebar />
-                <main className="flex flex-col flex-grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+                <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
                     <Navbar />
-                    <section className="flex flex-col gap-7 items-start justify-start w-full py-7 px-6 flex-grow bg-gray-50 overflow-y-auto">
+                    <section className="flex flex-col gap-7 items-start justify-start w-full py-7 px-6 grow bg-gray-50 overflow-y-auto">
                         <h2 className="text-3xl sm:text-5xl font-bold text-gray-700">
                             Dashboard
                         </h2>
-                        <div className="grid grid-cols-1 xl:grid-cols-12 grid-row-2 xl:grid-rows-6 gap-5 flex-grow w-full rounded-lg">
+                        <div className="grid grid-cols-1 xl:grid-cols-12 grid-row-2 xl:grid-rows-6 gap-5 grow w-full rounded-lg">
                             <div className="flex flex-col items-start justify-center col-start-1 col-end-2 xl:col-end-10 row-start-1 row-end-2 xl:row-end-5 rounded-3xl shadow-md px-7 py-8 bg-white">
                                 {/* <h5 className="font-semibold text-gray-700 pl-1 pb-4">
                                     Exams to Register

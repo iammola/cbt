@@ -173,8 +173,8 @@ const CreateTeachers: NextPage = () => {
                             selected={selectedTitle}
                             handleChange={setSelectedTitle}
                             colorPallette={{
-                                activeCheckIconColor: "text-pink-600",
-                                inactiveCheckIconColor: "text-pink-800",
+                                activeCheckIconColor: "fill-pink-600",
+                                inactiveCheckIconColor: "fill-pink-800",
                                 activeOptionColor: "text-pink-900 bg-pink-100",
                                 buttonBorderColor: "focus-visible:border-pink-500",
                                 buttonOffsetFocusColor: "focus-visible:ring-offset-pink-500"
@@ -260,6 +260,7 @@ const CreateTeachers: NextPage = () => {
                                                         <input
                                                             id={_id.toString()}
                                                             type="checkbox"
+                                                            className="accent-pink-500"
                                                             checked={(selectedSubjects[classID] ?? []).includes(_id.toString())}
                                                             onChange={({ target: { checked } }) => {
                                                                 checked === true ? setSelectedSubjects({
@@ -292,18 +293,18 @@ const CreateTeachers: NextPage = () => {
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
                             "bg-pink-400 hover:bg-pink-500 focus:ring-pink-500": success === undefined,
-                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Profile
                     </button>
