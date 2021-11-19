@@ -252,6 +252,7 @@ const CreateTeachers: NextPage = () => {
                                                         <input
                                                             id={_id.toString()}
                                                             type="checkbox"
+                                                            className="accent-pink-400"
                                                             checked={(selectedSubjects[classID] ?? []).includes(_id.toString())}
                                                             onChange={({ target: { checked } }) => {
                                                                 checked === true ? setSelectedSubjects({

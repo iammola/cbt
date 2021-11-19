@@ -225,6 +225,7 @@ const CreateStudents: NextPage = () => {
                                     <input
                                         id={_id}
                                         type="checkbox"
+                                        className="accent-indigo-400"
                                         checked={selectedSubjects.includes(_id)}
                                         onChange={({ target: { checked } }) => checked === true ? setSelectedSubjects([...selectedSubjects, _id]) : setSelectedSubjects(selectedSubjects.filter(selected => selected !== _id))}
                                     />
