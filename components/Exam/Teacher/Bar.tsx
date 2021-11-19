@@ -54,7 +54,7 @@ const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, 
                 className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 rounded-md shadow-sm"
             >
                 {uploading === true && (
-                    <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
+                    <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                 )}
                 {uploaded === true && (
                     <CheckIcon className="w-5 h-5 fill-white" />

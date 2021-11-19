@@ -49,7 +49,7 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({ record, number, onC
                     onClick={insertQuestionAbove}
                     className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <SortAscendingIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
+                    <SortAscendingIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Above
                     </span>
@@ -58,7 +58,7 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({ record, number, onC
                     onClick={insertQuestionBelow}
                     className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <SortDescendingIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
+                    <SortDescendingIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Below
                     </span>
@@ -67,7 +67,7 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({ record, number, onC
                     onClick={deleteQuestion}
                     className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <TrashIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
+                    <TrashIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Delete Question
                     </span>

@@ -26,9 +26,9 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
                     )}
                     <Listbox.Button className={classNames("relative w-full mt-2 py-3.5 pl-3 pr-10 text-left sm:text-sm bg-white rounded-lg border shadow-sm cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-2", pallette.buttonOffsetFocusColor, pallette.buttonBorderColor)}>
                         <span className="block truncate">{selected.name}</span>
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-gray-400">
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <SelectorIcon
-                                className="w-5 h-5"
+                                className="w-5 h-5 stroke-gray-400"
                                 aria-hidden="true"
                             />
                         </span>

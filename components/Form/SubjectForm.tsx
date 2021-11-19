@@ -124,7 +124,7 @@ const SubjectForm: NextPage = () => {
                 })}
             >
                 {loading === true && (
-                    <LoadingIcon className="animate-spin w-5 h-5 fill-white" />
+                    <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                 )}
                 {success === true && (
                     <CheckIcon className="w-5 h-5 fill-white" />
