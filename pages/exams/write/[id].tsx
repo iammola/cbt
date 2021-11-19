@@ -32,7 +32,7 @@ const WriteExam: NextPage = () => {
                         />
                     </div>
                     <div className="grow h-full px-14 py-8">
-                        <div className="max-w-5xl h-full space-y-5">
+                        <div className="max-w-5xl h-full space-y-10">
                             {exam?.data.questions.map((question, questionIdx) => (
                                 <Question
                                     {...question}
