@@ -194,7 +194,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                         onClick={() => setExamState({ ...examState, details: false })}
                         className="fixed right-4 top-24 rounded-full p-2 bg-white cursor-pointer group"
                     >
-                        <CogIcon className="w-6 h-6 fill-indigo-700" />
+                        <CogIcon className="w-6 h-6 stroke-indigo-700" />
                         <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                             Change Settings
                         </span>
@@ -203,7 +203,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
                         onClick={() => scrollTo({ behavior: "smooth", top: 0 })}
                         className="fixed right-4 bottom-24 rounded-full p-2 bg-white cursor-pointer group"
                     >
-                        <ArrowSmUpIcon className="w-6 h-6 fill-indigo-700" />
+                        <ArrowSmUpIcon className="w-6 h-6 stroke-indigo-700" />
                         <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                             Scroll to Top
                         </span>
