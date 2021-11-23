@@ -73,8 +73,8 @@ const SubjectForm: NextPage = () => {
             <Select
                 label="Classes"
                 colorPallette={{
-                    activeCheckIconColor: "fill-blue-600",
-                    inactiveCheckIconColor: "fill-blue-800",
+                    activeCheckIconColor: "stroke-blue-600",
+                    inactiveCheckIconColor: "stroke-blue-800",
                     activeOptionColor: "text-blue-900 bg-blue-100",
                     buttonBorderColor: "focus-visible:border-blue-500",
                     buttonOffsetFocusColor: "focus-visible:ring-offset-blue-500"

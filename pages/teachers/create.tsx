@@ -173,8 +173,8 @@ const CreateTeachers: NextPage = () => {
                             selected={selectedTitle}
                             handleChange={setSelectedTitle}
                             colorPallette={{
-                                activeCheckIconColor: "fill-pink-600",
-                                inactiveCheckIconColor: "fill-pink-800",
+                                activeCheckIconColor: "stroke-pink-600",
+                                inactiveCheckIconColor: "stroke-pink-800",
                                 activeOptionColor: "text-pink-900 bg-pink-100",
                                 buttonBorderColor: "focus-visible:border-pink-500",
                                 buttonOffsetFocusColor: "focus-visible:ring-offset-pink-500"

@@ -102,8 +102,8 @@ const CreateEvent: NextPage = () => {
                     <Select
                         label="Classes"
                         colorPallette={{
-                            activeCheckIconColor: "fill-violet-600",
-                            inactiveCheckIconColor: "fill-violet-800",
+                            activeCheckIconColor: "stroke-violet-600",
+                            inactiveCheckIconColor: "stroke-violet-800",
                             activeOptionColor: "text-violet-900 bg-violet-100",
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
