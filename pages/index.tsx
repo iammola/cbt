@@ -214,7 +214,7 @@ const Input: FunctionComponent<InputProps> = ({ focus, value, focusNext, focusPr
 
     useEffect(() => {
         if (focus === true) ref.current?.focus();
-    });
+    }, [focus]);
 
     function validateCharacter(e: FormEvent<HTMLInputElement> & { data: string; }) {
         if (/\d/.test(e.data) === false) e.preventDefault();
