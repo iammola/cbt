@@ -70,8 +70,8 @@ const CreateEvent: NextPage = () => {
 
                 if (success === true) {
                     setDate(null);
-                    setSelectedClass({ _id: "", name: "Loading classes..." });
-                    setSelectedExam({ _id: "", name: "Select class first" });
+                    setSelectedClass({ _id: "", name: "Select class" });
+                    setSelectedExam({ _id: "", name: "Select exam" });
                 } else throw new Error(error);
             } catch (error: any) {
                 console.log({ error });
