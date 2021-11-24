@@ -6,18 +6,16 @@ import { EventModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
-async function createEvent({ date, event }: { date: Date; event: { name: string; subject: string } }): Promise<RouteResponse> {
+async function createEvent({ date, examId }: { date: Date; examId: string }): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        let data = await EventModel.findOneAndUpdate({ date }, {
-            $push: { events: event }
-        }, { runValidators: true }).select('date -_id').lean();
-
-        if (data === null) data = await EventModel.create({
-            date,
-            events: [event]
+        const data = EventModel.findOneAndUpdate({ from: date }, {
+            $push: { exams: examId }
+        }, {
+            returnDocument: 'after', upsert: true,
+            lean: true, fields: '_id', runValidators: true
         });
 
         [success, status, message] = [true, StatusCodes.OK, {
