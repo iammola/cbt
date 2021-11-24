@@ -126,13 +126,13 @@ const CreateTeachers: NextPage = () => {
             <section className="flex items-center justify-center bg-gradient-to-tr from-purple-400 to-pink-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white max-w-[75%]"
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white min-w-min max-w-[75%]"
                 >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
                         <span className="text-pink-500">Teacher Profile</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
+                    <div className="flex flex-col gap-2.5 w-full">
                         <label
                             htmlFor="fullName"
                             className="text-sm text-gray-600 font-semibold"
@@ -182,7 +182,7 @@ const CreateTeachers: NextPage = () => {
                         />
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="firstName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -198,7 +198,7 @@ const CreateTeachers: NextPage = () => {
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="lastName"
                                 className="text-sm text-gray-600 font-semibold"
