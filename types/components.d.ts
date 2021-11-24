@@ -1,11 +1,12 @@
 import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
-import type { CreateQuestion, AnswerRecord, ExamDetails } from ".";
+import type { CreateQuestion, AnswerRecord, ExamData, QuestionRecord } from ".";
 
 export type NotificationProps = {
     message: string;
     timeout: number;
     remove(): void;
+    out?: boolean;
     Icon(props: ComponentProps<'svg'>): JSX.Element;
 }
 
@@ -29,7 +30,7 @@ export type SelectProps = {
     handleChange(T: SelectProps['selected']): void;
 }
 
-export type QuestionProps = {
+export type TeacherQuestionProps = {
     number: number;
     record: CreateQuestion;
     deleteQuestion(): void;
@@ -38,11 +39,11 @@ export type QuestionProps = {
     onChange(question: Partial<CreateQuestion>): void;
 }
 
-export type AnswerProps = AnswerRecord & {
+export type TeacherAnswerProps = Omit<AnswerRecord, '_id'> & {
     id: string;
     number: number;
     deleteAnswer(): void;
-    handleChange(answer: Partial<AnswerRecord>): void;
+    handleChange(answer: Partial<Omit<AnswerRecord, '_id'>>): void;
 }
 
 export type BrandProps = {
@@ -62,10 +63,10 @@ export type ToggleProps = {
     toggleOpen(): void;
 }
 
-export type ExamModalProps = {
+export type TeacherExamModalProps = {
     open: boolean;
     isEdit: boolean;
-    onSubmit(v: ExamDetails): void;
+    onSubmit(v: Omit<ExamData['details'], 'instructions'>): void;
 }
 
 export type DivideProps = {
@@ -79,18 +80,32 @@ export type UserImageProps = ImageProps & {
     }
 }
 
-export type BarProps = {
+export type TeacherBarProps = {
     save(): void;
     saved: boolean;
     modified: boolean;
     uploaded: boolean;
     uploading: boolean;
-    exam?: ExamDetails;
+    exam?: ExamData['details']['name'];
 }
 
-export type FormProps = {
-    _id: string;
-    exam: ExamDetails;
-    instructions: string[];
-    questions: CreateQuestion<true>[];
+type StudentQuestionProps = QuestionRecord & {
+    chosen?: string;
+    onAnswer(AnswerID: QuestionRecord['_id']): void;
+}
+
+type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
+    selected: boolean;
+    handleSelect(id: AnswerRecord['_id']): void;
+}
+
+type StudentTimerProps = {
+    timeout?: number;
+}
+
+type StudentGridProps = {
+    questions: {
+        active?: boolean;
+        answered: boolean;
+    }[];
 }

@@ -8,15 +8,15 @@ import type { SelectProps } from "types";
 
 const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options, selected, className, handleChange }) => {
     const pallette = colorPallette ?? {
-        activeCheckIconColor: "text-yellow-600",
-        inactiveCheckIconColor: "text-yellow-800",
-        activeOptionColor: "text-yellow-900 bg-yellow-100",
+        activeCheckIconColor: "stroke-amber-600",
+        inactiveCheckIconColor: "stroke-amber-800",
+        activeOptionColor: "text-amber-900 bg-amber-100",
         buttonBorderColor: "focus-visible:border-indigo-500",
         buttonOffsetFocusColor: "focus-visible:ring-offset-yellow-500"
     }
 
     return (
-        <div className={classNames("flex flex-col min-w-80 w-full relative", className)}>
+        <div className={classNames("flex flex-col min-w-[20rem] w-full relative", className)}>
             <Listbox value={selected} onChange={handleChange}>
                 <div className="relative">
                     {label !== undefined && (
@@ -26,9 +26,9 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
                     )}
                     <Listbox.Button className={classNames("relative w-full mt-2 py-3.5 pl-3 pr-10 text-left sm:text-sm bg-white rounded-lg border shadow-sm cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-2", pallette.buttonOffsetFocusColor, pallette.buttonBorderColor)}>
                         <span className="block truncate">{selected.name}</span>
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-gray-400">
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <SelectorIcon
-                                className="w-5 h-5"
+                                className="w-5 h-5 stroke-gray-400"
                                 aria-hidden="true"
                             />
                         </span>
@@ -62,12 +62,15 @@ const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options,
                                                 </span>
                                                 {selected === true && (
                                                     <span
-                                                        className={classNames("absolute inset-y-0 left-0 flex items-center pl-3", {
-                                                            [pallette.activeCheckIconColor]: active,
-                                                            [pallette.inactiveCheckIconColor]: !active
-                                                        })}
+                                                        className="absolute inset-y-0 left-0 flex items-center pl-3"
                                                     >
-                                                        <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                                                        <CheckIcon
+                                                            aria-hidden="true"
+                                                            className={classNames("w-5 h-5", {
+                                                                [pallette.activeCheckIconColor]: active,
+                                                                [pallette.inactiveCheckIconColor]: !active
+                                                            })}
+                                                        />
                                                     </span>
                                                 )}
                                             </>

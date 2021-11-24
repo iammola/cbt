@@ -15,7 +15,7 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
                 "p-3 justify-center": open === false
             })}
         >
-            <div className="relative w-9 h-9 flex-shrink-0">
+            <div className="relative w-9 h-9 shrink-0">
                 <Image
                     layout="fill"
                     src={BrandIcon}

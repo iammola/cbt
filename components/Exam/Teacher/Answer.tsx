@@ -1,11 +1,11 @@
 import { FunctionComponent } from "react";
-import { XIcon } from "@heroicons/react/outline";
+import { XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
-import type { AnswerProps } from "types";
+import type { TeacherAnswerProps } from "types";
 
-const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
+const Answer: FunctionComponent<TeacherAnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
     return (
         <>
             <input
@@ -17,9 +17,9 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect,
             />
             <label
                 htmlFor={id}
-                className={classNames("w-3 h-3 rounded-full text-xs flex-shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
+                className={classNames("w-3 h-3 rounded-full text-xs shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer", {
                     "bg-gray-400": isCorrect,
-                    "bg-white": isCorrect === false
+                    "bg-white": !isCorrect
                 })}
             />
             <input
@@ -32,9 +32,9 @@ const Answer: FunctionComponent<AnswerProps> = ({ id, number, answer, isCorrect,
             />
             <span
                 onClick={deleteAnswer}
-                className="group relative p-2 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-200"
+                className="group relative p-2 rounded-full cursor-pointer hover:bg-gray-200"
             >
-                <XIcon className="w-5 h-5" />
+                <XIcon className="w-5 h-5 fill-gray-700 hover:fill-gray-600" />
                 <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                     Delete Option
                 </span>

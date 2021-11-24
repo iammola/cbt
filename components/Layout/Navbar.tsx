@@ -18,12 +18,12 @@ const Navbar: FunctionComponent = () => {
 
     return (
         <header className="flex gap-4 items-center justify-between bg-white shadow-sm h-[6rem] w-full px-6 relative">
-            <div className="flex gap-5 flex-grow items-center justify-end pl-10 h-full relative">
-                <div className="p-3 rounded-full text-gray-600 hover:text-gray-800 hover:bg-gray-50 cursor-pointer">
-                    <CommentTextIcon className="w-5 h-5" />
+            <div className="flex gap-5 grow items-center justify-end pl-10 h-full relative">
+                <div className="p-3 rounded-full hover:bg-gray-50 cursor-pointer">
+                    <CommentTextIcon className="w-5 h-5 fill-gray-600 hover:fill-gray-800" />
                 </div>
-                <div className="p-3 rounded-full text-gray-600 hover:text-gray-800 hover:bg-gray-50 cursor-pointer">
-                    <BellIcon className="w-5 h-5" />
+                <div className="p-3 rounded-full hover:bg-gray-50 cursor-pointer">
+                    <BellIcon className="w-5 h-5 fill-gray-600 hover:fill-gray-800" />
                 </div>
                 <div
                     onClick={() => setShow(!show)}
@@ -37,7 +37,7 @@ const Navbar: FunctionComponent = () => {
                         className="rounded-full"
                         initials={{
                             text: account?.name.initials ?? '',
-                            className: "rounded-full bg-yellow-300"
+                            className: "rounded-full bg-amber-300"
                         }}
                     />
                 </div>
@@ -66,22 +66,22 @@ const Navbar: FunctionComponent = () => {
                             <Badges.Soon />
                         </li>
                         <Divide className="w-full p-2" />
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
-                            <UsersIcon className="w-5 h-5" />
+                        <li className="flex gap-3 items-center justify-start text-xs font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                            <UsersIcon className="w-5 h-5 text-gray-500" />
                             <span className="w-max inline-block">
                                 View students
                             </span>
                             <Badges.Soon />
                         </li>
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
-                            <BellIcon className="w-5 h-5" />
+                        <li className="flex gap-3 items-center justify-start text-xs font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                            <BellIcon className="w-5 h-5 text-gray-500" />
                             <span className="w-max inline-block">
                                 Notifications
                             </span>
                             <Badges.Soon />
                         </li>
-                        <li className="flex gap-3 items-center justify-start text-xs text-gray-500 font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
-                            <CommentTextIcon className="w-5 h-5" />
+                        <li className="flex gap-3 items-center justify-start text-xs font-medium p-3 w-full rounded-md cursor-pointer hover:bg-gray-50">
+                            <CommentTextIcon className="w-5 h-5 text-gray-500" />
                             <span className="w-max inline-block">
                                 Messages
                             </span>

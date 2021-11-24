@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'react';
 import { SortAscendingIcon, SortDescendingIcon, TrashIcon } from '@heroicons/react/outline';
 
-import { Answer } from 'components/Exam';
+import { Answer } from '.';
 
-import type { QuestionProps } from 'types';
+import type { TeacherQuestionProps } from 'types';
 
-const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, deleteQuestion, insertQuestionBelow, insertQuestionAbove }) => {
+const Question: FunctionComponent<TeacherQuestionProps> = ({ record, number, onChange, deleteQuestion, insertQuestionBelow, insertQuestionAbove }) => {
     return (
         <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
             <input
@@ -47,27 +47,27 @@ const Question: FunctionComponent<QuestionProps> = ({ record, number, onChange, 
             <div className="flex items-center justify-end gap-3 w-full border-t pl-4 py-1">
                 <span
                     onClick={insertQuestionAbove}
-                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                    className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <SortAscendingIcon className="w-5 h-5" />
+                    <SortAscendingIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Above
                     </span>
                 </span>
                 <span
                     onClick={insertQuestionBelow}
-                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                    className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <SortDescendingIcon className="w-5 h-5" />
+                    <SortDescendingIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Insert Question Below
                     </span>
                 </span>
                 <span
                     onClick={deleteQuestion}
-                    className="group relative p-2.5 rounded-full cursor-pointer text-gray-700 hover:text-gray-600 hover:bg-gray-100"
+                    className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
                 >
-                    <TrashIcon className="w-5 h-5" />
+                    <TrashIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
                     <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
                         Delete Question
                     </span>

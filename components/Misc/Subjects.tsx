@@ -29,10 +29,10 @@ const Subjects: Subjects = ({ items }) => {
 }
 
 Subjects.Item = function Item({ name, subjects }) {
-    const colors = ["bg-blue-400", "bg-red-400", "bg-purple-400", "bg-pink-400", "bg-indigo-400", "bg-green-400"];
+    const colors = ["bg-blue-400", "bg-red-400", "bg-violet-400", "bg-pink-400", "bg-indigo-400", "bg-emerald-400"];
 
     return (
-        <div className="flex flex-col gap-3 items-start justify-start flex-grow max-w-full xl:w-full pt-2">
+        <div className="flex flex-col gap-3 items-start justify-start grow max-w-full xl:w-full pt-2">
             <span className="font-medium text-sm">
                 {name}
             </span>
@@ -45,7 +45,7 @@ Subjects.Item = function Item({ name, subjects }) {
                         <span className="text-xs text-gray-500 font-medium">
                             {++i}.
                         </span>
-                        <div className={classNames("flex flex-shrink-0 items-center justify-center rounded-full shadow-md w-9 h-9 text-xs text-white font-medium uppercase", colors[Math.floor(Math.random() * colors.length)])}>
+                        <div className={classNames("flex shrink-0 items-center justify-center rounded-full shadow-md w-9 h-9 text-xs text-white font-medium uppercase", colors[Math.floor(Math.random() * colors.length)])}>
                             {name.split(' ', 2).map(word => word[0])}
                         </div>
                         <div className="block truncate font-medium text-xs tracking-wider text-gray-700">

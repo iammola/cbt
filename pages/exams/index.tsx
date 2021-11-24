@@ -8,6 +8,7 @@ import { formatRelative } from "date-fns";
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
+import type { DateRecord } from "types";
 
 const Exams: NextPage = () => {
     const [{ account }] = useCookies(['account']);
@@ -21,9 +22,9 @@ const Exams: NextPage = () => {
             </Head>
             <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
                 <Sidebar />
-                <main className="flex flex-col flex-grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+                <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
                     <Navbar />
-                    <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 flex-grow bg-gray-50/80 overflow-y-auto">
+                    <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
                         <table className="rounded-lg shadow-md overflow-hidden min-w-full">
                             <thead className="bg-gray-200 text-gray-700">
                                 <tr>
@@ -104,7 +105,7 @@ const Exams: NextPage = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center gap-4">
-                                                <div className="flex-shrink-0 h-10 w-10 relative">
+                                                <div className="shrink-0 h-10 w-10 relative">
                                                     <UserImage
                                                         src=""
                                                         layout="fill"
@@ -123,7 +124,7 @@ const Exams: NextPage = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
-                                            <Link href={`/edit/exams/${exam._id}`}>
+                                            <Link href={`/exams/edit/${exam._id}`}>
                                                 <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
                                                     Edit
                                                 </a>
@@ -171,10 +172,7 @@ type ExamRow = {
     class: string;
     questions: number;
     subject: string;
-    created: {
-        at: Date;
-        by: any
-    };
+    created: DateRecord<true>;
     duration: number;
 };
 

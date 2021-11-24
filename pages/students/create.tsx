@@ -106,16 +106,16 @@ const CreateStudents: NextPage = () => {
             <section className="flex items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white max-w-2xl"
                 >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
                         <span className="text-indigo-500">Student Profile</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 w-full">
                         <label
                             htmlFor="fullName"
-                            className="text-sm text-gray-600 font-semibold"
+                            className="text-sm text-gray-600 min-w-[20rem] font-semibold"
                         >
                             Full Name
                         </label>
@@ -129,7 +129,7 @@ const CreateStudents: NextPage = () => {
                         />
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="initials"
                                 className="text-sm text-gray-600 font-semibold"
@@ -147,7 +147,7 @@ const CreateStudents: NextPage = () => {
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="email"
                                 className="text-sm text-gray-600 font-semibold"
@@ -165,7 +165,7 @@ const CreateStudents: NextPage = () => {
                         </div>
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="firstName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -181,7 +181,7 @@ const CreateStudents: NextPage = () => {
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="lastName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -201,8 +201,8 @@ const CreateStudents: NextPage = () => {
                     <Select
                         label="Class"
                         colorPallette={{
-                            activeCheckIconColor: "text-indigo-600",
-                            inactiveCheckIconColor: "text-indigo-800",
+                            activeCheckIconColor: "stroke-indigo-600",
+                            inactiveCheckIconColor: "stroke-indigo-800",
                             activeOptionColor: "text-indigo-900 bg-indigo-100",
                             buttonBorderColor: "focus-visible:border-indigo-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
@@ -211,11 +211,11 @@ const CreateStudents: NextPage = () => {
                         selected={selectedClass}
                         handleChange={setSelectedClass}
                     />
-                    <div className="flex flex-col gap-2 5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2 5 min-w-[20rem] w-full">
                         <span className="text-sm text-gray-600 font-semibold">
                             Subjects
                         </span>
-                        <div className="flex gap-x-4 gap-y-3 w-full text-sm">
+                        <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm">
                             {subjects.map(({ _id, name }) => (
                                 <label
                                     key={_id}
@@ -225,6 +225,7 @@ const CreateStudents: NextPage = () => {
                                     <input
                                         id={_id}
                                         type="checkbox"
+                                        className="accent-indigo-500"
                                         checked={selectedSubjects.includes(_id)}
                                         onChange={({ target: { checked } }) => checked === true ? setSelectedSubjects([...selectedSubjects, _id]) : setSelectedSubjects(selectedSubjects.filter(selected => selected !== _id))}
                                     />
@@ -246,18 +247,18 @@ const CreateStudents: NextPage = () => {
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
                             "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
-                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Profile
                     </button>

@@ -13,7 +13,7 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }).select('terms');
+        const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms').lean();
 
         const { code, ...data } = await StudentModel.create({
             ...student,
@@ -22,7 +22,7 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
                 session: currentSession._id,
                 terms: [{
                     ...academic,
-                    term: (currentSession.terms[0] as any)._id
+                    term: currentSession.terms[0]._id
                 }]
             }]
         });

@@ -2,25 +2,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, SubjectsModel } from "db/models";
+import { SubjectsModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { RouteResponse, SubjectsRecord } from "types";
 
 async function getExtendedTeacherSubjects(id: any): Promise<RouteResponse> {
     await connect();
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const subjects = await SubjectsModel.find({ "subjects.teachers": id }, "-_id").lean();
-        const classes = await ClassModel.find({ _id: subjects.map(item => item.class) }, 'name').lean();
-
-        const data = classes.map(({ name, ...classItem }) => ({
-            name,
-            subjects: subjects.find(item => (classItem as any)._id.equals(item.class))?.subjects.filter(({ teachers }) => teachers.find(teacher => teacher.toString() === id)).map(({ teachers, ...item }) => item) ?? [],
-        }));
+        const subjects: SubjectsRecord<true>[] = await SubjectsModel.find({ "subjects.teachers": id }, "-_id").populate('class', 'name').lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data,
+            data: subjects.map(cur => ({
+                name: cur.class.name,
+                subjects: cur.subjects.filter(({ teachers }) => teachers.find(teacher => teacher.equals(id))).map(({ teachers, ...item }) => item)
+            })),
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {

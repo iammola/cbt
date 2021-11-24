@@ -1,29 +1,29 @@
-import type { Schema } from "mongoose";
+import type { ObjectId } from "bson";
 
-type RecordId<P = false, I = false> = (P extends true ? { _id: I extends true ? Schema.Types.ObjectId : string } : {});
+type RecordId = { _id: ObjectId };
 
 /* Class and Subject */
 
-export type ClassRecord<P = false, I = false> = RecordId<P, I> & {
+export type ClassRecord = RecordId & {
     name: string;
     alias: string;
 };
 
-export type SubjectRecord<P = false, I = false> = RecordId<P, I> & {
+export type SubjectRecord = RecordId & {
     name: string;
     alias: string;
-    teachers: Schema.Types.ObjectId[];
+    teachers: ObjectId[];
 }
 
-export type SubjectsRecord<P = false, I = false> = RecordId<P, I> & {
-    class: Schema.Types.ObjectId;
-    subjects: SubjectRecord<P, I>[];
+export type SubjectsRecord<P = false> = RecordId & {
+    class: P extends true ? ClassRecord : ObjectId;
+    subjects: SubjectRecord[];
 }
 
 
 /* Student and Teacher */
 
-type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
+type UserRecord<T = never> = RecordId & {
     name: {
         title: T;
         initials: string;
@@ -36,76 +36,69 @@ type UserRecord<P = false, I = false, T = never> = RecordId<P, I> & {
     code: string;
 }
 
-export type TeacherRecord<P = false, I = false> = UserRecord<P, I, "Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
+export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
 
-export type StudentRecord<P = false, I = false> = UserRecord<P, I> & {
+export type StudentRecord = UserRecord & {
     academic: {
-        session: Schema.Types.ObjectId;
+        session: ObjectId;
         terms: {
-            term: Schema.Types.ObjectId;
-            class: Schema.Types.ObjectId;
-            subjects: Schema.Types.ObjectId[];
+            term: ObjectId;
+            class: ObjectId;
+            subjects: ObjectId[];
         }[];
     }[];
 };
 
 
-/* Event and Exam and Answer and Question */
+/* Event and Exam and Answer */
 
-export type EventRecord<P = false, I = false> = RecordId<P, I> & {
-    date: Date;
-    events: {
-        name: string;
-        subject: Schema.Types.ObjectId;
-    }[];
+export type EventRecord = RecordId & {
+    from: Date;
+    exams: ObjectId[];
 };
 
-export type ExamRecord<P = false, I = false> = RecordId<P, I> & {
+type DateRecord<P = false> = {
+    at: Date;
+    by: P extends true ? TeacherRecord : ObjectId;
+}
+
+export type ExamRecord<P = false> = RecordId & {
     duration: number;
-    SubjectID: P extends true ? SubjectRecord<P, I> : Schema.Types.ObjectId;
+    subjectId: P extends true ? SubjectRecord : ObjectId;
     instructions: string[];
-    created: {
-        at: Date;
-        by: P extends true ? TeacherRecord<P, I> : Schema.Types.ObjectId;
-    };
+    questions: QuestionRecord[];
+    created: DateRecord<P>;
+    edited: DateRecord<P>[];
 };
 
-export type AnswerRecord<P = false, I = false> = RecordId<P, I> & {
+export type AnswerRecord = RecordId & {
     answer: string
     isCorrect?: boolean;
 };
 
-export type AnswersRecord<P = false, I = false> = RecordId<P, I> & {
-    question: Schema.Types.ObjectId;
-    answers: AnswerRecord<P, I>[];
-};
-
-export type QuestionRecord<P = false, I = false> = RecordId<P, I> & {
+export type QuestionRecord = RecordId & {
     question: string;
 } & ({
     type: "Multiple choice" | "Short Answer" | "Long Answer";
+    answers: AnswerRecord[];
 } | {
+    answers: never;
     type: "Checkboxes";
     maxLength?: number;
     minLength?: number;
 });
 
-export type QuestionsRecord<P = false, I = false> = RecordId<P, I> & {
-    exam: Schema.Types.ObjectId;
-    questions: QuestionRecord<P, I>[];
-};
-
 
 /* Session and Term */
 
-export type SessionRecord<P = false, I = false> = RecordId<P, I> & {
+export type SessionRecord = RecordId & {
     name: string;
     alias: string;
     current?: boolean;
-    terms: TermRecord<P, I>[];
+    terms: TermRecord[];
 };
 
-export type TermRecord<P = false, I = false> = RecordId<P, I> & {
+export type TermRecord = RecordId & {
     name: string;
     alias: string;
     current?: boolean;

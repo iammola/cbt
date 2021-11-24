@@ -1,7 +1,7 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 
-import { Form } from "components/Exam";
+import { Form } from "components/Exam/Teacher";
 
 const CreateExams: NextPage = () => {
     return (

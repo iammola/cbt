@@ -1,16 +1,19 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
+import { BriefcaseIcon } from "@heroicons/react/solid";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
+import { useNotifications } from "components/Misc/Notification";
 
 import type { ClassRecord, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
+    const [addNotification, , Notifications] = useNotifications();
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -41,7 +44,7 @@ const CreateTeachers: NextPage = () => {
     const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedSubjects, setSelectedSubjects] = useState<{ [key: string]: string[] }>({});
-    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord<true>[]; }[] | string>('');
+    const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord[]; }[] | string>('');
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
@@ -57,14 +60,11 @@ const CreateTeachers: NextPage = () => {
     useEffect(() => {
         async function fetchSubjects() {
             try {
-                const data = await Promise.all((classes?.data as Pick<ClassRecord<true>, '_id' | 'name'>[]).map(async ({ _id, name }) => {
+                const data = await Promise.all((classes?.data as Pick<ClassRecord, '_id' | 'name'>[]).map(async ({ _id, name }) => {
                     const res = await fetch(`/api/classes/${_id}/subjects`);
-                    const { data } = await res.json();
+                    const { data: { subjects } } = await res.json();
 
-                    return {
-                        _id, name,
-                        subjects: data.subjects as SubjectRecord<true>[]
-                    };
+                    return { _id: _id.toString(), name, subjects };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
             } catch (error: any) {
@@ -88,11 +88,16 @@ const CreateTeachers: NextPage = () => {
                     subjects: selectedSubjects
                 })
             });
-            const { success, error } = await res.json();
+            const { success, data, error } = await res.json();
 
             setSuccess(success);
 
             if (success === true) {
+                addNotification({
+                    timeout: 75e2,
+                    message: `Success... ${firstName}'s code is ${data.code}`,
+                    Icon: () => BriefcaseIcon({ className: "w-5 h-5 text-indigo-600" })
+                });
                 setEmail('');
                 setFullName('');
                 setLastName('');
@@ -127,7 +132,7 @@ const CreateTeachers: NextPage = () => {
                         <span>Create a</span>{' '}
                         <span className="text-pink-500">Teacher Profile</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="fullName"
                             className="text-sm text-gray-600 font-semibold"
@@ -168,8 +173,8 @@ const CreateTeachers: NextPage = () => {
                             selected={selectedTitle}
                             handleChange={setSelectedTitle}
                             colorPallette={{
-                                activeCheckIconColor: "text-pink-600",
-                                inactiveCheckIconColor: "text-pink-800",
+                                activeCheckIconColor: "stroke-pink-600",
+                                inactiveCheckIconColor: "stroke-pink-800",
                                 activeOptionColor: "text-pink-900 bg-pink-100",
                                 buttonBorderColor: "focus-visible:border-pink-500",
                                 buttonOffsetFocusColor: "focus-visible:ring-offset-pink-500"
@@ -210,7 +215,7 @@ const CreateTeachers: NextPage = () => {
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <label
                             htmlFor="email"
                             className="text-sm text-gray-600 font-semibold"
@@ -226,7 +231,7 @@ const CreateTeachers: NextPage = () => {
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
-                    <div className="flex flex-col gap-2.5 min-w-80 w-full">
+                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
                         <span className="text-sm text-gray-600 font-semibold">
                             Subjects
                         </span>
@@ -248,21 +253,22 @@ const CreateTeachers: NextPage = () => {
                                             <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm text-gray-700">
                                                 {subjects.map(({ _id, name }) => (
                                                     <label
-                                                        key={_id}
-                                                        htmlFor={_id}
+                                                        key={_id.toString()}
+                                                        htmlFor={_id.toString()}
                                                         className="flex gap-3 p-2"
                                                     >
                                                         <input
-                                                            id={_id}
+                                                            id={_id.toString()}
                                                             type="checkbox"
-                                                            checked={(selectedSubjects[classID] ?? []).includes(_id)}
+                                                            className="accent-pink-500"
+                                                            checked={(selectedSubjects[classID] ?? []).includes(_id.toString())}
                                                             onChange={({ target: { checked } }) => {
                                                                 checked === true ? setSelectedSubjects({
                                                                     ...selectedSubjects,
-                                                                    [classID]: [...(selectedSubjects[classID] ?? []), _id]
+                                                                    [classID]: [...(selectedSubjects[classID] ?? []), _id.toString()]
                                                                 }) : setSelectedSubjects(Object.fromEntries(
                                                                     Object.entries(selectedSubjects).map(
-                                                                        ([key, selected]) => [key, key === classID ? selected.filter(i => i !== _id) : selected]
+                                                                        ([key, selected]) => [key, key === classID ? selected.filter(i => i !== _id.toString()) : selected]
                                                                     ).filter(
                                                                         ([, selected]) => selected.length > 0
                                                                     )
@@ -287,23 +293,24 @@ const CreateTeachers: NextPage = () => {
                         type="submit"
                         className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
                             "bg-pink-400 hover:bg-pink-500 focus:ring-pink-500": success === undefined,
-                            "bg-green-400 hover:bg-green-500 focus:ring-green-500": success === true,
+                            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success === true,
                             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
                         })}
                     >
                         {loading === true && (
-                            <LoadingIcon className="animate-spin w-5 h-5" />
+                            <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                         )}
                         {success === true && (
-                            <CheckIcon className="w-5 h-5" />
+                            <CheckIcon className="w-5 h-5 fill-white" />
                         )}
                         {success === false && (
-                            <XIcon className="w-5 h-5" />
+                            <XIcon className="w-5 h-5 fill-white" />
                         )}
                         Create Profile
                     </button>
                 </form>
             </section>
+            {Notifications}
         </>
     );
 }

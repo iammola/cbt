@@ -3,11 +3,11 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
 
-import { Form, Loader } from "components/Exam";
+import { Form, Loader } from "components/Exam/Teacher";
 
 const CreateExam: NextPage = () => {
     const router = useRouter();
-    const { data: exam } = useSWRImmutable(router.query.id !== undefined ? `/api/exams/${router.query.id}/edit/` : null, url => url !== null && fetch(url).then(res => res.json()));
+    const { data: exam } = useSWRImmutable(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => url !== null && fetch(url).then(res => res.json()));
 
     return (
         <>

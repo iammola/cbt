@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SubjectsModel } from "db/models";
+import { ClassModel, SubjectsModel } from "db/models";
 
 import type { RouteResponse, SubjectRecord } from "types";
 
@@ -33,7 +33,7 @@ async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<R
     try {
         const data = await SubjectsModel.findOneAndUpdate({ class: id }, {
             $push: { subjects: { name, alias } }
-        }, { runValidators: true }).lean();
+        }, { runValidators: true, returnDocument: "after", upsert: await ClassModel.exists({ _id: id }) }).lean();
 
         if (data === null) throw new Error('Class does not exist');
 
