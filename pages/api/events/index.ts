@@ -20,9 +20,15 @@ async function createEvent({ date, event }: { date: Date; event: { name: string;
             events: [event]
         });
 
-        [success, status, message] = [true, 201, { data, message: "Created" }];
+        [success, status, message] = [true, StatusCodes.OK, {
+            data,
+            message: ReasonPhrases.OK
+        }];
     } catch (error: any) {
-
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error: error.message,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
     }
 
     return [success, status, message];
