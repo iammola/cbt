@@ -12,8 +12,8 @@ async function createEvent({ date, examId }: { date: Date; examId: string }): Pr
 
     try {
         if (await ExamModel.exists({ _id: examId }) === false) throw new Error('Invalid Exam ID');
-        const data = EventModel.findOneAndUpdate({ from: date }, {
             $push: { exams: examId }
+        const data = await EventModel.findOneAndUpdate({ from: date }, {
         }, {
             returnDocument: 'after', upsert: true,
             lean: true, fields: '_id', runValidators: true
