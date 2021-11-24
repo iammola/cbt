@@ -53,11 +53,8 @@ export type StudentRecord = UserRecord & {
 /* Event and Exam and Answer */
 
 export type EventRecord = RecordId & {
-    date: Date;
-    events: {
-        name: string;
-        subject: ObjectId;
-    }[];
+    from: Date;
+    exams: ObjectId[];
 };
 
 type DateRecord<P = false> = {

@@ -8,8 +8,8 @@ import type { SelectProps } from "types";
 
 const Select: FunctionComponent<SelectProps> = ({ label, colorPallette, options, selected, className, handleChange }) => {
     const pallette = colorPallette ?? {
-        activeCheckIconColor: "fill-amber-600",
-        inactiveCheckIconColor: "fill-amber-800",
+        activeCheckIconColor: "stroke-amber-600",
+        inactiveCheckIconColor: "stroke-amber-800",
         activeOptionColor: "text-amber-900 bg-amber-100",
         buttonBorderColor: "focus-visible:border-indigo-500",
         buttonOffsetFocusColor: "focus-visible:ring-offset-yellow-500"
