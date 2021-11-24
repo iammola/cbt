@@ -126,13 +126,13 @@ const CreateTeachers: NextPage = () => {
             <section className="flex items-center justify-center bg-gradient-to-tr from-purple-400 to-pink-500 p-10 w-screen min-h-screen">
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white max-w-[75%]"
+                    className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white min-w-min max-w-[75%]"
                 >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
                         <span className="text-pink-500">Teacher Profile</span>
                     </h1>
-                    <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
+                    <div className="flex flex-col gap-2.5 w-full">
                         <label
                             htmlFor="fullName"
                             className="text-sm text-gray-600 font-semibold"
@@ -182,7 +182,7 @@ const CreateTeachers: NextPage = () => {
                         />
                     </div>
                     <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="firstName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -198,7 +198,7 @@ const CreateTeachers: NextPage = () => {
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
-                        <div className="flex flex-col gap-2.5">
+                        <div className="flex flex-col gap-2.5 w-full">
                             <label
                                 htmlFor="lastName"
                                 className="text-sm text-gray-600 font-semibold"
@@ -247,8 +247,29 @@ const CreateTeachers: NextPage = () => {
                                             key={classID}
                                             className="flex flex-col gap-2"
                                         >
-                                            <span className="text-xs w-full font-medium text-gray-600">
+                                            <span className="flex items-center justify-start gap-3 text-xs w-full font-medium text-gray-600">
                                                 {name}
+                                                <label
+                                                    htmlFor={`selectAll${name}`}
+                                                    className="flex gap-2 items-center justify-start text-gray-500"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`selectAll${name}`}
+                                                        className="accent-pink-500"
+                                                        ref={e => {
+                                                            if (e !== null) {
+                                                                e.checked = selectedSubjects[classID]?.length === subjects.length;
+                                                                e.indeterminate = selectedSubjects[classID]?.length > 0 && selectedSubjects[classID]?.length < subjects.length;
+                                                            }
+                                                        }}
+                                                        onChange={e => setSelectedSubjects(e.target.checked === true ? {
+                                                            ...selectedSubjects,
+                                                            [classID]: subjects.map(({ _id }) => _id.toString())
+                                                        } : Object.fromEntries(Object.entries(selectedSubjects).filter(([key]) => key !== classID)))}
+                                                    />
+                                                    Select All
+                                                </label>
                                             </span>
                                             <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm text-gray-700">
                                                 {subjects.map(({ _id, name }) => (
