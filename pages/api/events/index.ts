@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { EventModel } from "db/models";
+import { EventModel, ExamModel } from "db/models";
 
 import type { RouteResponse } from "types";
 
@@ -11,6 +11,7 @@ async function createEvent({ date, examId }: { date: Date; examId: string }): Pr
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
+        if (await ExamModel.exists({ _id: examId }) === false) throw new Error('Invalid Exam ID');
         const data = EventModel.findOneAndUpdate({ from: date }, {
             $push: { exams: examId }
         }, {
