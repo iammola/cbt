@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { format, startOfTomorrow } from "date-fns";
+import { addHours, format } from "date-fns";
 import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
@@ -123,7 +123,6 @@ const CreateEvent: NextPage = () => {
                         selected={selectedExam}
                         handleChange={setSelectedExam}
                     />
-                                min={format(startOfTomorrow(), 'yyyy-MM-dd')}
                     <div className="flex flex-col gap-2.5 w-full">
                         <label
                             htmlFor="date"
@@ -136,6 +135,7 @@ const CreateEvent: NextPage = () => {
                             id="date"
                             type="datetime-local"
                             onChange={e => setDate(new Date(e.target.value))}
+                            min={format(addHours(new Date(), 1), "yyyy-MM-dd'T'HH:mm")}
                             value={date === null ? '' : format(date, "yyyy-MM-dd'T'HH:mm")}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-violet-400 focus:outline-none p-3 pl-5"
                         />
