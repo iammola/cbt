@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { format, startOfTomorrow } from "date-fns";
+import { addHours, format } from "date-fns";
 import { FormEvent, useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
@@ -12,12 +12,11 @@ import { LoadingIcon } from "components/Misc/Icons";
 import type { SelectOption } from "types";
 
 const CreateEvent: NextPage = () => {
-    const [name, setName] = useState('');
     const [date, setDate] = useState<Date | null>(null);
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
-    const [selectedSubject, setSelectedSubject] = useState({ _id: "", name: "Select class first" });
+    const [selectedExam, setSelectedExam] = useState({ _id: "", name: "Select exam" });
 
-    const [subjects, setSubjects] = useState<SelectOption[]>();
+    const [exams, setExams] = useState<SelectOption[]>();
     const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [loading, setLoading] = useState(false);
@@ -33,35 +32,35 @@ const CreateEvent: NextPage = () => {
     useEffect(() => {
         const { _id } = selectedClass;
 
-        async function fetchSubjects() {
-            setSelectedSubject({ _id: "", name: "Loading subjects..." });
+        async function getExams() {
+            setSelectedExam({ _id: "", name: "Loading exams..." });
             try {
-                const res = await fetch(`/api/classes/${_id}/subjects`);
+                const res = await fetch(`/api/classes/${_id}/exams`);
                 const { success, data, error } = await res.json();
 
                 if (success === true) {
-                    setSubjects(data.subjects);
-                    setSelectedSubject({ _id: "", name: "Select subject" });
+                    setExams(data.exams);
+                    setSelectedExam({ _id: "", name: "Select exam" });
                 } else throw new Error(error);
             } catch (error: any) {
                 console.log({ error });
             }
         }
 
-        if (_id !== "") fetchSubjects();
+        if (_id !== "") getExams();
     }, [selectedClass]);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setLoading(true);
 
-        if (selectedClass._id !== "" && selectedSubject._id !== "") {
+        if (selectedClass._id !== "" && selectedExam._id !== "") {
             try {
                 const res = await fetch('/api/events/', {
                     method: "POST",
                     body: JSON.stringify({
                         date,
-                        event: { name, subject: selectedSubject._id }
+                        examId: selectedExam._id
                     })
                 });
 
@@ -70,10 +69,9 @@ const CreateEvent: NextPage = () => {
                 setSuccess(success);
 
                 if (success === true) {
-                    setName('');
                     setDate(null);
-                    setSelectedClass({ _id: "", name: "Loading classes..." });
-                    setSelectedSubject({ _id: "", name: "Select class first" });
+                    setSelectedClass({ _id: "", name: "Select class" });
+                    setSelectedExam({ _id: "", name: "Select exam" });
                 } else throw new Error(error);
             } catch (error: any) {
                 console.log({ error });
@@ -113,7 +111,7 @@ const CreateEvent: NextPage = () => {
                         handleChange={setSelectedClass}
                     />
                     <Select
-                        label="Subjects"
+                        label="Exams"
                         colorPallette={{
                             activeCheckIconColor: "stroke-violet-600",
                             inactiveCheckIconColor: "stroke-violet-800",
@@ -121,44 +119,26 @@ const CreateEvent: NextPage = () => {
                             buttonBorderColor: "focus-visible:border-purple-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500"
                         }}
-                        options={subjects}
-                        selected={selectedSubject}
-                        handleChange={setSelectedSubject}
+                        options={exams}
+                        selected={selectedExam}
+                        handleChange={setSelectedExam}
                     />
-                    <div className="flex items-center justify-between gap-4 w-full">
-                        <div className="flex flex-col gap-2.5">
-                            <label
-                                htmlFor="name"
-                                className="text-sm text-gray-600 font-semibold"
-                            >
-                                Event Name
-                            </label>
-                            <input
-                                required
-                                id="name"
-                                type="text"
-                                value={name}
-                                onChange={({ target: { value } }) => setName(value)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-violet-400 focus:outline-none p-3 pl-5"
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2.5">
-                            <label
-                                htmlFor="date"
-                                className="text-sm text-gray-600 font-semibold"
-                            >
-                                Event Date
-                            </label>
-                            <input
-                                required
-                                id="date"
-                                type="date"
-                                min={format(startOfTomorrow(), 'yyyy-MM-dd')}
-                                value={date === null ? '' : format(date, 'yyyy-MM-dd')}
-                                onChange={({ target: { valueAsDate } }) => setDate(valueAsDate)}
-                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-violet-400 focus:outline-none p-3 pl-5"
-                            />
-                        </div>
+                    <div className="flex flex-col gap-2.5 w-full">
+                        <label
+                            htmlFor="date"
+                            className="text-sm text-gray-600 font-semibold"
+                        >
+                            Event Date
+                        </label>
+                        <input
+                            required
+                            id="date"
+                            type="datetime-local"
+                            onChange={e => setDate(new Date(e.target.value))}
+                            min={format(addHours(new Date(), 1), "yyyy-MM-dd'T'HH:mm")}
+                            value={date === null ? '' : format(date, "yyyy-MM-dd'T'HH:mm")}
+                            className="border rounded-md transition-shadow focus:ring-2 focus:ring-violet-400 focus:outline-none p-3 pl-5"
+                        />
                     </div>
                     <button
                         type="submit"
