@@ -222,6 +222,7 @@ const CreateStudents: NextPage = () => {
                                     <input
                                         type="checkbox"
                                         id="selectAll"
+                                        className="accent-indigo-500"
                                         ref={e => {
                                             if (e !== null) {
                                                 e.checked = selectedSubjects.length === subjects.length;

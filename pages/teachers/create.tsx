@@ -256,6 +256,7 @@ const CreateTeachers: NextPage = () => {
                                                     <input
                                                         type="checkbox"
                                                         id={`selectAll${name}`}
+                                                        className="accent-pink-500"
                                                         ref={e => {
                                                             if (e !== null) {
                                                                 e.checked = selectedSubjects[classID]?.length === subjects.length;
