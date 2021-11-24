@@ -52,9 +52,10 @@ const CreateEvent: NextPage = () => {
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        setLoading(true);
 
         if (selectedClass._id !== "" && selectedExam._id !== "") {
+            setLoading(true);
+
             try {
                 const res = await fetch('/api/events/', {
                     method: "POST",
