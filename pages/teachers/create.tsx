@@ -247,8 +247,29 @@ const CreateTeachers: NextPage = () => {
                                             key={classID}
                                             className="flex flex-col gap-2"
                                         >
-                                            <span className="text-xs w-full font-medium text-gray-600">
+                                            <span className="flex items-center justify-start gap-3 text-xs w-full font-medium text-gray-600">
                                                 {name}
+                                                <label
+                                                    htmlFor={`selectAll${name}`}
+                                                    className="flex gap-2 items-center justify-start text-gray-500"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`selectAll${name}`}
+                                                        className="accent-pink-500"
+                                                        ref={e => {
+                                                            if (e !== null) {
+                                                                e.checked = selectedSubjects[classID]?.length === subjects.length;
+                                                                e.indeterminate = selectedSubjects[classID]?.length > 0 && selectedSubjects[classID]?.length < subjects.length;
+                                                            }
+                                                        }}
+                                                        onChange={e => setSelectedSubjects(e.target.checked === true ? {
+                                                            ...selectedSubjects,
+                                                            [classID]: subjects.map(({ _id }) => _id.toString())
+                                                        } : Object.fromEntries(Object.entries(selectedSubjects).filter(([key]) => key !== classID)))}
+                                                    />
+                                                    Select All
+                                                </label>
                                             </span>
                                             <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm text-gray-700">
                                                 {subjects.map(({ _id, name }) => (

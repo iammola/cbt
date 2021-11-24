@@ -212,8 +212,28 @@ const CreateStudents: NextPage = () => {
                         handleChange={setSelectedClass}
                     />
                     <div className="flex flex-col gap-2 5 min-w-[20rem] w-full">
-                        <span className="text-sm text-gray-600 font-semibold">
+                        <span className="flex items-center justify-start gap-3 text-sm text-gray-600 font-semibold">
                             Subjects
+                            {subjects.length > 0 && (
+                                <label
+                                    htmlFor="selectAll"
+                                    className="flex gap-2 items-center justify-start text-gray-500"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id="selectAll"
+                                        className="accent-indigo-500"
+                                        ref={e => {
+                                            if (e !== null) {
+                                                e.checked = selectedSubjects.length === subjects.length;
+                                                e.indeterminate = selectedSubjects.length > 0 && selectedSubjects.length < subjects.length;
+                                            }
+                                        }}
+                                        onChange={e => setSelectedSubjects(e.target.checked === true ? subjects.map(({ _id }) => _id) : [])}
+                                    />
+                                    Select All
+                                </label>
+                            )}
                         </span>
                         <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm">
                             {subjects.map(({ _id, name }) => (
