@@ -71,7 +71,10 @@ const ExamSchema = new Schema<ExamRecord>({
         trim: true,
     }],
     created: DateSchema,
-    edited: [DateSchema],
+    edited: {
+        type: [DateSchema],
+        default: undefined
+    },
     questions: [QuestionSchema],
 });
 
