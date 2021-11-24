@@ -222,6 +222,12 @@ const CreateStudents: NextPage = () => {
                                     <input
                                         type="checkbox"
                                         id="selectAll"
+                                        ref={e => {
+                                            if (e !== null) {
+                                                e.checked = selectedSubjects.length === subjects.length;
+                                                e.indeterminate = selectedSubjects.length > 0 && selectedSubjects.length < subjects.length;
+                                            }
+                                        }}
                                         onChange={e => setSelectedSubjects(e.target.checked === true ? subjects.map(({ _id }) => _id) : [])}
                                     />
                                     Select All

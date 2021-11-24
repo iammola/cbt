@@ -256,6 +256,12 @@ const CreateTeachers: NextPage = () => {
                                                     <input
                                                         type="checkbox"
                                                         id={`selectAll${name}`}
+                                                        ref={e => {
+                                                            if (e !== null) {
+                                                                e.checked = selectedSubjects[classID]?.length === subjects.length;
+                                                                e.indeterminate = selectedSubjects[classID]?.length > 0 && selectedSubjects[classID]?.length < subjects.length;
+                                                            }
+                                                        }}
                                                         onChange={e => setSelectedSubjects(e.target.checked === true ? {
                                                             ...selectedSubjects,
                                                             [classID]: subjects.map(({ _id }) => _id.toString())
