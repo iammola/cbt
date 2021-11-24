@@ -14,8 +14,11 @@ async function getExams(classId: any): Promise<RouteResponse> {
         const data = await SubjectsModel.findOne({ class: classId }, '-subjects.teachers').lean();
         if (data === null) throw new Error('Class does not exist');
 
-        const exams = examsRecord.map(({ subjectId }) => data.subjects.find(({ _id }) => _id.equals(subjectId)));
         const examsRecord = await ExamModel.find({ subjectId: data.subjects.map(({ _id }) => _id) }, 'subjectId').lean();
+        const exams = examsRecord.map(({ _id, subjectId }) => {
+            const { name, alias } = data.subjects.find(({ _id }) => _id.equals(subjectId)) ?? {};
+            return { _id, name, alias };
+        });
 
         [success, status, message] = [true, StatusCodes.OK, {
             data: { exams },
