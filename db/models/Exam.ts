@@ -2,6 +2,17 @@ import { Schema, Model, model, models } from "mongoose";
 
 import type { AnswerRecord, ExamRecord, QuestionRecord } from "types";
 
+const DateSchema = new Schema<ExamRecord['created']>({
+    at: {
+        type: Date,
+        required: true
+    }, by: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
+        required: true
+    }
+}, { _id: false });
+
 const AnswerSchema = new Schema<AnswerRecord>({
     isCorrect: {
         type: Boolean,
@@ -48,17 +59,6 @@ const QuestionSchema = new Schema<QuestionRecord>({
     */
 });
 
-const DateSchema = new Schema<ExamRecord['created']>({
-    at: {
-        type: Date,
-        required: true
-    }, by: {
-        type: Schema.Types.ObjectId,
-        ref: 'Teacher',
-        required: true
-    }
-}, { _id: false })
-
 const ExamSchema = new Schema<ExamRecord>({
     duration: {
         type: Number,
@@ -71,7 +71,10 @@ const ExamSchema = new Schema<ExamRecord>({
         trim: true,
     }],
     created: DateSchema,
-    edited: [DateSchema],
+    edited: {
+        type: [DateSchema],
+        default: undefined
+    },
     questions: [QuestionSchema],
 });
 
