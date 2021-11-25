@@ -195,7 +195,7 @@ const Home: NextPage = () => {
                     "bg-emerald-400": dbState?.data?.code === 1,
                     "bg-amber-400": dbState?.data?.code === 2,
                     "bg-pink-400": dbState?.data?.code === 3,
-                    "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code),
+                    "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code ?? -1),
                 })}
             />
             {Notifications}
