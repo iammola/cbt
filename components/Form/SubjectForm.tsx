@@ -8,13 +8,16 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
+import type { RouteData, RouteError } from "types";
+import type { ClassesGETData } from "types/api/classes";
+
 const SubjectForm: NextPage = () => {
     const { mutate } = useSWRConfig();
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
-    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedClass, setSelectedClass] = useState({
         _id: "",

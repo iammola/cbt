@@ -4,11 +4,12 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ClassModel } from "db/models";
 
-import type { RouteResponse, ClassRecord } from "types";
+import type { ServerResponse, ClassRecord } from "types";
+import type { ClassesGETData, ClassesPOSTData } from "types/api/classes";
 
-async function getClasses(select: string = ''): Promise<RouteResponse> {
+async function getClasses(select: string = ''): Promise<ServerResponse<ClassesGETData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ClassesGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await ClassModel.find({}, select).lean();
@@ -26,12 +27,12 @@ async function getClasses(select: string = ''): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createClass(item: ClassRecord): Promise<RouteResponse> {
+async function createClass(item: ClassRecord): Promise<ServerResponse<ClassesPOSTData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ClassesPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await ClassModel.create(item);
+        const data = (await ClassModel.create(item)).toObject();
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
             message: ReasonPhrases.CREATED
@@ -47,7 +48,7 @@ async function createClass(item: ClassRecord): Promise<RouteResponse> {
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ClassesPOSTData | ClassesGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -55,7 +56,7 @@ export default async function handler({ method, query, body }: NextApiRequest, r
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createClass(JSON.parse(body)) : getClasses(query.select as string));
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }
