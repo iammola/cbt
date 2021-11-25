@@ -54,7 +54,7 @@ const Home: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({ code: code.join('') })
             });
-            const result= await res.json() as ClientResponse<LoginData>;
+            const result = await res.json() as ClientResponse<LoginData>;
 
             setSuccess(result.success);
             if (result.success === true) {
