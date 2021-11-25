@@ -53,7 +53,7 @@ const StudentSchema = new Schema<StudentRecord>({
             }]
         },
     }], code: {
-        type: String,
+        type: Number,
         required: [true, 'User Login Code required'],
         unique: true,
         select: false,

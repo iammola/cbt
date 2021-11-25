@@ -9,7 +9,7 @@ import type { LoginData } from "types/api/login";
 
 import { promiseAny } from "utils";
 
-async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Teacher" | "Student", code: string) {
+async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Teacher" | "Student", code: number) {
     const data = await model.findOne({ code }).select('name email').lean();
     if (data === null) throw new Error('User does not exist');
 
@@ -24,7 +24,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else {
-        const { code }: { code: string } = JSON.parse(body);
+        const { code } = JSON.parse(body);
 
         try {
             await connect();

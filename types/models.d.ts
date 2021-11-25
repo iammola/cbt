@@ -33,7 +33,7 @@ type UserRecord<T = never> = RecordId & {
     };
     image: string;
     email: string;
-    code: string;
+    code: number;
 }
 
 export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;

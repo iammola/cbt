@@ -39,7 +39,7 @@ const TeacherSchema = new Schema<TeacherRecord>({
         lowercase: true,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, 'Please fill a valid email address']
     }, code: {
-        type: String,
+        type: Number,
         required: [true, 'User Login Code required'],
         unique: true,
         select: false,
