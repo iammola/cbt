@@ -7,12 +7,12 @@ import { generateCode } from "utils";
 import { connect } from "db";
 import { SubjectsModel, TeacherModel } from "db/models";
 
-import type { TeacherRecord, RouteResponse } from "types";
+import type { TeacherRecord, ServerResponse } from "types";
 
-async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<RouteResponse> {
+async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<ServerResponse> {
     await connect();
     const session = await startSession();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const code = generateCode();
@@ -43,7 +43,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {

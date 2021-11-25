@@ -6,11 +6,11 @@ import { generateCode } from "utils";
 import { connect } from "db";
 import { SessionModel, StudentModel } from "db/models";
 
-import type { StudentRecord, RouteResponse } from "types";
+import type { StudentRecord, ServerResponse } from "types";
 
-async function createStudent({ academic, ...student }: Pick<StudentRecord, 'email' | 'name'> & { academic: { class: string; subject: string; } }): Promise<RouteResponse> {
+async function createStudent({ academic, ...student }: Pick<StudentRecord, 'email' | 'name'> & { academic: { class: string; subject: string; } }): Promise<ServerResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms').lean();
@@ -41,7 +41,7 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {

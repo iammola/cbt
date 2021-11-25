@@ -4,11 +4,11 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { SessionModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { ServerResponse } from "types";
 
-async function getCurrentSession(): Promise<RouteResponse> {
+async function getCurrentSession(): Promise<ServerResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await SessionModel.findOne({ current: true }, { name: 1, alias: 1, terms: { $elemMatch: { current: true } } });
@@ -27,7 +27,7 @@ async function getCurrentSession(): Promise<RouteResponse> {
 }
 
 export default async function handler({ method, query, cookies, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {

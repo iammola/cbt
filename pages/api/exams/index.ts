@@ -4,11 +4,11 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, EventModel } from "db/models";
 
-import type { RouteResponse, ExamRecord, CreateQuestion } from "types";
+import type { ServerResponse, ExamRecord, CreateQuestion } from "types";
 
-async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<RouteResponse> {
+async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<ServerResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         if (await ExamModel.exists({ subjectId })) throw new Error("Subject Exam already created");
@@ -32,7 +32,7 @@ async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: E
 }
 
 export default async function handler({ body, query, method, cookies }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "POST";
 
     if (allowedMethods !== method) {
