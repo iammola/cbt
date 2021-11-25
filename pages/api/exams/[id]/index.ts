@@ -37,13 +37,13 @@ async function getExam(_id: any): Promise<ServerResponse> {
     try {
         const exam = await ExamModel.findById(_id, '-created -edited').lean();
         if (exam === null) throw new Error("Exam ID not found");
-        
+
         const { duration, instructions, questions, subjectId } = exam;
-        
+
         const subject: SubjectsRecord<true> = await SubjectsModel.findOne({
             "subjects._id": subjectId
         }, "class subjects.name.$").populate("class", "-_id name").lean();
-        
+
         if (subject === null) throw new Error("Exam Subject not found");
 
         [success, status, message] = [true, StatusCodes.OK, {
