@@ -8,7 +8,7 @@ export type TeacherClassSubjectGETData = {
     subjects: Omit<SubjectRecord, 'teachers'>[];
 }
 
-export type TeacherExamGETData = (Omit<ExamRecord<true>, 'subjectId' | 'questions'> & {
+export type TeacherExamGETData = (Pick<ExamRecord<true>, 'created'> & Omit<ExamRecord, 'created' | 'subjectId' | 'questions'> & {
     class: string;
     subject: string;
     questions: number;
