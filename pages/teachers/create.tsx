@@ -10,8 +10,8 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassesGETData } from "types/api/classes";
-import type { ClassRecord, RouteData, RouteError, SubjectRecord } from "types";
+import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
+import type { ClassRecord, ClientResponse, RouteData, RouteError, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
@@ -60,9 +60,9 @@ const CreateTeachers: NextPage = () => {
             try {
                 const data = await Promise.all((classes?.data as Pick<ClassRecord, '_id' | 'name'>[]).map(async ({ _id, name }) => {
                     const res = await fetch(`/api/classes/${_id}/subjects`);
-                    const { data: { subjects } } = await res.json();
+                    const result = await res.json() as ClientResponse<ClassSubjectGETData>;
 
-                    return { _id: _id.toString(), name, subjects };
+                    return { _id: _id.toString(), name, subjects: result.success === true ? result.data?.subjects ?? [] : [] };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
             } catch (error: any) {

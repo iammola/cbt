@@ -5,12 +5,14 @@ import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
 
 import { Grid, Timer, Question } from "components/Exam/Student";
-import type { ExamData } from "types";
+
+import type { RouteData } from "types";
+import type { ExamGETData } from "types/api/exams";
 
 const WriteExam: NextPage = () => {
     const router = useRouter();
     const [answeredQuestions, setAnsweredQuestions] = useState<{ [QuestionId: string]: string }>({});
-    const { data: exam } = useSWRImmutable<{ data: ExamData }>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url).then(res => res.json()));
+    const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
     return (
         <>

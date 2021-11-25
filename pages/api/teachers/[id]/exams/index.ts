@@ -4,11 +4,12 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
+import type { TeacherExamGETData } from "types/api/teachers";
 import type { ServerResponse, SubjectsRecord } from "types";
 
-async function getExams(id: any): Promise<ServerResponse> {
+async function getExams(id: any): Promise<ServerResponse<TeacherExamGETData>> {
     await connect();
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const exam = await ExamModel.find({ "created.by": id }, '-instructions').populate('created.by').lean();
@@ -20,9 +21,9 @@ async function getExams(id: any): Promise<ServerResponse> {
 
             return {
                 ...exam,
-                class: item?.class?.name,
+                class: item?.class?.name ?? '',
                 questions: questions.length,
-                subject: item?.subjects.find(({ _id }) => _id.equals(subjectId))?.name,
+                subject: item?.subjects.find(({ _id }) => _id.equals(subjectId))?.name ?? '',
             };
         }));
 
@@ -41,7 +42,7 @@ async function getExams(id: any): Promise<ServerResponse> {
 }
 
 export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
@@ -49,7 +50,7 @@ export default async function handler({ method, query }: NextApiRequest, res: Ne
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await getExams(query.id);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

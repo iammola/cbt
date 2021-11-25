@@ -8,8 +8,8 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
-import type { RouteData, RouteError } from "types";
-import type { ClassesGETData } from "types/api/classes";
+import type { ClientResponse, RouteData, RouteError } from "types";
+import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
 
 const CreateStudents: NextPage = () => {
     const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ const CreateStudents: NextPage = () => {
     });
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
-    const [subjects, setSubjects] = useState<{ _id: string; name: string; }[]>([]);
+    const [subjects, setSubjects] = useState<{ _id: any; name: string; }[]>([]);
     const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
@@ -79,12 +79,12 @@ const CreateStudents: NextPage = () => {
 
             try {
                 const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
-                const { success, data, error } = await res.json();
+                const result = await res.json() as ClientResponse<ClassSubjectGETData>;
 
-                if (success === true) {
-                    setSubjects(data.subjects);
+                if (result.success === true) {
+                    setSubjects(result.data?.subjects ?? []);
                     setSubjectsLoadingState(undefined);
-                } else throw new Error(error);
+                } else throw new Error(result.error);
             } catch (error: any) {
                 console.log({ error });
                 setSubjectsLoadingState(false);
