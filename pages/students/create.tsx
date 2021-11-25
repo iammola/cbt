@@ -13,10 +13,7 @@ import type { ClassesGETData } from "types/api/classes";
 
 const CreateStudents: NextPage = () => {
     const [email, setEmail] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [initials, setInitials] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [firstName, setFirstName] = useState('');
+    const [name, setName] = useState<{ [K in "full" | "first" | "last" | "initials"]?: string }>({});
     const [selectedClass, setSelectedClass] = useState({
         _id: "",
         name: "Select class"
@@ -39,8 +36,7 @@ const CreateStudents: NextPage = () => {
             const res = await fetch('/api/students/', {
                 method: "POST",
                 body: JSON.stringify({
-                    email,
-                    name: { initials, fullName, lastName, firstName },
+                    email, name,
                     academic: {
                         class: selectedClass._id,
                         subjects: selectedSubjects
@@ -52,11 +48,8 @@ const CreateStudents: NextPage = () => {
             setSuccess(success);
 
             if (success === true) {
+                setName({});
                 setEmail('');
-                setFullName('');
-                setInitials('');
-                setLastName('');
-                setFirstName('');
                 setSelectedClass({
                     _id: "",
                     name: "Select class"
@@ -126,8 +119,8 @@ const CreateStudents: NextPage = () => {
                             required
                             type="text"
                             id="fullName"
-                            value={fullName}
-                            onChange={({ target: { value } }) => setFullName(value)}
+                            value={name.full ?? ''}
+                            onChange={e => setName({ ...name, full: e.target.value })}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -145,8 +138,8 @@ const CreateStudents: NextPage = () => {
                                 minLength={2}
                                 maxLength={3}
                                 id="initials"
-                                value={initials}
-                                onChange={({ target: { value } }) => setInitials(value)}
+                                value={name.initials ?? ''}
+                                onChange={e => setName({ ...name, initials: e.target.value })}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -179,8 +172,8 @@ const CreateStudents: NextPage = () => {
                                 required
                                 type="text"
                                 id="firstName"
-                                value={firstName}
-                                onChange={({ target: { value } }) => setFirstName(value)}
+                                value={name.first ?? ''}
+                                onChange={e => setName({ ...name, first: e.target.value })}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -195,8 +188,8 @@ const CreateStudents: NextPage = () => {
                                 required
                                 type="text"
                                 id="lastName"
-                                value={lastName}
-                                onChange={({ target: { value } }) => setLastName(value)}
+                                value={name.last ?? ''}
+                                onChange={e => setName({ ...name, last: e.target.value })}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>

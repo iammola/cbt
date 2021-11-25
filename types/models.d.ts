@@ -27,9 +27,9 @@ type UserRecord<T = never> = RecordId & {
     name: {
         title: T;
         initials: string;
-        fullName: string;
-        firstName: string;
-        lastName: string;
+        full: string;
+        first: string;
+        last: string;
     };
     image: string;
     email: string;
