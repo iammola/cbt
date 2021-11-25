@@ -8,6 +8,9 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
+import type { RouteData, RouteError } from "types";
+import type { ClassesGETData } from "types/api/classes";
+
 const CreateStudents: NextPage = () => {
     const [email, setEmail] = useState('');
     const [fullName, setFullName] = useState('');
@@ -21,7 +24,7 @@ const CreateStudents: NextPage = () => {
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
     const [subjects, setSubjects] = useState<{ _id: string; name: string; }[]>([]);
-    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
 

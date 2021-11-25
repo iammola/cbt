@@ -4,11 +4,11 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ClassModel, SubjectsModel } from "db/models";
 
-import type { RouteResponse, SubjectRecord } from "types";
+import type { ServerResponse, SubjectRecord } from "types";
 
-async function getSubjects(id: any, select: string): Promise<RouteResponse> {
+async function getSubjects(id: any, select: string): Promise<ServerResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await SubjectsModel.findOne({ class: id }, { _id: 0, class: 0 });
@@ -26,9 +26,9 @@ async function getSubjects(id: any, select: string): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<RouteResponse> {
+async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<ServerResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await SubjectsModel.findOneAndUpdate({ class: id }, {
@@ -53,7 +53,7 @@ async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<R
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
     const { id, select } = query as { id: string; select: string };
-    let [success, status, message]: RouteResponse = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {

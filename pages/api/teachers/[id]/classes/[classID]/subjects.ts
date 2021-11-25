@@ -4,11 +4,11 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { SubjectsModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { ServerResponse } from "types";
 
-async function getTeacherClassSubject(id: any, classID: any, select: any): Promise<RouteResponse> {
+async function getTeacherClassSubject(id: any, classID: any, select: any): Promise<ServerResponse> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const subjects = (await SubjectsModel.find({
@@ -31,7 +31,7 @@ async function getTeacherClassSubject(id: any, classID: any, select: any): Promi
 }
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {

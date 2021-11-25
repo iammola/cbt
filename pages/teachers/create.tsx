@@ -10,7 +10,8 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassRecord, SubjectRecord } from "types";
+import type { ClassesGETData } from "types/api/classes";
+import type { ClassRecord, RouteData, RouteError, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
@@ -41,7 +42,7 @@ const CreateTeachers: NextPage = () => {
         name: "Master"
     }]), []);
 
-    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedSubjects, setSelectedSubjects] = useState<{ [key: string]: string[] }>({});
     const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord[]; }[] | string>('');
