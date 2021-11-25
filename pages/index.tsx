@@ -14,11 +14,14 @@ import Background from "/public/BG.jpg";
 import { LoadingIcon } from 'components/Misc/Icons';
 import { useNotifications } from 'components/Misc/Notification';
 
+import type { RouteData } from 'types';
+import type { PingData } from 'types/api/ping';
+
 const Home: NextPage = () => {
     const router = useRouter();
     const [, setCookies] = useCookies(['account']);
     const [addNotification, removeNotification, Notifications] = useNotifications();
-    const { data: dbState } = useSWR('/api/ping/', url => fetch(url).then(res => res.json()));
+    const { data: dbState } = useSWR<RouteData<PingData>>('/api/ping/', url => fetch(url).then(res => res.json()));
 
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
