@@ -9,7 +9,7 @@ import type { LoginData } from "types/api/login";
 
 import { promiseAny } from "utils";
 
-async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Mola" | "Teacher" | "Student", code: string) {
+async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Teacher" | "Student", code: string) {
     const data = await model.findOne({ code }).select('name email').lean();
     if (data === null) throw new Error('User does not exist');
 
