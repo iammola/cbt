@@ -6,6 +6,9 @@ import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { classNames } from "utils";
 import { LoadingIcon } from "components/Misc/Icons";
 
+import type { ClientResponse } from "types";
+import type { ClassesPOSTData } from "types/api/classes";
+
 const ClassForm: NextPage = () => {
     const { mutate } = useSWRConfig();
     const [name, setName] = useState('');
@@ -22,15 +25,14 @@ const ClassForm: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({ name, alias })
             });
-            const { success, error } = await res.json();
+            const result = await res.json() as ClientResponse<ClassesPOSTData>;
 
-            setSuccess(success);
-
-            if (success === true) {
+            setSuccess(result.success);
+            if (result.success === true) {
                 setName('');
                 setAlias('');
                 mutate('/api/classes?select=name');
-            } else throw new Error(error);
+            } else throw new Error(result.error);
         } catch (error: any) {
             console.log({ error });
         }
