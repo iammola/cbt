@@ -2,23 +2,25 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, EventModel } from "db/models";
+import { ExamModel } from "db/models";
 
+import type { ExamsPOSTData } from "types/api/exams";
 import type { ServerResponse, ExamRecord, CreateQuestion } from "types";
 
-async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<ServerResponse> {
+async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] }, by: string): Promise<ServerResponse<ExamsPOSTData>> {
     await connect();
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ExamsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         if (await ExamModel.exists({ subjectId })) throw new Error("Subject Exam already created");
 
-        await ExamModel.create({
+        const { _id } = await ExamModel.create({
             ...exam, subjectId, questions,
             created: { by, at: new Date() },
         });
 
         [success, status, message] = [true, StatusCodes.CREATED, {
+            data: { _id },
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {
@@ -31,8 +33,8 @@ async function createExam({ exam: { subjectId, ...exam }, questions }: { exam: E
     return [success, status, message];
 }
 
-export default async function handler({ body, query, method, cookies }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+export default async function handler({ body, method, cookies }: NextApiRequest, res: NextApiResponse) {
+    let [success, status, message]: ServerResponse<ExamsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "POST";
 
     if (allowedMethods !== method) {
@@ -40,7 +42,7 @@ export default async function handler({ body, query, method, cookies }: NextApiR
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await createExam(JSON.parse(body), JSON.parse(cookies.account)._id);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

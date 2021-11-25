@@ -27,13 +27,13 @@ type UserRecord<T = never> = RecordId & {
     name: {
         title: T;
         initials: string;
-        fullName: string;
-        firstName: string;
-        lastName: string;
+        full: string;
+        first: string;
+        last: string;
     };
     image: string;
     email: string;
-    code: string;
+    code: number;
 }
 
 export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;

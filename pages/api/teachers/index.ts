@@ -8,11 +8,12 @@ import { connect } from "db";
 import { SubjectsModel, TeacherModel } from "db/models";
 
 import type { TeacherRecord, ServerResponse } from "types";
+import { TeachersPOSTData } from "types/api/teachers";
 
-async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<ServerResponse> {
+async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<ServerResponse<TeachersPOSTData>> {
     await connect();
     const session = await startSession();
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeachersPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const code = generateCode();
@@ -43,7 +44,7 @@ async function createTeacher({ subjects, ...teacher }: TeacherRecord & { subject
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeachersPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -51,7 +52,7 @@ export default async function handler({ method, query, body }: NextApiRequest, r
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createTeacher(JSON.parse(body)) : [success, status, message]);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

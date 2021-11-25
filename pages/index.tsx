@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         try {
             const res = await fetch('/api/login/', {
                 method: "POST",
-                body: JSON.stringify({ code: code.join('') })
+                body: JSON.stringify({ code: +code.join('') })
             });
             const result = await res.json() as ClientResponse<LoginData>;
 

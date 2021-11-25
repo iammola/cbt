@@ -5,10 +5,11 @@ import { connect } from "db";
 import { SubjectsModel, TeacherModel } from "db/models";
 
 import type { ServerResponse } from "types";
+import type { TeacherSubjectsGETData } from "types/api/teachers";
 
-async function getTeacherSubjects(id: string): Promise<ServerResponse> {
+async function getTeacherSubjects(id: string): Promise<ServerResponse<TeacherSubjectsGETData>> {
     await connect();
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherSubjectsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const subjects = await SubjectsModel.find({ "subjects.teacher": id }, '-class').lean();
@@ -30,7 +31,7 @@ async function getTeacherSubjects(id: string): Promise<ServerResponse> {
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
     const { id } = query as { id: string };
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherSubjectsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -38,7 +39,7 @@ export default async function handler({ query, method }: NextApiRequest, res: Ne
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await getTeacherSubjects(id);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }
