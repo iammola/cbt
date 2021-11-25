@@ -11,7 +11,7 @@ async function getClasses(select: string = ''): Promise<RouteResponse> {
     let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await ClassModel.find({}).select(select);
+        const data = await ClassModel.find({}, select).lean();
         [success, status, message] = [true, StatusCodes.OK, {
             data,
             message: ReasonPhrases.OK
