@@ -14,8 +14,9 @@ import Background from "/public/BG.jpg";
 import { LoadingIcon } from 'components/Misc/Icons';
 import { useNotifications } from 'components/Misc/Notification';
 
-import type { RouteData } from 'types';
+import type { ClientResponse, RouteData } from 'types';
 import type { PingData } from 'types/api/ping';
+import type { LoginData } from 'types/api/login';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -53,12 +54,12 @@ const Home: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({ code: code.join('') })
             });
-            const { success, error, data } = await res.json();
+            const result= await res.json() as ClientResponse<LoginData>;
 
-            setSuccess(success);
-            if (success === true) {
+            setSuccess(result.success);
+            if (result.success === true) {
                 setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
-                setCookies("account", JSON.stringify(data), {
+                setCookies("account", JSON.stringify(result.data), {
                     path: '/',
                     sameSite: true
                 });
@@ -67,7 +68,7 @@ const Home: NextPage = () => {
                     timeout: 10e3,
                     Icon: () => BadgeCheckIcon({ className: "w-6 h-6 stroke-emerald-600" })
                 });
-            } else throw new Error(error);
+            } else throw new Error(result.error);
         } catch (error: any) {
             if (navigator.onLine === false) setTimeout(handleOnline, 1e3);
             addNotification({
