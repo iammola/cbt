@@ -6,9 +6,10 @@ import { CogIcon, CheckCircleIcon, ExclamationCircleIcon, XCircleIcon, BellIcon,
 import { Bar, Modal, Question } from ".";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { CreateQuestion, ExamData } from "types";
+import type { CreateQuestion } from "types";
+import type { ExamGETData } from "types/api/exams";
 
-const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
+const Form: FunctionComponent<{ data?: ExamGETData; }> = ({ data }) => {
     const router = useRouter();
     const [addNotification, , Notifications] = useNotifications();
     const [{ savedExams }, setCookies] = useCookies(['savedExams']);
@@ -18,7 +19,7 @@ const Form: FunctionComponent<{ data?: ExamData; }> = ({ data }) => {
         type: "Multiple choice",
         answers: [{ answer: "", isCorrect: true }, { answer: "" }],
     }), []);
-    const [exam, setExam] = useState<Omit<ExamData['details'], 'instructions'>>();
+    const [exam, setExam] = useState<Omit<ExamGETData['details'], 'instructions'>>();
     const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
     const [instructions, setInstructions] = useState(['Answer all questions', '']);
 

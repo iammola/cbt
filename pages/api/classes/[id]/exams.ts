@@ -5,10 +5,11 @@ import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse } from "types";
+import type { ClassExamGETData } from "types/api/classes";
 
-async function getExams(classId: any): Promise<ServerResponse> {
+async function getExams(classId: any): Promise<ServerResponse<ClassExamGETData>> {
     await connect();
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ClassExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await SubjectsModel.findOne({ class: classId }, '-subjects.teachers').lean();
@@ -16,7 +17,7 @@ async function getExams(classId: any): Promise<ServerResponse> {
 
         const examsRecord = await ExamModel.find({ subjectId: data.subjects.map(({ _id }) => _id) }, 'subjectId').lean();
         const exams = examsRecord.map(({ _id, subjectId }) => {
-            const { name, alias } = data.subjects.find(({ _id }) => _id.equals(subjectId)) ?? {};
+            const { name = '', alias } = data.subjects.find(({ _id }) => _id.equals(subjectId)) ?? {};
             return { _id, name, alias };
         });
 
@@ -35,7 +36,7 @@ async function getExams(classId: any): Promise<ServerResponse> {
 }
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
+    let [success, status, message]: ServerResponse<ClassExamGETData> = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
@@ -43,7 +44,7 @@ export default async function handler({ query, method }: NextApiRequest, res: Ne
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await getExams(query.id);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

@@ -8,8 +8,8 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
-import type { RouteData, RouteError } from "types";
-import type { ClassesGETData } from "types/api/classes";
+import type { ClientResponse, RouteData, RouteError } from "types";
+import type { ClassesGETData, ClassSubjectPOSTData } from "types/api/classes";
 
 const SubjectForm: NextPage = () => {
     const { mutate } = useSWRConfig();
@@ -41,11 +41,11 @@ const SubjectForm: NextPage = () => {
                     method: "POST",
                     body: JSON.stringify({ name, alias })
                 });
-                const { success, error } = await res.json();
+                const result = await res.json() as ClientResponse<ClassSubjectPOSTData>;
 
-                setSuccess(success);
+                setSuccess(result.success);
 
-                if (success === true) {
+                if (result.success === true) {
                     setName('');
                     setAlias('');
                     setSelectedClass({
@@ -54,7 +54,7 @@ const SubjectForm: NextPage = () => {
                     });
 
                     mutate(`/api/classes/${selectedClass._id}/subjects`);
-                } else throw new Error(error);
+                } else throw new Error(result.error);
             } catch (error: any) {
                 console.log({ error });
             }

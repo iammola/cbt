@@ -8,11 +8,13 @@ import { formatRelative } from "date-fns";
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
-import type { DateRecord } from "types";
+
+import type { RouteData } from "types";
+import type { TeacherExamGETData } from "types/api/teachers";
 
 const Exams: NextPage = () => {
     const [{ account }] = useCookies(['account']);
-    const { data: exams } = useSWR(account !== undefined ? `/api/teachers/${account._id}/exams` : null, url => url !== null && fetch(url).then(res => res.json()));
+    const { data: exams } = useSWR<RouteData<TeacherExamGETData>>(account !== undefined ? `/api/teachers/${account._id}/exams` : null, url => fetch(url ?? '').then(res => res.json()));
 
     return (
         <>
@@ -76,7 +78,7 @@ const Exams: NextPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
-                                {(exams?.data as ExamRow[])?.map(({ subject, duration, questions, created: { at, by }, ...exam }, examIdx) => (
+                                {exams?.data?.map(({ subject, duration, questions, created: { at, by }, ...exam }, examIdx) => (
                                     <tr
                                         key={examIdx}
                                         className="text-sm font-medium"
@@ -119,12 +121,12 @@ const Exams: NextPage = () => {
                                                     />
                                                 </div>
                                                 <span>
-                                                    {by.name.fullName}
+                                                    {by.name.full}
                                                 </span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
-                                            <Link href={`/exams/edit/${exam._id}`}>
+                                            <Link href={`/exams/edit/${exam._id.toString()}`}>
                                                 <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
                                                     Edit
                                                 </a>
@@ -166,14 +168,5 @@ const Exams: NextPage = () => {
         </>
     );
 }
-
-type ExamRow = {
-    _id: string;
-    class: string;
-    questions: number;
-    subject: string;
-    created: DateRecord<true>;
-    duration: number;
-};
 
 export default Exams;

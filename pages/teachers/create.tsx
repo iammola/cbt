@@ -10,20 +10,17 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassesGETData } from "types/api/classes";
-import type { ClassRecord, RouteData, RouteError, SubjectRecord } from "types";
+import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
+import type { ClassRecord, ClientResponse, RouteData, RouteError, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
     const [email, setEmail] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [initials, setInitials] = useState('');
     const [selectedTitle, setSelectedTitle] = useState({
         _id: "",
         name: "Select title"
     })
+    const [name, setName] = useState<{ [K in "full" | "first" | "last" | "initials"]?: string }>({});
 
     const titleOptions = useMemo(() => ([{
         _id: "Mr.",
@@ -63,9 +60,9 @@ const CreateTeachers: NextPage = () => {
             try {
                 const data = await Promise.all((classes?.data as Pick<ClassRecord, '_id' | 'name'>[]).map(async ({ _id, name }) => {
                     const res = await fetch(`/api/classes/${_id}/subjects`);
-                    const { data: { subjects } } = await res.json();
+                    const result = await res.json() as ClientResponse<ClassSubjectGETData>;
 
-                    return { _id: _id.toString(), name, subjects };
+                    return { _id: _id.toString(), name, subjects: result.success === true ? result.data?.subjects ?? [] : [] };
                 }));
                 setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
             } catch (error: any) {
@@ -85,7 +82,7 @@ const CreateTeachers: NextPage = () => {
                 method: "POST",
                 body: JSON.stringify({
                     email,
-                    name: { initials, fullName, lastName, firstName, title: selectedTitle._id },
+                    name: { ...name, title: selectedTitle._id },
                     subjects: selectedSubjects
                 })
             });
@@ -96,14 +93,11 @@ const CreateTeachers: NextPage = () => {
             if (success === true) {
                 addNotification({
                     timeout: 75e2,
-                    message: `Success... ${firstName}'s code is ${data.code}`,
+                    message: `Success... ${name.first}'s code is ${data.code}`,
                     Icon: () => BriefcaseIcon({ className: "w-5 h-5 text-indigo-600" })
                 });
+                setName({});
                 setEmail('');
-                setFullName('');
-                setLastName('');
-                setInitials('');
-                setFirstName('');
                 setSelectedTitle({
                     _id: "",
                     name: "Select title"
@@ -144,8 +138,8 @@ const CreateTeachers: NextPage = () => {
                             required
                             type="text"
                             id="fullName"
-                            value={fullName}
-                            onChange={({ target: { value } }) => setFullName(value)}
+                            value={name.full ?? ''}
+                            onChange={e => setName({ ...name, full: e.target.value })}
                             className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                         />
                     </div>
@@ -163,8 +157,8 @@ const CreateTeachers: NextPage = () => {
                                 minLength={2}
                                 maxLength={3}
                                 id="initials"
-                                value={initials}
-                                onChange={({ target: { value } }) => setInitials(value)}
+                                value={name.initials ?? ''}
+                                onChange={e => setName({ ...name, initials: e.target.value })}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -194,8 +188,8 @@ const CreateTeachers: NextPage = () => {
                                 required
                                 type="text"
                                 id="firstName"
-                                value={firstName}
-                                onChange={({ target: { value } }) => setFirstName(value)}
+                                value={name.first ?? ''}
+                                onChange={e => setName({ ...name, first: e.target.value })}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
@@ -210,8 +204,8 @@ const CreateTeachers: NextPage = () => {
                                 required
                                 type="text"
                                 id="lastName"
-                                value={lastName}
-                                onChange={({ target: { value } }) => setLastName(value)}
+                                value={name.last ?? ''}
+                                onChange={e => setName({ ...name, last: e.target.value })}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-pink-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
