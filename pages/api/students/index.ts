@@ -14,11 +14,11 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
     let [success, status, message]: ServerResponse<StudentsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
+        const code = generateCode();
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms').lean();
 
-        const { code, ...data } = await StudentModel.create({
-            ...student,
-            code: generateCode(),
+        await StudentModel.create({
+            ...student, code,
             academic: currentSession === null ? [] : [{
                 session: currentSession._id,
                 terms: [{
