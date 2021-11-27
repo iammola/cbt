@@ -53,7 +53,6 @@ const Calendar: NextPage = () => {
                             </span>
                         ))}
                     </div>
-                    <div className="grid grid-cols-7 grid-rows-[repeat(5,calc(100%/5))] grow">
                         <div className="flex flex-col justify-start items-end w-full border-t border-r border-white/10 text-gray-400 bg-white/5 pt-1.5 pr-1">
                             <span className="flex items-center justify-center w-8 h-8 shrink-0 -mt-1 -mr-0.5 text-sm text-center rounded-full">
                                 31
@@ -203,6 +202,7 @@ const Calendar: NextPage = () => {
                             <span className="flex items-center justify-center w-8 h-8 shrink-0 -mt-1 -mr-0.5 text-sm text-center rounded-full">
                                 29
                             </span>
+                    <div className="grid grid-cols-7 grid-rows-[repeat(5,calc(100%/5))] grow w-full">
                             <div className="flex flex-col items-start justify-start grow w-full pl-2">
                                 <div className="flex items-center justify-start gap-1.5 w-full">
                                     <span
