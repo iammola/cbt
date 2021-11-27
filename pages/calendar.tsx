@@ -1,8 +1,13 @@
 import Head from "next/head";
+import { useMemo } from "react";
 import type { NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
+import { classNames } from "utils";
+
 const Calendar: NextPage = () => {
+    const days = useMemo(() => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], []);
+
     return (
         <>
             <Head>
@@ -32,27 +37,17 @@ const Calendar: NextPage = () => {
                 </div>
                 <div className="flex flex-col items-start justify-start w-full grow">
                     <div className="grid grid-cols-7 py-2 w-full">
-                        <span className="w-full text-right px-3 font-medium text-gray-400">
-                            Sun
-                        </span>
-                        <span className="w-full text-right px-3 text-gray-300">
-                            Mon
-                        </span>
-                        <span className="w-full text-right px-3 text-gray-300">
-                            Tue
-                        </span>
-                        <span className="w-full text-right px-3 text-gray-300">
-                            Wed
-                        </span>
-                        <span className="w-full text-right px-3 text-gray-300">
-                            Thu
-                        </span>
-                        <span className="w-full text-right px-3 text-gray-300">
-                            Fri
-                        </span>
-                        <span className="w-full text-right px-3 font-medium text-gray-400">
-                            Sat
-                        </span>
+                        {days.map((day, i) => (
+                            <span
+                                key={day}
+                                className={classNames("w-full text-right px-3", {
+                                    "text-gray-400 font-medium": [0, 6].includes(i),
+                                    "text-gray-300": ![0, 6].includes(i),
+                                })}
+                            >
+                                {day}
+                            </span>
+                        ))}
                     </div>
                     <div className="grid grid-cols-7 grid-rows-[repeat(5,calc(100%/5))] grow">
                         <div className="flex flex-col justify-start items-end w-full border-t border-r border-white/10 text-gray-400 bg-white/5 pt-1.5 pr-1">
