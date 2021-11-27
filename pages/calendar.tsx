@@ -70,12 +70,14 @@ const Calendar: NextPage = () => {
                     <div className="flex items-center justify-center">
                         <button
                             type="button"
+                            onClick={() => setSelectedMonth(selectedMonth > 0 ? selectedMonth - 1 : selectedMonth)}
                             className="p-2 rounded-tl-md rounded-bl-md bg-gray-200 focus:outline-none hover:bg-gray-300"
                         >
                             <ChevronLeftIcon className="w-5 h-5 fill-neutral-500" />
                         </button>
                         <button
                             type="button"
+                            onClick={() => setSelectedMonth(selectedMonth < 11 ? selectedMonth + 1 : selectedMonth)}
                             className="p-2 rounded-tr-md rounded-br-md bg-gray-200 focus:outline-none hover:bg-gray-300"
                         >
                             <ChevronRightIcon className="w-5 h-5 fill-neutral-500" />
