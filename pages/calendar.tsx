@@ -12,7 +12,9 @@ import type { EventsRangeGETData } from "types/api/events";
 
 const Calendar: NextPage = () => {
     const activeYear = 2021;
+    const selectedColors: { [key: string]: string } = {};
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const colors = ["bg-amber-400", "bg-indigo-400", "bg-cyan-400", "bg-pink-400", "bg-lime-400"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
@@ -132,7 +134,7 @@ const Calendar: NextPage = () => {
                                             >
                                                 <span
                                                     aria-hidden="true"
-                                                    className="w-1.5 h-1.5 bg-lime-400 rounded-full shrink-0"
+                                                    className={classNames("w-1.5 h-1.5 bg-lime-400 rounded-full shrink-0", selectedColors[event.split(' ', 1)[0]] ??= colors.splice(Math.floor(Math.random() * colors.length), 1)[0])}
                                                 />
                                                 <span className="grow block truncate text-gray-50 text-xs tracking-wide">
                                                     {event}
