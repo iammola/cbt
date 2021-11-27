@@ -94,7 +94,7 @@ const Calendar: NextPage = () => {
                             return (
                                 <div
                                     key={i}
-                                    className={classNames("flex flex-col justify-start items-end w-full border-t border-white/10 pt-1.5 pr-1", {
+                                    className={classNames("flex flex-col justify-start items-end w-full border-t border-white/10 pt-1.5 pr-1 overflow-hidden", {
                                         "bg-white/5": isWeekend,
                                         "border-r": isNotEndOfWeek,
                                         "border-b": i + 7 >= a.length,
