@@ -86,6 +86,32 @@ const Calendar: NextPage = () => {
                         ))}
                     </div>
                     <div className="grid grid-cols-7 grid-rows-[repeat(5,calc(100%/5))] grow w-full">
+                        {datesObj?.dates.map((d, i) => {
+                            const isNotEndOfWeek = (i + 1) % 7 !== 0;
+                            const isWeekend = [i % 7, (i + 1) % 7].includes(0);
+                            const isNotInMonth = datesObj.start > i || i > datesObj.end;
+
+                            return (
+                                <div
+                                    key={i}
+                                    className={classNames("flex flex-col justify-start items-end w-full border-t border-white/10 pt-1.5 pr-1", {
+                                        "bg-white/5": isWeekend,
+                                        "border-r": isNotEndOfWeek,
+                                        "text-gray-200": !isWeekend,
+                                        "text-gray-400/50": isNotInMonth,
+                                        "text-gray-400": !isNotInMonth && isWeekend,
+                                    })}
+                                >
+                                    <span
+                                        className={classNames("flex items-center justify-center w-8 h-8 shrink-0 -mt-1 -mr-0.5 text-center rounded-full", {
+                                            "bg-red-500 text-gray-800 font-semibold text-sm": i === datesObj.today
+                                        })}
+                                    >
+                                        {d}
+                                    </span>
+                                </div>
+                            );
+                        })}
                             <div className="flex flex-col items-start justify-start grow w-full pl-2">
                                 <div className="flex items-center justify-start gap-1.5 w-full">
                                     <span
