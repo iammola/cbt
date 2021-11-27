@@ -1,11 +1,16 @@
 import Head from "next/head";
+import { useState } from "react";
 import type { NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
 const Calendar: NextPage = () => {
+    const activeYear = 2021;
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
 
     return (
         <>
@@ -16,8 +21,8 @@ const Calendar: NextPage = () => {
             <section className="flex flex-col items-start justify-start w-screen h-screen py-3 px-5 bg-neutral-800 overflow-hidden">
                 <div className="flex items-center justify-between w-full">
                     <h2 className="text-5xl">
-                        <span className="text-gray-100 font-bold">November</span>{' '}
-                        <span className="text-gray-200 font-normal">2021</span>
+                        <span className="text-gray-100 font-bold">{months[selectedMonth]}</span>{' '}
+                        <span className="text-gray-200 font-normal">{activeYear}</span>
                     </h2>
                     <div className="flex items-center justify-center">
                         <button
