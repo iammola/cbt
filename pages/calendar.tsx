@@ -1,12 +1,11 @@
 import Head from "next/head";
-import { useMemo } from "react";
 import type { NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
 const Calendar: NextPage = () => {
-    const days = useMemo(() => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], []);
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     return (
         <>
