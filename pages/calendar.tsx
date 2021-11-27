@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import { addMonths, endOfWeek, getDaysInMonth, isThisMonth, lastDayOfMonth, startOfMonth, subMonths } from "date-fns";
+import { addMonths, endOfWeek, getDaysInMonth, isThisMonth, lastDayOfMonth, setDate, startOfDay, startOfMonth, subMonths } from "date-fns";
 
 import { classNames } from "utils";
 
@@ -98,7 +98,12 @@ const Calendar: NextPage = () => {
                         {datesObj?.dates.map((d, i, a) => {
                             const isNotEndOfWeek = (i + 1) % 7 !== 0;
                             const isWeekend = [i % 7, (i + 1) % 7].includes(0);
-                            const isNotInMonth = datesObj.start > i || i > datesObj.end;
+                            const isNextMonth = i > datesObj.end;
+                            const isPreviousMonth = datesObj.start > i;
+                            const isNotInMonth = isNextMonth || isPreviousMonth;
+
+                            const dateEvents = events?.data?.filter(({ date }) => startOfDay(new Date(date)).getTime() === setDate(subMonths(new Date(activeYear, selectedMonth), isPreviousMonth ? 1 : isNextMonth ? -1 : 0), d).getTime()) ?? [];
+                            const eventsLength = dateEvents.map(({ events }) => events.length).reduce((a, b) => a + b, 0);
 
                             return (
                                 <div
@@ -119,74 +124,33 @@ const Calendar: NextPage = () => {
                                     >
                                         {d}
                                     </span>
+                                    <div className="flex flex-col items-start justify-start grow w-full pl-2 empty:hidden">
+                                        {dateEvents.map(({ time, events }) => events.map(event => (
+                                            <div
+                                                key={event}
+                                                className="flex items-center justify-start gap-1.5 w-full"
+                                            >
+                                                <span
+                                                    aria-hidden="true"
+                                                    className="w-1.5 h-1.5 bg-lime-400 rounded-full shrink-0"
+                                                />
+                                                <span className="grow block truncate text-gray-50 text-xs tracking-wide">
+                                                    {event}
+                                                </span>
+                                                <span className="shrink-0 text-gray-200 text-[0.625rem] tracking-wider">
+                                                    {time}
+                                                </span>
+                                            </div>
+                                        ))).flat().slice(0, 5)}
+                                        {eventsLength > 5 && (
+                                            <span className="pl-3 w-full text-xs font-semibold text-gray-400">
+                                                {eventsLength - 5} more...
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             );
                         })}
-                            <div className="flex flex-col items-start justify-start grow w-full pl-2">
-                                <div className="flex items-center justify-start gap-1.5 w-full">
-                                    <span
-                                        aria-hidden="true"
-                                        className="w-1.5 h-1.5 bg-lime-400 rounded-full shrink-0"
-                                    />
-                                    <span className="grow block truncate text-gray-50 text-xs tracking-wide">
-                                        JC3 Mathematics
-                                    </span>
-                                    <span className="shrink-0 text-gray-200 text-[0.625rem] tracking-wider">
-                                        5:30 PM
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-start gap-1.5 w-full">
-                                    <span
-                                        aria-hidden="true"
-                                        className="w-1.5 h-1.5 bg-pink-400 rounded-full shrink-0"
-                                    />
-                                    <span className="grow block truncate text-gray-50 text-xs tracking-wide">
-                                        JC2 English Language
-                                    </span>
-                                    <span className="shrink-0 text-gray-200 text-[0.625rem] tracking-wider">
-                                        8:30 AM
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-start gap-1.5 w-full">
-                                    <span
-                                        aria-hidden="true"
-                                        className="w-1.5 h-1.5 bg-cyan-400 rounded-full shrink-0"
-                                    />
-                                    <span className="grow block truncate text-gray-50 text-xs tracking-wide">
-                                        JC1 Pre-Vocational Studies
-                                    </span>
-                                    <span className="shrink-0 text-gray-200 text-[0.625rem] tracking-wider">
-                                        12:30 PM
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-start gap-1.5 w-full">
-                                    <span
-                                        aria-hidden="true"
-                                        className="w-1.5 h-1.5 bg-indigo-400 rounded-full shrink-0"
-                                    />
-                                    <span className="grow block truncate text-gray-50 text-xs tracking-wide">
-                                        SC2 Chemistry
-                                    </span>
-                                    <span className="shrink-0 text-gray-200 text-[0.625rem] tracking-wider">
-                                        8:30 AM
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-start gap-1.5 w-full">
-                                    <span
-                                        aria-hidden="true"
-                                        className="w-1.5 h-1.5 bg-amber-400 rounded-full shrink-0"
-                                    />
-                                    <span className="grow block truncate text-gray-50 text-xs tracking-wide">
-                                        SC1 Chemistry
-                                    </span>
-                                    <span className="shrink-0 text-gray-200 text-[0.625rem] tracking-wider">
-                                        12:30 PM
-                                    </span>
-                                </div>
-                                <span className="pl-3 w-full text-xs font-semibold text-gray-400">
-                                    2 more...
-                                </span>
-                            </div>
                     </div>
                 </div>
             </section>
