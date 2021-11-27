@@ -52,9 +52,9 @@ export type StudentRecord = UserRecord & {
 
 /* Event and Exam and Answer */
 
-export type EventRecord = RecordId & {
+export type EventRecord<P> = RecordId & {
     from: Date;
-    exams: ObjectId[];
+    exams: (P extends true ? ExamRecord : ObjectId)[];
 };
 
 type DateRecord<P = false> = {
