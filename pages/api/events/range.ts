@@ -53,7 +53,7 @@ export default async function handler({ query, method }: NextApiRequest, res: Ne
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else[success, status, message] = await getEventsRange(query.from, query.to);
 
     if (typeof message !== "object") message = { message, error: message };
 
