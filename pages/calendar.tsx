@@ -12,30 +12,33 @@ const Calendar: NextPage = () => {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
-    const [datesObj, setDatesObj] = useState<{ dates: number[]; today: number; start: number; end: number; }>();
+    const [datesObj, setDatesObj] = useState<{ dates: number[]; range: number[]; today: number; start: number; end: number; }>();
 
     const generateDates = useCallback(() => {
         const dates: number[] = [];
         const date = new Date(activeYear, selectedMonth);
 
+        const range: number[] = [];
         const end = lastDayOfMonth(date);
         const start = startOfMonth(date).getDay();
 
         if (start > 0) {
-            const lastMonth = getDaysInMonth(subMonths(date, 1));
-            for (let i = 1; i <= start; i++) dates.push(lastMonth - start + i);
+            const lastMonth = subMonths(date, 1);
+            range.push(lastMonth.getTime());
+            for (let i = 1; i <= start; i++) dates.push(getDaysInMonth(lastMonth) - start + i);
         }
 
         for (let i = 1; i <= getDaysInMonth(date); i++) dates.push(i);
 
         if (end.getDay() < 6) {
             const nextMonthFirstWeek = endOfWeek(addMonths(date, 1));
+            range.push(nextMonthFirstWeek.getTime());
             for (let i = 1; i <= nextMonthFirstWeek.getDate(); i++) dates.push(i);
         }
 
         setDatesObj({
-            dates, start,
             end: end.getDate(),
+            dates, start, range,
             today: (isThisMonth(date) ? new Date().getDate() + start : 0) - 1
         });
     }, [selectedMonth]);
