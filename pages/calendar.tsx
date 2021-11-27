@@ -1,3 +1,4 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import type { NextPage } from "next";
@@ -6,6 +7,9 @@ import { addMonths, endOfWeek, getDaysInMonth, isThisMonth, lastDayOfMonth, star
 
 import { classNames } from "utils";
 
+import type { RouteData } from "types";
+import type { EventsRangeGETData } from "types/api/events";
+
 const Calendar: NextPage = () => {
     const activeYear = 2021;
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -13,6 +17,8 @@ const Calendar: NextPage = () => {
 
     const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
     const [datesObj, setDatesObj] = useState<{ dates: number[]; range: number[]; today: number; start: number; end: number; }>();
+
+    const { data: events } = useSWR<RouteData<EventsRangeGETData>>(datesObj !== undefined ? `/api/events/range?from=${datesObj.range[0]}&to=${datesObj.range[1]}` : null, url => fetch(url ?? '').then(res => res.json()));
 
     const generateDates = useCallback(() => {
         const dates: number[] = [];
