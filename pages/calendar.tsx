@@ -136,7 +136,7 @@ const Calendar: NextPage = () => {
                                             >
                                                 <span
                                                     aria-hidden="true"
-                                                    className={classNames("w-1.5 h-1.5 bg-lime-400 rounded-full shrink-0", selectedColors[event.split(' ', 1)[0]] ??= colors.splice(Math.floor(Math.random() * colors.length), 1)[0])}
+                                                    className={classNames("w-1.5 h-1.5 rounded-full shrink-0", selectedColors[event.split(' ', 1)[0]] ??= colors.splice(Math.floor(Math.random() * colors.length), 1)[0])}
                                                 />
                                                 <span className="grow block truncate text-gray-50 text-xs tracking-wide">
                                                     {event}
