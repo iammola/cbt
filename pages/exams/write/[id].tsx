@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
 
-import { Grid, Timer, Question } from "components/Exam/Student";
+import { Bar, Grid, Timer, Question } from "components/Exam/Student";
 
 import type { RouteData } from "types";
 import type { ExamGETData } from "types/api/exams";
