@@ -49,7 +49,7 @@ const Calendar: NextPage = () => {
             dates, start, range,
             today: (isThisMonth(date) ? new Date().getDate() + start : 0) - 1
         });
-    }, [selectedMonth]);
+    }, [activeYear, selectedMonth]);
 
     useEffect(() => {
         generateDates();
