@@ -8,8 +8,9 @@ import useSWRImmutable from "swr/immutable";
 import { useNotifications } from "components/Misc/Notification";
 import { Bar, Grid, Timer, Question } from "components/Exam/Student";
 
-import type { RouteData, UserRecord } from "types";
+import type { ClientResponse, RouteData, UserRecord } from "types";
 import type { ExamGETData } from "types/api/exams";
+import type { StudentResultPOSTData } from "types/api/students";
 
 type PageCookies = {
     exam?: {
@@ -60,8 +61,8 @@ const WriteExam: NextPage = () => {
                     method: "POST",
                     body: JSON.stringify(cookies.exam)
                 });
-                const result = await res.json();
             } catch (error: any) { /* // TODO: Notifications */ }
+                const result = await res.json() as ClientResponse<StudentResultPOSTData>;
         } else { /* // TODO: Toggle Confirm Modal */ }
     }
 
