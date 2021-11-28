@@ -7,8 +7,17 @@ import useSWRImmutable from "swr/immutable";
 
 import { Bar, Grid, Timer, Question } from "components/Exam/Student";
 
-import type { RouteData } from "types";
+import type { RouteData, UserRecord } from "types";
 import type { ExamGETData } from "types/api/exams";
+
+type PageCookies = {
+    exam?: {
+        started: Date;
+        examId: string;
+        answers: { [questionId: string]: string; }
+    };
+    account?: UserRecord;
+}
 
 const WriteExam: NextPage = () => {
     const router = useRouter();
