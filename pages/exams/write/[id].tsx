@@ -56,7 +56,7 @@ const WriteExam: NextPage = () => {
             try {
                 const res = await fetch(`/api/students/${cookies.account?._id}/results`, {
                     method: "POST",
-                    body: JSON.stringify({ answered })
+                    body: JSON.stringify(cookies.exam)
                 });
                 const result = await res.json();
             } catch (error: any) { /* // TODO: Notifications */ }
