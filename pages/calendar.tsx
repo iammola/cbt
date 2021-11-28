@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { addMonths, endOfWeek, getDaysInMonth, isThisMonth, lastDayOfMonth, setDate, startOfDay, startOfMonth, subMonths } from "date-fns";
@@ -11,11 +11,11 @@ import type { RouteData } from "types";
 import type { EventsRangeGETData } from "types/api/events";
 
 const Calendar: NextPage = () => {
-    const activeYear = 2021;
-    const selectedColors: { [key: string]: string } = {};
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const colors = ["bg-amber-400", "bg-indigo-400", "bg-cyan-400", "bg-pink-400", "bg-lime-400", "bg-violet-400", "bg-rose-400", "bg-teal-400", "bg-slate-400"];
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const activeYear = useMemo(() => 2021, []);
+    const selectedColors = useMemo<{ [key: string]: string }>(() => ({}), []);
+    const days = useMemo(() => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], []);
+    const colors = useMemo(() => ["bg-amber-400", "bg-indigo-400", "bg-cyan-400", "bg-pink-400", "bg-lime-400", "bg-violet-400", "bg-rose-400", "bg-teal-400", "bg-slate-400"], []);
+    const months = useMemo(() => ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], []);
 
     const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
     const [datesObj, setDatesObj] = useState<{ dates: number[]; range: number[]; today: number; start: number; end: number; }>();
