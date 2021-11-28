@@ -82,6 +82,7 @@ const WriteExam: NextPage = () => {
                     message: "Retrying in 3 seconds",
                     Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-emerald-500" />
                 }]);
+                setTimeout(handleSubmit, 25e2, true);
             }
         } else { /* // TODO: Toggle Confirm Modal */ }
     }
