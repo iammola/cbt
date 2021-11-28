@@ -88,6 +88,17 @@ export type QuestionRecord = RecordId & {
     minLength?: number;
 });
 
+export type ResultRecord = RecordId & {
+    student: ObjectId;
+    results: {
+        ended: Date;
+        started: Date;
+        score: number;
+        examId: ObjectId;
+        answers: ObjectId[];
+    }[];
+}
+
 
 /* Session and Term */
 
