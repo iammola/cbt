@@ -14,7 +14,7 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
 
     try {
         const events: EventRecord<true>[] = await EventModel.find({
-            date: {
+            from: {
                 $lte: new Date(+to),
                 $gte: new Date(+from)
             }
