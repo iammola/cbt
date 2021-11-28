@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
 
+import { useNotifications } from "components/Misc/Notification";
 import { Bar, Grid, Timer, Question } from "components/Exam/Student";
 
 import type { RouteData, UserRecord } from "types";
@@ -20,6 +21,7 @@ type PageCookies = {
 }
 
 const WriteExam: NextPage = () => {
+    const [addNotification, , Notifications] = useNotifications();
     const router = useRouter();
     const [modified, setModified] = useState(false);
     const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account", PageCookies>(['exam', 'account']);
@@ -104,6 +106,7 @@ const WriteExam: NextPage = () => {
                 </div>
                 <Timer timeout={exam?.data.details.duration} />
             </form>
+            {Notifications}
         </>
     );
 }
