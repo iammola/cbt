@@ -37,6 +37,14 @@ const WriteExam: NextPage = () => {
         setModified(true);
     }, [answeredQuestions]);
 
+    useEffect(() => {
+        if (cookies.exam === undefined && exam !== undefined) setCookies("exam", JSON.stringify({
+            answers: {},
+            started: new Date(),
+            examId: exam.data._id,
+        }), { path: '/exams/write/' });
+    }, [cookies.exam, exam, setCookies]);
+
     return (
         <>
             <Head>
