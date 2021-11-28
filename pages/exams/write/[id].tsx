@@ -45,6 +45,10 @@ const WriteExam: NextPage = () => {
         }), { path: '/exams/write/' });
     }, [cookies.exam, exam, setCookies]);
 
+    useEffect(() => {
+        if (cookies.exam?.examId === (router.query.id ?? [])) setAnsweredQuestions(cookies.exam.answers);
+    }, [cookies.exam, router.query.id]);
+
     return (
         <>
             <Head>
