@@ -4,7 +4,6 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
-import { Badges } from "components/Misc"
 import { CalendarIcon, HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
 import type { MenuProps } from "types";
