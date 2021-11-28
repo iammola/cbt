@@ -23,19 +23,19 @@ const WriteExam: NextPage = () => {
     const router = useRouter();
     const [modified, setModified] = useState(false);
     const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account", PageCookies>(['exam', 'account']);
-    const [answeredQuestions, setAnsweredQuestions] = useState<{ [QuestionId: string]: string }>({});
+    const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
     useEffect(() => {
         if (modified === true) setCookies("exam", JSON.stringify({
             ...cookies.exam,
-            answers: answeredQuestions
+            answers: answered
         }), { path: '/exams/write/' });
-    }, [answeredQuestions, cookies.exam, modified, setCookies]);
+    }, [answered, cookies.exam, modified, setCookies]);
 
     useEffect(() => {
         setModified(true);
-    }, [answeredQuestions]);
+    }, [answered]);
 
     useEffect(() => {
         if (cookies.exam === undefined && exam !== undefined) setCookies("exam", JSON.stringify({
@@ -46,7 +46,7 @@ const WriteExam: NextPage = () => {
     }, [cookies.exam, exam, setCookies]);
 
     useEffect(() => {
-        if (cookies.exam?.examId === (router.query.id ?? [])) setAnsweredQuestions(cookies.exam.answers);
+        if (cookies.exam?.examId === (router.query.id ?? [])) setAnswered(cookies.exam.answers);
     }, [cookies.exam, router.query.id]);
 
     async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
@@ -56,7 +56,7 @@ const WriteExam: NextPage = () => {
             try {
                 const res = await fetch(`/api/students/${cookies.account?._id}/results`, {
                     method: "POST",
-                    body: JSON.stringify({ answeredQuestions })
+                    body: JSON.stringify({ answered })
                 });
                 const result = await res.json();
             } catch (error: any) { /* // TODO: Notifications */ }
@@ -81,8 +81,8 @@ const WriteExam: NextPage = () => {
                 <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
                     <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
                         <Grid
-                            questions={exam?.data.questions.map(({ _id }) => ({
-                                answered: !!answeredQuestions[_id.toString()],
+                            questions={exam?.data?.questions?.map(({ _id }) => ({
+                                answered: !!answered[_id.toString()],
                             })) ?? []}
                         />
                     </div>
@@ -92,9 +92,9 @@ const WriteExam: NextPage = () => {
                                 <Question
                                     {...question}
                                     key={questionIdx}
-                                    chosen={answeredQuestions[question._id.toString()]}
-                                    onAnswer={AnswerID => setAnsweredQuestions({
-                                        ...answeredQuestions,
+                                    chosen={answered[question._id.toString()]}
+                                    onAnswer={AnswerID => setAnswered({
+                                        ...answered,
                                         [question._id.toString()]: AnswerID.toString()
                                     })}
                                 />
