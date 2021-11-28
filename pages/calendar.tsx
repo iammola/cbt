@@ -14,7 +14,7 @@ const Calendar: NextPage = () => {
     const activeYear = 2021;
     const selectedColors: { [key: string]: string } = {};
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const colors = ["bg-amber-400", "bg-indigo-400", "bg-cyan-400", "bg-pink-400", "bg-lime-400"];
+    const colors = ["bg-amber-400", "bg-indigo-400", "bg-cyan-400", "bg-pink-400", "bg-lime-400", "bg-violet-400", "bg-rose-400", "bg-teal-400", "bg-slate-400"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
