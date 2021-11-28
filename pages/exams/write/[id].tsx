@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
 
@@ -12,7 +12,12 @@ import type { ExamGETData } from "types/api/exams";
 const WriteExam: NextPage = () => {
     const router = useRouter();
     const [answeredQuestions, setAnsweredQuestions] = useState<{ [QuestionId: string]: string }>({});
+    const [modified, setModified] = useState(false);
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
+
+    useEffect(() => {
+        setModified(true);
+    }, [answeredQuestions]);
 
     return (
         <>
