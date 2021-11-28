@@ -5,7 +5,7 @@ import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
 import { Badges } from "components/Misc"
-import { HomeIcon, FileTextIcon } from "components/Misc/Icons";
+import { CalendarIcon, HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
 import type { MenuProps } from "types";
 
@@ -128,6 +128,32 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
 
                         </>
                     )}
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Main>
+                        <Link href="/calendar">
+                            <a
+                                className={classNames("flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5", {
+                                    "justify-start pr-3": open === true,
+                                    "justify-center sm:py-3": open === false,
+                                })}
+                            >
+                                <CalendarIcon
+                                    className={classNames("shrink-0 w-6 h-6", {
+                                        "ml-3": open === true
+                                    })}
+                                />
+                                <span
+                                    className={classNames("text-sm truncate", {
+                                        "hidden": open === false,
+                                        "block": open === true
+                                    })}
+                                >
+                                    Calendar
+                                </span>
+                            </a>
+                        </Link>
+                    </MenuItem.Main>
                 </MenuItem>
             </ul>
         </nav>
