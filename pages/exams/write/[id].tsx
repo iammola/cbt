@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
@@ -49,6 +49,20 @@ const WriteExam: NextPage = () => {
         if (cookies.exam?.examId === (router.query.id ?? [])) setAnsweredQuestions(cookies.exam.answers);
     }, [cookies.exam, router.query.id]);
 
+    async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
+        e?.preventDefault();
+
+        if (e !== undefined) {
+            try {
+                const res = await fetch(`/api/students/${cookies.account?._id}/results`, {
+                    method: "POST",
+                    body: JSON.stringify({ answeredQuestions })
+                });
+                const result = await res.json();
+            } catch (error: any) { /* // TODO: Notifications */ }
+        } else { /* // TODO: Toggle Confirm Modal */ }
+    }
+
     return (
         <>
             <Head>
@@ -59,7 +73,10 @@ const WriteExam: NextPage = () => {
                     body { overflow: unset !important; }
                 `}</style>
             </Head>
-            <form className="flex flex-col items-center justify-start w-screen min-h-screen">
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center justify-start w-screen min-h-screen"
+            >
                 <Bar exam={exam?.data.details.name} />
                 <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
                     <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
