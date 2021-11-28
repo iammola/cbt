@@ -9,7 +9,9 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
-import type { SelectOption } from "types";
+import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
+import type { ClientResponse, RouteData, RouteError, SelectOption } from "types";
+import { EventsGETData } from "types/api/events";
 
 const CreateEvent: NextPage = () => {
     const [date, setDate] = useState<Date | null>(null);
@@ -17,7 +19,7 @@ const CreateEvent: NextPage = () => {
     const [selectedExam, setSelectedExam] = useState({ _id: "", name: "Select exam" });
 
     const [exams, setExams] = useState<SelectOption[]>();
-    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
@@ -36,12 +38,12 @@ const CreateEvent: NextPage = () => {
             setSelectedExam({ _id: "", name: "Loading exams..." });
             try {
                 const res = await fetch(`/api/classes/${_id}/exams`);
-                const { success, data, error } = await res.json();
+                const result = await res.json() as ClientResponse<ClassExamGETData>;
 
-                if (success === true) {
-                    setExams(data.exams);
+                if (result.success === true) {
+                    setExams(result.data.exams);
                     setSelectedExam({ _id: "", name: "Select exam" });
-                } else throw new Error(error);
+                } else throw new Error(result.error);
             } catch (error: any) {
                 console.log({ error });
             }
@@ -65,15 +67,15 @@ const CreateEvent: NextPage = () => {
                     })
                 });
 
-                const { success, error } = await res.json();
+                const result = await res.json() as ClientResponse<EventsGETData>;
 
-                setSuccess(success);
+                setSuccess(result.success);
 
-                if (success === true) {
+                if (result.success === true) {
                     setDate(null);
                     setSelectedClass({ _id: "", name: "Select class" });
                     setSelectedExam({ _id: "", name: "Select exam" });
-                } else throw new Error(error);
+                } else throw new Error(result.error);
             } catch (error: any) {
                 console.log({ error });
             }

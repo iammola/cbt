@@ -4,11 +4,12 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { EventModel, ExamModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { ServerResponse } from "types";
+import { EventsGETData, EventsPOSTData } from "types/api/events";
 
-async function createEvent({ date, examId }: { date: Date; examId: string }): Promise<RouteResponse> {
+async function createEvent({ date, examId }: { date: Date; examId: string }): Promise<ServerResponse<EventsPOSTData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<EventsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         if (await ExamModel.exists({ _id: examId }) === false) throw new Error('Invalid Exam ID');
@@ -33,9 +34,9 @@ async function createEvent({ date, examId }: { date: Date; examId: string }): Pr
     return [success, status, message];
 }
 
-async function getEvents({ from, to, exact }: { from: string; to: string; exact?: string; }): Promise<RouteResponse> {
+async function getEvents({ from, to, exact }: { from: string; to: string; exact?: string; }): Promise<ServerResponse<EventsGETData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<EventsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await EventModel.find({ date: exact !== undefined ? new Date(exact) : { $gte: new Date(+from), $lte: new Date(+to) } }).lean();
@@ -54,7 +55,7 @@ async function getEvents({ from, to, exact }: { from: string; to: string; exact?
 }
 
 export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<EventsGETData | EventsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -62,7 +63,7 @@ export default async function handler({ body, query, method }: NextApiRequest, r
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createEvent(JSON.parse(body)) : getEvents(query as any));
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

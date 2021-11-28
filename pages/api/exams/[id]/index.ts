@@ -4,11 +4,12 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
-import type { ExamData, SubjectsRecord, RouteResponse } from "types";
+import type { SubjectsRecord, ServerResponse } from "types";
+import { ExamGETData, ExamPUTData } from "types/api/exams";
 
-async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; questions: any; }): Promise<RouteResponse> {
+async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; questions: any; }): Promise<ServerResponse<ExamPUTData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ExamPUTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         await ExamModel.updateOne({ _id }, {
@@ -17,7 +18,7 @@ async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; q
         }, { runValidators: true });
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data: _id,
+            data: { _id },
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
@@ -30,20 +31,20 @@ async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; q
     return [success, status, message];
 }
 
-async function getExam(_id: any): Promise<RouteResponse> {
+async function getExam(_id: any): Promise<ServerResponse<ExamGETData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const exam = await ExamModel.findById(_id, '-created -edited').lean();
         if (exam === null) throw new Error("Exam ID not found");
-        
+
         const { duration, instructions, questions, subjectId } = exam;
-        
+
         const subject: SubjectsRecord<true> = await SubjectsModel.findOne({
             "subjects._id": subjectId
         }, "class subjects.name.$").populate("class", "-_id name").lean();
-        
+
         if (subject === null) throw new Error("Exam Subject not found");
 
         [success, status, message] = [true, StatusCodes.OK, {
@@ -56,7 +57,7 @@ async function getExam(_id: any): Promise<RouteResponse> {
                         subject: subject?.subjects[0].name
                     },
                 }
-            } as ExamData,
+            },
             message: ReasonPhrases.OK,
         }];
     } catch (error: any) {
@@ -70,7 +71,7 @@ async function getExam(_id: any): Promise<RouteResponse> {
 }
 
 export default async function handler({ body, cookies, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ExamGETData | ExamPUTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["GET", "PUT"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -78,7 +79,7 @@ export default async function handler({ body, cookies, query, method }: NextApiR
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "PUT" ? updateExam(query.id, JSON.parse(cookies.account)._id, JSON.parse(body)) : getExam(query.id))
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

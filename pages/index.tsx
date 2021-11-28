@@ -14,11 +14,15 @@ import Background from "/public/BG.jpg";
 import { LoadingIcon } from 'components/Misc/Icons';
 import { useNotifications } from 'components/Misc/Notification';
 
+import type { ClientResponse, RouteData } from 'types';
+import type { PingData } from 'types/api/ping';
+import type { LoginData } from 'types/api/login';
+
 const Home: NextPage = () => {
     const router = useRouter();
     const [, setCookies] = useCookies(['account']);
     const [addNotification, removeNotification, Notifications] = useNotifications();
-    const { data: dbState } = useSWR('/api/ping/', url => fetch(url).then(res => res.json()));
+    const { data: dbState } = useSWR<RouteData<PingData>>('/api/ping/', url => fetch(url).then(res => res.json()));
 
     const [active, setActive] = useState(0);
     const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
@@ -48,14 +52,14 @@ const Home: NextPage = () => {
         try {
             const res = await fetch('/api/login/', {
                 method: "POST",
-                body: JSON.stringify({ code: code.join('') })
+                body: JSON.stringify({ code: +code.join('') })
             });
-            const { success, error, data } = await res.json();
+            const result = await res.json() as ClientResponse<LoginData>;
 
-            setSuccess(success);
-            if (success === true) {
+            setSuccess(result.success);
+            if (result.success === true) {
                 setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
-                setCookies("account", JSON.stringify(data), {
+                setCookies("account", JSON.stringify(result.data), {
                     path: '/',
                     sameSite: true
                 });
@@ -64,8 +68,10 @@ const Home: NextPage = () => {
                     timeout: 10e3,
                     Icon: () => BadgeCheckIcon({ className: "w-6 h-6 stroke-emerald-600" })
                 });
-            } else throw new Error(error);
+            } else throw new Error(result.error);
         } catch (error: any) {
+            setActive(0);
+            setCode(Array.from({ length: 6 }));
             if (navigator.onLine === false) setTimeout(handleOnline, 1e3);
             addNotification({
                 message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
@@ -192,7 +198,7 @@ const Home: NextPage = () => {
                     "bg-emerald-400": dbState?.data?.code === 1,
                     "bg-amber-400": dbState?.data?.code === 2,
                     "bg-pink-400": dbState?.data?.code === 3,
-                    "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code),
+                    "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code ?? -1),
                 })}
             />
             {Notifications}

@@ -27,13 +27,13 @@ type UserRecord<T = never> = RecordId & {
     name: {
         title: T;
         initials: string;
-        fullName: string;
-        firstName: string;
-        lastName: string;
+        full: string;
+        first: string;
+        last: string;
     };
     image: string;
     email: string;
-    code: string;
+    code: number;
 }
 
 export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
@@ -52,9 +52,9 @@ export type StudentRecord = UserRecord & {
 
 /* Event and Exam and Answer */
 
-export type EventRecord = RecordId & {
+export type EventRecord<P = false> = RecordId & {
     from: Date;
-    exams: ObjectId[];
+    exams: (P extends true ? ExamRecord : ObjectId)[];
 };
 
 type DateRecord<P = false> = {

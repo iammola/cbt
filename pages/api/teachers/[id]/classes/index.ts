@@ -4,15 +4,16 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ClassModel, SubjectsModel } from "db/models";
 
-import type { RouteResponse } from "types";
+import type { ServerResponse } from "types";
+import { TeacherClassGETData } from "types/api/teachers";
 
-async function getTeacherClasses(id: any, select: any): Promise<RouteResponse> {
+async function getTeacherClasses(id: any, select: any): Promise<ServerResponse<TeacherClassGETData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherClassGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const classes = (await SubjectsModel.find({ "subjects.teachers": id }, 'class').lean()).map(item => item.class);
-        const data = await ClassModel.find({ _id: classes }, select);
+        const data = await ClassModel.find({ _id: classes }, select).lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
             data,
@@ -29,7 +30,7 @@ async function getTeacherClasses(id: any, select: any): Promise<RouteResponse> {
 }
 
 export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherClassGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
@@ -37,7 +38,7 @@ export default async function handler({ query, method }: NextApiRequest, res: Ne
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await getTeacherClasses(query.id, query.select);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

@@ -4,14 +4,15 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { SessionModel } from "db/models";
 
-import type { SessionRecord, RouteResponse } from "types";
+import type { SessionRecord, ServerResponse } from "types";
+import type { SessionsGETData, SessionsPOSTData } from "types/api/sessions";
 
-async function getSessions(select: string): Promise<RouteResponse> {
+async function getSessions(select: string): Promise<ServerResponse<SessionsGETData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<SessionsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await SessionModel.find({}).select(select);
+        const data = await SessionModel.find({}, select).lean();
         [success, status, message] = [true, StatusCodes.OK, {
             data,
             message: ReasonPhrases.OK
@@ -26,9 +27,9 @@ async function getSessions(select: string): Promise<RouteResponse> {
     return [success, status, message];
 }
 
-async function createSession(session: SessionRecord): Promise<RouteResponse> {
+async function createSession(session: SessionRecord): Promise<ServerResponse<SessionsPOSTData>> {
     await connect();
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<SessionsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         if (session.current === true) await SessionModel.updateMany({ current: true }, {
@@ -38,7 +39,7 @@ async function createSession(session: SessionRecord): Promise<RouteResponse> {
             runValidators: true,
             arrayFilters: [{ "i.current": true }]
         });
-        const data = await SessionModel.create(session);
+        const data = (await SessionModel.create(session)).toObject();
         [success, status, message] = [true, StatusCodes.CREATED, {
             data,
             message: ReasonPhrases.CREATED
@@ -54,7 +55,7 @@ async function createSession(session: SessionRecord): Promise<RouteResponse> {
 }
 
 export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: RouteResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<SessionsPOSTData | SessionsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -62,7 +63,7 @@ export default async function handler({ method, query, body }: NextApiRequest, r
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createSession(JSON.parse(body)) : getSessions(query.select as string));
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }

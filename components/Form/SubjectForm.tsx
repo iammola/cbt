@@ -8,13 +8,16 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
+import type { ClientResponse, RouteData, RouteError } from "types";
+import type { ClassesGETData, ClassSubjectPOSTData } from "types/api/classes";
+
 const SubjectForm: NextPage = () => {
     const { mutate } = useSWRConfig();
     const [name, setName] = useState('');
     const [alias, setAlias] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState<boolean | undefined>();
-    const { data: classes, error } = useSWR('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [selectedClass, setSelectedClass] = useState({
         _id: "",
@@ -38,11 +41,11 @@ const SubjectForm: NextPage = () => {
                     method: "POST",
                     body: JSON.stringify({ name, alias })
                 });
-                const { success, error } = await res.json();
+                const result = await res.json() as ClientResponse<ClassSubjectPOSTData>;
 
-                setSuccess(success);
+                setSuccess(result.success);
 
-                if (success === true) {
+                if (result.success === true) {
                     setName('');
                     setAlias('');
                     setSelectedClass({
@@ -51,7 +54,7 @@ const SubjectForm: NextPage = () => {
                     });
 
                     mutate(`/api/classes/${selectedClass._id}/subjects`);
-                } else throw new Error(error);
+                } else throw new Error(result.error);
             } catch (error: any) {
                 console.log({ error });
             }
