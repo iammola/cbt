@@ -11,6 +11,7 @@ import { Bar, Grid, Timer, Question } from "components/Exam/Student";
 import type { ClientResponse, RouteData, UserRecord } from "types";
 import type { ExamGETData } from "types/api/exams";
 import type { StudentResultPOSTData } from "types/api/students";
+import { BanIcon, BellIcon, DesktopComputerIcon } from "@heroicons/react/outline";
 
 type PageCookies = {
     exam?: {
@@ -61,8 +62,27 @@ const WriteExam: NextPage = () => {
                     method: "POST",
                     body: JSON.stringify(cookies.exam)
                 });
-            } catch (error: any) { /* // TODO: Notifications */ }
                 const result = await res.json() as ClientResponse<StudentResultPOSTData>;
+                if (result.success === true) {
+                    addNotification({
+                        timeout: 5e3,
+                        message: `Result saved... 👍  Score: ${result.data.score}`,
+                        Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
+                    });
+                    removeCookies("exam");
+                    setTimeout(router.push, 1e3, '/');
+                } else throw new Error(result.error);
+            } catch (error: any) { 
+                addNotification([{
+                    timeout: 5e3,
+                    message: "Error saving result",
+                    Icon: () => <BanIcon className="w-6 h-6 stroke-red-600" />
+                }, {
+                    timeout: 3e3,
+                    message: "Retrying in 3 seconds",
+                    Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-emerald-500" />
+                }]);
+            }
         } else { /* // TODO: Toggle Confirm Modal */ }
     }
 
