@@ -70,6 +70,8 @@ const Home: NextPage = () => {
                 });
             } else throw new Error(result.error);
         } catch (error: any) {
+            setActive(0);
+            setCode(Array.from({ length: 6 }));
             if (navigator.onLine === false) setTimeout(handleOnline, 1e3);
             addNotification({
                 message: "Wrong 🙅‍♂️ ... Try again!! 🧨",

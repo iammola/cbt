@@ -6,6 +6,7 @@ import type { EventRecord } from "types";
 const EventSchema = new Schema<EventRecord>({
     from: {
         type: Date,
+        unique: true,
         validate: [(v: Date) => isFuture(v), 'New events must be after the current date']
     }, exams: [{
         type: Schema.Types.ObjectId,
