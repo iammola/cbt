@@ -22,8 +22,8 @@ type PageCookies = {
 const WriteExam: NextPage = () => {
     const router = useRouter();
     const [modified, setModified] = useState(false);
-    const [answeredQuestions, setAnsweredQuestions] = useState<{ [QuestionId: string]: string }>(savedAnswers ?? {});
     const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account", PageCookies>(['exam', 'account']);
+    const [answeredQuestions, setAnsweredQuestions] = useState<{ [QuestionId: string]: string }>({});
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
     useEffect(() => {
