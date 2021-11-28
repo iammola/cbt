@@ -27,8 +27,11 @@ const WriteExam: NextPage = () => {
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
     useEffect(() => {
-        if (modified === true) setCookies("savedAnswers", JSON.stringify(answeredQuestions), { path: '/' });
-    }, [answeredQuestions, modified, setCookies]);
+        if (modified === true) setCookies("exam", JSON.stringify({
+            ...cookies.exam,
+            answers: answeredQuestions
+        }), { path: '/exams/write/' });
+    }, [answeredQuestions, cookies.exam, modified, setCookies]);
 
     useEffect(() => {
         setModified(true);
