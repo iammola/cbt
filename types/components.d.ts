@@ -129,4 +129,11 @@ export type StudentModalProps = {
     show: boolean;
     close(): void;
     confirm(): void;
+    /**
+     * - '' = Idle
+     * - 0 = Failed
+     * - 1 = Success
+     * - -1 = Loading
+     */
+    success: '' | 0 | 1 | -1;
 }
