@@ -51,7 +51,7 @@ const WriteExam: NextPage = () => {
     }, [answered]);
 
     useEffect(() => {
-        if (firstLoad === true && cookies.exam === undefined && exam !== undefined) {
+        if (firstLoad === true && started === true && cookies.exam === undefined && exam !== undefined) {
             setFirstLoad(false);
             setCookies("exam", JSON.stringify({
                 answers: {},
@@ -59,7 +59,7 @@ const WriteExam: NextPage = () => {
                 examId: exam.data._id,
             }), { path: '/exams/write/' });
         }
-    }, [cookies.exam, exam, firstLoad, setCookies]);
+    }, [cookies.exam, exam, firstLoad, setCookies, started]);
 
     useEffect(() => {
         const { answers, examId } = cookies.exam ?? { answers: {} };
