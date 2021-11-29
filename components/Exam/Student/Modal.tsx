@@ -1,9 +1,12 @@
 import { Fragment, FunctionComponent } from "react";
 import { Transition, Dialog } from "@headlessui/react";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
+
+import { LoadingIcon } from "components/Misc/Icons";
 
 import type { StudentModalProps } from "types";
 
-const Modal: FunctionComponent<StudentModalProps> = ({ show, close, confirm }) => {
+const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, confirm }) => {
     return (
         <Transition show={show} appear as={Fragment}>
             <Dialog
@@ -49,6 +52,15 @@ const Modal: FunctionComponent<StudentModalProps> = ({ show, close, confirm }) =
                                 onClick={confirm}
                                 className="inline-flex justify-center px-4 py-3 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md shadow-sm hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                             >
+                                {success === -1 && (
+                                    <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+                                )}
+                                {success === 1 && (
+                                    <CheckIcon className="w-5 h-5 fill-white" />
+                                )}
+                                {success === 0 && (
+                                    <XIcon className="w-5 h-5 fill-white" />
+                                )}
                                 Yes, I&apos;m ready
                             </button>
                         </div>
