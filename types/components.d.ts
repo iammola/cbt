@@ -111,9 +111,8 @@ export type StudentGridProps = {
 }
 
 export type StudentBarProps = {
+    onSubmit(): void;
     exam?: ExamData['details']['name'];
-    success?: boolean;
-    loading: boolean;
 }
 
 export type StudentLoaderProps = {
