@@ -12,7 +12,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
         if (started === true) {
             const end = new Date(timeBounds?.end ?? addMinutes(new Date(), timeout ?? 1/12));
 
-            if (timeBounds === undefined) setCookies("timeBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
+            if (timeBounds === undefined) setCookies("timeBounds", JSON.stringify({ end, start: new Date() }), { path: '/exam/write' });
 
             const timer = setInterval(() => {
                 const start = new Date();
