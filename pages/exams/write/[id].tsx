@@ -40,6 +40,7 @@ const WriteExam: NextPage = () => {
             ...cookies.exam,
             answers: answered
         }), { path: '/exams/write/' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [answered, firstLoad, modified, setCookies]);
 
     useEffect(() => {
