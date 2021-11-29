@@ -125,3 +125,9 @@ export type StudentLoaderProps = {
         questions: number;
     }
 }
+
+export type StudentModalProps = {
+    show: boolean;
+    close(): void;
+    confirm(): void;
+}
