@@ -5,6 +5,8 @@ import { CheckIcon, ChevronRightIcon, XIcon } from "@heroicons/react/solid";
 
 import { LoadingIcon } from "components/Misc/Icons";
 
+import { classNames } from "utils";
+
 import type { StudentBarProps } from "types/components";
 
 const Bar: FunctionComponent<StudentBarProps> = ({ exam, loading, success }) => {
@@ -44,7 +46,11 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, loading, success }) => 
             </div>
             <button
                 type="submit"
-                className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
+                className={classNames("flex gap-4 items-center justify-center mt-3 py-2.5 px-6 text-sm font-medium rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white", {
+                    "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500": success === undefined,
+                    "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success === true,
+                    "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
+                })}
             >
                 {loading === true && (
                     <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
