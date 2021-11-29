@@ -143,7 +143,10 @@ const WriteExam: NextPage = () => {
                         </div>
                     </div>
                 </div>
-                <Timer timeout={exam?.data.details.duration} />
+                <Timer
+                    submit={() => setSubmitting(true)}
+                    timeout={exam?.data.details.duration}
+                />
             </form>
             <Loader
                 start={() => setStarted(true)}
