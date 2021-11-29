@@ -6,13 +6,13 @@ import type { StudentTimerProps } from "types";
 
 const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout }) => {
     const [displayTime, setDisplay] = useState('');
-    const [{ examBounds }, setCookies] = useCookies(['examBounds']);
+    const [{ timeBounds }, setCookies] = useCookies(['timeBounds']);
 
     useEffect(() => {
         if (started === true) {
-            const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout ?? 1/12));
+            const end = new Date(timeBounds?.end ?? addMinutes(new Date(), timeout ?? 1/12));
 
-            if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
+            if (timeBounds === undefined) setCookies("timeBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
 
             const timer = setInterval(() => {
                 const start = new Date();
@@ -29,7 +29,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
 
             return () => clearInterval(timer);
         }
-    }, [examBounds, setCookies, started, submit, timeout]);
+    }, [timeBounds, setCookies, started, submit, timeout]);
 
     return (
         <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700">
