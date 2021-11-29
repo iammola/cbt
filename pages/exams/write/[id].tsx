@@ -11,7 +11,7 @@ import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Stude
 import type { ClientResponse, RouteData, UserRecord } from "types";
 import type { ExamGETData } from "types/api/exams";
 import type { StudentResultPOSTData } from "types/api/students";
-import { BanIcon, BellIcon, DesktopComputerIcon } from "@heroicons/react/outline";
+import { BanIcon, BellIcon, DatabaseIcon } from "@heroicons/react/outline";
 
 type PageCookies = {
     exam?: {
@@ -32,8 +32,6 @@ const WriteExam: NextPage = () => {
     const [started, setStarted] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
 
-    const [success, setSuccess] = useState<boolean | undefined>();
-    const [loading, setLoading] = useState(false);
     const [modified, setModified] = useState(false);
 
     useEffect(() => {
@@ -70,42 +68,37 @@ const WriteExam: NextPage = () => {
     }, [cookies.exam, firstLoad, router.query.id]);
 
     async function handleSubmit() {
+        setSuccess(-1);
 
-            setLoading(true);
+        try {
+            const res = await fetch(`/api/students/${cookies.account?._id}/results/`, {
+                method: "POST",
+                body: JSON.stringify(cookies.exam)
+            });
+            const result = await res.json() as ClientResponse<StudentResultPOSTData>;
 
-            try {
-                const res = await fetch(`/api/students/${cookies.account?._id}/results/`, {
-                    method: "POST",
-                    body: JSON.stringify(cookies.exam)
-                });
-                const result = await res.json() as ClientResponse<StudentResultPOSTData>;
-
-                setSuccess(result.success);
-                setTimeout(setSuccess, 75e2, undefined);
-
-                if (result.success === true) {
-                    addNotification({
-                        timeout: 5e3,
-                        message: `Result saved 👍...  Score: ${result.data.score}`,
-                        Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
-                    });
-                    removeCookies("exam");
-                    setTimeout(router.push, 1e3, '/home');
-                } else throw new Error(result.error);
-            } catch (error: any) {
-                addNotification([{
+            if (result.success === true) {
+                setSuccess(1);
+                addNotification({
                     timeout: 5e3,
-                    message: "Error saving result",
-                    Icon: () => <BanIcon className="w-6 h-6 stroke-red-600" />
-                }, {
-                    timeout: 3e3,
-                    message: "Retrying in 3 seconds",
-                    Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-emerald-500" />
-                }]);
-                // setTimeout(handleSubmit, 25e2);
-            }
-
-            setLoading(false);
+                    message: `Result saved 👍...  Score: ${result.data.score}`,
+                    Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
+                });
+                removeCookies("exam");
+                setTimeout(router.push, 1e3, '/home');
+            } else throw new Error(result.error);
+        } catch (error: any) {
+            setSuccess(0);
+            addNotification([{
+                timeout: 5e3,
+                message: "Error saving result",
+                Icon: () => <BanIcon className="w-6 h-6 stroke-red-600" />
+            }, {
+                timeout: 2e3,
+                message: error.message,
+                Icon: () => <DatabaseIcon className="w-6 h-6 stroke-sky-500" />
+            }]);
+            setTimeout(setSuccess, 25e2, '');
         }
     }
 
@@ -121,8 +114,6 @@ const WriteExam: NextPage = () => {
             </Head>
             <form className="flex flex-col items-center justify-start w-screen min-h-screen">
                 <Bar
-                    loading={loading}
-                    success={success}
                     exam={exam?.data.details.name}
                 />
                 <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
