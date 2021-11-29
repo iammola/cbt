@@ -40,7 +40,7 @@ const WriteExam: NextPage = () => {
             ...cookies.exam,
             answers: answered
         }), { path: '/exams/write/' });
-    }, [answered, cookies.exam, modified, setCookies]);
+    }, [answered, firstLoad, modified, setCookies]);
 
     useEffect(() => {
         setModified(true);
