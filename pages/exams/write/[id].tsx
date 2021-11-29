@@ -25,10 +25,13 @@ type PageCookies = {
 const WriteExam: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
     const router = useRouter();
-    const [modified, setModified] = useState(false);
     const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account", PageCookies>(['exam', 'account']);
     const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
+
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [modified, setModified] = useState(false);
 
     useEffect(() => {
         if (modified === true) setCookies("exam", JSON.stringify({
@@ -57,12 +60,17 @@ const WriteExam: NextPage = () => {
         e?.preventDefault();
 
         if (e !== undefined) {
+            setLoading(true);
             try {
                 const res = await fetch(`/api/students/${cookies.account?._id}/results`, {
                     method: "POST",
                     body: JSON.stringify(cookies.exam)
                 });
                 const result = await res.json() as ClientResponse<StudentResultPOSTData>;
+
+                setSuccess(result.success);
+                setTimeout(setSuccess, 75e2, undefined);
+
                 if (result.success === true) {
                     addNotification({
                         timeout: 5e3,
@@ -72,7 +80,7 @@ const WriteExam: NextPage = () => {
                     removeCookies("exam");
                     setTimeout(router.push, 1e3, '/');
                 } else throw new Error(result.error);
-            } catch (error: any) { 
+            } catch (error: any) {
                 addNotification([{
                     timeout: 5e3,
                     message: "Error saving result",
@@ -84,6 +92,7 @@ const WriteExam: NextPage = () => {
                 }]);
                 setTimeout(handleSubmit, 25e2, true);
             }
+            setLoading(false);
         } else { /* // TODO: Toggle Confirm Modal */ }
     }
 
