@@ -1,7 +1,9 @@
 import { format } from "date-fns";
 import useSWRImmutable from "swr";
 import { FunctionComponent } from "react";
-import { ChevronRightIcon } from "@heroicons/react/solid";
+import { CheckIcon, ChevronRightIcon, XIcon } from "@heroicons/react/solid";
+
+import { LoadingIcon } from "components/Misc/Icons";
 
 import type { StudentBarProps } from "types/components";
 
@@ -44,6 +46,15 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, loading, success }) => 
                 type="submit"
                 className="flex items-center justify-center gap-2 py-3 px-8 tracking-wider text-xs font-medium bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm"
             >
+                {loading === true && (
+                    <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+                )}
+                {success === true && (
+                    <CheckIcon className="w-5 h-5 fill-white" />
+                )}
+                {success === false && (
+                    <XIcon className="w-5 h-5 fill-white" />
+                )}
                 Submit
             </button>
         </div>
