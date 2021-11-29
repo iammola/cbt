@@ -102,6 +102,7 @@ export type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
 export type StudentTimerProps = {
     submit(): void;
     timeout?: number;
+    started: boolean;
 }
 
 export type StudentGridProps = {

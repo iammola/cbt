@@ -144,6 +144,7 @@ const WriteExam: NextPage = () => {
                     </div>
                 </div>
                 <Timer
+                    started={started}
                     submit={() => setSubmitting(true)}
                     timeout={exam?.data.details.duration}
                 />
