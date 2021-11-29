@@ -1,7 +1,9 @@
 import { Fragment, FunctionComponent } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
-const Modal: FunctionComponent<{ show: boolean; close(): void; confirm(): void }> = ({ show, close, confirm }) => {
+import type { StudentModalProps } from "types";
+
+const Modal: FunctionComponent<StudentModalProps> = ({ show, close, confirm }) => {
     return (
         <Transition show={show} appear as={Fragment}>
             <Dialog
