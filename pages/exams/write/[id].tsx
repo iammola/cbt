@@ -43,7 +43,7 @@ const WriteExam: NextPage = () => {
     }, [answered, firstLoad, modified, setCookies]);
 
     useEffect(() => {
-        setModified(true);
+        if (Object.keys(answered).length > 0) setModified(true);
     }, [answered]);
 
     useEffect(() => {
