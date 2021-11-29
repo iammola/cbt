@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
-import type { CreateQuestion, AnswerRecord, ExamData, QuestionRecord } from ".";
+import type { CreateQuestion, AnswerRecord, ExamData, ExamRecord, QuestionRecord } from ".";
 
 export type NotificationProps = {
     message: string;
@@ -114,4 +114,13 @@ export type StudentBarProps = {
     exam?: ExamData['details']['name'];
     success?: boolean;
     loading: boolean;
+}
+
+export type StudentLoaderProps = {
+    show: boolean;
+    exam?: Pick<ExamRecord, 'instructions' | 'duration'> & {
+        class: string;
+        subject: string;
+        questions: number;
+    }
 }
