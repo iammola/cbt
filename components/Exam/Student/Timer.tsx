@@ -4,13 +4,12 @@ import { addMinutes, formatDuration, intervalToDuration } from "date-fns";
 
 import type { StudentTimerProps } from "types";
 
-const Timer: FunctionComponent<StudentTimerProps> = ({ submit, timeout }) => {
+const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout }) => {
     const [displayTime, setDisplay] = useState('');
     const [{ examBounds }, setCookies] = useCookies(['examBounds']);
 
     useEffect(() => {
-        if (timeout === undefined) setDisplay("Loading Timer");
-        else {
+        if (started === true) {
             const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout));
 
             if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
@@ -30,7 +29,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ submit, timeout }) => {
 
             return () => clearInterval(timer);
         }
-    }, [setCookies, examBounds, timeout, submit]);
+    }, [examBounds, setCookies, started, submit, timeout]);
 
     return (
         <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700">
