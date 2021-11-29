@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
 
 import { useNotifications } from "components/Misc/Notification";
-import { Bar, Grid, Timer, Question } from "components/Exam/Student";
+import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Student";
 
 import type { ClientResponse, RouteData, UserRecord } from "types";
 import type { ExamGETData } from "types/api/exams";
@@ -36,12 +36,14 @@ const WriteExam: NextPage = () => {
     const [modified, setModified] = useState(false);
 
     useEffect(() => {
-        if (modified === true && firstLoad === false) setCookies("exam", JSON.stringify({
-            ...cookies.exam,
-            answers: answered
-        }), { path: '/exams/write/' });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [answered, firstLoad, modified, setCookies]);
+        if (modified === true && firstLoad === false) {
+            setCookies("exam", JSON.stringify({
+                ...cookies.exam,
+                answers: answered
+            }), { path: '/exams/write/' });
+            setModified(false);
+        }
+    }, [answered, cookies.exam, firstLoad, modified, setCookies]);
 
     useEffect(() => {
         if (Object.keys(answered).length > 0) setModified(true);
@@ -69,10 +71,11 @@ const WriteExam: NextPage = () => {
     async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
         e?.preventDefault();
 
-        if (e !== undefined) {
+        if (e === undefined) {
             setLoading(true);
+
             try {
-                const res = await fetch(`/api/students/${cookies.account?._id}/results`, {
+                const res = await fetch(`/api/students/${cookies.account?._id}/results/`, {
                     method: "POST",
                     body: JSON.stringify(cookies.exam)
                 });
@@ -84,11 +87,11 @@ const WriteExam: NextPage = () => {
                 if (result.success === true) {
                     addNotification({
                         timeout: 5e3,
-                        message: `Result saved... 👍  Score: ${result.data.score}`,
+                        message: `Result saved 👍...  Score: ${result.data.score}`,
                         Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
                     });
                     removeCookies("exam");
-                    setTimeout(router.push, 1e3, '/');
+                    // setTimeout(router.push, 1e3, '/home');
                 } else throw new Error(result.error);
             } catch (error: any) {
                 addNotification([{
@@ -100,10 +103,14 @@ const WriteExam: NextPage = () => {
                     message: "Retrying in 3 seconds",
                     Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-emerald-500" />
                 }]);
-                setTimeout(handleSubmit, 25e2, true);
+                // setTimeout(handleSubmit, 25e2);
             }
+
             setLoading(false);
-        } else { /* // TODO: Toggle Confirm Modal */ }
+        } else {
+            /* // TODO: Toggle Confirm Modal */
+            handleSubmit(undefined);
+        }
     }
 
     return (
