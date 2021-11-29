@@ -95,7 +95,10 @@ export type ResultRecord = RecordId & {
         started: Date;
         score: number;
         examId: ObjectId;
-        answers: ObjectId[];
+        answers: {
+            answer: ObjectId;
+            question: ObjectId;
+        }[];
     }[];
 }
 
