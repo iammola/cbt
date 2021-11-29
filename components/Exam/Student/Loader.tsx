@@ -1,7 +1,7 @@
 import { Fragment, FunctionComponent } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
-const Modal: FunctionComponent<{ show: boolean }> = ({ show }) => {
+const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
     return (
         <Transition show={show} appear as={Fragment}>
             <Dialog
@@ -46,4 +46,4 @@ const Modal: FunctionComponent<{ show: boolean }> = ({ show }) => {
     );
 }
 
-export default Modal;
+export default Loader;
