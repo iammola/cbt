@@ -1,7 +1,9 @@
 import { Fragment, FunctionComponent } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
-const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
+import type { StudentLoaderProps } from "types";
+
+const Loader: FunctionComponent<StudentLoaderProps> = ({ show, exam }) => {
     return (
         <Transition show={show} appear as={Fragment}>
             <Dialog
