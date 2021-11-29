@@ -10,7 +10,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
 
     useEffect(() => {
         if (started === true) {
-            const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout));
+            const end = new Date(examBounds?.end ?? addMinutes(new Date(), timeout ?? 1/12));
 
             if (examBounds === undefined) setCookies("examBounds", JSON.stringify({ end, start: new Date() }), { path: '/' });
 
