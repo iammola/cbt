@@ -110,7 +110,11 @@ const WriteExam: NextPage = () => {
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center justify-start w-screen min-h-screen"
             >
-                <Bar exam={exam?.data.details.name} />
+                <Bar
+                    loading={loading}
+                    success={success}
+                    exam={exam?.data.details.name}
+                />
                 <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
                     <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
                         <Grid
