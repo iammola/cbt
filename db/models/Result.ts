@@ -10,22 +10,20 @@ const ResultSchema = new Schema<ResultRecord>({
         required: [true, "Student ID required"]
     }, results: [{
         _id: false,
-        type: {
-            score: Number,
-            started: Date,
-            ended: Date,
-            examId: {
-                type: Schema.Types.ObjectId,
-                ref: 'Exam',
-            }, answers: [{
+        score: Number,
+        started: Date,
+        ended: Date,
+        examId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Exam',
+        }, answers: [{
+            default: undefined,
+            type: {
                 _id: false,
-                default: undefined,
-                type: {
-                    answer: Schema.Types.ObjectId,
-                    question: Schema.Types.ObjectId
-                },
-            }]
-        }
+                answer: Schema.Types.ObjectId,
+                question: Schema.Types.ObjectId
+            },
+        }]
     }]
 });
 
