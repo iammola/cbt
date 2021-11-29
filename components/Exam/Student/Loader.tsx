@@ -3,7 +3,7 @@ import { Transition, Dialog } from "@headlessui/react";
 
 import type { StudentLoaderProps } from "types";
 
-const Loader: FunctionComponent<StudentLoaderProps> = ({ show, exam }) => {
+const Loader: FunctionComponent<StudentLoaderProps> = ({ show, start, exam }) => {
     return (
         <Transition show={show} appear as={Fragment}>
             <Dialog
@@ -75,7 +75,10 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({ show, exam }) => {
                                         ))}
                                     </ul>
                                 </div>
-                                <button className="shadow-md rounded-full text-sm text-white bg-sky-400 hover:bg-sky-500 px-8 py-3 focus:outline-none">
+                                <button
+                                    onClick={start}
+                                    className="shadow-md rounded-full text-sm text-white bg-sky-400 hover:bg-sky-500 px-8 py-3 focus:outline-none"
+                                >
                                     Start Exam
                                 </button>
                             </>

@@ -118,6 +118,7 @@ export type StudentBarProps = {
 
 export type StudentLoaderProps = {
     show: boolean;
+    start(): void;
     exam?: Pick<ExamRecord, 'instructions' | 'duration'> & {
         class: string;
         subject: string;
