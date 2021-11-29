@@ -29,12 +29,14 @@ const WriteExam: NextPage = () => {
     const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
+    const [firstLoad, setFirstLoad] = useState(true);
+
     const [success, setSuccess] = useState<boolean | undefined>();
     const [loading, setLoading] = useState(false);
     const [modified, setModified] = useState(false);
 
     useEffect(() => {
-        if (modified === true) setCookies("exam", JSON.stringify({
+        if (modified === true && firstLoad === false) setCookies("exam", JSON.stringify({
             ...cookies.exam,
             answers: answered
         }), { path: '/exams/write/' });
@@ -45,16 +47,23 @@ const WriteExam: NextPage = () => {
     }, [answered]);
 
     useEffect(() => {
-        if (cookies.exam === undefined && exam !== undefined) setCookies("exam", JSON.stringify({
-            answers: {},
-            started: new Date(),
-            examId: exam.data._id,
-        }), { path: '/exams/write/' });
-    }, [cookies.exam, exam, setCookies]);
+        if (firstLoad === true && cookies.exam === undefined && exam !== undefined) {
+            setFirstLoad(false);
+            setCookies("exam", JSON.stringify({
+                answers: {},
+                started: new Date(),
+                examId: exam.data._id,
+            }), { path: '/exams/write/' });
+        }
+    }, [cookies.exam, exam, firstLoad, setCookies]);
 
     useEffect(() => {
-        if (cookies.exam?.examId === (router.query.id ?? [])) setAnswered(cookies.exam.answers);
-    }, [cookies.exam, router.query.id]);
+        const { answers, examId } = cookies.exam ?? { answers: {} };
+        if (firstLoad === true && examId === router.query.id && Object.keys(answers).length > 0) {
+            setFirstLoad(false);
+            setAnswered(answers);
+        }
+    }, [cookies.exam, firstLoad, router.query.id]);
 
     async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
         e?.preventDefault();
