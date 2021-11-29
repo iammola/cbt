@@ -32,15 +32,19 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({ show, exam }) => {
                     leaveTo="opacity-0 scale-95"
                 >
                     <div className="flex flex-col items-center gap-1 rounded-3xl shadow-lg p-12 bg-white w-full sm:w-[50rem]">
-                        <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
-                            <span>Loading</span>{' '}
-                            <span className="text-sky-500">Exam</span>{' '}
-                            <span>🎲</span>
-                        </Dialog.Title>
-                        <div
-                            style={{ borderRightColor: 'rgb(14, 165, 233)' }}
-                            className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin mt-5"
-                        />
+                        {exam === undefined && (
+                            <>
+                                <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+                                    <span>Loading</span>{' '}
+                                    <span className="text-sky-500">Exam</span>{' '}
+                                    <span>🎲</span>
+                                </Dialog.Title>
+                                <div
+                                    style={{ borderRightColor: 'rgb(14, 165, 233)' }}
+                                    className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin mt-5"
+                                />
+                            </>
+                        )}
                     </div>
                 </Transition.Child>
             </Dialog>
