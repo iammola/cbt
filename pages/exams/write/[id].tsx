@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
@@ -69,10 +69,8 @@ const WriteExam: NextPage = () => {
         }
     }, [cookies.exam, firstLoad, router.query.id]);
 
-    async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
-        e?.preventDefault();
+    async function handleSubmit() {
 
-        if (e === undefined) {
             setLoading(true);
 
             try {
@@ -108,9 +106,6 @@ const WriteExam: NextPage = () => {
             }
 
             setLoading(false);
-        } else {
-            /* // TODO: Toggle Confirm Modal */
-            handleSubmit(undefined);
         }
     }
 
@@ -124,10 +119,7 @@ const WriteExam: NextPage = () => {
                     body { overflow: unset !important; }
                 `}</style>
             </Head>
-            <form
-                onSubmit={handleSubmit}
-                className="flex flex-col items-center justify-start w-screen min-h-screen"
-            >
+            <form className="flex flex-col items-center justify-start w-screen min-h-screen">
                 <Bar
                     loading={loading}
                     success={success}
