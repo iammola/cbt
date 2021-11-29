@@ -29,6 +29,7 @@ const WriteExam: NextPage = () => {
     const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
+    const [started, setStarted] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
 
     const [success, setSuccess] = useState<boolean | undefined>();
