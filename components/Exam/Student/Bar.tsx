@@ -5,7 +5,7 @@ import { ChevronRightIcon } from "@heroicons/react/solid";
 
 import type { StudentBarProps } from "types/components";
 
-const Bar: FunctionComponent<StudentBarProps> = ({ exam, loading, success }) => {
+const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
     const { data: currentSession } = useSWRImmutable('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     return (
@@ -42,6 +42,7 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, loading, success }) => 
             </div>
             <button
                 type="button"
+                onClick={onSubmit}
                 className="flex gap-4 items-center justify-center mt-3 py-2.5 px-6 text-sm font-medium rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-violet-400 hover:bg-violet-500 focus:ring-violet-500"
             >
                 Submit
