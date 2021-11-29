@@ -5,7 +5,7 @@ import { ChevronRightIcon } from "@heroicons/react/solid";
 
 import type { StudentBarProps } from "types/components";
 
-const Bar: FunctionComponent<StudentBarProps> = ({ exam }) => {
+const Bar: FunctionComponent<StudentBarProps> = ({ exam, loading, success }) => {
     const { data: currentSession } = useSWRImmutable('/api/sessions/current/', url => fetch(url).then(res => res.json()));
 
     return (

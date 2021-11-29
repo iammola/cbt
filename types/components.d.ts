@@ -112,4 +112,6 @@ export type StudentGridProps = {
 
 export type StudentBarProps = {
     exam?: ExamData['details']['name'];
+    success?: boolean;
+    loading: boolean;
 }
