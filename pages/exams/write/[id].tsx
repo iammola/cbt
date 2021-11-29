@@ -91,7 +91,7 @@ const WriteExam: NextPage = () => {
                         Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
                     });
                     removeCookies("exam");
-                    // setTimeout(router.push, 1e3, '/home');
+                    setTimeout(router.push, 1e3, '/home');
                 } else throw new Error(result.error);
             } catch (error: any) {
                 addNotification([{
