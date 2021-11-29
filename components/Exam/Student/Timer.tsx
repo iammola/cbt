@@ -4,7 +4,7 @@ import { addMinutes, formatDuration, intervalToDuration } from "date-fns";
 
 import type { StudentTimerProps } from "types";
 
-const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
+const Timer: FunctionComponent<StudentTimerProps> = ({ submit, timeout }) => {
     const [displayTime, setDisplay] = useState('');
     const [{ examBounds }, setCookies] = useCookies(['examBounds']);
 
@@ -19,8 +19,8 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
                 const start = new Date();
 
                 if (end < start) {
-                    // TODO: Use this component to start exam with a function call. - Report time allowed has elapsed
                     clearInterval(timer);
+                    setTimeout(submit, 1e3);
                     setDisplay("Time's up!! 🙅‍♂️");
                 } else {
                     const time = formatDuration(intervalToDuration({ end, start }));
@@ -30,7 +30,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ timeout }) => {
 
             return () => clearInterval(timer);
         }
-    }, [setCookies, examBounds, timeout]);
+    }, [setCookies, examBounds, timeout, submit]);
 
     return (
         <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700">
