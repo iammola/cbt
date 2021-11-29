@@ -38,14 +38,14 @@ const Modal: FunctionComponent<{ show: boolean; close(): void; confirm(): void }
                             <button
                                 type="button"
                                 onClick={confirm}
-                                className="inline-flex justify-center px-4 py-2 text-xs font-medium text-rose-900 bg-rose-100 border border-transparent rounded-md hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                                className="inline-flex justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                             >
                                 No, I&apos;m not ready
                             </button>
                             <button
                                 type="button"
                                 onClick={close}
-                                className="inline-flex justify-center px-4 py-2 text-xs font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                className="inline-flex justify-center px-4 py-3 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md shadow-sm hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                             >
                                 Yes, I&apos;m ready
                             </button>
