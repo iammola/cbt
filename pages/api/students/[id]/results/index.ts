@@ -18,13 +18,25 @@ async function createResult(id: any, result: RequestBody): Promise<ServerRespons
         const exam = await ExamModel.findById(result.examId, '-_id questions._id questions.answers._id questions.answers.isCorrect').lean();
         if (exam === null) throw new Error("Exam does not exist");
 
-        const score = exam.questions.map(({ _id, answers }) => answers.find(e => e.isCorrect)?._id?.equals(result.answers[_id.toString()] ?? '') === true ? 1 : 0).reduce((a: number, b) => a + b, 0);
+        const items = exam.questions.map(({ _id, answers }) => {
+            const answer = result.answers[_id.toString()];
+            return {
+                _id, answer,
+                score: +(answers.find(e => e.isCorrect)?._id?.equals(answer) ?? 0)
+            };
+        }).filter(i => i.answer);
+
+        const score = items.reduce((a, b) => a + b.score, 0);
 
         await ResultModel.findOneAndUpdate({ student: id }, {
             $push: {
                 results: {
                     ...result,
-                    score, ended: new Date()
+                    score, ended: new Date(),
+                    answers: items.reduce((a: any[], b) => [...a, {
+                        question: b._id,
+                        answer: b.answer,
+                    }], [])
                 }
             }
         }, {
