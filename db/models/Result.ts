@@ -18,8 +18,12 @@ const ResultSchema = new Schema<ResultRecord>({
                 type: Schema.Types.ObjectId,
                 ref: 'Exam',
             }, answers: [{
-                type: Schema.Types.ObjectId,
+                _id: false,
                 default: undefined,
+                type: {
+                    answer: Schema.Types.ObjectId,
+                    question: Schema.Types.ObjectId
+                },
             }]
         }
     }]
