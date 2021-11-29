@@ -30,13 +30,10 @@ const Modal: FunctionComponent<{ show: boolean; close(): void; confirm(): void }
                     leaveTo="opacity-0 scale-95"
                 >
                     <div className="flex flex-col items-center gap-7 rounded-3xl shadow-lg p-12 bg-white w-full sm:w-[50rem]">
-                        <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
-                            <span className="text-rose-500">Submit</span>{' '}
-                            <span>the exam?</span>
+                        <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
+                            <span>Are you sure you want to</span>{' '}
+                            <span className="text-blue-500">submit?</span>
                         </Dialog.Title>
-                        <Dialog.Description>
-                            <span>Are you sure you want to submit</span>{' '}
-                        </Dialog.Description>
                         <div className="flex gap-5 item-center justify-end mt-2">
                             <button
                                 type="button"
