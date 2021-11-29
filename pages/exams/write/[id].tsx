@@ -145,6 +145,22 @@ const WriteExam: NextPage = () => {
                 </div>
                 <Timer timeout={exam?.data.details.duration} />
             </form>
+            <Loader
+                start={() => setStarted(true)}
+                exam={exam === undefined ? undefined : {
+                    ...exam.data.details.name,
+                    duration: exam.data.details.duration,
+                    questions: exam.data.questions.length,
+                    instructions: exam.data.details.instructions
+                }}
+                show={exam === undefined || started === false}
+            />
+            <Modal
+                show={submitting}
+                success={success}
+                confirm={handleSubmit}
+                close={() => setSubmitting(false)}
+            />
             {Notifications}
         </>
     );
