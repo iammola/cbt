@@ -29,7 +29,7 @@ const Modal: FunctionComponent<{ show: boolean; close(): void; confirm(): void }
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                 >
-                    <div className="flex flex-col items-center gap-7 rounded-3xl shadow-lg p-12 bg-white w-full sm:w-[50rem]">
+                    <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white md:w-[50vw] lg:w-[42.5vw] xl:w-[35.5vw]">
                         <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
                             <span>Are you sure you want to</span>{' '}
                             <span className="text-blue-500">submit?</span>
