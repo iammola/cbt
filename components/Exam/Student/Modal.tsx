@@ -45,7 +45,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, cl
                                 <>
                                     <span>You&apos;ve</span>{' '}
                                     <span className="text-blue-500">used up</span>{' '}
-                                    <span>the <br /> allowed time for this exam</span>
+                                    <span>your <br /> allocated time for this exam</span>
                                 </>
                             )}
                         </Dialog.Title>
