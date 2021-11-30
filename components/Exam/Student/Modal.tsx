@@ -62,7 +62,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, cl
                             <button
                                 type="button"
                                 onClick={confirm}
-                                className="inline-flex gap-3 justify-center px-5 py-3 text-sm font-medium tracking-wide text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                className="inline-flex gap-3 justify-center px-5 py-3 text-sm font-medium tracking-wide text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:pointer-events-none"
                             >
                                 {success === -1 && (
                                     <LoadingIcon className="animate-spin w-5 h-5 stroke-sky-900" />
