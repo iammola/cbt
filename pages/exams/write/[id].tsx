@@ -77,6 +77,10 @@ const WriteExam: NextPage = () => {
         }
     }, [cookies.exam, firstLoad, router.query.id]);
 
+    useEffect(() => {
+        if (exam?.data === undefined) router.push('/home');
+    }, [exam, router]);
+
     async function handleSubmit() {
         setSuccess(-1);
 
