@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
+import { BanIcon, BellIcon, DatabaseIcon } from "@heroicons/react/outline";
 
 import { useNotifications } from "components/Misc/Notification";
 import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Student";
@@ -11,7 +12,6 @@ import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Stude
 import type { ClientResponse, RouteData, UserRecord } from "types";
 import type { ExamGETData } from "types/api/exams";
 import type { StudentResultPOSTData } from "types/api/students";
-import { BanIcon, BellIcon, DatabaseIcon } from "@heroicons/react/outline";
 
 type PageCookies = {
     exam?: {
