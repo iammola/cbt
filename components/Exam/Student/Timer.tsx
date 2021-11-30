@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FunctionComponent, useEffect, useState } from "react";
 import { formatDuration, intervalToDuration, minutesToMilliseconds } from "date-fns";
@@ -5,26 +6,28 @@ import { formatDuration, intervalToDuration, minutesToMilliseconds } from "date-
 import type { StudentTimerProps } from "types";
 
 type PageCookie = {
-    timeBounds: { left: number; start: number; }
+    timeBounds: { left: number; start: number; examId: string; }
 };
 
 const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout }) => {
+    const router = useRouter();
     const [displayTime, setDisplay] = useState('');
     const [{ timeBounds }, setCookies] = useCookies<"timeBounds", Partial<PageCookie>>(['timeBounds']);
     const [timeLeft, setTimeLeft] = useState(timeBounds?.left ?? 0);
 
     useEffect(() => {
         if (started === true && (timeBounds === undefined || displayTime === '')) {
-            const obj = timeBounds ?? {
+            const obj = {
                 start: Date.now(),
+                examId: router.query.id as string,
                 left: minutesToMilliseconds(timeout ?? 1 / 12)
             }
-            if (displayTime === '') obj.start = Date.now();
+            if (displayTime === '' && timeBounds?.examId === obj.examId) obj.left = timeBounds.left;
 
             setTimeLeft(obj.left);
             setCookies("timeBounds", JSON.stringify(obj), { path: '/' });
         }
-    }, [displayTime, setCookies, started, timeBounds, timeout]);
+    }, [displayTime, router.query.id, setCookies, started, timeBounds, timeout]);
 
     useEffect(() => {
         if (started === true && timeBounds !== undefined) setDisplay(`${formatDuration(intervalToDuration({
@@ -45,7 +48,8 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
                     setTimeLeft(timeLeft => timeLeft - 1e3);
                     if (timeLeft % 1e4 === 0) setCookies("timeBounds", JSON.stringify({
                         left: timeLeft,
-                        start: timeBounds.start
+                        start: timeBounds.start,
+                        examId: timeBounds.examId
                     }), { path: '/' });
                 }
             }, 1e3);
