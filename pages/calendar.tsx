@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { NextPage } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import { addMonths, endOfWeek, getDaysInMonth, isThisMonth, lastDayOfMonth, setDate, startOfDay, startOfMonth, subMonths } from "date-fns";
+import { addMonths, endOfWeek, getDaysInMonth, lastDayOfMonth, setDate, startOfDay, startOfMonth, subMonths } from "date-fns";
 
 import { classNames } from "utils";
 
