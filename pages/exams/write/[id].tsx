@@ -41,7 +41,7 @@ const WriteExam: NextPage = () => {
             setCookies("exam", JSON.stringify({
                 ...cookies.exam,
                 answers: answered
-            }), { path: '/exams/write/' });
+            }), { path: '/' });
             setModified(false);
         }
     }, [answered, cookies.exam, firstLoad, modified, setCookies]);
@@ -51,13 +51,21 @@ const WriteExam: NextPage = () => {
     }, [answered]);
 
     useEffect(() => {
-        if (firstLoad === true && started === true && cookies.exam === undefined && exam !== undefined) {
+        if (firstLoad === true && started === true && exam !== undefined) {
             setFirstLoad(false);
-            setCookies("exam", JSON.stringify({
+
+            const obj = {
                 answers: {},
                 started: new Date(),
                 examId: exam.data._id,
-            }), { path: '/exams/write/' });
+            }
+
+            if (cookies.exam?.examId === exam.data._id.toString()) {
+                obj.started = cookies.exam.started;
+                obj.answers = cookies.exam.answers;
+            }
+
+            setCookies("exam", JSON.stringify(obj), { path: '/' });
         }
     }, [cookies.exam, exam, firstLoad, setCookies, started]);
 
