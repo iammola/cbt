@@ -130,6 +130,7 @@ export type StudentLoaderProps = {
 export type StudentModalProps = {
     show: boolean;
     close(): void;
+    forced: boolean;
     confirm(): void;
     /**
      * - '' = Idle
