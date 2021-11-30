@@ -10,7 +10,7 @@ import { useNotifications } from "components/Misc/Notification";
 import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Student";
 
 import type { ClientResponse, RouteData, UserRecord } from "types";
-import type { StudentResultPOSTData } from "types/api/students";
+import type { StudentExamGETData, StudentResultPOSTData } from "types/api/students";
 
 type PageCookies = {
     exam?: {
@@ -26,7 +26,7 @@ const WriteExam: NextPage = () => {
     const router = useRouter();
     const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account" | "timeBounds", PageCookies>(['exam', 'account', 'timeBounds']);
     const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
-    const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
+    const { data: exam } = useSWRImmutable<RouteData<StudentExamGETData>>(router.query.id !== undefined ? `/api/students/${cookies.account?._id}/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
     const [started, setStarted] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
