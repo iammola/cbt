@@ -34,7 +34,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, con
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                 >
-                    <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white md:w-[50vw] lg:w-[42.5vw] xl:w-[35.5vw]">
+                    <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white w-[65vw] lg:w-[42.5vw] xl:w-[35.5vw]">
                         <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
                             <span>Are you sure you want to</span>{' '}
                             <span className="text-sky-500">submit?</span>
