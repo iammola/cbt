@@ -9,10 +9,12 @@ import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
     const [show, setShow] = useState(false);
-    const [{ account }, , removeCookies] = useCookies(['account']);
+    const [{ account }, , removeCookies] = useCookies(['account', 'exam', 'timeBounds']);
 
     function logout() {
+        removeCookies("exam");
         removeCookies('account');
+        removeCookies("timeBounds");
         setTimeout(router.push, 5e2, '/');
     }
 

@@ -20,7 +20,7 @@ import type { LoginData } from 'types/api/login';
 
 const Home: NextPage = () => {
     const router = useRouter();
-    const [, setCookies] = useCookies(['account']);
+    const [, setCookies, removeCookies] = useCookies(['account', 'exam', 'timeBounds']);
     const [addNotification, removeNotification, Notifications] = useNotifications();
     const { data: dbState } = useSWR<RouteData<PingData>>('/api/ping/', url => fetch(url).then(res => res.json()));
 
@@ -58,6 +58,8 @@ const Home: NextPage = () => {
 
             setSuccess(result.success);
             if (result.success === true) {
+                removeCookies("exam");
+                removeCookies("timeBounds");
                 setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
                 setCookies("account", JSON.stringify(result.data), {
                     path: '/',

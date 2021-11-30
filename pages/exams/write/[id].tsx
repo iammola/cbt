@@ -25,7 +25,7 @@ type PageCookies = {
 const WriteExam: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
     const router = useRouter();
-    const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account", PageCookies>(['exam', 'account']);
+    const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account" | "timeBounds", PageCookies>(['exam', 'account', 'timeBounds']);
     const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
     const { data: exam } = useSWRImmutable<RouteData<ExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
@@ -87,6 +87,7 @@ const WriteExam: NextPage = () => {
                     Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
                 });
                 removeCookies("exam");
+                removeCookies("timeBounds");
                 setTimeout(router.push, 1e3, '/home');
             } else throw new Error(result.error);
         } catch (error: any) {
