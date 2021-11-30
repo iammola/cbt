@@ -23,6 +23,8 @@ const Calendar: NextPage = () => {
     const { data: events } = useSWR<RouteData<EventsRangeGETData>>(datesObj !== undefined ? `/api/events/range?from=${datesObj.range[0]}&to=${datesObj.range[1]}` : null, url => fetch(url ?? '').then(res => res.json()));
 
     const generateDates = useCallback(() => {
+        const today = new Date();
+
         const dates: number[] = [];
         const date = new Date(activeYear, selectedMonth);
 
@@ -44,10 +46,15 @@ const Calendar: NextPage = () => {
             for (let i = 1; i <= nextMonthFirstWeek.getDate(); i++) dates.push(i);
         }
 
+        const thisMonthRange = today.getMonth() === selectedMonth ? { start, end } :
+            (subMonths(today, 1).getMonth() === selectedMonth ? { end: dates.length, start: end } :
+                (addMonths(today, 1).getMonth() === selectedMonth) ? { start: 0, end: start } :
+                    { start: -1, end: -1 });
+
         setDatesObj({
             end: end.getDate(),
             dates, start, range,
-            today: (isThisMonth(date) ? new Date().getDate() + start : 0) - 1
+            today: dates.findIndex((b, i) => b === today.getDate() && (i >= thisMonthRange.start || i <= thisMonthRange.start))
         });
     }, [activeYear, selectedMonth]);
 
