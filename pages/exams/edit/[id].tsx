@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
@@ -14,6 +15,10 @@ const EditExam: NextPage = () => {
     const [{ account }] = useCookies(['account']);
     const { data: exam } = useSWRImmutable<RouteData<TeacherExamGETData>>(router.query.id !== undefined ? `/api/teachers/${account?._id}/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
+    useEffect(() => {
+        if (exam !== undefined && exam.data === undefined) router.push('/home');
+    }, [exam, router]);
+
     return (
         <>
             <Head>
@@ -21,7 +26,7 @@ const EditExam: NextPage = () => {
                 <meta name="description" content="Exam Editing | GRS CBT" />
             </Head>
             <Form data={exam?.data} />
-            <Loader show={exam === undefined} />
+            <Loader show={exam?.data === undefined} />
         </>
     );
 }
