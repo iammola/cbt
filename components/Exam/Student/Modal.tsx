@@ -36,10 +36,16 @@ const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, cl
                 >
                     <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white w-[65vw] lg:w-[42.5vw] xl:w-[35.5vw]">
                         <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
-                            {forced === false && (
+                            {forced === false ? (
                                 <>
                                     <span>Are you sure you&apos;re <br /> ready to</span>{' '}
                                     <span className="text-blue-500">submit?</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span>You&apos;ve</span>{' '}
+                                    <span className="text-blue-500">used up</span>{' '}
+                                    <span>the <br /> allowed time for this exam</span>
                                 </>
                             )}
                         </Dialog.Title>
@@ -67,7 +73,15 @@ const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, cl
                                 {success === 0 && (
                                     <XIcon className="w-5 h-5 fill-sky-900" />
                                 )}
-                                Yes, I&apos;m ready
+                                {forced === false ? (
+                                    <>
+                                        Yes, I&apos;m ready
+                                    </>
+                                ) : (
+                                    <>
+                                        Submit Exam
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
