@@ -12,9 +12,9 @@ const Navbar: FunctionComponent = () => {
     const [{ account }, , removeCookies] = useCookies(['account', 'exam', 'timeBounds']);
 
     function logout() {
-        removeCookies("exam");
-        removeCookies('account');
-        removeCookies("timeBounds");
+        removeCookies("exam", { path: '/' });
+        removeCookies('account', { path: '/' });
+        removeCookies("timeBounds", { path: '/' });
         setTimeout(router.push, 5e2, '/');
     }
 

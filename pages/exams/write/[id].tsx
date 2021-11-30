@@ -95,8 +95,8 @@ const WriteExam: NextPage = () => {
                     message: `Result saved 👍...  Score: ${result.data.score}`,
                     Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />
                 });
-                removeCookies("exam");
-                removeCookies("timeBounds");
+                removeCookies("exam", { path: '/' });
+                removeCookies("timeBounds", { path: '/' });
                 setTimeout(router.push, 1e3, '/home');
             } else throw new Error(result.error);
         } catch (error: any) {
@@ -117,7 +117,7 @@ const WriteExam: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Subject | Event | Exam | CBT | Grand Regal School</title>
+                <title>{exam?.data.details.name.class} {exam?.data.details.name.subject ?? "Loading"} | {cookies.account?.name.full} | Exam | CBT | Grand Regal School</title>
                 <meta name="description" content="Subject Exam | GRS CBT" />
                 <style>{`
                     #main,

@@ -58,8 +58,8 @@ const Home: NextPage = () => {
 
             setSuccess(result.success);
             if (result.success === true) {
-                removeCookies("exam");
-                removeCookies("timeBounds");
+                removeCookies("exam", { path: '/' });
+                removeCookies("timeBounds", { path: '/' });
                 setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
                 setCookies("account", JSON.stringify(result.data), {
                     path: '/',
