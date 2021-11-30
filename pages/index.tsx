@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         try {
             const res = await fetch('/api/login/', {
                 method: "POST",
-                body: JSON.stringify({ code: code.join('') })
+                body: JSON.stringify({ code: +code.join('') })
             });
             const result = await res.json() as ClientResponse<LoginData>;
 
@@ -70,6 +70,8 @@ const Home: NextPage = () => {
                 });
             } else throw new Error(result.error);
         } catch (error: any) {
+            setActive(0);
+            setCode(Array.from({ length: 6 }));
             if (navigator.onLine === false) setTimeout(handleOnline, 1e3);
             addNotification({
                 message: "Wrong 🙅‍♂️ ... Try again!! 🧨",

@@ -7,17 +7,18 @@ import { connect } from "db";
 import { SessionModel, StudentModel } from "db/models";
 
 import type { StudentRecord, ServerResponse } from "types";
+import { StudentsPOSTData } from "types/api/students";
 
-async function createStudent({ academic, ...student }: Pick<StudentRecord, 'email' | 'name'> & { academic: { class: string; subject: string; } }): Promise<ServerResponse> {
+async function createStudent({ academic, ...student }: Pick<StudentRecord, 'email' | 'name'> & { academic: { class: string; subject: string; } }): Promise<ServerResponse<StudentsPOSTData>> {
     await connect();
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<StudentsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
+        const code = generateCode();
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms').lean();
 
-        const { code, ...data } = await StudentModel.create({
-            ...student,
-            code: generateCode(),
+        await StudentModel.create({
+            ...student, code,
             academic: currentSession === null ? [] : [{
                 session: currentSession._id,
                 terms: [{
@@ -27,7 +28,7 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
             }]
         });
         [success, status, message] = [true, StatusCodes.CREATED, {
-            data,
+            data: { code },
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {
@@ -40,8 +41,8 @@ async function createStudent({ academic, ...student }: Pick<StudentRecord, 'emai
     return [success, status, message];
 }
 
-export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+export default async function handler({ method, body }: NextApiRequest, res: NextApiResponse) {
+    let [success, status, message]: ServerResponse<StudentsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
@@ -49,7 +50,7 @@ export default async function handler({ method, query, body }: NextApiRequest, r
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
     } else[success, status, message] = await (method === "POST" ? createStudent(JSON.parse(body)) : [success, status, message]);
 
-    if (typeof message !== "object") message = { message };
+    if (typeof message !== "object") message = { message, error: message };
 
     res.status(status).json({ success, ...message });
 }
