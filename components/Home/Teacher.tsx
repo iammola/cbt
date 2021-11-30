@@ -16,8 +16,8 @@ const Home: FunctionComponent = () => {
         <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
             <Sidebar />
             <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+                <Navbar />
                 <section className="flex flex-col gap-7 items-start justify-start w-full py-7 px-6 grow bg-gray-50 overflow-y-auto">
-                    <Navbar />
                     <h2 className="text-3xl sm:text-5xl font-bold text-gray-700">
                         Dashboard
                     </h2>
