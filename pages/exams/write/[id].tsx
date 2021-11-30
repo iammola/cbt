@@ -34,6 +34,7 @@ const WriteExam: NextPage = () => {
 
     const [modified, setModified] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [forceSubmit, setForceSubmit] = useState(false);
     const [success, setSuccess] = useState<'' | 0 | 1 | -1>('');
 
     useEffect(() => {
@@ -154,7 +155,7 @@ const WriteExam: NextPage = () => {
                 </div>
                 <Timer
                     started={started}
-                    submit={() => setSubmitting(true)}
+                    submit={() => setForceSubmit(true)}
                     timeout={exam?.data.details.duration}
                 />
             </form>
@@ -169,10 +170,10 @@ const WriteExam: NextPage = () => {
                 show={exam === undefined || started === false}
             />
             <Modal
-                show={submitting}
+                show={submitting === true || forceSubmit === true}
                 success={success}
                 confirm={handleSubmit}
-                close={() => setSubmitting(false)}
+                close={() => forceSubmit === false && setSubmitting(false)}
             />
             {Notifications}
         </>
