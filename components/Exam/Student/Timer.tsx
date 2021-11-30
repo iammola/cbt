@@ -50,12 +50,11 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
                     if (timeLeft === 1e3) setTimeout(timeUp, 1e3, timer);
                     setTimeLeft(timeLeft => timeLeft - 1e3);
 
-                if (timeLeft % 3e3 === 0) setCookies("timeBounds", JSON.stringify({
-                    left: timeLeft,
-                    start: timeBounds.start,
-                    examId: timeBounds.examId
-                }), { path: '/' });
-            }, 1e3);
+                    setCookies("timeBounds", JSON.stringify({
+                        left: timeLeft,
+                        start: timeBounds.start,
+                        examId: timeBounds.examId
+                    }), { path: '/' });
                 }, 1e3);
 
                 return () => clearInterval(timer);
