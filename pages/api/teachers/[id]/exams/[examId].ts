@@ -1,8 +1,57 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-import type { ServerResponse } from "types";
+import { connect } from "db";
+import { ExamModel, SubjectsModel, TeacherModel } from "db/models";
+
 import { TeacherExamGETData } from "types/api/teachers";
+import type { ServerResponse, SubjectsRecord } from "types";
+
+async function getExam(teacherId: any, examId: any): Promise<ServerResponse<TeacherExamGETData>> {
+    await connect();
+    let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+
+    try {
+        if (await TeacherModel.exists({ _id: teacherId }) === false) throw new Error("Teacher does not exist");
+
+        const exam = await ExamModel.findById(examId, '-created -edited').lean();
+        if (exam === null) throw new Error("Exam ID not found");
+
+        const { duration, instructions, questions, subjectId } = exam;
+
+        const subject: SubjectsRecord<true> = await SubjectsModel.findOne({
+            subjects: {
+                $elemMatch: {
+                    _id: subjectId,
+                    teachers: teacherId
+                }
+            },
+        }, "class subjects.$").populate("class", "-_id name").lean();
+
+        if (subject === null) throw new Error("Exam Subject not found / Teacher not authorized to GET exam");
+
+        [success, status, message] = [true, StatusCodes.OK, {
+            data: {
+                _id: examId, questions,
+                details: {
+                    duration, subjectId, instructions,
+                    name: {
+                        class: subject.class.name,
+                        subject: subject?.subjects[0].name
+                    },
+                }
+            },
+            message: ReasonPhrases.OK,
+        }];
+    } catch (error: any) {
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error: error.message,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
+    }
+
+    return [success, status, message];
+}
 
 export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
