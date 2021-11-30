@@ -36,7 +36,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, con
                 >
                     <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white w-[65vw] lg:w-[42.5vw] xl:w-[35.5vw]">
                         <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
-                            <span>Are you sure you want to</span>{' '}
+                            <span>Are you sure you&apos;re <br /> ready to</span>{' '}
                             <span className="text-blue-500">submit?</span>
                         </Dialog.Title>
                         <div className="flex gap-6 item-center justify-center mt-2">
