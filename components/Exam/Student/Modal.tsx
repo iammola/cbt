@@ -37,7 +37,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, con
                     <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white w-[65vw] lg:w-[42.5vw] xl:w-[35.5vw]">
                         <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
                             <span>Are you sure you want to</span>{' '}
-                            <span className="text-sky-500">submit?</span>
+                            <span className="text-blue-500">submit?</span>
                         </Dialog.Title>
                         <div className="flex gap-5 item-center justify-end mt-2">
                             <button
@@ -50,7 +50,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, con
                             <button
                                 type="button"
                                 onClick={confirm}
-                                className="inline-flex gap-3 justify-center px-4 py-3 text-sm font-medium text-sky-900 bg-sky-100 border border-transparent rounded-md shadow-sm hover:bg-sky-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-500"
+                                className="inline-flex gap-3 justify-center px-5 py-3 text-sm font-medium tracking-wide text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                             >
                                 {success === -1 && (
                                     <LoadingIcon className="animate-spin w-5 h-5 stroke-sky-900" />
