@@ -6,7 +6,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 
 import type { StudentModalProps } from "types";
 
-const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, confirm }) => {
+const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, close, confirm }) => {
     return (
         <Transition show={show} appear as={Fragment}>
             <Dialog
@@ -36,17 +36,23 @@ const Modal: FunctionComponent<StudentModalProps> = ({ show, success, close, con
                 >
                     <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white w-[65vw] lg:w-[42.5vw] xl:w-[35.5vw]">
                         <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
-                            <span>Are you sure you&apos;re <br /> ready to</span>{' '}
-                            <span className="text-blue-500">submit?</span>
+                            {forced === false && (
+                                <>
+                                    <span>Are you sure you&apos;re <br /> ready to</span>{' '}
+                                    <span className="text-blue-500">submit?</span>
+                                </>
+                            )}
                         </Dialog.Title>
                         <div className="flex gap-6 item-center justify-center mt-2">
-                            <button
-                                type="button"
-                                onClick={close}
-                                className="inline-flex justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
-                            >
-                                No, I&apos;m not ready
-                            </button>
+                            {forced === false && (
+                                <button
+                                    type="button"
+                                    onClick={close}
+                                    className="inline-flex justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                                >
+                                    No, I&apos;m not ready
+                                </button>
+                            )}
                             <button
                                 type="button"
                                 onClick={confirm}

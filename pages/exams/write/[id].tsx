@@ -172,6 +172,7 @@ const WriteExam: NextPage = () => {
             <Modal
                 show={submitting === true || forceSubmit === true}
                 success={success}
+                forced={forceSubmit}
                 confirm={handleSubmit}
                 close={() => forceSubmit === false && setSubmitting(false)}
             />
