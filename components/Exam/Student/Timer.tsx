@@ -24,27 +24,31 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
             }
             if (displayTime === '' && timeBounds?.examId === obj.examId) obj.left = timeBounds.left;
 
-            setTimeLeft(obj.left);
-            setCookies("timeBounds", JSON.stringify(obj), { path: '/' });
+            if (obj.left > (timeBounds?.left ?? 0)) setTimeLeft(obj.left);
+            if (timeBounds === undefined) setCookies("timeBounds", JSON.stringify(obj), { path: '/' });
         }
     }, [displayTime, router.query.id, setCookies, started, timeBounds, timeout]);
 
     useEffect(() => {
-        if (started === true && timeBounds !== undefined) setDisplay(`${formatDuration(intervalToDuration({
-            start: timeBounds.start,
-            end: timeBounds.start + timeLeft
+        if (started === true && (timeBounds?.left ?? 0) > 0) setDisplay(`${formatDuration(intervalToDuration({
+            start: (timeBounds?.start ?? 0),
+            end: (timeBounds?.start ?? 0) + timeLeft
         }))} left`);
-    }, [started, timeBounds, timeLeft]);
+    }, [started, timeBounds?.left, timeBounds?.start, timeLeft]);
 
     useEffect(() => {
+        function timeUp(timer?: number) {
+            submit();
+            setTimeLeft(0);
+            clearInterval(timer);
+            setDisplay("Time's up!! 🙅‍♂️");
+        }
+
         if (started === true && timeBounds !== undefined) {
-            const timer = setInterval(() => {
-                if (timeLeft < 1e3) {
-                    setTimeLeft(0);
-                    clearInterval(timer);
-                    setTimeout(submit, 1e3);
-                    setDisplay("Time's up!! 🙅‍♂️");
-                } else setTimeLeft(timeLeft => timeLeft - 1e3);
+            if (timeLeft > 0) {
+                const timer = setInterval(() => {
+                    if (timeLeft === 1e3) setTimeout(timeUp, 1e3, timer);
+                    setTimeLeft(timeLeft => timeLeft - 1e3);
 
                 if (timeLeft % 3e3 === 0) setCookies("timeBounds", JSON.stringify({
                     left: timeLeft,
@@ -52,8 +56,11 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
                     examId: timeBounds.examId
                 }), { path: '/' });
             }, 1e3);
+                }, 1e3);
 
-            return () => clearInterval(timer);
+                return () => clearInterval(timer);
+            }
+            timeUp();
         }
     }, [setCookies, started, submit, timeBounds, timeLeft]);
 
