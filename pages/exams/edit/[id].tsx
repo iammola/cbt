@@ -1,6 +1,7 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
 
 import { Form, Loader } from "components/Exam/Teacher";
@@ -10,7 +11,8 @@ import type { TeacherExamGETData } from "types/api/teachers";
 
 const EditExam: NextPage = () => {
     const router = useRouter();
-    const { data: exam } = useSWRImmutable<RouteData<TeacherExamGETData>>(router.query.id !== undefined ? `/api/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
+    const [{ account }] = useCookies(['account']);
+    const { data: exam } = useSWRImmutable<RouteData<TeacherExamGETData>>(router.query.id !== undefined ? `/api/teachers/${account?._id}/exams/${router.query.id}/` : null, url => fetch(url ?? '').then(res => res.json()));
 
     return (
         <>
