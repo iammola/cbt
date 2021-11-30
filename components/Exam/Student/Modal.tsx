@@ -66,13 +66,13 @@ const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, cl
                                 className="inline-flex gap-3 justify-center px-5 py-3 text-sm font-medium tracking-wide text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:pointer-events-none"
                             >
                                 {success === -1 && (
-                                    <LoadingIcon className="animate-spin w-5 h-5 stroke-sky-900" />
+                                    <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
                                 )}
                                 {success === 1 && (
-                                    <CheckIcon className="w-5 h-5 fill-sky-900" />
+                                    <CheckIcon className="w-5 h-5 fill-white" />
                                 )}
                                 {success === 0 && (
-                                    <XIcon className="w-5 h-5 fill-sky-900" />
+                                    <XIcon className="w-5 h-5 fill-white" />
                                 )}
                                 {forced === false ? (
                                     <>
