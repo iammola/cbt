@@ -1,5 +1,7 @@
 import { FunctionComponent } from "react";
 
+import Exams from "./Exams";
+
 const Home: FunctionComponent = () => {
     return (
         <section className="w-screen h-screen bg-gray-200/25">
@@ -18,6 +20,9 @@ const Home: FunctionComponent = () => {
                 >
                     Log out
                 </button>
+            </div>
+            <div className="px-10 md:px-16 xl:px-20 w-full">
+                <Exams />
             </div>
         </section>
     );
