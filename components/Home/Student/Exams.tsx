@@ -84,7 +84,7 @@ const Exam: FunctionComponent = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm">
                                 {(() => {
-                                    const date = formatRelative(i.date, new Date());
+                                    const date = formatRelative(new Date(i.date), new Date());
                                     return date[0].toUpperCase() + date.slice(1)
                                 })()}
                             </td>
