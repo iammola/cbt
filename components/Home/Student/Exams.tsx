@@ -13,6 +13,7 @@ import type { StudentExamsGETData } from "types/api/students";
 
 const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ addNotification }) => {
     const [{ account }] = useCookies(['account']);
+    const [firstLoad, setFirstLoad] = useState(true);
     const [notification, setNotification] = useState<number>();
     const [exams, setExams] = useState<StudentExamsGETData>([]);
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
@@ -23,6 +24,18 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
             locked: isPast(new Date(exam.date)) === false
         })));
     }, [data]);
+
+    useEffect(() => {
+        if (firstLoad === true && data === undefined) {
+            setFirstLoad(false);
+            setNotification(addNotification({
+                message: "Loading Exams",
+                timeout: 3e3,
+                Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-blue-500" />
+            })[0]);
+            setTimeout(setNotification, 5e3, undefined)
+        }
+    }, [addNotification, data, firstLoad]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
@@ -95,8 +108,6 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
                     ))}
                 </tbody>
             </table>
-            {exams.length === 0 && data === undefined && "No exams"}
-            {exams.length === 0 && data === undefined}
         </section>
     );
 }
