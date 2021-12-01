@@ -17,33 +17,12 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
     const [exams, setExams] = useState<StudentExamsGETData>([]);
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
 
-    const setLocked = useCallback(() => {
-        if (exams.findIndex(i => isPast(new Date(i.date)) === true && i.locked !== false) !== -1) setExams(exams.map(exam => ({
+    useEffect(() => {
+        if (data !== undefined) setExams(data.data.map(exam => ({
             ...exam,
             locked: isPast(new Date(exam.date)) === false
         })));
-    }, [exams]);
-
-    useEffect(() => {
-        setLocked();
-        const timer = setInterval(setLocked, 5e3);
-
-        return () => clearInterval(timer);
-    }, [exams, setLocked]);
-
-    useEffect(() => {
-        if (data !== undefined) {
-            setExams(data.data);
-            setLocked();
-        } else if (notification === undefined && exams?.length === 0) {
-            setNotification(addNotification({
-                message: "Loading Exams",
-                timeout: 5e3,
-                Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-blue-500" />
-            })[0]);
-            setTimeout(setNotification, 5e3, undefined)
-        }
-    }, [addNotification, data, exams, notification, setLocked]);
+    }, [data]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
@@ -116,6 +95,8 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
                     ))}
                 </tbody>
             </table>
+            {exams.length === 0 && data === undefined && "No exams"}
+            {exams.length === 0 && data === undefined}
         </section>
     );
 }
