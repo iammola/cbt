@@ -4,22 +4,10 @@ import { FunctionComponent, useCallback, useEffect, useState } from "react";
 
 import { classNames } from "utils";
 
+import type { StudentExamsGETData } from "types/api/students";
+
 const Exam: FunctionComponent = () => {
-    const [exams, setExams] = useState([{
-        _id: '1',
-        locked: true,
-        duration: 50,
-        questions: 50,
-        subject: "Pre-Vocational Studies",
-        date: new Date("December 1, 2021 8:30 AM"),
-    }, {
-        _id: '2',
-        locked: true,
-        duration: 50,
-        questions: 60,
-        subject: "Basic Science and Technology",
-        date: new Date("December 1, 2021 12:30 PM"),
-    }]);
+    const [exams, setExams] = useState<StudentExamsGETData>([]);
 
     const setLocked = useCallback(() => {
         if (exams.findIndex(i => isPast(i.date) === true && i.locked !== false) !== -1) setExams(exams.map(exam => ({
