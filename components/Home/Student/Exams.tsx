@@ -102,7 +102,7 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
                                         type="button"
                                         className="flex items-center justify-center py-2 px-4 rounded-full bg-gray-500 hover:bg-gray-600"
                                     >
-                                        <Link href="/exams/write/">
+                                        <Link href={`/exams/write/${i._id}`}>
                                             <a className="text-white text-xs font-medium tracking-wide">
                                                 Go to exam
                                             </a>
