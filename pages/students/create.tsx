@@ -2,16 +2,19 @@ import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
 import { FormEvent, useEffect, useState } from "react";
+import { BriefcaseIcon } from "@heroicons/react/outline";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
+import { useNotifications } from "components/Misc/Notification";
 
 import type { ClientResponse, RouteData, RouteError } from "types";
 import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
 
 const CreateStudents: NextPage = () => {
+    const [addNotification, , Notifications] = useNotifications();
     const [email, setEmail] = useState('');
     const [name, setName] = useState<{ [K in "full" | "first" | "last" | "initials"]?: string }>({});
     const [selectedClass, setSelectedClass] = useState({
@@ -43,7 +46,7 @@ const CreateStudents: NextPage = () => {
                     }
                 })
             });
-            const { success, error } = await res.json();
+            const { success, data, error } = await res.json();
 
             setSuccess(success);
 
@@ -55,6 +58,11 @@ const CreateStudents: NextPage = () => {
                     name: "Select class"
                 })
                 setSelectedSubjects([]);
+                addNotification({
+                    timeout: 75e2,
+                    message: `Success... ${name.first}'s code is ${data.code}`,
+                    Icon: () => BriefcaseIcon({ className: "w-5 h-5 text-indigo-600" })
+                });
             } else throw new Error(error);
         } catch (error: any) {
             console.log({ error });
@@ -279,6 +287,7 @@ const CreateStudents: NextPage = () => {
                         Create Profile
                     </button>
                 </form>
+                {Notifications}
             </section>
         </>
     );
