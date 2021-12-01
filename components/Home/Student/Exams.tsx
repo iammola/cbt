@@ -35,7 +35,7 @@ const Exam: FunctionComponent = () => {
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
             <table className="rounded-lg shadow-md overflow-hidden min-w-full">
-                <thead className="bg-gray-50 text-gray-700">
+                <thead className="bg-gray-200 text-gray-700">
                     <tr>
                         {["Subject", "Status", "Date"].map(i => (
                             <th
