@@ -4,12 +4,13 @@ import { useCookies } from "react-cookie";
 import { formatRelative, isPast } from "date-fns";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 
+import { NotificationsHook } from "components/Misc/Notification";
 import { classNames } from "utils";
 
 import type { RouteData } from "types";
 import type { StudentExamsGETData } from "types/api/students";
 
-const Exam: FunctionComponent = () => {
+const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ addNotification }) => {
     const [{ account }] = useCookies(['account']);
     const [exams, setExams] = useState<StudentExamsGETData>([]);
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
