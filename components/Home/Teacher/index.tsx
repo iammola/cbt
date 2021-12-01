@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { useCookies } from "react-cookie";
 import { FunctionComponent } from "react";
 
-import { Subjects } from "components/Misc";
+import Subjects from "./Subjects";
 import { Sidebar, Navbar } from "components/Layout";
 
 import type { RouteData } from "types";
