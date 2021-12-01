@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatRelative } from "date-fns";
+import { formatRelative, isPast } from "date-fns";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 
 import { classNames } from "utils";
@@ -20,6 +20,20 @@ const Exam: FunctionComponent = () => {
         subject: "Basic Science and Technology",
         date: new Date("December 1, 2021 12:30 PM"),
     }]);
+
+    const setLocked = useCallback(() => {
+        if (exams.findIndex(i => isPast(i.date) === true && i.locked !== false) !== -1) setExams(exams.map(exam => ({
+            ...exam,
+            locked: isPast(exam.date) === false
+        })));
+    }, [exams]);
+
+    useEffect(() => {
+        setLocked();
+        const timer = setInterval(setLocked, 15e3);
+
+        return () => clearInterval(timer);
+    }, [exams, setLocked]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
