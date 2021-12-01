@@ -1,9 +1,11 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 
 import Exams from "./Exams";
 import { classNames } from "utils";
 
 const Home: FunctionComponent = () => {
+    const [activeTab, setActiveTab] = useState('Exams');
+
     return (
         <section className="w-screen h-screen bg-gray-200/25">
             <div className="flex items-center justify-start gap-5 bg-white w-full h-28 shadow-sm px-10 md:px-16 xl:px-20 py-4">
@@ -27,14 +29,15 @@ const Home: FunctionComponent = () => {
                     {["Exams", "Results"].map(label => (
                         <div
                             key={label}
+                            onClick={() => setActiveTab(label)}
                             className={classNames("group flex items-center relative px-2 pb-3 gap-3.5 cursor-pointer after:absolute after:w-full after:h-0.5 after:left-0 after:-bottom-0.5 after:transition-all hover:after:bg-gray-600", {
-                                "after:bg-gray-600": false
+                                "after:bg-gray-600": activeTab === label
                             })}
                         >
                             <span
                                 className={classNames("font-semibold w-max group-hover:text-gray-800 transition-all", {
-                                    "text-gray-600": true,
-                                    "text-gray-800": false
+                                    "text-gray-600": activeTab !== label,
+                                    "text-gray-800": activeTab === label
                                 })}
                             >
                                 {label}
