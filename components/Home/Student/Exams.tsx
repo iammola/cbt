@@ -32,8 +32,10 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
     }, [exams, setLocked]);
 
     useEffect(() => {
-        if (data !== undefined) setExams(data.data);
-        else if (notification === undefined && exams.length === 0) {
+        if (data !== undefined) {
+            setExams(data.data);
+            setLocked();
+        } else if (notification === undefined && exams.length === 0) {
             setNotification(addNotification({
                 message: "Loading Exams",
                 timeout: 5e3,
@@ -41,7 +43,7 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
             })[0]);
             setTimeout(setNotification, 5e3, undefined)
         }
-    }, [addNotification, data, exams.length, notification]);
+    }, [addNotification, data, exams.length, notification, setLocked]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">

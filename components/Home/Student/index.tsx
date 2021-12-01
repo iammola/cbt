@@ -1,12 +1,14 @@
+import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 
 import Exams from "./Exams";
 import { classNames } from "utils";
 import { useNotifications } from "components/Misc/Notification";
 
 const Home: FunctionComponent = () => {
-    const [{ account }] = useCookies(['account']);
+    const router = useRouter();
+    const [{ account }, , removeCookies] = useCookies(['account']);
     const [activeTab, setActiveTab] = useState('Exams');
     const [greeting, setGreeting] = useState('Good morning');
 
@@ -25,6 +27,10 @@ const Home: FunctionComponent = () => {
                 </div>
                 <button
                     type="button"
+                    onClick={() => {
+                        removeCookies("account", { path: '/' });
+                        router.push('/');
+                    }}
                     className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-sm font-semibold cursor-pointer"
                 >
                     Log out
