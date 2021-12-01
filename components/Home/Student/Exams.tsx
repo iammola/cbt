@@ -1,13 +1,18 @@
+import useSWR from "swr";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
 import { formatRelative, isPast } from "date-fns";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 
 import { classNames } from "utils";
 
+import type { RouteData } from "types";
 import type { StudentExamsGETData } from "types/api/students";
 
 const Exam: FunctionComponent = () => {
+    const [{ account }] = useCookies(['account']);
     const [exams, setExams] = useState<StudentExamsGETData>([]);
+    const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
 
     const setLocked = useCallback(() => {
         if (exams.findIndex(i => isPast(i.date) === true && i.locked !== false) !== -1) setExams(exams.map(exam => ({
@@ -22,6 +27,10 @@ const Exam: FunctionComponent = () => {
 
         return () => clearInterval(timer);
     }, [exams, setLocked]);
+
+    useEffect(() => {
+        if (data !== undefined) setExams(data.data);
+    }, [data]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
