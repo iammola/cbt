@@ -6,7 +6,7 @@ import type { NotificationProps } from "types";
 
 type Item = Omit<NotificationProps, "remove" | "out">;
 
-type NotificationsHook = [
+export type NotificationsHook = [
     (items: Item | Item[]) => number[],
     (idx: number) => void,
     JSX.Element
