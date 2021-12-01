@@ -4,15 +4,15 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
-import type { TeacherExamGETData } from "types/api/teachers";
+import type { TeacherExamsGETData } from "types/api/teachers";
 import type { ExamRecord, ServerResponse, SubjectsRecord } from "types";
 
-async function getExams(id: any): Promise<ServerResponse<TeacherExamGETData>> {
+async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
     await connect();
-    let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherExamsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const exam: (Omit<ExamRecord, 'created'> & Pick<ExamRecord<true>, 'created'>)[] = await ExamModel.find({ "created.by": id }, '-instructions -edited').populate('created.by').lean();
+        const exam: (Omit<ExamRecord, 'created'> & Pick<ExamRecord<true>, 'created'>)[] = await ExamModel.find({ /* "created.by": id */ }, '-instructions -edited').populate('created.by').lean();
 
         const subjects: SubjectsRecord<true>[] = await SubjectsModel.find({ "subjects._id": exam.map(({ subjectId }) => subjectId) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
 
@@ -42,7 +42,7 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamGETData>> {
 }
 
 export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<TeacherExamsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {

@@ -30,7 +30,7 @@ export function useNotifications(): NotificationsHook {
     };
 
     const Notifications: NotificationsHook[2] = (
-        <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-50 h-screen pointer-events-none">
+        <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-[1500] h-screen pointer-events-none">
             {notifications.map(({ id, ...item }, i) => (
                 <Notification
                     key={id}

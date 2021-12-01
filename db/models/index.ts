@@ -1,5 +1,6 @@
 export { ExamModel } from "./Exam";
 export { EventModel } from "./Event";
+export { ResultModel } from "./Result";
 
 export { SessionModel } from "./Session";
 

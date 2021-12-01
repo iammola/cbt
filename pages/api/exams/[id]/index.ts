@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
 import type { SubjectsRecord, ServerResponse } from "types";
-import { ExamGETData, ExamPUTData } from "types/api/exams";
+import { ExamPUTData } from "types/api/exams";
 
 async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; questions: any; }): Promise<ServerResponse<ExamPUTData>> {
     await connect();
@@ -31,53 +31,14 @@ async function updateExam(_id: any, by: any, { exam, questions }: { exam: any; q
     return [success, status, message];
 }
 
-async function getExam(_id: any): Promise<ServerResponse<ExamGETData>> {
-    await connect();
-    let [success, status, message]: ServerResponse<ExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-
-    try {
-        const exam = await ExamModel.findById(_id, '-created -edited').lean();
-        if (exam === null) throw new Error("Exam ID not found");
-
-        const { duration, instructions, questions, subjectId } = exam;
-
-        const subject: SubjectsRecord<true> = await SubjectsModel.findOne({
-            "subjects._id": subjectId
-        }, "class subjects.name.$").populate("class", "-_id name").lean();
-
-        if (subject === null) throw new Error("Exam Subject not found");
-
-        [success, status, message] = [true, StatusCodes.OK, {
-            data: {
-                _id, questions,
-                details: {
-                    duration, subjectId, instructions,
-                    name: {
-                        class: subject.class.name,
-                        subject: subject?.subjects[0].name
-                    },
-                }
-            },
-            message: ReasonPhrases.OK,
-        }];
-    } catch (error: any) {
-        [status, message] = [StatusCodes.BAD_REQUEST, {
-            error: error.message,
-            message: ReasonPhrases.BAD_REQUEST
-        }];
-    }
-
-    return [success, status, message];
-}
-
 export default async function handler({ body, cookies, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse<ExamGETData | ExamPUTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-    const allowedMethods = ["GET", "PUT"];
+    let [success, status, message]: ServerResponse<ExamPUTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    const allowedMethods = "PUT";
 
-    if (allowedMethods.includes(method ?? '') === false) {
+    if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "PUT" ? updateExam(query.id, JSON.parse(cookies.account)._id, JSON.parse(body)) : getExam(query.id))
+    } else[success, status, message] = await updateExam(query.id, JSON.parse(cookies.account)._id, JSON.parse(body));
 
     if (typeof message !== "object") message = { message, error: message };
 
