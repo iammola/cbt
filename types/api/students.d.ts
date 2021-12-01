@@ -1,10 +1,17 @@
-import { RecordId, UserRecord } from "types";
+import { RecordId, ExamRecord, UserRecord } from "types";
 
 export type StudentsPOSTData = Pick<UserRecord, 'code'>;
 
 export type StudentResultPOSTData = {
     score: number;
 }
+
+export type StudentExamsGETData = (Pick<ExamRecord, '_id' | 'duration'> & {
+    date: Date;
+    subject: string;
+    locked?: boolean;
+    questions: number;
+})[];
 
 export type StudentExamGETData = RecordId & {
     questions: QuestionRecord[];

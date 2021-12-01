@@ -16,7 +16,7 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
 
         const subjects: SubjectsRecord<true>[] = await SubjectsModel.find({ "subjects._id": exam.map(({ subjectId }) => subjectId) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
 
-        const data = await Promise.all(exam.map(async ({ subjectId, questions, ...exam }) => {
+        const data = exam.map(({ subjectId, questions, ...exam }) => {
             const item = subjects.find(({ subjects }) => subjects.find(({ _id }) => subjectId.equals(_id)));
 
             return {
@@ -25,7 +25,7 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
                 questions: questions.length,
                 subject: item?.subjects.find(({ _id }) => _id.equals(subjectId))?.name ?? '',
             };
-        }));
+        });
 
         [success, status, message] = [true, StatusCodes.OK, {
             data,
