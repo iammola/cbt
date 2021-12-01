@@ -63,7 +63,7 @@ const Exam: FunctionComponent = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
                     {exams.map(i => (
-                        <tr key={i._id}>
+                        <tr key={i._id.toString()}>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="flex flex-col items-start justify-center text-sm">
                                     <span className="text-gray-900">
