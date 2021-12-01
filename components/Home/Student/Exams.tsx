@@ -26,7 +26,7 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
 
     useEffect(() => {
         setLocked();
-        const timer = setInterval(setLocked, 15e3);
+        const timer = setInterval(setLocked, 5e3);
 
         return () => clearInterval(timer);
     }, [exams, setLocked]);
