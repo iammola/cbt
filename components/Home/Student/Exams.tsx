@@ -18,9 +18,9 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
 
     const setLocked = useCallback(() => {
-        if (exams.findIndex(i => isPast(i.date) === true && i.locked !== false) !== -1) setExams(exams.map(exam => ({
+        if (exams.findIndex(i => isPast(new Date(i.date)) === true && i.locked !== false) !== -1) setExams(exams.map(exam => ({
             ...exam,
-            locked: isPast(exam.date) === false
+            locked: isPast(new Date(exam.date)) === false
         })));
     }, [exams]);
 
