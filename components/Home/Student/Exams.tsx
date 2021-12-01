@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { formatRelative, isPast } from "date-fns";
 import { DesktopComputerIcon } from "@heroicons/react/outline";
-import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { NotificationsHook } from "components/Misc/Notification";
 import { classNames } from "utils";
@@ -14,7 +14,7 @@ import type { StudentExamsGETData } from "types/api/students";
 const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ addNotification }) => {
     const [{ account }] = useCookies(['account']);
     const [firstLoad, setFirstLoad] = useState(true);
-    const [notification, setNotification] = useState<number>();
+    const [,setNotification] = useState<number>();
     const [exams, setExams] = useState<StudentExamsGETData>([]);
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
 
