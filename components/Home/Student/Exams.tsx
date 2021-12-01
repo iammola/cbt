@@ -76,10 +76,10 @@ const Exam: FunctionComponent = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <span className={classNames("inline-flex text-sm leading-5 rounded-full px-3 py-0.5", {
-                                    "text-slate-600 bg-slate-200/25": i.locked === true,
                                     "text-blue-600 bg-blue-200/25": i.locked === false,
+                                    "text-slate-600 bg-slate-200/25": i.locked !== false,
                                 })}>
-                                    {i.locked === true ? "Locked" : "Unlocked"}
+                                    {i.locked !== false ? "Locked" : "Unlocked"}
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm">
