@@ -33,7 +33,7 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
 
     useEffect(() => {
         if (data !== undefined) setExams(data.data);
-        else if (notification === undefined) {
+        else if (notification === undefined && exams.length === 0) {
             setNotification(addNotification({
                 message: "Loading Exams",
                 timeout: 5e3,
@@ -41,7 +41,7 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
             })[0]);
             setTimeout(setNotification, 5e3, undefined)
         }
-    }, [addNotification, data, notification]);
+    }, [addNotification, data, exams.length, notification]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
@@ -102,7 +102,7 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
                                         type="button"
                                         className="flex items-center justify-center py-2 px-4 rounded-full bg-gray-500 hover:bg-gray-600"
                                     >
-                                        <Link href="/exams/write/">
+                                        <Link href={`/exams/write/${i._id}`}>
                                             <a className="text-white text-xs font-medium tracking-wide">
                                                 Go to exam
                                             </a>
