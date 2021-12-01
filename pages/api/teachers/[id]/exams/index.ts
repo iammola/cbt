@@ -12,7 +12,7 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamGETData>> {
     let [success, status, message]: ServerResponse<TeacherExamGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const exam: (Omit<ExamRecord, 'created'> & Pick<ExamRecord<true>, 'created'>)[] = await ExamModel.find({ "created.by": id }, '-instructions -edited').populate('created.by').lean();
+        const exam: (Omit<ExamRecord, 'created'> & Pick<ExamRecord<true>, 'created'>)[] = await ExamModel.find({ /* "created.by": id */ }, '-instructions -edited').populate('created.by').lean();
 
         const subjects: SubjectsRecord<true>[] = await SubjectsModel.find({ "subjects._id": exam.map(({ subjectId }) => subjectId) }, '-_id class subjects._id subjects.name').populate('class', 'name').lean();
 
