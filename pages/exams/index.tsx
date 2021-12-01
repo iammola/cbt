@@ -10,11 +10,11 @@ import { Navbar, Sidebar } from "components/Layout";
 import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
 
 import type { RouteData } from "types";
-import type { TeacherExamGETData } from "types/api/teachers";
+import type { TeacherExamsGETData } from "types/api/teachers";
 
 const Exams: NextPage = () => {
     const [{ account }] = useCookies(['account']);
-    const { data: exams } = useSWR<RouteData<TeacherExamGETData>>(account !== undefined ? `/api/teachers/${account._id}/exams` : null, url => fetch(url ?? '').then(res => res.json()));
+    const { data: exams } = useSWR<RouteData<TeacherExamsGETData>>(account !== undefined ? `/api/teachers/${account._id}/exams` : null, url => fetch(url ?? '').then(res => res.json()));
 
     return (
         <>

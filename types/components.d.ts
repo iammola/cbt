@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
-import type { CreateQuestion, AnswerRecord, ExamData, QuestionRecord } from ".";
+import type { CreateQuestion, AnswerRecord, ExamData, ExamRecord, QuestionRecord } from ".";
 
 export type NotificationProps = {
     message: string;
@@ -89,23 +89,54 @@ export type TeacherBarProps = {
     exam?: ExamData['details']['name'];
 }
 
-type StudentQuestionProps = QuestionRecord & {
+export type StudentQuestionProps = QuestionRecord & {
     chosen?: string;
     onAnswer(AnswerID: QuestionRecord['_id']): void;
 }
 
-type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
+export type StudentAnswerProps = Omit<AnswerRecord, 'isCorrect'> & {
     selected: boolean;
     handleSelect(id: AnswerRecord['_id']): void;
 }
 
-type StudentTimerProps = {
+export type StudentTimerProps = {
+    submit(): void;
     timeout?: number;
+    started: boolean;
 }
 
-type StudentGridProps = {
+export type StudentGridProps = {
     questions: {
         active?: boolean;
         answered: boolean;
     }[];
+}
+
+export type StudentBarProps = {
+    onSubmit(): void;
+    exam?: ExamData['details']['name'];
+}
+
+export type StudentLoaderProps = {
+    show: boolean;
+    start(): void;
+    exam?: Pick<ExamRecord, 'instructions' | 'duration'> & {
+        class: string;
+        subject: string;
+        questions: number;
+    }
+}
+
+export type StudentModalProps = {
+    show: boolean;
+    close(): void;
+    forced: boolean;
+    confirm(): void;
+    /**
+     * - '' = Idle
+     * - 0 = Failed
+     * - 1 = Success
+     * - -1 = Loading
+     */
+    success: '' | 0 | 1 | -1;
 }

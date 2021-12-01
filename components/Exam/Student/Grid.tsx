@@ -5,7 +5,7 @@ import type { StudentGridProps } from "types";
 
 const Grid: FunctionComponent<StudentGridProps> = ({ questions }) => {
     return (
-        <div className="w-full bg-white rounded-xl shadow-sm py-8 px-5 ring-1 ring-gray-200 sticky top-14">
+        <div className="w-full bg-white rounded-xl shadow-sm py-8 px-5 ring-1 ring-gray-200 sticky top-36">
             <ul className="grid grid-cols-5 gap-4 items-start justify-center w-full">
                 {questions.map(({ answered, active }, i) => (
                     <li

@@ -8,11 +8,21 @@ export type TeacherClassSubjectGETData = {
     subjects: Omit<SubjectRecord, 'teachers'>[];
 }
 
-export type TeacherExamGETData = (Pick<ExamRecord<true>, 'created'> & Omit<ExamRecord, 'created' | 'subjectId' | 'questions'> & {
+export type TeacherExamsGETData = (Pick<ExamRecord<true>, 'created'> & Omit<ExamRecord, 'created' | 'subjectId' | 'questions'> & {
     class: string;
     subject: string;
     questions: number;
 })[];
+
+export type TeacherExamGETData = RecordId & {
+    questions: QuestionRecord[];
+    details: Pick<ExamRecord, 'duration' | 'instructions' | 'subjectId'> & {
+        name: {
+            class: string;
+            subject: string;
+        };
+    };
+}
 
 export type TeacherSubjectsGETData = RecordId['_id'][];
 
