@@ -1,11 +1,15 @@
-import { FunctionComponent, useState } from "react";
+import { useCookies } from "react-cookie";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import Exams from "./Exams";
 import { classNames } from "utils";
 import { useNotifications } from "components/Misc/Notification";
 
 const Home: FunctionComponent = () => {
+    const [{ account }] = useCookies(['account']);
     const [activeTab, setActiveTab] = useState('Exams');
+    const [greeting, setGreeting] = useState('Good morning');
+
     const [addNotification, , Notifications] = useNotifications();
 
     return (
@@ -13,10 +17,10 @@ const Home: FunctionComponent = () => {
             <div className="flex items-center justify-start gap-5 bg-white w-full h-28 shadow-sm px-10 md:px-16 xl:px-20 py-4">
                 <div className="flex items-center justify-start gap-3 grow py-2 relative">
                     <div className="flex items-center justify-center shrink-0 w-14 h-14 rounded-full overflow-hidden font-medium text-white bg-gray-400 text-lg cursor-pointer">
-                        AA
+                        {account?.name.initials}
                     </div>
                     <h3 className="font-bold text-xl text-gray-800 tracking-wider">
-                        Good morning, Ademola
+                        {greeting}, {account?.name.first}.
                     </h3>
                 </div>
                 <button
