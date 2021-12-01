@@ -34,7 +34,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
         }, '-_id').sort({ from: 1 }).lean();
 
         const data = events.map(event => event.exams.map(examId => {
-            const exam = exams.find(exam => examId.equals(exam._id) && (result?.results ?? []).map(i => i.examId).includes(exam._id) === false);
+            const exam = exams.find(exam => examId.equals(exam._id) && result?.results.find(i => i.examId.equals(examId)) === undefined);
 
             return exam === undefined ? undefined : {
                 _id: examId,
