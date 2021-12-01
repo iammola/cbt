@@ -47,7 +47,7 @@ const Home: FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                <Exams />
+                <Exams addNotification={addNotification} />
             </div>
             {Notifications}
         </section>
