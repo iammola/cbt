@@ -2,6 +2,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { formatRelative, isPast } from "date-fns";
+import { DesktopComputerIcon } from "@heroicons/react/outline";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 
 import { NotificationsHook } from "components/Misc/Notification";
@@ -12,6 +13,7 @@ import type { StudentExamsGETData } from "types/api/students";
 
 const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ addNotification }) => {
     const [{ account }] = useCookies(['account']);
+    const [notification, setNotification] = useState<number>();
     const [exams, setExams] = useState<StudentExamsGETData>([]);
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
 
@@ -31,7 +33,15 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
 
     useEffect(() => {
         if (data !== undefined) setExams(data.data);
-    }, [data]);
+        else if (notification === undefined) {
+            setNotification(addNotification({
+                message: "Loading Exams",
+                timeout: 5e3,
+                Icon: () => <DesktopComputerIcon className="w-6 h-6 stroke-blue-500" />
+            })[0]);
+            setTimeout(setNotification, 5e3, undefined)
+        }
+    }, [addNotification, data, notification]);
 
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
