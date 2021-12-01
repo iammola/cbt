@@ -2,9 +2,11 @@ import { FunctionComponent, useState } from "react";
 
 import Exams from "./Exams";
 import { classNames } from "utils";
+import { useNotifications } from "components/Misc/Notification";
 
 const Home: FunctionComponent = () => {
     const [activeTab, setActiveTab] = useState('Exams');
+    const [addNotification, , Notifications] = useNotifications();
 
     return (
         <section className="w-screen h-screen bg-gray-200/25">
@@ -47,6 +49,7 @@ const Home: FunctionComponent = () => {
                 </div>
                 <Exams />
             </div>
+            {Notifications}
         </section>
     );
 }
