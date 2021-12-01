@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { EventModel, ExamModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
+import { EventModel, ExamModel, ResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
 import type { StudentExamsGETData } from "types/api/students";
@@ -25,6 +25,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
                 $in: student.academic[0].terms.find(i => i.term.equals(session.terms[0]._id))?.subjects
             }
         }, '_id duration questions subjectId').lean();
+        const result = await ResultModel.findOne({ student: _id }).lean();
 
         const subjects = await SubjectsModel.find({ "subjects._id": exams.map(i => i.subjectId) }, '-_id subjects._id subjects.name').lean();
 
@@ -33,7 +34,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
         }, '-_id').sort({ from: 1 }).lean();
 
         const data = events.map(event => event.exams.map(examId => {
-            const exam = exams.find(exam => examId.equals(exam._id));
+            const exam = exams.find(exam => examId.equals(exam._id) && (result?.results ?? []).map(i => i.examId).includes(exam._id) === false);
 
             return exam === undefined ? undefined : {
                 _id: examId,
