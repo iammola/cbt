@@ -3,6 +3,8 @@ import { useCookies } from "react-cookie";
 import { FunctionComponent, useState } from "react";
 
 import Exams from "./Exams";
+import Results from "./Results";
+
 import { classNames } from "utils";
 import { useNotifications } from "components/Misc/Notification";
 
@@ -57,7 +59,11 @@ const Home: FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                <Exams addNotification={addNotification} />
+                {activeTab === "Exams" ? (
+                    <Exams addNotification={addNotification} />
+                ) : (
+                    <Results />
+                )}
             </div>
             {Notifications}
         </section>
