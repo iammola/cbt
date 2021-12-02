@@ -2,10 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, ResultModel, StudentModel } from "db/models";
+import { ExamModel, ResultModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ResultRecord, ServerResponse } from "types";
-import type { StudentResultPOSTData } from "types/api/students";
+import type { StudentResultsGETData, StudentResultPOSTData } from "types/api/students";
 
 type RequestBody = Omit<ResultRecord['results'][number], 'score' | 'ended' | 'answers'> & { answers: { [key: string]: string } }
 
@@ -46,6 +46,39 @@ async function createResult(id: any, result: RequestBody): Promise<ServerRespons
 
         [success, status, message] = [true, StatusCodes.CREATED, {
             data: { score },
+            message: ReasonPhrases.CREATED
+        }];
+    } catch (error: any) {
+        [status, message] = [StatusCodes.BAD_REQUEST, {
+            error: error.message,
+            message: ReasonPhrases.BAD_REQUEST
+        }];
+    }
+
+    return [success, status, message];
+}
+
+async function getResults(id: any): Promise<ServerResponse<StudentResultsGETData>> {
+    await connect();
+    let [success, status, message]: ServerResponse<StudentResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+
+    try {
+        const record = await ResultModel.findOne({ student: id }, 'results.started results.score results.examId').lean();
+
+        const exams = await ExamModel.find({ _id: record?.results.map(i => i.examId) ?? [] }, 'subjectId').lean();
+        const subjects = (await SubjectsModel.find({ "subjects._id": exams.map(e => e.subjectId) }, 'subjects._id subjects.name').lean()).map(i => i.subjects).flat();
+
+        const data = exams.map(e => {
+            const { score, started } = record?.results.find(r => r.examId.equals(e._id)) ?? { score: 0, started: new Date() };
+
+            return {
+                score, started,
+                subject: subjects.find(s => s._id.equals(e.subjectId))?.name ?? '',
+            }
+        });
+
+        [success, status, message] = [true, StatusCodes.CREATED, {
+            data,
             message: ReasonPhrases.CREATED
         }];
     } catch (error: any) {

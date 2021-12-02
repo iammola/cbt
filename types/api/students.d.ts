@@ -6,6 +6,12 @@ export type StudentResultPOSTData = {
     score: number;
 }
 
+export type StudentResultsGETData = {
+    started: Date;
+    score: number;
+    subject: string;
+}[];
+
 export type StudentExamsGETData = (Pick<ExamRecord, '_id' | 'duration'> & {
     date: Date;
     subject: string;
