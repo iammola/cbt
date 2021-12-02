@@ -1,9 +1,17 @@
+import useSWR from "swr";
+import { useCookies } from "react-cookie";
 import { formatRelative } from "date-fns";
 import { FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
+import type { RouteData } from "types";
+import type { StudentResultsGETData } from "types/api/students";
+
 const Result: FunctionComponent = () => {
+    const [{ account }] = useCookies(['account']);
+    const { data } = useSWR<RouteData<StudentResultsGETData>>(`/api/students/${account?._id}/results/`, url => fetch(url ?? '').then(res => res.json()));
+
     return (
         <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
             <table className="rounded-lg shadow-md overflow-hidden min-w-full">
@@ -23,22 +31,24 @@ const Result: FunctionComponent = () => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
-                    <tr>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex flex-col items-start justify-center text-sm text-gray-900">
-                                Mathematics
-                            </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                            44
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                            {(() => {
-                                const date = formatRelative(new Date('December 1, 2021 8:35 AM'), new Date());
-                                return date[0].toUpperCase() + date.slice(1)
-                            })()}
-                        </td>
-                    </tr>
+                    {data?.data.map(e => (
+                        <tr key={e.subject}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="flex flex-col items-start justify-center text-sm text-gray-900">
+                                    {e.subject}
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                {e.score}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                {(() => {
+                                    const date = formatRelative(new Date(e.started), new Date());
+                                    return date[0].toUpperCase() + date.slice(1)
+                                })()}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </section>
