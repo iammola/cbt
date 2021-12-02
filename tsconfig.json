@@ -13,7 +13,6 @@
       "dom",
       "dom.iterable",
       "esnext",
-      "ES2021.Promise"
     ],
     "module": "esnext",
     "moduleResolution": "node",
@@ -22,7 +21,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES5",
+    "target": "ES3",
   },
   "include": [
     "next-env.d.ts",
