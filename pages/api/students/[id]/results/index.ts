@@ -92,13 +92,13 @@ async function getResults(id: any): Promise<ServerResponse<StudentResultsGETData
 }
 
 export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse<StudentResultPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
-    const allowedMethods = "POST";
+    let [success, status, message]: ServerResponse<StudentResultPOSTData | StudentResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await createResult(query.id, JSON.parse(body));
+    } else[success, status, message] = await (method === "POST" ? createResult(query.id, JSON.parse(body)) : getResults(query.id));
 
     if (typeof message !== "object") message = { message, error: message };
 
