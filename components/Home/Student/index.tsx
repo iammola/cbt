@@ -59,11 +59,11 @@ const Home: FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                {activeTab === "Exams" ? (
-                    <Exams addNotification={addNotification} />
-                ) : (
-                    <Results />
-                )}
+                <Exams
+                    show={activeTab === "Exams"}
+                    addNotification={addNotification}
+                />
+                <Results show={activeTab === "Results"} />
             </div>
             {Notifications}
         </section>

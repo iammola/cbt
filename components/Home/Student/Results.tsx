@@ -8,12 +8,16 @@ import { classNames } from "utils";
 import type { RouteData } from "types";
 import type { StudentResultsGETData } from "types/api/students";
 
-const Result: FunctionComponent = () => {
+const Result: FunctionComponent<{ show: boolean; }> = ({ show }) => {
     const [{ account }] = useCookies(['account']);
     const { data } = useSWR<RouteData<StudentResultsGETData>>(`/api/students/${account?._id}/results/`, url => fetch(url ?? '').then(res => res.json()));
 
     return (
-        <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
+        <section
+            className={classNames("flex gap-x-5 gap-y-3 items-start content-start justify-start", {
+                "hidden": show === false
+            })}
+        >
             <table className="rounded-lg shadow-md overflow-hidden min-w-full">
                 <thead className="bg-gray-200 text-gray-700">
                     <tr>

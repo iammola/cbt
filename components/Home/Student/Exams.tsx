@@ -11,10 +11,10 @@ import { classNames } from "utils";
 import type { RouteData } from "types";
 import type { StudentExamsGETData } from "types/api/students";
 
-const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ addNotification }) => {
+const Exam: FunctionComponent<{ addNotification: NotificationsHook[0]; show: boolean; }> = ({ addNotification, show }) => {
     const [{ account }] = useCookies(['account']);
     const [firstLoad, setFirstLoad] = useState(true);
-    const [,setNotification] = useState<number>();
+    const [, setNotification] = useState<number>();
     const [exams, setExams] = useState<StudentExamsGETData>([]);
     const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, url => fetch(url ?? '').then(res => res.json()));
 
@@ -38,7 +38,11 @@ const Exam: FunctionComponent<{ addNotification: NotificationsHook[0] }> = ({ ad
     }, [addNotification, data, firstLoad]);
 
     return (
-        <section className="flex gap-x-5 gap-y-3 items-start content-start justify-start">
+        <section
+            className={classNames("flex gap-x-5 gap-y-3 items-start content-start justify-start", {
+                "hidden": show === false
+            })}
+        >
             <table className="rounded-lg shadow-md overflow-hidden min-w-full">
                 <thead className="bg-gray-200 text-gray-700">
                     <tr>
