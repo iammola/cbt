@@ -44,13 +44,13 @@ const Home: FunctionComponent = () => {
                         <div
                             key={label}
                             onClick={() => setActiveTab(label)}
-                            className={classNames("group flex items-center relative px-2 pb-3 gap-3.5 cursor-pointer after:absolute after:w-full after:h-0.5 after:left-0 after:-bottom-0.5 after:transition-all hover:after:bg-gray-600", {
-                                "after:bg-gray-600": activeTab === label
+                            className={classNames("group flex items-center relative px-2 pb-3 gap-3.5 cursor-pointer after:absolute after:w-full after:h-0.5 after:left-0 after:-bottom-0.5 after:transition-all hover:after:bg-gray-500", {
+                                "after:bg-gray-500": activeTab === label
                             })}
                         >
                             <span
                                 className={classNames("font-semibold w-max group-hover:text-gray-800 transition-all", {
-                                    "text-gray-600": activeTab !== label,
+                                    "text-gray-500": activeTab !== label,
                                     "text-gray-800": activeTab === label
                                 })}
                             >
