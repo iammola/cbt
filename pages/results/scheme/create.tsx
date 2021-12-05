@@ -52,6 +52,19 @@ const CreateScheme: NextPage = () => {
         ));
     }
 
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const notifications = [{
+            timeout: 5e3, message: verifyFields() ?? '',
+            Icon: () => <BanIcon className="w-6 h-6 stroke-rose-600" />
+        }, {
+            timeout: 5e3, message: verifyScheme() ?? '',
+            Icon: () => <BanIcon className="w-6 h-6 stroke-rose-600" />
+        }].filter(i => i.message !== '');
+
+        addNotifications(notifications);
+    }
+
     return (
         <>
             <Head>
@@ -59,7 +72,10 @@ const CreateScheme: NextPage = () => {
                 <meta name="description" content="Create Scheme | GRS Portal" />
             </Head>
             <section className="flex items-center justify-center bg-gray-300 p-10 w-screen min-h-screen">
-                <form className="flex flex-col gap-2 rounded-3xl shadow-lg p-8 bg-white" >
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-2 rounded-3xl shadow-lg p-8 bg-white"
+                >
                     <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
                         <span>Create a</span>{' '}
                         <span className="text-stone-500">Result Setting</span>
