@@ -52,6 +52,7 @@ const CreateScheme: NextPage = () => {
                                 className="flex items-center justify-start gap-2 w-full"
                             >
                                 <input
+                                    required
                                     type="text"
                                     value={s.grade}
                                     placeholder="Grade"
@@ -59,6 +60,7 @@ const CreateScheme: NextPage = () => {
                                     className="w-14 p-2 text-xs text-gray-700 text-center font-bold border border-gray-200 rounded-md focus:border-none"
                                 />
                                 <input
+                                    required
                                     type="text"
                                     value={s.description}
                                     placeholder="Description"
@@ -66,6 +68,7 @@ const CreateScheme: NextPage = () => {
                                     className="flex-grow p-2 text-sm text-gray-700 border border-gray-200 rounded-md focus:border-none"
                                 />
                                 <input
+                                    required
                                     max={100}
                                     type="number"
                                     value={s.limit}
@@ -101,6 +104,7 @@ const CreateScheme: NextPage = () => {
                                 className="flex items-center justify-start gap-2 w-full"
                             >
                                 <input
+                                    required
                                     type="text"
                                     value={f.name}
                                     placeholder="Name"
@@ -108,6 +112,7 @@ const CreateScheme: NextPage = () => {
                                     className="flex-grow p-2 text-sm text-gray-700 border border-gray-200 rounded-md focus:border-none"
                                 />
                                 <input
+                                    required
                                     type="text"
                                     value={f.alias}
                                     placeholder="Alias"
@@ -116,6 +121,7 @@ const CreateScheme: NextPage = () => {
                                 />
                                 <input
                                     min={0}
+                                    required
                                     type="number"
                                     value={f.max}
                                     placeholder="Max"
