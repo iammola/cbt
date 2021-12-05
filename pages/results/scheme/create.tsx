@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { NextPage } from "next";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
+import { BanIcon } from "@heroicons/react/outline";
 
 import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
@@ -23,6 +24,33 @@ const CreateScheme: NextPage = () => {
         limit: 100,
         description: "Distinction",
     }]);
+
+    function verifyFields() {
+        const { name, alias } = fields.reduce((a, b) => ({
+            name: [...(a.name ?? []), b.name],
+            alias: [...(a.alias ?? []), b.alias],
+        }), {} as { [K in keyof Omit<Fields, 'max'>]: Fields[K][] });
+
+        return (new Set(name).size !== name.length ? "Duplicate result field name found" : (
+            new Set(alias).size !== alias.length ? "Duplicate result field alias found" : undefined)
+        );
+    }
+
+    function verifyScheme() {
+        const { grade, limit, description } = scheme.reduce((a, b) => ({
+            grade: [...(a.grade ?? []), b.grade],
+            limit: [...(a.limit ?? []), b.limit],
+            description: [...(a.description ?? []), b.description],
+        }), {} as { [K in keyof Scheme]: Scheme[K][] });
+
+        return (new Set(grade).size !== grade.length ? "Duplicate scheme grade found" : (
+            new Set(description).size !== description.length ? "Duplicate scheme description found" : (
+                new Set(limit).size !== limit.length ? "Duplicate scheme limit found" : (
+                    limit.includes(100) === false ? "100 limit scheme not found" : undefined
+                )
+            )
+        ));
+    }
 
     return (
         <>
