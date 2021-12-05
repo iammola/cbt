@@ -4,16 +4,20 @@ import { useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
 import Select from "components/Select";
+import type { ClassResultRecord } from "types";
+
+type Fields = (Omit<ClassResultRecord['fields'][number], 'max'> & { max: number | ''; });
+type Scheme = (Omit<ClassResultRecord['scheme'][number], 'limit'> & { limit: number | ''; });
 
 const CreateScheme: NextPage = () => {
-    const [fields, setFields] = useState([{
+    const [fields, setFields] = useState<Fields[]>([{
         name: '',
         alias: '',
-        max: 0 as number | '',
+        max: 0,
     }]);
-    const [scheme, setScheme] = useState([{
+    const [scheme, setScheme] = useState<Scheme[]>([{
         grade: "A",
-        limit: 100 as number | '',
+        limit: 100,
         description: "Distinction",
     }]);
 
