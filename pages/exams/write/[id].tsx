@@ -85,7 +85,7 @@ const WriteExam: NextPage = () => {
         setSuccess(-1);
 
         try {
-            const res = await fetch(`/api/students/${cookies.account?._id}/results/`, {
+            const res = await fetch(`/api/students/${cookies.account?._id}/cbt_results/`, {
                 method: "POST",
                 body: JSON.stringify(cookies.exam)
             });
