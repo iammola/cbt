@@ -99,12 +99,9 @@ const CreateSession: NextPage = () => {
                         />
                     </div>
                     <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
-                        <label
-                            htmlFor="alias"
-                            className="text-sm text-gray-600 font-semibold"
-                        >
+                        <span className="text-sm text-gray-600 font-semibold" >
                             Terms
-                        </label>
+                        </span>
                         {terms.map((term, termIdx) => (
                             <div
                                 key={termIdx}
