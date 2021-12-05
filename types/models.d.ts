@@ -9,6 +9,20 @@ export type ClassRecord = RecordId & {
     alias: string;
 };
 
+export type ClassResultRecord = RecordId & {
+    class: ObjectId;
+    fields: {
+        max: number;
+        name: string;
+        alias: string;
+    }[];
+    scheme: {
+        limit: number;
+        grade: string;
+        description: string;
+    }[];
+}
+
 export type SubjectRecord = RecordId & {
     name: string;
     alias: string;
