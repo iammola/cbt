@@ -102,6 +102,17 @@ export type CBTResultRecord = RecordId & {
     }[];
 }
 
+export type ResultRecord = RecordId & {
+    student: ObjectId;
+    data: {
+        subject: ObjectId;
+        scores: {
+            score: number;
+            fieldId: ObjectId;
+        }[];
+    }[];
+}
+
 
 /* Session and Term */
 
