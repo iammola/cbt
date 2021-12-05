@@ -4,12 +4,15 @@ import { useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
 import Select from "components/Select";
+import { useNotifications } from "components/Misc/Notification";
+
 import type { ClassResultRecord } from "types";
 
 type Fields = (Omit<ClassResultRecord['fields'][number], 'max'> & { max: number | ''; });
 type Scheme = (Omit<ClassResultRecord['scheme'][number], 'limit'> & { limit: number | ''; });
 
 const CreateScheme: NextPage = () => {
+    const [addNotifications, , Notifications] = useNotifications();
     const [fields, setFields] = useState<Fields[]>([{
         name: '',
         alias: '',
@@ -157,6 +160,7 @@ const CreateScheme: NextPage = () => {
                         Create Result Setting
                     </button>
                 </form>
+                {Notifications}
             </section>
         </>
     );
