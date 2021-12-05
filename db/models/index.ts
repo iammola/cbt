@@ -1,6 +1,6 @@
 export { ExamModel } from "./Exam";
 export { EventModel } from "./Event";
-export { ResultModel } from "./Result";
+export { CBTResultModel } from "./CBTResult";
 
 export { SessionModel } from "./Session";
 

@@ -1,8 +1,8 @@
 import { Schema, Model, model, models } from "mongoose";
 
-import type { ResultRecord } from "types";
+import type { CBTResultRecord } from "types";
 
-const ResultSchema = new Schema<ResultRecord>({
+const CBTResultSchema = new Schema<CBTResultRecord>({
     student: {
         type: Schema.Types.ObjectId,
         unique: true,
@@ -27,4 +27,4 @@ const ResultSchema = new Schema<ResultRecord>({
     }]
 });
 
-export const ResultModel = models.Result as Model<ResultRecord> ?? model('Result', ResultSchema);
+export const CBTResultModel = models.Result as Model<CBTResultRecord> ?? model('Result', CBTResultSchema);

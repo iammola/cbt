@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { EventModel, ExamModel, ResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
+import { EventModel, ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
 import type { StudentExamsGETData } from "types/api/students";
@@ -25,7 +25,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
                 $in: student.academic[0].terms.find(i => i.term.equals(session.terms[0]._id))?.subjects
             }
         }, '_id duration questions subjectId').lean();
-        const result = await ResultModel.findOne({ student: _id }).lean();
+        const result = await CBTResultModel.findOne({ student: _id }).lean();
 
         const subjects = await SubjectsModel.find({ "subjects._id": exams.map(i => i.subjectId) }, '-_id subjects._id subjects.name').lean();
 

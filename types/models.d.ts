@@ -88,7 +88,7 @@ export type QuestionRecord = RecordId & {
     minLength?: number;
 });
 
-export type ResultRecord = RecordId & {
+export type CBTResultRecord = RecordId & {
     student: ObjectId;
     results: {
         ended: Date;
