@@ -1,3 +1,4 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
 import { FormEvent, useState } from "react";
@@ -7,13 +8,15 @@ import { BanIcon } from "@heroicons/react/outline";
 import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassResultRecord } from "types";
+import type { ClassesGETData } from "types/api/classes";
+import type { ClassResultRecord, RouteData } from "types";
 
 type Fields = (Omit<ClassResultRecord['fields'][number], 'max'> & { max: number | ''; });
 type Scheme = (Omit<ClassResultRecord['scheme'][number], 'limit'> & { limit: number | ''; });
 
 const CreateScheme: NextPage = () => {
     const [addNotifications, , Notifications] = useNotifications();
+    const [selectedClass, setSelectedClass] = useState({ name: 'Select class', _id: '' });
     const [fields, setFields] = useState<Fields[]>([{
         name: '',
         alias: '',
@@ -24,6 +27,8 @@ const CreateScheme: NextPage = () => {
         limit: 100,
         description: "Distinction",
     }]);
+
+    const { data: classes } = useSWR<RouteData<ClassesGETData>>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     function verifyFields() {
         const { name, alias } = fields.reduce((a, b) => ({
@@ -82,8 +87,8 @@ const CreateScheme: NextPage = () => {
                     </h1>
                     <Select
                         label="Class"
-                        options={undefined}
-                        selected={{ name: 'Select class', _id: '' }}
+                        options={classes?.data}
+                        selected={selectedClass}
                         colorPallette={{
                             activeCheckIconColor: "stroke-indigo-600",
                             inactiveCheckIconColor: "stroke-indigo-800",
@@ -91,7 +96,7 @@ const CreateScheme: NextPage = () => {
                             buttonBorderColor: "focus-visible:border-indigo-500",
                             buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
                         }}
-                        handleChange={() => { }}
+                        handleChange={setSelectedClass}
                     />
                     <div className="flex flex-col gap-3 items-start justify-start w-full py-2">
                         <span className="text-sm text-gray-600 font-semibold" >
