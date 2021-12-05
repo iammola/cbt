@@ -27,4 +27,4 @@ const CBTResultSchema = new Schema<CBTResultRecord>({
     }]
 });
 
-export const CBTResultModel = models.Result as Model<CBTResultRecord> ?? model('Result', CBTResultSchema);
+export const CBTResultModel = models.Result as Model<CBTResultRecord> ?? model('CBTResult', CBTResultSchema);
