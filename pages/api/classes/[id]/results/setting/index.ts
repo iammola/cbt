@@ -5,19 +5,19 @@ import { connect } from "db";
 import { ClassModel, SessionModel } from "db/models";
 
 import type { ClassResultTemplate, ServerResponse } from "types";
-import type { ResultsSettingPOSTData } from "types/api/results";
+import type { ClassResultSettingsPOSTData } from "types/api/classes";
 
-async function createResultSetting(body: Omit<ClassResultTemplate, 'term'> & { class: string }): Promise<ServerResponse<ResultsSettingPOSTData>> {
+async function createResultSetting(_id: any, body: Omit<ClassResultTemplate, 'term'>): Promise<ServerResponse<ClassResultSettingsPOSTData>> {
     await connect();
-    let [success, status, message]: ServerResponse<ResultsSettingPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<ClassResultSettingsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const classRecord = await ClassModel.findById(body.class, 'resultTemplate').lean();
+        const classRecord = await ClassModel.findById(_id, 'resultTemplate').lean();
         if (classRecord === null) throw new Error("Class does not exist");
 
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms._id.$').lean();
 
-        const data = await ClassModel.updateOne({ _id: body.class }, {
+        const data = await ClassModel.updateOne({ _id }, {
             $push: {
                 resultTemplate: {
                     session: currentSession?._id ?? "",
@@ -47,8 +47,8 @@ async function createResultSetting(body: Omit<ClassResultTemplate, 'term'> & { c
     return [success, status, message];
 }
 
-export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse<ResultsSettingPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
+    let [success, status, message]: ServerResponse<ClassResultSettingsPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {
