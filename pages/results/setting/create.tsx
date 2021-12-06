@@ -3,13 +3,13 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { FormEvent, useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
-import { BanIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, BanIcon } from "@heroicons/react/outline";
 
 import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassesGETData } from "types/api/classes";
-import type { ClassResultTemplate, RouteData } from "types";
+import type { ClassesGETData, ClassResultSettingsPOSTData } from "types/api/classes";
+import type { ClassResultTemplate, ClientResponse, RouteData } from "types";
 
 type Fields = (Omit<ClassResultTemplate['fields'][number], 'max'> & { max: number | ''; });
 type Scheme = (Omit<ClassResultTemplate['scheme'][number], 'limit'> & { limit: number | ''; });
@@ -68,6 +68,24 @@ const CreateScheme: NextPage = () => {
         }].filter(i => i.message !== '');
 
         addNotifications(notifications);
+
+        if (notifications.length > 0) {
+            try {
+                const res = await fetch('/api/classes/${selectedClass._id}/results/setting', {
+                    method: "POST",
+                    body: JSON.stringify({ fields, scheme: scheme.sort((a, b) => +a.limit - +b.limit) })
+                });
+                const result = await res.json() as ClientResponse<ClassResultSettingsPOSTData>;
+
+                if (result.success === true) addNotifications({
+                    timeout: 5e3,
+                    message: "Success",
+                    Icon: () => <BadgeCheckIcon className="w-6 h-6 stroke-emerald-500" />
+                }); else throw new Error(result.error)
+            } catch (error: any) {
+                console.log({ error });
+            }
+        }
     }
 
     return (
