@@ -1,4 +1,4 @@
-import type { ClassRecord, RecordId, ServerResponse, SubjectRecord, SubjectsRecord } from "types";
+import type { ClassRecord, ClassResultTemplate, RecordId, ServerResponse, SubjectRecord, SubjectsRecord } from "types";
 
 export type ClassesGETData = ClassRecord[];
 export type ClassesPOSTData = ClassRecord;
@@ -16,3 +16,5 @@ export type ClassExamGETData = {
 export type ClassResultSettingsPOSTData = {
     ok: boolean;
 }
+
+export type ClassResultSettingsGETData = ClassResultTemplate | undefined
