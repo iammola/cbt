@@ -12,3 +12,7 @@ export type ClassExamGETData = {
         alias?: string;
     })[]
 };
+
+export type ClassResultSettingsPOSTData = {
+    ok: boolean;
+}
