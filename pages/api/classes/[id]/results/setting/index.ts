@@ -54,7 +54,7 @@ export default async function handler({ body, method, query }: NextApiRequest, r
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else[success, status, message] = await (method === "POST" ? createResultSetting(query.id, JSON.parse(body)) : [success, status, message]);
 
     if (typeof message !== "object") message = { message, error: message };
 
