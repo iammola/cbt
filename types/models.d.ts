@@ -7,10 +7,14 @@ type RecordId = { _id: ObjectId };
 export type ClassRecord = RecordId & {
     name: string;
     alias: string;
+    resultTemplate: {
+        session: ObjectId,
+        terms: ClassResultTemplate[];
+    }[];
 };
 
-export type ClassResultRecord = RecordId & {
-    class: ObjectId;
+export type ClassResultTemplate = {
+    term: ObjectId;
     fields: {
         max: number;
         name: string;
