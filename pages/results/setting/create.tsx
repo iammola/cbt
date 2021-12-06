@@ -69,7 +69,7 @@ const CreateScheme: NextPage = () => {
 
         addNotifications(notifications);
 
-        if (notifications.length > 0) {
+        if (notifications.length === 0) {
             try {
                 const res = await fetch('/api/classes/${selectedClass._id}/results/setting', {
                     method: "POST",
