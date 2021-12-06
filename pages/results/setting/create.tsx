@@ -9,10 +9,10 @@ import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { ClassesGETData } from "types/api/classes";
-import type { ClassResultRecord, RouteData } from "types";
+import type { ClassResultTemplate, RouteData } from "types";
 
-type Fields = (Omit<ClassResultRecord['fields'][number], 'max'> & { max: number | ''; });
-type Scheme = (Omit<ClassResultRecord['scheme'][number], 'limit'> & { limit: number | ''; });
+type Fields = (Omit<ClassResultTemplate['fields'][number], 'max'> & { max: number | ''; });
+type Scheme = (Omit<ClassResultTemplate['scheme'][number], 'limit'> & { limit: number | ''; });
 
 const CreateScheme: NextPage = () => {
     const [addNotifications, , Notifications] = useNotifications();
