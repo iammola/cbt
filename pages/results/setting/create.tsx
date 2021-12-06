@@ -71,7 +71,7 @@ const CreateScheme: NextPage = () => {
 
         if (notifications.length === 0) {
             try {
-                const res = await fetch('/api/classes/${selectedClass._id}/results/setting', {
+                const res = await fetch(`/api/classes/${selectedClass._id}/results/setting`, {
                     method: "POST",
                     body: JSON.stringify({ fields, scheme: scheme.sort((a, b) => +a.limit - +b.limit) })
                 });
