@@ -2,12 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, ResultModel, StudentModel, SubjectsModel } from "db/models";
+import { ExamModel, CBTResultModel, StudentModel, SubjectsModel } from "db/models";
 
-import type { ResultRecord, ServerResponse } from "types";
+import type { CBTResultRecord, ServerResponse } from "types";
 import type { StudentResultsGETData, StudentResultPOSTData } from "types/api/students";
 
-type RequestBody = Omit<ResultRecord['results'][number], 'score' | 'ended' | 'answers'> & { answers: { [key: string]: string } }
+type RequestBody = Omit<CBTResultRecord['results'][number], 'score' | 'ended' | 'answers'> & { answers: { [key: string]: string } }
 
 async function createResult(id: any, result: RequestBody): Promise<ServerResponse<StudentResultPOSTData>> {
     await connect();
@@ -28,7 +28,7 @@ async function createResult(id: any, result: RequestBody): Promise<ServerRespons
 
         const score = items.reduce((a, b) => a + b.score, 0);
 
-        await ResultModel.findOneAndUpdate({ student: id }, {
+        await CBTResultModel.findOneAndUpdate({ student: id }, {
             $push: {
                 results: {
                     ...result,
@@ -63,7 +63,7 @@ async function getResults(id: any): Promise<ServerResponse<StudentResultsGETData
     let [success, status, message]: ServerResponse<StudentResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const record = await ResultModel.findOne({ student: id }, 'results.started results.score results.examId').lean();
+        const record = await CBTResultModel.findOne({ student: id }, 'results.started results.score results.examId').lean();
 
         const exams = await ExamModel.find({ _id: record?.results.map(i => i.examId) ?? [] }, 'subjectId').lean();
         const subjects = (await SubjectsModel.find({ "subjects._id": exams.map(e => e.subjectId) }, 'subjects._id subjects.name').lean()).map(i => i.subjects).flat();

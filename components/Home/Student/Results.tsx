@@ -10,7 +10,7 @@ import type { StudentResultsGETData } from "types/api/students";
 
 const Result: FunctionComponent<{ show: boolean; }> = ({ show }) => {
     const [{ account }] = useCookies(['account']);
-    const { data } = useSWR<RouteData<StudentResultsGETData>>(`/api/students/${account?._id}/results/`, url => fetch(url ?? '').then(res => res.json()));
+    const { data } = useSWR<RouteData<StudentResultsGETData>>(`/api/students/${account?._id}/cbt_results/`, url => fetch(url ?? '').then(res => res.json()));
 
     return (
         <section

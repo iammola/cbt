@@ -8,23 +8,24 @@ const ResultSchema = new Schema<ResultRecord>({
         unique: true,
         ref: 'Student',
         required: [true, "Student ID required"]
-    }, results: [{
+    }, data: {
         _id: false,
-        score: Number,
-        started: Date,
-        ended: Date,
-        examId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Exam',
-        }, answers: [{
-            default: undefined,
-            type: {
+        type: [{
+            subject: {
+                type: Schema.Types.ObjectId
+            }, scores: {
                 _id: false,
-                answer: Schema.Types.ObjectId,
-                question: Schema.Types.ObjectId
-            },
-        }]
-    }]
+                type: [{
+                    fieldId: {
+                        type: Schema.Types.ObjectId
+                    }, score: {
+                        min: 0,
+                        type: Number,
+                    }
+                }],
+            }
+        }],
+    }
 });
 
 export const ResultModel = models.Result as Model<ResultRecord> ?? model('Result', ResultSchema);

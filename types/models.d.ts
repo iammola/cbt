@@ -7,7 +7,25 @@ type RecordId = { _id: ObjectId };
 export type ClassRecord = RecordId & {
     name: string;
     alias: string;
+    resultTemplate: {
+        session: ObjectId,
+        terms: ClassResultTemplate[];
+    }[];
 };
+
+export type ClassResultTemplate = {
+    term: ObjectId;
+    fields: {
+        max: number;
+        name: string;
+        alias: string;
+    }[];
+    scheme: {
+        limit: number;
+        grade: string;
+        description: string;
+    }[];
+}
 
 export type SubjectRecord = RecordId & {
     name: string;
@@ -88,7 +106,7 @@ export type QuestionRecord = RecordId & {
     minLength?: number;
 });
 
-export type ResultRecord = RecordId & {
+export type CBTResultRecord = RecordId & {
     student: ObjectId;
     results: {
         ended: Date;
@@ -98,6 +116,17 @@ export type ResultRecord = RecordId & {
         answers: {
             answer: ObjectId;
             question: ObjectId;
+        }[];
+    }[];
+}
+
+export type ResultRecord = RecordId & {
+    student: ObjectId;
+    data: {
+        subject: ObjectId;
+        scores: {
+            score: number;
+            fieldId: ObjectId;
         }[];
     }[];
 }
