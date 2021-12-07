@@ -16,6 +16,7 @@ async function createResultSetting(_id: any, body: Omit<ClassResultTemplate, 'te
         if (classRecord === null) throw new Error("Class does not exist");
 
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms._id.$').lean();
+        if (currentSession === null) throw new Error("No session to bind to");
 
         const data = await ClassModel.updateOne({ _id }, {
             resultTemplate: [{
