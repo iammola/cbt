@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import { DesktopComputerIcon } from "@heroicons/react/outline";
 import { Fragment, FunctionComponent, ReactNode, useState } from "react";
 
 import { classNames } from "utils";
@@ -118,6 +119,66 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                             <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
                                                 <span className="text-sm block truncate">
                                                     View Exams
+                                                </span>
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </MenuItem.Panel>
+                            )}
+
+                        </>
+                    )}
+                </MenuItem>
+                <MenuItem>
+                    {({ expand, toggleExpand }) => (
+                        <>
+                            <MenuItem.Main>
+                                <div
+                                    onClick={toggleExpand}
+                                    className={classNames("flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5", {
+                                        "justify-start pr-3": open === true,
+                                        "justify-center": open === false,
+                                    })}
+                                >
+                                    <DesktopComputerIcon
+                                        className={classNames("shrink-0 w-6 h-6", {
+                                            "ml-3": open === true
+                                        })}
+                                    />
+                                    <span
+                                        className={classNames("text-sm truncate", {
+                                            "hidden": open === false,
+                                            "block": open === true
+                                        })}
+                                    >
+                                        Results
+                                    </span>
+                                    <ChevronDownIcon
+                                        className={classNames("shrink-0 w-5 h-5 ml-auto text-gray-600", {
+                                            "hidden": open === false
+                                        })}
+                                    />
+                                </div>
+                            </MenuItem.Main>
+                            {open === true ? (
+                                <MenuItem.List expand={expand}>
+                                    <li className="w-full">
+                                        <Link href="/results/">
+                                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                                <span className="text-sm block truncate">
+                                                    View CBT Results
+                                                </span>
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </MenuItem.List>
+                            ) : (
+                                <MenuItem.Panel expand={expand}>
+                                    <li className="w-full">
+                                        <Link href="/results/">
+                                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                                <span className="text-sm block truncate">
+                                                    View CBT Results
                                                 </span>
                                             </a>
                                         </Link>
