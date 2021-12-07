@@ -18,20 +18,15 @@ async function createResultSetting(_id: any, body: Omit<ClassResultTemplate, 'te
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms._id.$').lean();
 
         const data = await ClassModel.updateOne({ _id }, {
-            $push: {
-                resultTemplate: {
-                    session: currentSession?._id ?? "",
-                    terms: [{
-                        fields: body.fields,
-                        scheme: body.scheme,
-                        term: currentSession?.terms[0]._id,
-                    }]
-                }
-            }
-        }, {
-            runValidators: true,
-            lean: true, fields: "_id",
-        });
+            resultTemplate: [{
+                session: currentSession._id,
+                terms: [{
+                    fields: body.fields,
+                    scheme: body.scheme,
+                    term: currentSession.terms[0]._id,
+                }]
+            }]
+        }, { runValidators: true });
 
         [success, status, message] = [data.acknowledged, StatusCodes.OK, {
             data: { ok: data.acknowledged },
