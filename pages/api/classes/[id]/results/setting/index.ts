@@ -33,9 +33,9 @@ async function createResultSetting(_id: any, body: Omit<ClassResultTemplate, 'te
             lean: true, fields: "_id",
         });
 
-        [success, status, message] = [true, StatusCodes.CREATED, {
+        [success, status, message] = [data.acknowledged, StatusCodes.OK, {
             data: { ok: data.acknowledged },
-            message: ReasonPhrases.CREATED
+            message: ReasonPhrases.OK
         }];
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
@@ -63,9 +63,9 @@ async function getResultSetting(_id: any): Promise<ServerResponse<ClassResultSet
             },
         }, 'resultTemplate.terms.$').lean();
 
-        [success, status, message] = [true, StatusCodes.CREATED, {
+        [success, status, message] = [true, StatusCodes.OK, {
             data: classRecord?.resultTemplate?.[0]?.terms?.[0],
-            message: ReasonPhrases.CREATED
+            message: ReasonPhrases.OK
         }];
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
