@@ -15,11 +15,11 @@ export type ClassRecord = RecordId & {
 
 export type ClassResultTemplate = {
     term: ObjectId;
-    fields: {
+    fields: (RecordId & {
         max: number;
         name: string;
         alias: string;
-    }[];
+    })[];
     scheme: {
         limit: number;
         grade: string;
