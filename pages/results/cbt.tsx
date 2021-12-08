@@ -1,3 +1,4 @@
+import useSWR from "swr";
 import Head from "next/head";
 import { useState } from "react";
 import type { NextPage } from "next";
@@ -8,9 +9,15 @@ import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 
 import type { TeacherCBTResultsGETData } from "types/api/teachers";
+import type { SelectOption, RouteData, ClientResponse } from "types";
 
 const Results: NextPage = () => {
+    const [exams, setExams] = useState<SelectOption[]>();
+    const { data: classes } = useSWR<RouteData<ClassesGETData>>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+
     const [results, setResults] = useState<TeacherCBTResultsGETData>();
+    const [selectedExam, setSelectedExam] = useState({ _id: "", name: "Select exam" });
+    const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
 
     return (
         <>
@@ -26,8 +33,8 @@ const Results: NextPage = () => {
                         <div className="flex gap-4 items-end justify-center w-full">
                             <Select
                                 label="Class"
-                                options={undefined}
-                                selected={{ _id: "", name: "" }}
+                                options={classes?.data}
+                                selected={selectedClass}
                                 colorPallette={{
                                     activeCheckIconColor: "stroke-indigo-600",
                                     inactiveCheckIconColor: "stroke-indigo-800",
@@ -35,12 +42,12 @@ const Results: NextPage = () => {
                                     buttonBorderColor: "focus-visible:border-indigo-500",
                                     buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
                                 }}
-                                handleChange={() => { }}
+                                handleChange={setSelectedClass}
                             />
                             <Select
                                 label="Exam"
-                                options={undefined}
-                                selected={{ _id: "", name: "" }}
+                                options={exams}
+                                selected={selectedExam}
                                 colorPallette={{
                                     activeCheckIconColor: "stroke-indigo-600",
                                     inactiveCheckIconColor: "stroke-indigo-800",
@@ -48,7 +55,7 @@ const Results: NextPage = () => {
                                     buttonBorderColor: "focus-visible:border-indigo-500",
                                     buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
                                 }}
-                                handleChange={() => { }}
+                                handleChange={setSelectedExam}
                             />
                             <button className="px-4 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-sm">
                                 Load Results
