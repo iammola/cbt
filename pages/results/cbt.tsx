@@ -1,8 +1,8 @@
 import useSWR from "swr";
 import Head from "next/head";
-import { useState } from "react";
 import type { NextPage } from "next";
 import { formatRelative } from "date-fns";
+import { useEffect, useState } from "react";
 
 import Select from "components/Select";
 import { UserImage } from "components/Misc";
@@ -10,6 +10,7 @@ import { Navbar, Sidebar } from "components/Layout";
 
 import type { TeacherCBTResultsGETData } from "types/api/teachers";
 import type { SelectOption, RouteData, ClientResponse } from "types";
+import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
 
 const Results: NextPage = () => {
     const [exams, setExams] = useState<SelectOption[]>();
@@ -18,6 +19,29 @@ const Results: NextPage = () => {
     const [results, setResults] = useState<TeacherCBTResultsGETData>();
     const [selectedExam, setSelectedExam] = useState({ _id: "", name: "Select exam" });
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
+
+    useEffect(() => {
+        const { _id } = selectedClass;
+
+        async function getExams() {
+            setExams([]);
+            setSelectedExam({ _id: "", name: "Loading exams..." });
+
+            try {
+                const res = await fetch(`/api/classes/${_id}/exams`);
+                const result = await res.json() as ClientResponse<ClassExamGETData>;
+
+                if (result.success === true) {
+                    setExams(result.data.exams);
+                    setSelectedExam({ _id: "", name: "Select exam" });
+                } else throw new Error(result.error);
+            } catch (error: any) {
+                console.log({ error });
+            }
+        }
+
+        if (_id !== "") getExams();
+    }, [selectedClass]);
 
     return (
         <>
