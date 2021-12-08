@@ -16,11 +16,18 @@ import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
 const Results: NextPage = () => {
     const [{ account }] = useCookies(['account']);
     const [exams, setExams] = useState<SelectOption[]>();
-    const { data: classes } = useSWR<RouteData<ClassesGETData>>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
     const [results, setResults] = useState<TeacherCBTResultsGETData>();
     const [selectedExam, setSelectedExam] = useState({ _id: "", name: "Select exam" });
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
+
+    useEffect(() => {
+        setSelectedClass({
+            _id: "",
+            name: (error !== undefined && classes === undefined) ? "Error Loading Classes" : (classes === undefined ? "Loading classes..." : "Select class")
+        });
+    }, [classes, error]);
 
     useEffect(() => {
         const { _id } = selectedClass;
