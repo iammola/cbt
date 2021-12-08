@@ -1,10 +1,17 @@
 import Head from "next/head";
+import { useState } from "react";
 import type { NextPage } from "next";
+import { formatRelative } from "date-fns";
 
 import Select from "components/Select";
+import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 
+import type { TeacherCBTResultsGETData } from "types/api/teachers";
+
 const Results: NextPage = () => {
+    const [results, setResults] = useState<TeacherCBTResultsGETData>();
+
     return (
         <>
             <Head>
@@ -16,7 +23,7 @@ const Results: NextPage = () => {
                 <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
                     <Navbar />
                     <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
-                        <div className="flex gap-4 items-center justify-center w-full">
+                        <div className="flex gap-4 items-end justify-center w-full">
                             <Select
                                 label="Class"
                                 options={undefined}
@@ -47,6 +54,63 @@ const Results: NextPage = () => {
                                 Load Results
                             </button>
                         </div>
+                        {results !== undefined && (
+                            <table className="rounded-lg shadow-md overflow-hidden min-w-full">
+                                <thead className="bg-gray-200 text-gray-700">
+                                    <tr>
+                                        {["Student", "Score", "Date"].map(i => (
+                                            <th
+                                                key={i}
+                                                scope="col"
+                                                className="py-5"
+                                            >
+                                                <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    {i}
+                                                </span>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+                                    {results.map(({ student, results }) => (
+                                        <tr
+                                            key={student._id.toString()}
+                                            className="text-sm font-medium"
+                                        >
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="shrink-0 h-10 w-10 relative">
+                                                        <UserImage
+                                                            src=""
+                                                            layout="fill"
+                                                            objectFit="cover"
+                                                            objectPosition="center"
+                                                            className="rounded-full"
+                                                            initials={{
+                                                                text: student.name.initials,
+                                                                className: "rounded-full bg-indigo-300"
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <span>
+                                                        {student.name.full}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                {results[0].score}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                {(() => {
+                                                    const date = formatRelative(new Date(results[0].started), new Date());
+                                                    return date[0].toUpperCase() + date.slice(1)
+                                                })()}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
                     </section>
                 </main>
             </section>
