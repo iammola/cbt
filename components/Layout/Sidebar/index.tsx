@@ -6,7 +6,7 @@ import { Divide } from "components/Misc";
 import { Brand, Menu, Theme, Toggle } from "./components";
 
 const Sidebar: FunctionComponent = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     return (
         <aside
