@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
+import { useCookies } from "react-cookie";
 import { formatRelative } from "date-fns";
 import { useEffect, useState } from "react";
 
@@ -13,6 +14,7 @@ import type { SelectOption, RouteData, ClientResponse } from "types";
 import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
 
 const Results: NextPage = () => {
+    const [{ account }] = useCookies(['account']);
     const [exams, setExams] = useState<SelectOption[]>();
     const { data: classes } = useSWR<RouteData<ClassesGETData>>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
@@ -42,6 +44,21 @@ const Results: NextPage = () => {
 
         if (_id !== "") getExams();
     }, [selectedClass]);
+
+    async function getData() {
+        if (selectedExam._id !== "") {
+            try {
+                const res = await fetch(`/api/teachers/${account._id}/cbt_results/${selectedExam._id}`);
+                const result = await res.json() as ClientResponse<TeacherCBTResultsGETData>;
+
+                if (result.success === true) {
+                    setResults(result.data);
+                } else throw new Error(result.error);
+            } catch (error: any) {
+                console.log({ error });
+            }
+        }
+    }
 
     return (
         <>
@@ -81,7 +98,10 @@ const Results: NextPage = () => {
                                 }}
                                 handleChange={setSelectedExam}
                             />
-                            <button className="px-4 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-sm">
+                            <button
+                                onClick={getData}
+                                className="px-4 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-xs mb-3 min-w-max"
+                            >
                                 Load Results
                             </button>
                         </div>
