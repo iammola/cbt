@@ -1,4 +1,4 @@
-import { ClassRecord, ExamRecord, RecordId, SubjectRecord, UserRecord } from "types";
+import { CBTResultRecord, ClassRecord, ExamRecord, RecordId, SubjectRecord, UserRecord } from "types";
 
 export type TeachersPOSTData = Pick<UserRecord, 'code'>;
 
@@ -30,3 +30,5 @@ export type TeacherSubjectsExtendGETData = {
     name: string;
     subjects: Omit<SubjectRecord, 'teachers'>[];
 }[];
+
+export type TeacherCBTResultsGETData = Pick<CBTResultRecord<true>, 'student' | 'results'>[]

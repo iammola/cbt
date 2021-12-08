@@ -106,13 +106,13 @@ export type QuestionRecord = RecordId & {
     minLength?: number;
 });
 
-export type CBTResultRecord = RecordId & {
-    student: ObjectId;
+export type CBTResultRecord<P = false> = RecordId & {
+    student: P extends true ? StudentRecord : ObjectId;
     results: {
         ended: Date;
         started: Date;
         score: number;
-        examId: ObjectId;
+        examId: P extends true ? ExamRecord : ObjectId;
         answers: {
             answer: ObjectId;
             question: ObjectId;
