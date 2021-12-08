@@ -16,7 +16,7 @@ import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
 const Results: NextPage = () => {
     const [{ account }] = useCookies(['account']);
     const [exams, setExams] = useState<SelectOption[]>();
-    const { data: classes, error } = useSWR<RouteData<ClassesGETData>>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
+    const { data: classes, error } = useSWR<RouteData<ClassesGETData>>(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => fetch(url ?? '').then(res => res.json()));
 
     const [results, setResults] = useState<TeacherCBTResultsGETData>();
     const [selectedExam, setSelectedExam] = useState({ _id: "", name: "Select exam" });
