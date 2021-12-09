@@ -168,7 +168,7 @@ const Results: NextPage = () => {
                 <Sidebar />
                 <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
                     <Navbar />
-                    <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow overflow-y-auto">
+                    <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
                         <div className="flex gap-4 items-end justify-center w-full">
                             <Select
                                 label="Class"
