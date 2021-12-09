@@ -2,6 +2,8 @@ import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
 import { Fragment, FunctionComponent, useCallback, useEffect, useState } from "react";
 
+import { generateCode } from "utils";
+
 import type { NotificationProps } from "types";
 
 type Item = Omit<NotificationProps, "remove" | "out">;
@@ -13,13 +15,10 @@ export type NotificationsHook = [
 ];
 
 export function useNotifications(): NotificationsHook {
-    const [count, setCount] = useState(0);
     const [notifications, setNotifications] = useState<(Item & Pick<NotificationProps, 'out'> & { id: number; })[]>([]);
 
     const addNotification: NotificationsHook[0] = items => {
-        let newCount = count;
-        const newItems: (Item & { id: number; })[] = [items].flat().map((item, i) => ({ ...item, id: ++newCount }));
-        setCount(newCount);
+        const newItems = [items].flat().map((item, i) => ({ ...item, id: generateCode() }));
         setNotifications(notifications => [...notifications, ...newItems]);
         return newItems.map(({ id }) => id);
     }
