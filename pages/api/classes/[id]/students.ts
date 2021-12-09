@@ -47,14 +47,14 @@ async function getClassStudents(classId: any): Promise<ServerResponse<ClassStude
     return [success, status, message];
 }
 
-export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: ServerResponse<ClassStudentsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else [success, status, message] = await getClassStudents(query.id);
 
     if (typeof message !== "object") message = { message, error: message };
 
