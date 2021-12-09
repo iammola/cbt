@@ -7,7 +7,6 @@ import { ResultModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
 
-export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
 async function getStudentSubjectResult(student: any, subject: any): Promise<ServerResponse<StudentResultSubjectGETData>> {
     await connect();
     let [success, status, message]: ServerResponse<StudentResultSubjectGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
@@ -69,13 +68,14 @@ async function updateStudentSubjectResult(student: any, subject: any, scores: an
     return [success, status, message];
 }
 
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
     let [success, status, message]: ServerResponse<StudentResultSubjectGETData | StudentResultSubjectPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["GET", "POST"];
 
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    }
+    } else[success, status, message] = await (method === "POST" ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body).scores) : getStudentSubjectResult(query.id, query.subjectId));
 
     if (typeof message !== "object") message = { message, error: message };
 
