@@ -16,26 +16,22 @@ async function createResultSetting(_id: any, body: Omit<ClassResultTemplate, 'te
         if (classRecord === null) throw new Error("Class does not exist");
 
         const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, 'terms._id.$').lean();
+        if (currentSession === null) throw new Error("No session to bind to");
 
         const data = await ClassModel.updateOne({ _id }, {
-            $push: {
-                resultTemplate: {
-                    session: currentSession?._id ?? "",
-                    terms: [{
-                        fields: body.fields,
-                        scheme: body.scheme,
-                        term: currentSession?.terms[0]._id,
-                    }]
-                }
-            }
-        }, {
-            runValidators: true,
-            lean: true, fields: "_id",
-        });
+            resultTemplate: [{
+                session: currentSession._id,
+                terms: [{
+                    fields: body.fields,
+                    scheme: body.scheme,
+                    term: currentSession.terms[0]._id,
+                }]
+            }]
+        }, { runValidators: true });
 
-        [success, status, message] = [true, StatusCodes.CREATED, {
+        [success, status, message] = [data.acknowledged, StatusCodes.OK, {
             data: { ok: data.acknowledged },
-            message: ReasonPhrases.CREATED
+            message: ReasonPhrases.OK
         }];
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
@@ -63,9 +59,9 @@ async function getResultSetting(_id: any): Promise<ServerResponse<ClassResultSet
             },
         }, 'resultTemplate.terms.$').lean();
 
-        [success, status, message] = [true, StatusCodes.CREATED, {
+        [success, status, message] = [true, StatusCodes.OK, {
             data: classRecord?.resultTemplate?.[0]?.terms?.[0],
-            message: ReasonPhrases.CREATED
+            message: ReasonPhrases.OK
         }];
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {

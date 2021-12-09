@@ -23,7 +23,6 @@ const ClassSchema = new Schema<ClassRecord>({
                 type: [{
                     term: Schema.Types.ObjectId,
                     fields: {
-                        _id: false,
                         type: [{
                             max: {
                                 type: Number,

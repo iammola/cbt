@@ -11,7 +11,7 @@ import { useNotifications } from "components/Misc/Notification";
 import type { ClassesGETData, ClassResultSettingsPOSTData } from "types/api/classes";
 import type { ClassResultTemplate, ClientResponse, RouteData } from "types";
 
-type Fields = (Omit<ClassResultTemplate['fields'][number], 'max'> & { max: number | ''; });
+type Fields = (Omit<ClassResultTemplate['fields'][number], '_id' | 'max'> & { max: number | ''; });
 type Scheme = (Omit<ClassResultTemplate['scheme'][number], 'limit'> & { limit: number | ''; });
 
 const CreateScheme: NextPage = () => {

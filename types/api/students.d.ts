@@ -1,4 +1,4 @@
-import { RecordId, ExamRecord, UserRecord } from "types";
+import { RecordId, ExamRecord, UserRecord, ResultRecord } from "types";
 
 export type StudentsPOSTData = Pick<UserRecord, 'code'>;
 
@@ -27,4 +27,12 @@ export type StudentExamGETData = RecordId & {
             subject: string;
         };
     };
+}
+
+export type StudentResultSubjectGETData = {
+    scores: ResultRecord['data'][number]['scores'];
+}
+
+export type StudentResultSubjectPOSTData = {
+    ok: boolean;
 }
