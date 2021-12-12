@@ -281,6 +281,7 @@ const Results: NextPage = () => {
                                                             >
                                                                 <input
                                                                     min={0}
+                                                                    step={.1}
                                                                     pattern="\d+"
                                                                     type="number"
                                                                     max={field.max}
