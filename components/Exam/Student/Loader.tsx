@@ -39,10 +39,7 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({ show, start, exam }) =>
                                     <span className="text-sky-500">Exam</span>{' '}
                                     <span>🎲</span>
                                 </Dialog.Title>
-                                <div
-                                    style={{ borderRightColor: 'rgb(14, 165, 233)' }}
-                                    className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin mt-5"
-                                />
+                                <div className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin mt-5 [border-right-color:rgb(14,165,233)]" />
                             </>
                         ) : (
                             <>
