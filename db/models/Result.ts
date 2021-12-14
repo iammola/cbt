@@ -10,6 +10,7 @@ const ResultSchema = new Schema<ResultRecord>({
         required: [true, "Student ID required"]
     }, data: {
         _id: false,
+        validate: [(val: ResultRecord['data'][number]) => val.scores !== val.total || (val.scores !== undefined && val.total !== undefined), "One of forced total or scores must be provided"],
         type: [{
             subject: {
                 type: Schema.Types.ObjectId
