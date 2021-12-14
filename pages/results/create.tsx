@@ -60,6 +60,9 @@ const Results: NextPage = () => {
 
     async function getData() {
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
+            setScores([]);
+            setStudents([]);
+            setSettings(undefined);
 
             try {
                 let notifications = addNotifications([{
