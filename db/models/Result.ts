@@ -23,6 +23,8 @@ const ResultSchema = new Schema<ResultRecord>({
                         type: Number,
                     }
                 }],
+            }, total: {
+                type: Number,
             }
         }],
     }, comments: {
