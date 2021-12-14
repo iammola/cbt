@@ -15,6 +15,7 @@ const ResultSchema = new Schema<ResultRecord>({
                 type: Schema.Types.ObjectId
             }, scores: {
                 _id: false,
+                default: undefined,
                 type: [{
                     fieldId: {
                         type: Schema.Types.ObjectId
@@ -25,6 +26,7 @@ const ResultSchema = new Schema<ResultRecord>({
                 }],
             }, total: {
                 type: Number,
+                default: undefined
             }
         }],
     }, comments: {
