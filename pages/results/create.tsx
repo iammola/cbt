@@ -315,7 +315,7 @@ const Results: NextPage = () => {
                                                                         title={scheme?.description}
                                                                         className="text-sm text-center"
                                                                     >
-                                                                        {total} - {scheme?.grade}
+                                                                        {total.toFixed(1)} - {scheme?.grade}
                                                                     </abbr>
                                                                 ) : '';
                                                             })()}
