@@ -29,9 +29,7 @@ export type StudentExamGETData = RecordId & {
     };
 }
 
-export type StudentResultSubjectGETData = {
-    scores: ResultRecord['data'][number]['scores'];
-}
+export type StudentResultSubjectGETData = Omit<ResultRecord['data'][number], 'subject'>;
 
 export type StudentResultSubjectPOSTData = {
     ok: boolean;
