@@ -15,7 +15,7 @@ async function getStudentSubjectResult(student: any, subject: any): Promise<Serv
         const result = await ResultModel.findOne({
             student,
             "data.subject": subject
-        }, "data.scores.$").lean();
+        }, "data.total data.scores.$").lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
             data: { scores: result?.data[0].scores ?? [] },
@@ -31,7 +31,7 @@ async function getStudentSubjectResult(student: any, subject: any): Promise<Serv
     return [success, status, message];
 }
 
-async function updateStudentSubjectResult(student: any, subject: any, scores: any): Promise<ServerResponse<StudentResultSubjectPOSTData>> {
+async function updateStudentSubjectResult(student: any, subject: any, { scores, total }: any): Promise<ServerResponse<StudentResultSubjectPOSTData>> {
     await connect();
     let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
@@ -43,11 +43,14 @@ async function updateStudentSubjectResult(student: any, subject: any, scores: an
 
         const [filter, update, options] = record === null ? [
             { student }, {
-                $push: { data: { scores, subject } }
+                $push: { data: { scores, subject, total } }
             }, { upsert: true }
         ] : [
             { _id: record._id }, {
-                $set: { "data.$[i].scores": scores }
+                $set: {
+                    "data.$[i].total": total,
+                    "data.$[i].scores": scores
+                }
             }, {
                 runValidators: true, fields: '_id',
                 arrayFilters: [{ "i.subject": subject }]
@@ -75,7 +78,7 @@ export default async function handler({ body, method, query }: NextApiRequest, r
     if (allowedMethods.includes(method ?? '') === false) {
         res.setHeader("Allow", allowedMethods);
         [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "POST" ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body).scores) : getStudentSubjectResult(query.id, query.subjectId));
+    } else[success, status, message] = await (method === "POST" ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body)) : getStudentSubjectResult(query.id, query.subjectId));
 
     if (typeof message !== "object") message = { message, error: message };
 
