@@ -15,8 +15,9 @@ import type { ClassesGETData, ClassResultSettingsGETData, ClassSubjectGETData } 
 
 const Results: NextPage = () => {
     const [addNotifications, removeNotifications, Notifications] = useNotifications();
+    const [hardTotal, setHardTotal] = useState<StudentRecord['_id'][]>([]);
     const [settings, setSettings] = useState<ClassResultSettingsGETData>();
-    const [scores, setScores] = useState<(Pick<StudentResultSubjectGETData, 'scores'> & { student: StudentRecord['_id']; modified: boolean; })[]>([]);
+    const [scores, setScores] = useState<(Omit<StudentResultSubjectGETData, 'subject'> & { student: StudentRecord['_id']; modified: boolean; })[]>([]);
     const [students, setStudents] = useState<Pick<StudentRecord, '_id' | 'name'>[]>([]);
 
     const [subjects, setSubjects] = useState<{ _id: any; name: string; }[]>([]);
@@ -62,6 +63,7 @@ const Results: NextPage = () => {
         if (selectedClass._id !== "" && selectedSubject._id !== "") {
             setScores([]);
             setStudents([]);
+            setHardTotal([]);
             setSettings(undefined);
 
             try {
@@ -91,16 +93,17 @@ const Results: NextPage = () => {
 
                 const scores = await Promise.all(students.map(async j => {
                     const res = await fetch(`/api/students/${j._id}/results/${selectedSubject._id}/`);
-                    const { data: { scores } } = await res.json() as RouteData<StudentResultSubjectGETData>;
+                    const { data: { scores, total } } = await res.json() as RouteData<StudentResultSubjectGETData>;
 
                     return {
-                        scores,
+                        scores, total,
                         student: j._id,
                         modified: false
                     };
                 }));
 
                 setScores(scores);
+                setHardTotal(scores.filter(i => i.total !== undefined).map(i => i.student));
                 removeNotifications(notifications[0]);
             } catch (error: any) {
                 console.log({ error });
@@ -117,7 +120,7 @@ const Results: NextPage = () => {
                 Icon: () => <></>,
                 timeout: 2e3,
             });
-            await Promise.all(scores.filter(i => i.modified).map(async ({ student, scores }) => {
+            await Promise.all(scores.filter(i => i.modified).map(async ({ student, scores, total }) => {
                 const name = students.find(i => i._id === student)?.name.full ?? "";
                 const notificationId = addNotifications({
                     timeout: 2e3,
@@ -126,7 +129,7 @@ const Results: NextPage = () => {
                 })[0];
                 const res = await fetch(`/api/students/${student}/results/${selectedSubject._id}/`, {
                     method: "POST",
-                    body: JSON.stringify({ scores })
+                    body: JSON.stringify({ scores, total })
                 });
                 const result = await res.json() as RouteData<StudentResultSubjectPOSTData>;
 
@@ -250,7 +253,8 @@ const Results: NextPage = () => {
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
                                             {students.map(({ _id, name }) => {
-                                                const studentScores = scores.find(i => i.student === _id)?.scores ?? [];
+                                                const forceTotal = hardTotal.includes(_id);
+                                                const { scores: studentScores, total: studentTotal } = scores.find(i => i.student === _id) ?? {};
 
                                                 return (
                                                     <tr
@@ -282,38 +286,43 @@ const Results: NextPage = () => {
                                                                 key={field.alias}
                                                                 className="p-2 whitespace-nowrap"
                                                             >
-                                                                <input
-                                                                    min={0}
-                                                                    step={.1}
-                                                                    pattern="\d+"
-                                                                    type="number"
-                                                                    max={field.max}
-                                                                    inputMode="numeric"
-                                                                    className="min-w-[3rem] py-3 w-full h-full text-center text-sm"
-                                                                    onChange={e => {
-                                                                        const value = +e.target.value;
-                                                                        setScores(scores.map(({ modified, student, scores }) => ({
-                                                                            student,
-                                                                            modified: modified === false ? student === _id : modified,
-                                                                            scores: settings.fields.map(scoreField => ({
-                                                                                fieldId: scoreField._id,
-                                                                                score: (scoreField._id === field._id && _id === student) ? value : (scores.find(score => score.fieldId === scoreField._id)?.score ?? "") as any
-                                                                            })).filter(i => i.score !== ""),
-                                                                        })));
-
-                                                                        if (value > field.max || value < 0) e.target.reportValidity();
-                                                                    }}
-                                                                    value={studentScores.find(i => i.fieldId === field._id)?.score ?? ''}
-                                                                    onBeforeInput={(e: FormEvent<HTMLInputElement> & { data: string; }) => /\d|\./.test(e.data) === false && e.preventDefault()}
-                                                                />
+                                                                {forceTotal === false ? (
+                                                                    <input
+                                                                        min={0}
+                                                                        step={.1}
+                                                                        pattern="\d+"
+                                                                        type="number"
+                                                                        max={field.max}
+                                                                        inputMode="numeric"
+                                                                        className="min-w-[3rem] py-3 w-full h-full text-center text-sm"
+                                                                        onChange={e => {
+                                                                            const value = +e.target.value;
+                                                                            setScores(scores.map(({ modified, student, scores, total }) => ({
+                                                                                student, total: _id === student ? undefined : total,
+                                                                                modified: modified === false ? student === _id : modified,
+                                                                                scores: settings.fields.map(scoreField => ({
+                                                                                    fieldId: scoreField._id,
+                                                                                    score: (scoreField._id === field._id && _id === student) ? value : (scores?.find(score => score.fieldId === scoreField._id)?.score ?? "") as any
+                                                                                })).filter(i => i.score !== ""),
+                                                                            })));
+    
+                                                                            if (value > field.max || value < 0) e.target.reportValidity();
+                                                                        }}
+                                                                        value={studentScores?.find(i => i.fieldId === field._id)?.score ?? ''}
+                                                                        onBeforeInput={(e: FormEvent<HTMLInputElement> & { data: string; }) => /\d|\./.test(e.data) === false && e.preventDefault()}
+                                                                    />
+                                                                ) : ''}
                                                             </td>
                                                         ))}
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
-                                                            {(() => {
-                                                                const total = studentScores.reduce((a, b) => a + b.score, 0);
+                                                        <td
+                                                            onDoubleClick={() => setHardTotal(forceTotal ? hardTotal.filter(i => i !== _id) : [...hardTotal, _id])}
+                                                            className="px-6 py-4 whitespace-nowrap text-sm text-center"
+                                                        >
+                                                            {forceTotal === false ? (() => {
+                                                                const total = studentScores?.reduce((a, b) => a + b.score, 0) ?? 0;
                                                                 const scheme = settings.scheme.find(i => total <= i.limit);
 
-                                                                return studentScores.length > 0 ? (
+                                                                return (studentScores?.length ?? 0) > 0 ? (
                                                                     <abbr
                                                                         title={scheme?.description}
                                                                         className="text-sm text-center"
@@ -321,7 +330,25 @@ const Results: NextPage = () => {
                                                                         {total.toFixed(1)} - {scheme?.grade}
                                                                     </abbr>
                                                                 ) : '';
-                                                            })()}
+                                                            })() : (
+                                                                <input
+                                                                    min={0}
+                                                                    step={.1}
+                                                                    pattern="\d+"
+                                                                    type="number"
+                                                                    inputMode="numeric"
+                                                                    value={studentTotal ?? ''}
+                                                                    max={settings.fields.reduce((a, b) => a + b.max, 0)}
+                                                                    className="min-w-[3rem] py-3 w-full h-full text-center text-sm"
+                                                                    onChange={e => setScores(scores.map(({ modified, student, scores, total }) => ({
+                                                                        student,
+                                                                        scores: student === _id ? undefined: scores,
+                                                                        total: student === _id ? +e.target.value : total,
+                                                                        modified: modified === false ? student === _id : modified,
+                                                                    })))}
+                                                                    onBeforeInput={(e: FormEvent<HTMLInputElement> & { data: string; }) => /\d|\./.test(e.data) === false && e.preventDefault()}
+                                                                />
+                                                            )}
                                                         </td>
                                                     </tr>
                                                 );
