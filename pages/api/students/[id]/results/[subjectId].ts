@@ -18,7 +18,7 @@ async function getStudentSubjectResult(student: any, subject: any): Promise<Serv
         }, "data.total data.scores.$").lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data: { scores: result?.data[0].scores ?? [] },
+            data: result?.data[0] ?? {},
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
