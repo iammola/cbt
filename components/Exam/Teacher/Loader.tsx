@@ -35,10 +35,7 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
                             <span className="text-indigo-500">Exam</span>{' '}
                             <span>🎲</span>
                         </Dialog.Title>
-                        <div
-                            style={{ borderRightColor: 'rgb(99, 102, 241)' }}
-                            className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin"
-                        />
+                        <div className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin [border-right-color:rgb(99,102,241)]" />
                     </div>
                 </Transition.Child>
             </Dialog>

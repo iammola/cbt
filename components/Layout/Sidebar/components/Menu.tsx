@@ -172,6 +172,15 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                         </Link>
                                     </li>
                                     <li className="w-full">
+                                        <Link href="/results/comments">
+                                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                                <span className="text-sm block truncate">
+                                                    Upload Term Comments
+                                                </span>
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="w-full">
                                         <Link href="/results/create">
                                             <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
                                                 <span className="text-sm block truncate">
@@ -188,6 +197,15 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                             <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
                                                 <span className="text-sm block truncate">
                                                     View CBT Results
+                                                </span>
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="w-full">
+                                        <Link href="/results/comments">
+                                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                                <span className="text-sm block truncate">
+                                                    Upload Term Comments
                                                 </span>
                                             </a>
                                         </Link>
