@@ -25,6 +25,13 @@ const StudentSchema = new Schema<StudentRecord>({
             trim: true,
             required: [true, 'Last Name required']
         }
+    }, birthday: {
+        type: Date,
+        required: [true, "Student birthday required"]
+    }, gender: {
+        type: String,
+        enum: ["M", "F"],
+        required: [true, "Student gender required"]
     }, email: {
         type: String,
         trim: true,
