@@ -12,7 +12,10 @@ import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
 const Comments: NextPage = () => {
     const [students, setStudents] = useState<ClassStudentsGETData>([]);
+
+    const [loadedStudent, setLoadedStudent] = useState("");
     const [comment, setComment] = useState<NonNullable<StudentCommentGETData>['comments']>();
+
     const [selectedStudent, setSelectedStudent] = useState({ _id: "", name: "Select student" });
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
     const { data: classes, error } = useSWR<RouteData<ClassesGETData>>("/api/classes?select=name", url => fetch(url).then(res => res.json()));
@@ -52,8 +55,10 @@ const Comments: NextPage = () => {
                 const res = await fetch(`/api/students/${selectedStudent._id}/comments`);
                 const result = await res.json() as ClientResponse<StudentCommentGETData>;
 
-                if (result.success === true) setComment(result.data?.comments ?? "");
-                else throw new Error(result.error);
+                if (result.success === true) {
+                    setLoadedStudent(selectedStudent.name);
+                    setComment(result.data?.comments ?? "");
+                } else throw new Error(result.error);
             } catch (error: any) {
                 console.error({ error });
             }
@@ -122,13 +127,13 @@ const Comments: NextPage = () => {
                                 Load Comments
                             </button>
                         </div>
-                        {comment !== undefined && (
+                        {comment !== undefined && loadedStudent !== "" && (
                             <form
                                 onSubmit={handleSubmit}
                                 className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow"
                             >
                                 <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">
-                                    {selectedStudent.name}
+                                    {loadedStudent}
                                 </h4>
                                 <div className="flex flex-col gap-3 items-start justify-center w-full">
                                     <h5 className="font-medium tracking-wide text-gray-700">
