@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 
 import Select from "components/Select";
 import { Sidebar, Navbar } from "components/Layout";
 
-import type { StudentCommentGETData } from "types/api/students";
+import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api/students";
 import type { ClientResponse, RouteData, StudentRecord } from "types";
 import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
@@ -58,6 +58,23 @@ const Comments: NextPage = () => {
         }
     }
 
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        try {
+            const res = await fetch(`/api/students/${selectedStudent._id}/comments`, {
+                method: "POST",
+                body: JSON.stringify({ comment }),
+            });
+            const result = await res.json() as ClientResponse<StudentCommentPOSTData>;
+
+            if (result.success === true) alert('Done');
+            else throw new Error(result.error);
+        } catch (error: any) {
+            console.error({ error });
+        }
+    }
+
     return (
         <>
             <Head>
@@ -104,7 +121,10 @@ const Comments: NextPage = () => {
                             </button>
                         </div>
                         {comment !== undefined && (
-                            <form className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow">
+                            <form
+                                onSubmit={handleSubmit}
+                                className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow"
+                            >
                                 <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">
                                     {selectedStudent.name}
                                 </h4>
