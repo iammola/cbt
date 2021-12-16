@@ -12,7 +12,7 @@ async function getComments(student: any): Promise<ServerResponse<StudentCommentG
     let [success, status, message]: ServerResponse<StudentCommentGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await ResultModel.findOne({ student }, 'comments').lean();
+        const data = await ResultModel.findOne({ student }, '-_id comments').lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
             data,
@@ -25,7 +25,7 @@ async function getComments(student: any): Promise<ServerResponse<StudentCommentG
         }];
     }
 
-    return[success, status, message];
+    return [success, status, message];
 }
 
 export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
