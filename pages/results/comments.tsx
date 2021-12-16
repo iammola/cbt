@@ -118,6 +118,12 @@ const Comments: NextPage = () => {
                                         className="border-2 border-gray-600 rounded-lg p-3 w-full"
                                     />
                                 </div>
+                                <button
+                                    type="submit"
+                                    className="px-12 py-2 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white"
+                                >
+                                    Save
+                                </button>
                             </form>
                         )}
                     </section>
