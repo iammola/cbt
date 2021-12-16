@@ -31,16 +31,8 @@ const ResultSchema = new Schema<ResultRecord>({
             }
         }],
     }, comments: {
-        _id: false,
-        type: {
-            head: {
-                type: String,
-                trim: true,
-            }, class: {
-                type: String,
-                trim: true,
-            }
-        }
+        type: String,
+        trim: true,
     }
 });
 
