@@ -64,10 +64,9 @@ const CreateStudents: NextPage = () => {
             if (success === true) {
                 setName({});
                 setEmail('');
-                setSelectedClass({
-                    _id: "",
-                    name: "Select class"
-                })
+                setBirthday(undefined);
+                setSelectedClass({ _id: "", name: "Select class" });
+                setSelectedGender({ _id: "", name: "Select gender" });
                 setSelectedSubjects([]);
                 addNotification({
                     timeout: 75e2,
