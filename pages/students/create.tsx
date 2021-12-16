@@ -64,6 +64,7 @@ const CreateStudents: NextPage = () => {
             if (success === true) {
                 setName({});
                 setEmail('');
+                setSubjects([]);
                 setBirthday(undefined);
                 setSelectedClass({ _id: "", name: "Select class" });
                 setSelectedGender({ _id: "", name: "Select gender" });
