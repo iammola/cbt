@@ -36,3 +36,5 @@ export type StudentResultSubjectPOSTData = {
 }
 
 export type StudentCommentGETData = Pick<ResultRecord, 'comments'> | null;
+
+export type StudentCommentPOSTData = { ok: boolean; }
