@@ -28,13 +28,17 @@ const Comments: NextPage = () => {
         setSelectedClass(selectedClass);
 
         if (selectedClass._id !== "") {
+            setSelectedStudent({ _id: "", name: "Loading students..." });
             try {
                 const res = await fetch(`/api/classes/${selectedClass._id}/students`);
                 const result = await res.json() as ClientResponse<ClassStudentsGETData>;
 
-                if (result.success === true) setStudents(result.data);
-                else throw new Error(result.error);
+                if (result.success === true) {
+                    setStudents(result.data);
+                    setSelectedStudent({ _id: "", name: "Select student" });
+                } else throw new Error(result.error);
             } catch (error: any) {
+                setSelectedStudent({ _id: "", name: "Error Loading students" });
                 console.error({ error });
             }
         }
