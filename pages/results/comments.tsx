@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 
 import Select from "components/Select";
 import { Sidebar, Navbar } from "components/Layout";
 
-import type { StudentCommentGETData } from "types/api/students";
+import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api/students";
 import type { ClientResponse, RouteData, StudentRecord } from "types";
 import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
@@ -28,13 +28,17 @@ const Comments: NextPage = () => {
         setSelectedClass(selectedClass);
 
         if (selectedClass._id !== "") {
+            setSelectedStudent({ _id: "", name: "Loading students..." });
             try {
                 const res = await fetch(`/api/classes/${selectedClass._id}/students`);
                 const result = await res.json() as ClientResponse<ClassStudentsGETData>;
 
-                if (result.success === true) setStudents(result.data);
-                else throw new Error(result.error);
+                if (result.success === true) {
+                    setStudents(result.data);
+                    setSelectedStudent({ _id: "", name: "Select student" });
+                } else throw new Error(result.error);
             } catch (error: any) {
+                setSelectedStudent({ _id: "", name: "Error Loading students" });
                 console.error({ error });
             }
         }
@@ -46,11 +50,28 @@ const Comments: NextPage = () => {
                 const res = await fetch(`/api/students/${selectedStudent._id}/comments`);
                 const result = await res.json() as ClientResponse<StudentCommentGETData>;
 
-                if (result.success === true) setComment(result.data?.comments);
+                if (result.success === true) setComment(result.data?.comments ?? "");
                 else throw new Error(result.error);
             } catch (error: any) {
                 console.error({ error });
             }
+        }
+    }
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        try {
+            const res = await fetch(`/api/students/${selectedStudent._id}/comments`, {
+                method: "POST",
+                body: JSON.stringify({ comment }),
+            });
+            const result = await res.json() as ClientResponse<StudentCommentPOSTData>;
+
+            if (result.success === true) alert('Done');
+            else throw new Error(result.error);
+        } catch (error: any) {
+            console.error({ error });
         }
     }
 
@@ -100,7 +121,10 @@ const Comments: NextPage = () => {
                             </button>
                         </div>
                         {comment !== undefined && (
-                            <form className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow">
+                            <form
+                                onSubmit={handleSubmit}
+                                className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow"
+                            >
                                 <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">
                                     {selectedStudent.name}
                                 </h4>
@@ -114,6 +138,12 @@ const Comments: NextPage = () => {
                                         className="border-2 border-gray-600 rounded-lg p-3 w-full"
                                     />
                                 </div>
+                                <button
+                                    type="submit"
+                                    className="px-12 py-2 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white"
+                                >
+                                    Save
+                                </button>
                             </form>
                         )}
                     </section>
