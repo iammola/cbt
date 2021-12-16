@@ -34,3 +34,5 @@ export type StudentResultSubjectGETData = Omit<ResultRecord['data'][number], 'su
 export type StudentResultSubjectPOSTData = {
     ok: boolean;
 }
+
+export type StudentCommentGETData = Pick<ResultRecord, 'comments'> | null;

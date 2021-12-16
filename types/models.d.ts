@@ -122,10 +122,7 @@ export type CBTResultRecord<P = false> = RecordId & {
 
 export type ResultRecord = RecordId & {
     student: ObjectId;
-    comments: {
-        head: string;
-        class: string;
-    };
+    comments: string;
     data: {
         subject: ObjectId;
         total?: number;
