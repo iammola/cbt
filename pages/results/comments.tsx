@@ -46,7 +46,7 @@ const Comments: NextPage = () => {
                 const res = await fetch(`/api/students/${selectedStudent._id}/comments`);
                 const result = await res.json() as ClientResponse<StudentCommentGETData>;
 
-                if (result.success === true) setComment(result.data?.comments);
+                if (result.success === true) setComment(result.data?.comments ?? "");
                 else throw new Error(result.error);
             } catch (error: any) {
                 console.error({ error });
