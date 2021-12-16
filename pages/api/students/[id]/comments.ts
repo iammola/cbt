@@ -35,7 +35,7 @@ async function updateComments(student: any, comments: string): Promise<ServerRes
     try {
         const { acknowledged: ok } = await ResultModel.updateOne({ student }, {
             $set: { comments }
-        }, { runValidators: true });
+        }, { runValidators: true, upsert: true });
 
         [success, status, message] = [true, StatusCodes.OK, {
             data: { ok },

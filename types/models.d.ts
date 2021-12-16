@@ -57,6 +57,8 @@ type UserRecord<T = never> = RecordId & {
 export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
 
 export type StudentRecord = UserRecord & {
+    birthday: Date;
+    gender: "M" | "F";
     academic: {
         session: ObjectId;
         terms: {

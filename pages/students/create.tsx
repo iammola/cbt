@@ -1,7 +1,8 @@
 import useSWR from "swr";
 import Head from "next/head";
+import { format } from "date-fns";
 import type { NextPage } from "next";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { BriefcaseIcon } from "@heroicons/react/outline";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
@@ -16,13 +17,22 @@ import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
 const CreateStudents: NextPage = () => {
     const [addNotification, , Notifications] = useNotifications();
     const [email, setEmail] = useState('');
+    const [birthday, setBirthday] = useState<Date>();
     const [name, setName] = useState<{ [K in "full" | "first" | "last" | "initials"]?: string }>({});
+    const [selectedGender, setSelectedGender] = useState({ _id: "", name: "Select gender" });
     const [selectedClass, setSelectedClass] = useState({
         _id: "",
         name: "Select class"
     });
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
+    const genders = useMemo(() => [{
+        _id: "M",
+        name: "Male"
+    }, {
+        _id: "F",
+        name: "Female"
+    }], []);
     const [subjects, setSubjects] = useState<{ _id: any; name: string; }[]>([]);
     const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>('/api/classes/?select=name', url => fetch(url).then(res => res.json()));
 
@@ -39,7 +49,8 @@ const CreateStudents: NextPage = () => {
             const res = await fetch('/api/students/', {
                 method: "POST",
                 body: JSON.stringify({
-                    email, name,
+                    email, name, birthday,
+                    gender: selectedGender._id,
                     academic: {
                         class: selectedClass._id,
                         subjects: selectedSubjects
@@ -198,6 +209,37 @@ const CreateStudents: NextPage = () => {
                                 id="lastName"
                                 value={name.last ?? ''}
                                 onChange={e => setName({ ...name, last: e.target.value })}
+                                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 w-full">
+                        <Select
+                            label="Gender"
+                            colorPallette={{
+                                activeCheckIconColor: "stroke-indigo-600",
+                                inactiveCheckIconColor: "stroke-indigo-800",
+                                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                                buttonBorderColor: "focus-visible:border-indigo-500",
+                                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500"
+                            }}
+                            options={genders}
+                            selected={selectedGender}
+                            handleChange={setSelectedGender}
+                        />
+                        <div className="flex flex-col gap-2.5 w-full">
+                            <label
+                                htmlFor="birthday"
+                                className="text-sm text-gray-600 font-semibold"
+                            >
+                                Birthday
+                            </label>
+                            <input
+                                required
+                                type="date"
+                                id="birthday"
+                                onChange={e => setBirthday(e.target.valueAsDate ?? undefined)}
+                                value={birthday !== undefined ? format(birthday, 'yyyy-MM-dd') : ''}
                                 className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
                             />
                         </div>
