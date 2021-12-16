@@ -28,6 +28,7 @@ const Comments: NextPage = () => {
     }, [classes, error]);
 
     async function getStudents(selectedClass: any) {
+        setStudents([]);
         setSelectedClass(selectedClass);
 
         if (selectedClass._id !== "") {
