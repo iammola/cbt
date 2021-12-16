@@ -12,7 +12,7 @@ import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
 const Comments: NextPage = () => {
     const [students, setStudents] = useState<ClassStudentsGETData>([]);
-    const [comments, setComments] = useState<NonNullable<StudentCommentGETData>['comments']>();
+    const [comment, setComment] = useState<NonNullable<StudentCommentGETData>['comments']>();
     const [selectedStudent, setSelectedStudent] = useState({ _id: "", name: "Select student" });
     const [selectedClass, setSelectedClass] = useState({ _id: "", name: "Loading classes..." });
     const { data: classes, error } = useSWR<RouteData<ClassesGETData>>("/api/classes?select=name", url => fetch(url).then(res => res.json()));
@@ -46,7 +46,7 @@ const Comments: NextPage = () => {
                 const res = await fetch(`/api/students/${selectedStudent._id}/comments`);
                 const result = await res.json() as ClientResponse<StudentCommentGETData>;
 
-                if (result.success === true) setComments(result.data?.comments);
+                if (result.success === true) setComment(result.data?.comments);
                 else throw new Error(result.error);
             } catch (error: any) {
                 console.error({ error });
@@ -99,34 +99,18 @@ const Comments: NextPage = () => {
                                 Load Comments
                             </button>
                         </div>
-                        {comments !== undefined && (
+                        {comment !== undefined && (
                             <form className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow">
                                 <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">
                                     {selectedStudent.name}
                                 </h4>
                                 <div className="flex flex-col gap-3 items-start justify-center w-full">
                                     <h5 className="font-medium tracking-wide text-gray-700">
-                                        Head Teacher&apos;s Comment
+                                        Comment
                                     </h5>
                                     <textarea
-                                        value={comments.head}
-                                        onChange={e => setComments({
-                                            head: e.target.value ?? '',
-                                            class: comments.class ?? ''
-                                        })}
-                                        className="border-2 border-gray-600 rounded-lg p-3 w-full"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-3 items-start justify-center w-full">
-                                    <h5 className="font-medium tracking-wide text-gray-700">
-                                        Class Teacher&apos;s Comment
-                                    </h5>
-                                    <textarea
-                                        value={comments.class}
-                                        onChange={e => setComments({
-                                            head: comments.head ?? '',
-                                            class: e.target.value ?? ''
-                                        })}
+                                        value={comment}
+                                        onChange={e => setComment(e.target.value)}
                                         className="border-2 border-gray-600 rounded-lg p-3 w-full"
                                     />
                                 </div>
