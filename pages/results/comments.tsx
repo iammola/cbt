@@ -24,8 +24,8 @@ const Comments: NextPage = () => {
         });
     }, [classes, error]);
 
-    async function getStudents(g: typeof selectedClass) {
-        setSelectedClass(g);
+    async function getStudents(selectedClass: any) {
+        setSelectedClass(selectedClass);
 
         if (selectedClass._id !== "") {
             try {
