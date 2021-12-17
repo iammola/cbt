@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ExamModel, CBTResultModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { CBTResultRecord, ServerResponse } from "types";
-import type { StudentResultsGETData, StudentResultPOSTData } from "types/api/students";
+import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api/students";
 
 type RequestBody = Omit<CBTResultRecord['results'][number], 'score' | 'ended' | 'answers'> & { answers: { [key: string]: string } }
 
@@ -58,9 +58,9 @@ async function createResult(id: any, result: RequestBody): Promise<ServerRespons
     return [success, status, message];
 }
 
-async function getResults(id: any): Promise<ServerResponse<StudentResultsGETData>> {
+async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETData>> {
     await connect();
-    let [success, status, message]: ServerResponse<StudentResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<StudentCBTResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const record = await CBTResultModel.findOne({ student: id }, 'results.started results.score results.examId').lean();
@@ -92,7 +92,7 @@ async function getResults(id: any): Promise<ServerResponse<StudentResultsGETData
 }
 
 export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse<StudentResultPOSTData | StudentResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<StudentResultPOSTData | StudentCBTResultsGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = ["POST", "GET"];
 
     if (allowedMethods.includes(method ?? '') === false) {

@@ -8,7 +8,7 @@ export type StudentResultPOSTData = {
 
 export type StudentGETData = StudentRecord | null;
 
-export type StudentResultsGETData = {
+export type StudentCBTResultsGETData = {
     started: Date;
     score: number;
     subject: string;
