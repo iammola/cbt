@@ -5,10 +5,11 @@ import { connect } from "db";
 import { StudentModel } from "db/models";
 
 import type { ServerResponse } from "types";
+import type { StudentGETData } from "types/api/students";
 
-async function getStudent(_id: any, select: any): Promise<ServerResponse<{}>> {
+async function getStudent(_id: any, select: any): Promise<ServerResponse<StudentGETData>> {
     await connect();
-    let [success, status, message]: ServerResponse<{}> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<StudentGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
         const data = await StudentModel.findById(_id, select).lean();
@@ -28,7 +29,7 @@ async function getStudent(_id: any, select: any): Promise<ServerResponse<{}>> {
 }
 
 export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
-    let [success, status, message]: ServerResponse<{}> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+    let [success, status, message]: ServerResponse<StudentGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
     const allowedMethods = "GET";
 
     if (allowedMethods !== method) {

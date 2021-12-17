@@ -1,10 +1,12 @@
-import { RecordId, ExamRecord, UserRecord, ResultRecord } from "types";
+import { RecordId, ExamRecord, UserRecord, ResultRecord, StudentRecord } from "types";
 
 export type StudentsPOSTData = Pick<UserRecord, 'code'>;
 
 export type StudentResultPOSTData = {
     score: number;
 }
+
+export type StudentGETData = StudentRecord | null;
 
 export type StudentResultsGETData = {
     started: Date;
