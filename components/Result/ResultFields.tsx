@@ -23,14 +23,14 @@ const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className 
                             <th
                                 key={col}
                                 scope="col"
-                                className="text-center w-1/3 py-2"
+                                className="text-center w-1/3 py-2 border-b border-gray-400"
                             >
                                 {col}
                             </th>
                         ))}
                     </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-400 border-t border-gray-400 text-gray-600">
+                <tbody className="bg-white divide-y divide-gray-400 text-gray-600">
                     {fields.map((item, index) => (
                         <tr
                             key={item.name}

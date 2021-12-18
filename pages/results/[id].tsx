@@ -193,7 +193,7 @@ const Result: NextPage = () => {
                             <tr className="divide-x divide-gray-400">
                                 <th
                                     scope="col"
-                                    className="py-5"
+                                    className="py-5 border-b border-gray-400"
                                 >
                                     <span className="sr-only">Subjects / Fields</span>
                                 </th>
@@ -201,16 +201,16 @@ const Result: NextPage = () => {
                                     <th
                                         scope="col"
                                         key={field.alias}
-                                        className="py-5 font-medium"
+                                        className="py-5 border-b border-gray-400 font-medium"
                                     >
-                                        <span className="px-2 text-xs text-gray-500 uppercase tracking-wider">
+                                        <span className="px-2 text-xs text-gray-700 font-semibold uppercase tracking-wider">
                                             {field.alias}
                                         </span>
                                     </th>
                                 ))}
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-400 border-t border-gray-400 text-gray-600">
+                        <tbody className="bg-white divide-y divide-gray-400 text-gray-600">
                             {data.subjects?.map((subject, index) => {
                                 const scores = data.scores?.find(item => item.subject === subject._id);
                                 const subjectTotal = total?.find(g => g.subject === subject._id)?.total ?? 0;
