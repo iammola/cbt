@@ -7,7 +7,7 @@ import type { ClassRecord } from "types";
 const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className }) => {
     return (
         <div className={className}>
-            <table className="border border-gray-400 bg-white w-full">
+            <table className="border border-gray-400 bg-white w-full border-separate [border-spacing:0;] rounded-lg overflow-hidden">
                 <thead className="text-gray-700 divide-y divide-gray-400 font-medium">
                     <tr>
                         <th
