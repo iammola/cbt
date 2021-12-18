@@ -216,7 +216,7 @@ const Result: NextPage = () => {
                                 const subjectTotal = total?.find(g => g.subject === subject._id)?.total ?? 0;
                                 const scheme = data.template?.scheme.find(i => subjectTotal <= i.limit);
 
-                                return (
+                                return scores !== undefined && (
                                     <tr
                                         key={subject.name}
                                         className={classNames("text-xs text-center text-gray-800 font-medium divide-x divide-gray-400", {
