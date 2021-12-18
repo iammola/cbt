@@ -191,8 +191,8 @@ const Result: NextPage = () => {
                         className="w-full py-10"
                         HRclassName="border-t-gray-300"
                     />
-                        <thead className="text-gray-700 bg-gray-100">
                     <table className="min-w-full border border-gray-400 bg-white border-separate [border-spacing:0;] rounded-lg overflow-hidden">
+                        <thead className="text-gray-700 bg-gray-50">
                             <tr className="divide-x divide-gray-400">
                                 <th
                                     scope="col"
