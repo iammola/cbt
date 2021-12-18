@@ -146,7 +146,7 @@ const Result: NextPage = () => {
                             />
                         </figure>
                         <div className="flex flex-col items-center justify-center">
-                            <h2 className="text-4xl font-extrabold uppercase text-gray-700 tracking-wider">Grand Regal School</h2>
+                            <h2 className="text-3xl font-extrabold uppercase text-gray-700 tracking-wider">Grand Regal International School</h2>
                             <p className="text-xs text-gray-600 font-medium">
                                 Hse. 2, 2nd Avenue, Wole Soyinka Drive, Gwarinpa, Abuja
                             </p>
