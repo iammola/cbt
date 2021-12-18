@@ -32,7 +32,7 @@ async function getStudentSubjects(_id: any): Promise<ServerResponse<StudentSubje
 
         const subjects = await SubjectsModel.findOne({
             class: d?.class
-        }, 'subjects.name').lean();
+        }, 'subjects._id subjects.name').lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
             data: subjects?.subjects.filter(subject => d?.subjects.includes(subject._id)) ?? [],
