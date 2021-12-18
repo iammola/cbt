@@ -31,7 +31,7 @@ const GradingScheme: FunctionComponent<GradingSchemeProps> = ({ scheme, classNam
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-400 border-t border-gray-400 text-gray-600">
-                    {scheme.sort((a, b) => b.limit - a.limit).map((item, index) => (
+                    {[...scheme].sort((a, b) => b.limit - a.limit).map((item, index) => (
                         <tr
                             key={item.grade}
                             className={classNames("text-xs text-center text-gray-800 font-medium divide-x divide-gray-400", {
