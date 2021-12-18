@@ -12,7 +12,7 @@ async function getStudentResult(student: any): Promise<ServerResponse<StudentRes
     let [success, status, message]: ServerResponse<StudentResultGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
 
     try {
-        const data = await ResultModel.findOne({ student }, "-_id").lean();
+        const data = await ResultModel.findOne({ student }, "-_id -student").lean();
         if (data === null) throw new Error("Student has no result record");
 
         [success, status, message] = [true, StatusCodes.OK, {
