@@ -32,7 +32,7 @@ async function getClassResultStats(id: any): Promise<ServerResponse<ClassResultG
             const total = data.reduce((acc, entry) => acc + (entry.total ?? entry.scores?.reduce((acc, item) => acc + item.score, 0) ?? 0), 0);
 
             average += total;
-            lowest = total < lowest ? total : lowest;
+            lowest = lowest === 0 ? total : (total < lowest ? total : lowest);
             highest = total > highest ? total : highest;
         });
 
