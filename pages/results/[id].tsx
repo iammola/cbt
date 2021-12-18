@@ -87,8 +87,8 @@ const Result: NextPage = () => {
                         <h2 className="text-4xl font-extrabold uppercase text-gray-700 tracking-wider">Grand Regal School</h2>
                     </div>
                     <Divide
-                        className="w-full py-7 px-10"
-                        HRclassName="border-t-gray-400"
+                        className="w-full py-7"
+                        HRclassName="border-t-gray-300"
                     />
                     <div className="flex flex-wrap gap-10 items-center justify-center w-full">
                         <div className="flex flex-col items-start justify-center">
@@ -125,8 +125,8 @@ const Result: NextPage = () => {
                         </div>
                     </div>
                     <Divide
-                        className="w-full py-8 px-10"
-                        HRclassName="border-t-gray-400"
+                        className="w-full py-10"
+                        HRclassName="border-t-gray-300"
                     />
                 </main>
             )}
