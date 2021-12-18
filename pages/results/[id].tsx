@@ -56,11 +56,11 @@ const Result: NextPage = () => {
             }));
 
             if (data?.session !== undefined && data?.class === undefined) {
-                const { academic } = student?.data;
+                const { academic } = student.data;
                 const { session, term } = data ?? {};
                 const active = academic.find(i => i.session === session?._id)?.terms.find(i => i.term === term?._id);
 
-                if (active?.class !== undefined) getClass(active.class);
+                if (active?.class !== undefined && data.class === undefined) getClass(active.class);
             }
         }
     }, [data, student]);
