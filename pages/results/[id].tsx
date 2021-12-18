@@ -10,7 +10,7 @@ import { classNames } from "utils";
 import { Divide } from "components/Misc";
 import { GradingScheme, ResultFields } from "components/Result";
 
-import type { ClassGETData, ClassResultSettingsGETData } from "types/api/classes";
+import type { ClassGETData, ClassResultGETData, ClassResultSettingsGETData } from "types/api/classes";
 import type { StudentGETData, StudentResultGETData, StudentSubjectsGETData } from "types/api/students";
 import type { SessionCurrentGETData } from "types/api/sessions";
 import type { ClassRecord, ClientResponse, ResultRecord, RouteData, SessionRecord, StudentRecord, SubjectRecord, TermRecord } from "types";
@@ -126,6 +126,21 @@ const Result: NextPage = () => {
         if (student?.data != undefined && data?.scores === undefined) getScores(student.data._id);
     }, [data?.scores, student?.data]);
 
+    useEffect(() => {
+        async function getClassStat(id: any) {
+            try {
+                const res = await fetch(`/api/classes/${id}/results/stats/`);
+                const result = await res.json() as ClientResponse<ClassResultGETData>;
+
+                if (result.success === true) setData(data => ({ ...data, stats: result.data }));
+                else throw new Error(result.error);
+            } catch (error) {
+                console.error({ error });
+            }
+        }
+        if (data?.class != undefined && data?.stats === undefined) getClassStat(data.class._id);
+    }, [data?.class, data?.stats]);
+
     return (
         <section className="flex items-center justify-center w-screen min-h-screen bg-gray-200 py-16 print:p-0 print:bg-white">
             <Head>
@@ -159,31 +174,66 @@ const Result: NextPage = () => {
                         className="w-full py-7"
                         HRclassName="border-t-gray-300"
                     />
-                    <div className="flex flex-wrap gap-10 items-center justify-between w-full">
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Full Name</div>
-                            <div className="font-semibold text-gray-800">{data.student?.name.full}</div>
-                        </div>
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Gender</div>
-                            <div className="font-semibold text-gray-800">
-                                {data.student?.gender === "M" ? "Male" : "Female"}
+                    <div className="flex flex-col gap-8 items-start justify-start w-full">
+                        <div className="flex flex-wrap gap-20 items-center justify-center w-full">
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Full Name</div>
+                                <div className="font-semibold text-gray-800">{data.student?.name.full}</div>
+                            </div>
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Gender</div>
+                                <div className="font-semibold text-gray-800">
+                                    {data.student?.gender === "M" ? "Male" : "Female"}
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Class</div>
+                                <div className="font-semibold text-gray-800">{data.class?.name ?? ''}</div>
+                            </div>
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Date of Birth</div>
+                                <div className="font-semibold text-gray-800">
+                                    {data.student?.birthday === undefined ? "Not set" : format(new Date(data.student?.birthday), "do MMMM yyyy")}
+                                </div>
                             </div>
                         </div>
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Class</div>
-                            <div className="font-semibold text-gray-800">{data.class?.name ?? ''}</div>
-                        </div>
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Date of Birth</div>
-                            <div className="font-semibold text-gray-800">
-                                {data.student?.birthday === undefined ? "Not set" : format(new Date(data.student?.birthday), "do MMMM yyyy")}
+                        <div className="flex flex-wrap gap-20 items-center justify-center w-full">
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Highest in Class</div>
+                                <div className="font-semibold text-gray-800">
+                                    {data.stats?.highest.toFixed(1)}
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Total Score</div>
-                            <div className="font-semibold text-gray-800">
-                                {total?.reduce((a, b) => a + b.total, 0)}
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Class Average</div>
+                                <div className="font-semibold text-gray-800">
+                                    {data.stats?.average.toFixed(1)}
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Expected Score</div>
+                                <div className="font-semibold text-gray-800">
+                                    {(() => {
+                                        const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
+                                        return (data.scores?.length ?? 0) * subjectMax
+                                    })()}
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Total Score</div>
+                                <div className="font-semibold text-gray-800">
+                                    {total?.reduce((a, b) => a + b.total, 0)}
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-start justify-center">
+                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Score %</div>
+                                <div className="font-semibold text-gray-800">
+                                    {(() => {
+                                        const overallTotal = total?.reduce((a, b) => a + b.total, 0) ?? 0;
+                                        const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
+                                        return `${((overallTotal / ((data.scores?.length ?? 0) * subjectMax)) * 1e2).toFixed(1)}%`
+                                    })()}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -298,6 +348,7 @@ interface Data {
     comments: ResultRecord['comments'];
     scores: ResultRecord['data'];
     term: TermRecord;
+    stats: ClassResultGETData;
     template: ClassResultSettingsGETData;
     class: Pick<ClassRecord, "_id" | "name">;
     session: Pick<SessionRecord, "_id" | "name">;
