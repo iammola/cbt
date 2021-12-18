@@ -22,3 +22,7 @@ export type ClassResultSettingsPOSTData = {
 export type ClassResultSettingsGETData = ClassResultTemplate | undefined
 
 export type ClassStudentsGETData = Pick<StudentRecord, '_id' | 'name'>[];
+
+export type ClassResultGETData = {
+    [K in "highest" | "lowest" | "average"]: number;
+}
