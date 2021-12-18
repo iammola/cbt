@@ -24,11 +24,11 @@ const Result: NextPage = () => {
         if (session?.data != undefined && data?.session === undefined) {
             const { _id, name, terms } = session.data;
 
-            setData({
+            setData(data => ({
                 ...data,
                 session: { _id, name },
                 term: terms.find(term => term.current === true),
-            });
+            }));
         }
     }, [data, session]);
 
@@ -39,10 +39,10 @@ const Result: NextPage = () => {
                 const result = await res.json() as ClientResponse<ClassGETData>;
 
                 if (result.success === true) {
-                    if (result.data !== null) setData({
+                    if (result.data !== null) setData(data => ({
                         ...data,
-                        class: result.data
-                    }); else alert("Class does not exist");
+                        class: result.data!
+                    })); else alert("Class does not exist");
                 } else throw new Error(result.error);
             } catch (error: any) {
                 console.error({ error });
@@ -50,10 +50,10 @@ const Result: NextPage = () => {
         }
 
         if (student?.data != undefined) {
-            if (data?.student === undefined) setData({
+            if (data?.student === undefined) setData(data => ({
                 ...data,
-                student: student?.data,
-            });
+                student: student.data!,
+            }));
 
             if (data?.session !== undefined && data?.class === undefined) {
                 const { academic } = student?.data;
