@@ -35,7 +35,7 @@ async function getStudentSubjects(_id: any): Promise<ServerResponse<StudentSubje
         }, 'subjects._id subjects.name').lean();
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data: subjects?.subjects.filter(subject => d?.subjects.includes(subject._id)) ?? [],
+            data: subjects?.subjects.filter(subject => d?.subjects.find(i => i.equals(subject._id)) !== undefined) ?? [],
             message: ReasonPhrases.OK
         }];
     } catch (error: any) {
