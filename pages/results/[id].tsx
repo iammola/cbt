@@ -90,7 +90,7 @@ const Result: NextPage = () => {
                         className="w-full py-7"
                         HRclassName="border-t-gray-300"
                     />
-                    <div className="flex flex-wrap gap-10 items-center justify-center w-full">
+                    <div className="flex flex-wrap gap-10 items-center justify-between w-full">
                         <div className="flex flex-col items-start justify-center">
                             <div className="text-xs text-gray-500 font-semibold tracking-wide">Full Name</div>
                             <div className="font-semibold text-gray-800">{data.student?.name.full}</div>
@@ -109,18 +109,6 @@ const Result: NextPage = () => {
                             <div className="text-xs text-gray-500 font-semibold tracking-wide">Date of Birth</div>
                             <div className="font-semibold text-gray-800">
                                 {data.student?.birthday === undefined ? "Not set" : format(new Date(data.student?.birthday), "do MMMM yyyy")}
-                            </div>
-                        </div>
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Overall Score</div>
-                            <div className="font-semibold text-gray-800">
-                                893
-                            </div>
-                        </div>
-                        <div className="flex flex-col items-start justify-center">
-                            <div className="text-xs text-gray-500 font-semibold tracking-wide">Class Average</div>
-                            <div className="font-semibold text-gray-800">
-                                1012.3
                             </div>
                         </div>
                     </div>
