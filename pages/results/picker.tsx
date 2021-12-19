@@ -76,7 +76,7 @@ const ResultsPicker: NextPage = () => {
                     </span>
                 </>
             )}
-            <h3 className="text-5xl font-bold tracking-wider text-gray-800">
+            <h3 className="text-5xl font-bold tracking-wider text-gray-600">
                 Select student
             </h3>
             <div className="flex flex-col gap-10 items-center justify-center pt-8">
