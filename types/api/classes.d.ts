@@ -24,5 +24,7 @@ export type ClassResultSettingsGETData = ClassResultTemplate | undefined
 export type ClassStudentsGETData = Pick<StudentRecord, '_id' | 'name'>[];
 
 export type ClassResultGETData = {
-    [K in "highest" | "lowest" | "average"]: number;
+    [K in "highest" | "lowest"]: number;
+} & {
+    average: { [K in "class" | "highest" | "lowest"]: number; }
 }
