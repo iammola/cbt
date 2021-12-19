@@ -1,4 +1,4 @@
-import useSWRImmutable from "swr";
+import useSWRImmutable from "swr/immutable";
 import { FunctionComponent } from "react";
 import { ChevronRightIcon, CheckIcon } from "@heroicons/react/solid";
 

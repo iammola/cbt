@@ -71,6 +71,7 @@ export type TeacherExamModalProps = {
 
 export type DivideProps = {
     className: string;
+    HRclassName?: string;
 }
 
 export type UserImageProps = ImageProps & {

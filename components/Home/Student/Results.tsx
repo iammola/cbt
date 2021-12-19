@@ -6,11 +6,11 @@ import { FunctionComponent } from "react";
 import { classNames } from "utils";
 
 import type { RouteData } from "types";
-import type { StudentResultsGETData } from "types/api/students";
+import type { StudentCBTResultsGETData } from "types/api/students";
 
 const Result: FunctionComponent<{ show: boolean; }> = ({ show }) => {
     const [{ account }] = useCookies(['account']);
-    const { data } = useSWR<RouteData<StudentResultsGETData>>(`/api/students/${account?._id}/cbt_results/`, url => fetch(url ?? '').then(res => res.json()));
+    const { data } = useSWR<RouteData<StudentCBTResultsGETData>>(`/api/students/${account?._id}/cbt_results/`, url => fetch(url ?? '').then(res => res.json()));
 
     return (
         <section

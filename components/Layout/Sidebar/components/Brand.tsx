@@ -3,8 +3,6 @@ import { FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
-import BrandIcon from "/public/favicon.ico"
-
 import type { BrandProps } from "types";
 
 const Brand: FunctionComponent<BrandProps> = ({ open }) => {
@@ -18,9 +16,10 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
             <div className="relative w-9 h-9 shrink-0">
                 <Image
                     layout="fill"
-                    src={BrandIcon}
+                    src="/Logo.png"
                     alt="Brand Icon"
-                    objectFit="cover"
+                    objectFit="contain"
+                    objectPosition="center"
                 />
             </div>
             <span

@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import useSWRImmutable from "swr";
+import useSWRImmutable from "swr/immutable";
 import { FunctionComponent } from "react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 
