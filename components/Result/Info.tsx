@@ -50,19 +50,19 @@ const Info: FunctionComponent<InfoProps> = ({ average, birthday, gender, name, s
                 </span>
             </div>
             <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Highest Average in Class:</span>{' '}
+                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Highest Class Average:</span>{' '}
                 <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
                     {average.highest.toFixed(1)}
                 </span>
             </div>
             <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Lowest Average in Class:</span>{' '}
+                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Lowest Class Average:</span>{' '}
                 <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
                     {average.lowest.toFixed(1)}
                 </span>
             </div>
             <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Overall Average in Class:</span>{' '}
+                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Class Average:</span>{' '}
                 <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
                     {average.class.toFixed(1)}
                 </span>
