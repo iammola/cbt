@@ -1,7 +1,13 @@
+import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
 
+import type { RouteData } from "types";
+import type { ClassesGETData } from "types/api/classes";
+
 const ResultsPicker: NextPage = () => {
+    const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name`, url => fetch(url ?? '').then(res => res.json()));
+
     return (
         <section className="flex flex-col gap-7 items-center justify-center w-screen h-screen">
             <Head>
