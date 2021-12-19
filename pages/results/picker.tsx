@@ -49,7 +49,7 @@ const ResultsPicker: NextPage = () => {
                                 {item.name}
                             </span>
                             <span className="text-xs text-gray-400">
-                                {data.length} students
+                                {data.length} student{data.length > 1 && "s"}
                             </span>
                         </div>
                     );
