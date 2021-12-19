@@ -296,7 +296,7 @@ const Result: NextPage = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-400 text-gray-600">
-                            {data.subjects?.map((subject, index) => {
+                            {data.subjects?.filter(subject => data.scores?.find(item => item.subject === subject._id) !== undefined).map((subject, index) => {
                                 const scores = data.scores?.find(item => item.subject === subject._id);
                                 const subjectTotal = total?.find(g => g.subject === subject._id)?.total ?? 0;
                                 const scheme = data.template?.scheme.find(i => subjectTotal <= i.limit);
