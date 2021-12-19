@@ -19,8 +19,8 @@ const ResultsPicker: NextPage = () => {
         return nameA < nameB ? -1 : (nameA > nameB ? 1 : 0);
     }), [students]);
 
-    const openTab = (id: any) => window.open(`/results/${id}`, '_blank', 'noopener,noreferrer');
     const loadItems = (id: any) => students.find(item => item.class === id)?.students.map(student => openTab(student._id));
+    const openTab = (id: any) => Object.assign(document.createElement('a'), { target: "_blank", href: `/results/${id}`, rel: "noopener, noreferrer" }).click();
 
     useEffect(() => {
         async function getStudents(classes: ClassesGETData) {
