@@ -19,7 +19,7 @@ const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className 
                         </th>
                     </tr>
                     <tr className="text-xs bg-gray-100 divide-x divide-gray-400">
-                        {["Name (Alias)", "Marks"].map(col => (
+                        {["Name (Alias)", "Obtainable Marks"].map(col => (
                             <th
                                 key={col}
                                 scope="col"
