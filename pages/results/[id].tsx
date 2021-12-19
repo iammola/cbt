@@ -246,7 +246,7 @@ const Result: NextPage = () => {
                                                     key={field._id.toString()}
                                                     className="py-4 w-16 print:w-12"
                                                 >
-                                                    {scores?.total === undefined && item?.score}
+                                                    {scores?.total === undefined ? item?.score :"-"}
                                                 </td>
                                             );
                                         })}
