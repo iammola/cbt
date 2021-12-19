@@ -3,7 +3,7 @@ import { formatDuration, intervalToDuration } from "date-fns";
 
 const Info: FunctionComponent<InfoProps> = ({ average, birthday, gender, name, scores, session, term, ...props }) => {
     return (
-        <div className="grid grid-cols-3 grid-rows-5 grid-flow-col gap-y-2.5 gap-x-16 w-full px-5">
+        <div className="grid grid-cols-3 grid-rows-5 grid-flow-col gap-y-2.5 gap-x-40 w-full px-5">
             <div className="flex gap-1.5 items-center justify-start">
                 <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Full Name:</span>{' '}
                 <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max uppercase">
