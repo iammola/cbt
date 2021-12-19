@@ -153,7 +153,7 @@ const Result: NextPage = () => {
     return (
         <section className="flex items-center justify-center w-screen min-h-screen bg-gray-200 py-16 print:p-0 print:bg-white">
             <Head>
-                <title>{data?.student?.name.full ?? "Loading student"} • Results | CBT | Grand Regal School</title>
+                <title>{data?.student?.name.full ?? "Loading student"} Result | {data?.term?.name} Term | {data?.session?.name} Session | Grand Regal School</title>
                 <meta name="description" content="Student • Results | GRS CBT" />
             </Head>
             {data !== undefined && (
