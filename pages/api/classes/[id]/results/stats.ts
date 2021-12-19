@@ -25,22 +25,30 @@ async function getClassResultStats(id: any): Promise<ServerResponse<ClassResultG
             }
         }, '_id').lean();
 
-        let [highest, lowest, average] = [0, 0, 0];
         const results = await ResultModel.find({ student: { $in: students.map(i => i._id) } }).lean();
 
-        results.forEach(({ data }) => {
+        const scores = results.map(({ data }) => {
             const total = data.reduce((acc, entry) => acc + (entry.total ?? entry.scores?.reduce((acc, item) => acc + item.score, 0) ?? 0), 0);
 
-            average += total;
-            lowest = lowest === 0 ? total : (total < lowest ? total : lowest);
-            highest = total > highest ? total : highest;
+            return {
+                total,
+                average: total / ((data?.length ?? 1) * 1e2) * 1e2
+            };
         });
 
-        average /= results.length;
+        const totals = scores.map(item => item.total);
+        const averages = scores.map(item => item.average);
 
         [success, status, message] = [true, StatusCodes.OK, {
-            data: { highest, lowest, average },
-            message: ReasonPhrases.OK
+            data: {
+                highest: Math.max(...totals),
+                lowest: Math.min(...totals),
+                average: {
+                    lowest: Math.min(...averages),
+                    highest: Math.max(...averages),
+                    class: averages.reduce((a, b) => a + b, 0) / averages.length
+                }
+            }, message: ReasonPhrases.OK
         }];
     } catch (error: any) {
         [status, message] = [StatusCodes.BAD_REQUEST, {
