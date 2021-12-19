@@ -186,13 +186,13 @@ const Result: NextPage = () => {
                     <div className="grid grid-cols-3 grid-rows-5 grid-flow-col gap-y-2.5 gap-x-14 w-full px-5">
                         <div className="flex gap-1.5 items-center justify-start">
                             <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Full Name:</span>{' '}
-                            <span className="text-sm font-medium tracking-wider text-gray-800 min-w-max">
+                            <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max uppercase">
                                 {data.student?.name.full}
                             </span>
                         </div>
                         <div className="flex gap-1.5 items-center justify-start">
                             <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Age:</span>{' '}
-                            <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
+                            <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max">
                                 {data.student?.birthday !== undefined && formatDuration(intervalToDuration({
                                     start: new Date(data.student?.birthday),
                                     end: new Date(),
@@ -219,7 +219,7 @@ const Result: NextPage = () => {
                         </div>
                         <div className="flex gap-1.5 items-center justify-start">
                             <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Final Grade:</span>{' '}
-                            <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
+                            <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max">
                                 {data.template?.scheme.find(scheme => average <= scheme.limit)?.grade}
                             </span>
                         </div>
