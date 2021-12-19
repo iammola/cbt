@@ -79,6 +79,12 @@ const ResultsPicker: NextPage = () => {
                     handleChange={setSelectedStudent}
                     options={studentOptions}
                 />
+                <button
+                    type="button"
+                    className="px-10 py-3 bg-slate-500 hover:bg-slate-600 text-white text-xs font-bold shadow rounded-full uppercase tracking-widest"
+                >
+                    Load
+                </button>
             </div>
         </section>
     );
