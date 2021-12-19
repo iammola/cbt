@@ -149,6 +149,17 @@ const Result: NextPage = () => {
         }
     }, [data?.scores, data?.template, total]);
 
+    useEffect(() => {
+        if (data !== undefined) {
+            const errors = [];
+            if (!!(data?.comments) === false) errors.push('• No Comments');
+            if (data?.student?.gender === undefined) errors.push('• No Gender');
+            if (data?.student?.birthday === undefined) errors.push('• No birthday');
+
+            errors.length > 0 && alert(errors.join('\n'));
+        }
+    }, [data]);
+
     return (
         <section className="flex items-center justify-center w-screen min-h-screen bg-gray-200 py-16 print:p-0 print:bg-white">
             <Head>
