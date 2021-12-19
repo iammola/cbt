@@ -19,7 +19,8 @@ const ResultsPicker: NextPage = () => {
         return nameA < nameB ? -1 : (nameA > nameB ? 1 : 0);
     }), [students]);
 
-    const loadItems = (id: any) => students.find(item => item.class === id)?.students.map(student => window.open(`/results/${student._id}/`, '_blank', 'noopener,noreferrer'));
+    const openTab = (id: any) => window.open(`/results/${id}`, '_blank', 'noopener,noreferrer');
+    const loadItems = (id: any) => students.find(item => item.class === id)?.students.map(student => openTab(student._id));
 
     useEffect(() => {
         async function getStudents(classes: ClassesGETData) {
@@ -81,6 +82,10 @@ const ResultsPicker: NextPage = () => {
                 />
                 <button
                     type="button"
+                    onClick={() => {
+                        const { _id } = selectedStudent;
+                        _id !== "" && openTab(_id);
+                    }}
                     className="px-10 py-3 bg-slate-500 hover:bg-slate-600 text-white text-xs font-bold shadow rounded-full uppercase tracking-widest"
                 >
                     Load
