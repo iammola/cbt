@@ -10,6 +10,8 @@ const ResultsPicker: NextPage = () => {
     const [students, setStudents] = useState<{ class: any; students: ClassStudentsGETData; }[]>([]);
     const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name`, url => fetch(url ?? '').then(res => res.json()));
 
+    const loadItems = (id: any) => students.find(item => item.class === id)?.students.map(student => window.open(`/results/${student._id}/`, '_blank', 'noopener,noreferrer'));
+
     useEffect(() => {
         async function getStudents(classes: ClassesGETData) {
             await Promise.all(classes.map(async ({ _id }) => {
@@ -43,6 +45,7 @@ const ResultsPicker: NextPage = () => {
                     return data?.length > 0 && (
                         <div
                             key={item.name}
+                            onClick={() => loadItems(item._id)}
                             className="flex gap-6 items-center justify-center px-4 py-3 h-16 rounded-full shadow select-none cursor-pointer"
                         >
                             <span className="text-sm font-medium text-gray-700">
