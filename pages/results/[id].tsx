@@ -155,7 +155,7 @@ const Result: NextPage = () => {
                 <title>{data?.student?.name.full ?? "Loading student"} Result | {data?.term?.name} Term | {data?.session?.name} Session | Grand Regal School</title>
                 <meta name="description" content="Student • Results | GRS CBT" />
             </Head>
-            {data !== undefined && (
+            {data?.class !== undefined && data?.comments !== undefined && data?.scores !== undefined && data?.session !== undefined && data?.stats !== undefined && data?.student !== undefined && data?.subjects !== undefined && data?.template !== undefined && data?.term !== undefined && total !== undefined && (
                 <main className="flex flex-col items-center justify-start bg-white rounded-lg shadow-xl shadow-gray-500/30 aspect-[1/1.4142] w-[60rem] p-12 print:px-8 print:py-5 print:shadow-none print:rounded-none">
                     <div className="flex gap-10 items-center justify-center w-full">
                         <figure className="w-24 h-24 relative">
