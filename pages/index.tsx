@@ -2,6 +2,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
+import { addHours } from 'date-fns';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
@@ -63,7 +64,8 @@ const Home: NextPage = () => {
                 setTimeout(router.push, 55e1, router.query.to === undefined ? '/home' : decodeURIComponent(router.query.to as string));
                 setCookies("account", JSON.stringify(result.data), {
                     path: '/',
-                    sameSite: true
+                    sameSite: true,
+                    expires: addHours(new Date(), 7)
                 });
                 addNotification({
                     message: "Success 👍 ...  Redirecting!! 🚀",
