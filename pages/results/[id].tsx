@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { format } from "date-fns";
+import { formatDuration, intervalToDuration } from "date-fns";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -183,67 +183,90 @@ const Result: NextPage = () => {
                         className="w-full py-7"
                         HRclassName="border-t-gray-300"
                     />
-                    <div className="flex flex-col gap-8 items-start justify-start w-full">
-                        <div className="flex flex-wrap gap-20 items-center justify-center w-full">
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Full Name</div>
-                                <div className="font-semibold text-gray-800">{data.student?.name.full}</div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Gender</div>
-                                <div className="font-semibold text-gray-800">
-                                    {data.student?.gender === "M" ? "Male" : "Female"}
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Class</div>
-                                <div className="font-semibold text-gray-800">{data.class?.name ?? ''}</div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Date of Birth</div>
-                                <div className="font-semibold text-gray-800">
-                                    {data.student?.birthday === undefined ? "Not set" : format(new Date(data.student?.birthday), "do MMMM yyyy")}
-                                </div>
-                            </div>
+                    <div className="grid grid-cols-3 grid-rows-5 grid-flow-col gap-y-2.5 gap-x-14 w-full px-5">
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Full Name:</span>{' '}
+                            <span className="text-sm font-medium tracking-wider text-gray-800">
+                                {data.student?.name.full}
+                            </span>
                         </div>
-                        <div className="flex flex-wrap gap-20 items-center justify-center w-full">
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Highest in Class</div>
-                                <div className="font-semibold text-gray-800">
-                                    {data.stats?.highest.toFixed(1)}
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Class Average</div>
-                                <div className="font-semibold text-gray-800">
-                                    {data.stats?.average.toFixed(1)}
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Expected Score</div>
-                                <div className="font-semibold text-gray-800">
-                                    {(() => {
-                                        const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
-                                        return (data.scores?.length ?? 0) * subjectMax
-                                    })()}
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Total Score</div>
-                                <div className="font-semibold text-gray-800">
-                                    {total?.reduce((a, b) => a + b.total, 0)}
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-start justify-center">
-                                <div className="text-xs text-gray-500 font-semibold tracking-wide">Score %</div>
-                                <div className="font-semibold text-gray-800">
-                                    {(() => {
-                                        const overallTotal = total?.reduce((a, b) => a + b.total, 0) ?? 0;
-                                        const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
-                                        return `${((overallTotal / ((data.scores?.length ?? 0) * subjectMax)) * 1e2).toFixed(1)}%`
-                                    })()}
-                                </div>
-                            </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Age:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.student?.birthday !== undefined && formatDuration(intervalToDuration({
+                                    start: new Date(data.student?.birthday),
+                                    end: new Date(),
+                                }), { format: ["years"] })} old
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Gender:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.student?.gender !== undefined && data.student.gender === "M" ? "Male" : "Female"}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Session:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.session?.name}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Term:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.term?.name}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Final Grade:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.template?.scheme.find(scheme => average <= scheme.limit)?.grade}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Class:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.class?.name}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Highest Average in Class:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.stats?.average.highest.toFixed(1)}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Lowest Average in Class:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.stats?.average.lowest.toFixed(1)}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Overall Average in Class:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {data.stats?.average.class.toFixed(1)}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Expected Score:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {(() => {
+                                    const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
+                                    return (data.scores?.length ?? 0) * subjectMax
+                                })()}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Total Score:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {total?.reduce((a, b) => a + b.total, 0)}
+                            </span>
+                        </div>
+                        <div className="flex gap-1.5 items-center justify-start">
+                            <span className="text-xs text-gray-700 font-semibold tracking-wide">Average:</span>{' '}
+                            <span className="text-sm font-medium tracking-wide text-gray-800">
+                                {average.toFixed(1)}
+                            </span>
                         </div>
                     </div>
                     <Divide
