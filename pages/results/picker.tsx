@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Select from "components/Select";
 
@@ -12,6 +12,12 @@ const ResultsPicker: NextPage = () => {
     const [selectedStudent, setSelectedStudent] = useState({ _id: "", name: "Select student" });
     const [students, setStudents] = useState<{ class: any; students: ClassStudentsGETData; }[]>([]);
     const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name`, url => fetch(url ?? '').then(res => res.json()));
+
+    const studentOptions = useMemo(() => students.map(item => item.students.map(student => ({ ...student, name: student.name.full }))).flat().sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        return nameA < nameB ? -1 : (nameA > nameB ? 1 : 0);
+    }), [students]);
 
     const loadItems = (id: any) => students.find(item => item.class === id)?.students.map(student => window.open(`/results/${student._id}/`, '_blank', 'noopener,noreferrer'));
 
@@ -71,7 +77,7 @@ const ResultsPicker: NextPage = () => {
                 <Select
                     selected={selectedStudent}
                     handleChange={setSelectedStudent}
-                    options={students.map(item => item.students.map(student => ({ ...student, name: student.name.full }))).flat()}
+                    options={studentOptions}
                 />
             </div>
         </section>
