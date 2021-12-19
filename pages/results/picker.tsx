@@ -12,13 +12,13 @@ const ResultsPicker: NextPage = () => {
     const [advanced, setAdvanced] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState({ _id: "", name: "Select student" });
     const [students, setStudents] = useState<{ class: any; students: ClassStudentsGETData; }[]>([]);
-    const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name`, url => fetch(url ?? '').then(res => res.json()));
+    const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name alias`, url => fetch(url ?? '').then(res => res.json()));
 
-    const studentOptions = useMemo(() => students.map(item => item.students.map(student => ({ ...student, name: student.name.full }))).flat().sort((a, b) => {
+    const studentOptions = useMemo(() => students.map(item => item.students.map(student => ({ ...student, name: `${student.name.full} - ${classes?.data.find(i => i._id === item.class)?.alias}` }))).flat().sort((a, b) => {
         const nameA = a.name.toUpperCase();
         const nameB = b.name.toUpperCase();
         return nameA < nameB ? -1 : (nameA > nameB ? 1 : 0);
-    }), [students]);
+    }), [classes?.data, students]);
 
     const loadItems = (id: any) => students.find(item => item.class === id)?.students.map(student => openTab(student._id));
     const openTab = (id: any) => Object.assign(document.createElement('a'), { target: "_blank", href: `/results/${id}`, rel: "noopener, noreferrer" }).click();
