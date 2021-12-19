@@ -170,7 +170,7 @@ const Result: NextPage = () => {
                             />
                         </figure>
                         <div className="flex flex-col items-center justify-center">
-                            <h2 className="text-3xl font-extrabold uppercase text-gray-700 tracking-wider">Grand Regal International School</h2>
+                            <h2 className="text-3xl font-extrabold uppercase text-gray-700 tracking-wider min-w-max">Grand Regal International School</h2>
                             <p className="text-sm text-gray-700 pb-2">
                                 Path to Peak for Excellence
                             </p>
