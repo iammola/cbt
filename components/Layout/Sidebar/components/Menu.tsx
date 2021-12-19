@@ -189,6 +189,15 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                             </a>
                                         </Link>
                                     </li>
+                                    <li className="w-full">
+                                        <Link href="/results/picker">
+                                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                                <span className="text-sm block truncate">
+                                                    View Term Results
+                                                </span>
+                                            </a>
+                                        </Link>
+                                    </li>
                                 </MenuItem.List>
                             ) : (
                                 <MenuItem.Panel expand={expand}>
@@ -215,6 +224,15 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                                             <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
                                                 <span className="text-sm block truncate">
                                                     Upload Term Result
+                                                </span>
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="w-full">
+                                        <Link href="/results/picker">
+                                            <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
+                                                <span className="text-sm block truncate">
+                                                    View Term Result
                                                 </span>
                                             </a>
                                         </Link>
