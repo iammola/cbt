@@ -7,7 +7,7 @@ import useSWRImmutable from "swr/immutable";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
-import { GradingScheme, ResultFields } from "components/Result";
+import { Info, GradingScheme, ResultFields } from "components/Result";
 
 import type { SessionCurrentGETData } from "types/api/sessions";
 import type { ClassGETData, ClassResultGETData, ClassResultSettingsGETData } from "types/api/classes";
@@ -181,6 +181,20 @@ const Result: NextPage = () => {
                     <Divide
                         className="w-full py-7"
                         HRclassName="border-t-gray-300"
+                    />
+                    <Info
+                        term={data.term.name}
+                        class={data.class.name}
+                        session={data.session.name}
+                        gender={data.student.gender}
+                        name={data.student.name.full}
+                        birthday={data.student.birthday}
+                        average={{ ...data.stats.average, average }}
+                        scores={{
+                            total: total.reduce((a, b) => a + b.total, 0),
+                            grade: data.template.scheme.find(scheme => average <= scheme.limit)?.grade ?? '',
+                            expected: (data.scores?.length ?? 0) * data.template.fields.reduce((a, b) => a + b.max, 0)
+                        }}
                     />
                     <Divide
                         className="w-full py-10"
