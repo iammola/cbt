@@ -17,6 +17,7 @@ import type { ClassRecord, ClientResponse, ResultRecord, RouteData, SessionRecor
 
 const Result: NextPage = () => {
     const router = useRouter();
+    const [average, setAverage] = useState(0);
     const [total, setTotal] = useState<{ subject: any; total: number }[]>();
     const [data, setData] = useState<Partial<Data>>();
 
@@ -117,7 +118,7 @@ const Result: NextPage = () => {
                     setTotal(scores.map(score => ({
                         subject: score.subject,
                         total: (score.total ?? score.scores?.reduce((a, b) => a + b.score, 0) ?? 0)
-                    })))
+                    })));
                 } else throw new Error(result.error);
             } catch (error) {
                 console.error({ error })
@@ -140,6 +141,14 @@ const Result: NextPage = () => {
         }
         if (data?.class != undefined && data?.stats === undefined) getClassStat(data.class._id);
     }, [data?.class, data?.stats]);
+
+    useEffect(() => {
+        if (data?.template !== undefined && total !== undefined) {
+            const overallTotal = total?.reduce((a, b) => a + b.total, 0) ?? 0;
+            const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
+            setAverage(overallTotal / ((data.scores?.length ?? 0) * subjectMax) * 1e2);
+        }
+    }, [data?.scores, data?.template, total]);
 
     return (
         <section className="flex items-center justify-center w-screen min-h-screen bg-gray-200 py-16 print:p-0 print:bg-white">
