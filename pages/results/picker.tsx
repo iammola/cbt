@@ -36,6 +36,25 @@ const ResultsPicker: NextPage = () => {
             <h3 className="text-5xl font-bold tracking-wide text-gray-800">
                 Load results for all students in a class
             </h3>
+            <div className="flex flex-wrap gap-4 items-center justify-center w-full px-10">
+                {classes?.data.map(item => {
+                    const data = students.find(element => element.class === item._id)?.students ?? [];
+
+                    return data?.length > 0 && (
+                        <div
+                            key={item.name}
+                            className="flex gap-6 items-center justify-center px-4 py-3 h-16 rounded-full shadow select-none cursor-pointer"
+                        >
+                            <span className="text-sm font-medium text-gray-700">
+                                {item.name}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                                {data.length} students
+                            </span>
+                        </div>
+                    );
+                })}
+            </div>
             <span className="text-gray-600 tracking-widest font-medium">
                 or
             </span>
