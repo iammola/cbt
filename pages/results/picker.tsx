@@ -3,10 +3,13 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 
+import Select from "components/Select";
+
 import type { ClientResponse, RouteData } from "types";
 import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
 const ResultsPicker: NextPage = () => {
+    const [selectedStudent, setSelectedStudent] = useState({ _id: "", name: "Select student" });
     const [students, setStudents] = useState<{ class: any; students: ClassStudentsGETData; }[]>([]);
     const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name`, url => fetch(url ?? '').then(res => res.json()));
 
@@ -64,6 +67,13 @@ const ResultsPicker: NextPage = () => {
             <h3 className="text-5xl font-bold tracking-wide text-gray-800">
                 Load for a single student
             </h3>
+            <div className="flex gap-8 items-center justify-center w-full px-20">
+                <Select
+                    selected={selectedStudent}
+                    handleChange={setSelectedStudent}
+                    options={students.map(item => item.students.map(student => ({ ...student, name: student.name.full }))).flat()}
+                />
+            </div>
         </section>
     );
 }
