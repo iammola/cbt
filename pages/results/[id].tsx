@@ -155,7 +155,7 @@ const Result: NextPage = () => {
                 <title>{data?.student?.name.full ?? "Loading student"} Result | {data?.term?.name} Term | {data?.session?.name} Session | Grand Regal School</title>
                 <meta name="description" content="Student • Results | GRS CBT" />
             </Head>
-            {data?.class !== undefined && data?.comments !== undefined && data?.scores !== undefined && data?.session !== undefined && data?.stats !== undefined && data?.student !== undefined && data?.subjects !== undefined && data?.template !== undefined && data?.term !== undefined && total !== undefined && (
+            {data?.class !== undefined && data?.scores !== undefined && data?.session !== undefined && data?.stats !== undefined && data?.student !== undefined && data?.subjects !== undefined && data?.template !== undefined && data?.term !== undefined && total !== undefined && (
                 <main className="flex flex-col items-center justify-start bg-white rounded-lg shadow-xl shadow-gray-500/30 aspect-[1/1.4142] w-[60rem] p-12 print:px-8 print:py-5 print:shadow-none print:rounded-none">
                     <div className="flex gap-10 items-center justify-center w-full">
                         <figure className="w-24 h-24 relative">
@@ -246,7 +246,7 @@ const Result: NextPage = () => {
                                                     key={field._id.toString()}
                                                     className="py-4 w-16 print:w-12"
                                                 >
-                                                    {scores?.total === undefined ? item?.score :"-"}
+                                                    {scores?.total === undefined ? item?.score : "-"}
                                                 </td>
                                             );
                                         })}
@@ -275,12 +275,16 @@ const Result: NextPage = () => {
                             className="row-span-full col-start-1 col-end-2"
                         />
                         <div className="flex flex-col gap-0.5 items-start justify-center row-start-2 row-end-3 col-start-2 col-end-3 mt-3">
-                            <span className="text-sm font-medium text-gray-800 underline underline-offset-2">
-                                Comment
-                            </span>
-                            <span className="text-sm text-gray-700 text-justify">
-                                {data.comments}
-                            </span>
+                            {data.comments !== undefined && (
+                                <>
+                                    <span className="text-sm font-medium text-gray-800 underline underline-offset-2">
+                                        Comment
+                                    </span>
+                                    <span className="text-sm text-gray-700 text-justify">
+                                        {data.comments}
+                                    </span>
+                                </>
+                            )}
                             <div className="w-52 h-20 self-center mt-8 relative">
                                 <Image
                                     priority
