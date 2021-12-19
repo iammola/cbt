@@ -252,14 +252,14 @@ const Result: NextPage = () => {
                             <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
                                 {(() => {
                                     const subjectMax = data.template?.fields.reduce((a, b) => a + b.max, 0) ?? 0;
-                                    return (data.scores?.length ?? 0) * subjectMax
+                                    return ((data.scores?.length ?? 0) * subjectMax).toFixed(1)
                                 })()}
                             </span>
                         </div>
                         <div className="flex gap-1.5 items-center justify-start">
                             <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Total Score:</span>{' '}
                             <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                                {total?.reduce((a, b) => a + b.total, 0)}
+                                {total?.reduce((a, b) => a + b.total, 0).toFixed(1)}
                             </span>
                         </div>
                         <div className="flex gap-1.5 items-center justify-start">
