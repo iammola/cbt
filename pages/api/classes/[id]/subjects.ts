@@ -34,7 +34,7 @@ async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<S
     try {
         const data = await SubjectsModel.findOneAndUpdate({ class: id }, {
             $push: { subjects: { name, alias } }
-        }, { runValidators: true, returnDocument: "after", upsert: await ClassModel.exists({ _id: id }) }).lean();
+        }, { runValidators: true, returnDocument: "after", upsert: !!(await ClassModel.exists({ _id: id })) }).lean();
 
         if (data === null) throw new Error('Class does not exist');
 
