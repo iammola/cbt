@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { CheckIcon, XIcon } from "@heroicons/react/outline";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { FunctionComponent, FormEvent, useState } from "react";
 
 import { classNames } from "utils";

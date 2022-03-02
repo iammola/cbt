@@ -1,4 +1,4 @@
-import { CheckIcon, XIcon } from "@heroicons/react/outline";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { FormEvent, FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
