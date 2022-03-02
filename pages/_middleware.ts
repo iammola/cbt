@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware({ cookies, nextUrl: { pathname } }: NextRequest) {
+export function middleware({
+  cookies,
+  nextUrl: { pathname, origin },
+}: NextRequest) {
   if (
     cookies.account !== undefined ||
     pathname === "/" ||
@@ -8,5 +11,5 @@ export function middleware({ cookies, nextUrl: { pathname } }: NextRequest) {
     !pathname.endsWith("/")
   )
     return NextResponse.next();
-  return NextResponse.redirect(`/?to=${encodeURIComponent(pathname)}`);
+  return NextResponse.redirect(`${origin}/?to=${encodeURIComponent(pathname)}`);
 }
