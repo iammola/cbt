@@ -9,7 +9,7 @@ import type { ServerResponse, ExamRecord, CreateQuestion } from "types";
 
 async function createExam(
   {
-    exam: { subjectId, ...exam },
+    exam: { subjectId, termId, ...exam },
     questions,
   }: { exam: ExamRecord; questions: CreateQuestion[] },
   by: string
@@ -22,12 +22,13 @@ async function createExam(
   ];
 
   try {
-    if (await ExamModel.exists({ subjectId }))
+    if (await ExamModel.exists({ subjectId, termId }))
       throw new Error("Subject Exam already created");
 
     const { _id } = await ExamModel.create({
       ...exam,
       subjectId,
+      termId,
       questions,
       created: { by, at: new Date() },
     });
