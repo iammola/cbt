@@ -194,7 +194,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="flex-grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
+                  className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
                   required
@@ -255,7 +255,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="flex-grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
+                  className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
                   required
@@ -269,7 +269,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="flex-grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
+                  className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
                   min={0}
