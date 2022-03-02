@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { FunctionComponent, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
+import { FunctionComponent, FormEvent, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
@@ -22,8 +22,37 @@ const TermForm: FunctionComponent = () => {
     fetch(url).then((res) => res.json())
   );
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch(`/api/sessions/${selectedSession._id}/terms`, {
+        method: "POST",
+        body: JSON.stringify({ name, alias, current }),
+      });
+      const { success, error } = await res.json();
+
+      setSuccess(success);
+
+      if (success) {
+        setName("");
+        setAlias("");
+        setCurrent(false);
+      } else throw new Error(error);
+    } catch (error) {
+      console.log({ error });
+    }
+
+    setLoading(false);
+    setTimeout(setSuccess, 15e2, undefined);
+  }
+
   return (
-    <form className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
+    >
       <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
         <span>Create a</span> <span className="text-pink-500">Term</span>
       </h1>
