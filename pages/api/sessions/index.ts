@@ -41,7 +41,7 @@ async function getSessions(
 }
 
 async function createSession(
-  session: SessionRecord
+  session: Omit<SessionRecord, "terms">
 ): Promise<ServerResponse<SessionsPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<SessionsPOSTData> = [

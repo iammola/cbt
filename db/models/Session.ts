@@ -35,6 +35,7 @@ const SessionSchema = new Schema<SessionRecord>({
           default: undefined,
         },
       },
+      default: undefined,
     },
   ],
 });
