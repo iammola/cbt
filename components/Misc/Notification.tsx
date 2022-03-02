@@ -47,7 +47,7 @@ export function useNotifications(): NotificationsHook {
   };
 
   const Notifications: NotificationsHook[2] = (
-    <aside className="flex flex-col items-center justify-end gap-y-3 p-3 pb-8 fixed right-0 inset-y-0 z-[1500] h-screen pointer-events-none">
+    <aside className="pointer-events-none fixed inset-y-0 right-0 z-[1500] flex h-screen flex-col items-center justify-end gap-y-3 p-3 pb-8">
       {notifications.map(({ id, ...item }, i) => (
         <Notification key={id} {...item} remove={() => removeNotification(i)} />
       ))}
@@ -90,14 +90,14 @@ const Notification: FunctionComponent<Omit<NotificationProps, "id">> = ({
       leaveFrom="translate-x-0"
       leaveTo="translate-x-full"
     >
-      <div className="flex items-center justify-start gap-6 w-96 min-h-[4rem] p-4 pl-6 border border-gray-200 bg-white rounded-lg shadow-sm">
+      <div className="flex min-h-[4rem] w-96 items-center justify-start gap-6 rounded-lg border border-gray-200 bg-white p-4 pl-6 shadow-sm">
         <Icon />
-        <p className="grow text-sm text-gray-900 block truncate">{message}</p>
+        <p className="block grow truncate text-sm text-gray-900">{message}</p>
         <button
           onClick={closeNotification}
-          className="p-1 rounded-md hover:bg-gray-200 pointer-events-auto"
+          className="pointer-events-auto rounded-md p-1 hover:bg-gray-200"
         >
-          <XIcon className="w-5 h-5 fill-gray-500" />
+          <XIcon className="h-5 w-5 fill-gray-500" />
         </button>
       </div>
     </Transition>

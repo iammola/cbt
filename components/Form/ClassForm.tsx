@@ -45,13 +45,13 @@ const ClassForm: NextPage = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+        className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
       >
-        <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+        <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
           <span>Create a</span> <span className="text-indigo-500">Class</span>
         </h1>
-        <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
-          <label htmlFor="name" className="text-sm text-gray-600 font-semibold">
+        <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
+          <label htmlFor="name" className="text-sm font-semibold text-gray-600">
             Name
           </label>
           <input
@@ -60,13 +60,13 @@ const ClassForm: NextPage = () => {
             type="text"
             value={name}
             onChange={({ target: { value } }) => setName(value)}
-            className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
-        <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
+        <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
           <label
             htmlFor="alias"
-            className="text-sm text-gray-600 font-semibold"
+            className="text-sm font-semibold text-gray-600"
           >
             Alias
           </label>
@@ -76,13 +76,13 @@ const ClassForm: NextPage = () => {
             type="text"
             value={alias}
             onChange={({ target: { value } }) => setAlias(value)}
-            className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
         <button
           type="submit"
           className={classNames(
-            "flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
+            "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
             {
               "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
                 success === undefined,
@@ -94,10 +94,10 @@ const ClassForm: NextPage = () => {
           )}
         >
           {loading === true && (
-            <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+            <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
           )}
-          {success === true && <CheckIcon className="w-5 h-5 fill-white" />}
-          {success === false && <XIcon className="w-5 h-5 fill-white" />}
+          {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+          {success === false && <XIcon className="h-5 w-5 fill-white" />}
           Create Class
         </button>
       </form>

@@ -128,7 +128,7 @@ const WriteExam: NextPage = () => {
         addNotification({
           timeout: 5e3,
           message: `Result saved 👍...  Score: ${result.data.score}`,
-          Icon: () => <BellIcon className="w-6 h-6 stroke-sky-500" />,
+          Icon: () => <BellIcon className="h-6 w-6 stroke-sky-500" />,
         });
         removeCookies("exam", { path: "/" });
         removeCookies("timeBounds", { path: "/" });
@@ -140,12 +140,12 @@ const WriteExam: NextPage = () => {
         {
           timeout: 5e3,
           message: "Error saving result",
-          Icon: () => <BanIcon className="w-6 h-6 stroke-red-600" />,
+          Icon: () => <BanIcon className="h-6 w-6 stroke-red-600" />,
         },
         {
           timeout: 2e3,
           message: error.message,
-          Icon: () => <DatabaseIcon className="w-6 h-6 stroke-sky-500" />,
+          Icon: () => <DatabaseIcon className="h-6 w-6 stroke-sky-500" />,
         },
       ]);
       setTimeout(setSuccess, 25e2, "");
@@ -166,12 +166,12 @@ const WriteExam: NextPage = () => {
                     body { overflow: unset !important; }
                 `}</style>
       </Head>
-      <form className="flex flex-col items-center justify-start w-screen min-h-screen">
+      <form className="flex min-h-screen w-screen flex-col items-center justify-start">
         <Bar
           exam={exam?.data.details.name}
           onSubmit={() => setSubmitting(true)}
         />
-        <div className="flex grow gap-6 items-center justify-center w-full h-full pt-6 px-12 bg-gray-50">
+        <div className="flex h-full w-full grow items-center justify-center gap-6 bg-gray-50 px-12 pt-6">
           {/* <div className="flex flex-col items-start justify-start h-full w-[18rem] py-8">
                         <Grid
                             questions={exam?.data?.questions?.map(({ _id }) => ({
@@ -179,8 +179,8 @@ const WriteExam: NextPage = () => {
                             })) ?? []}
                         />
                     </div> */}
-          <div className="grow h-full px-14 py-8">
-            <div className="max-w-6xl h-full space-y-10">
+          <div className="h-full grow px-14 py-8">
+            <div className="h-full max-w-6xl space-y-10">
               {exam?.data.questions.map((question, questionIdx) => (
                 <Question
                   {...question}

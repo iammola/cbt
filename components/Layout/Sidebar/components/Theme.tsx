@@ -40,7 +40,7 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
     <div className="w-full">
       <span
         className={classNames(
-          "w-full inline-block text-gray-400 text-[0.6rem] font-semibold uppercase tracking-wider pb-4",
+          "inline-block w-full pb-4 text-[0.6rem] font-semibold uppercase tracking-wider text-gray-400",
           {
             "text-center": open === false,
             "pl-5": open === true,
@@ -49,19 +49,19 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
       >
         Theme
       </span>
-      <div className="flex items-center justify-between w-full h-12 p-1 rounded-full overflow-hidden bg-gray-100 relative z-0">
+      <div className="relative z-0 flex h-12 w-full items-center justify-between overflow-hidden rounded-full bg-gray-100 p-1">
         {themes.map(({ label, Icon }, themeIdx) => (
           <div
             key={themeIdx}
             onClick={() => setActive(themeIdx)}
             onMouseEnter={() => setHovered(themeIdx)}
             onMouseLeave={() => setHovered(active)}
-            className="flex gap-2 items-center justify-center grow h-full rounded-full cursor-pointer"
+            className="flex h-full grow cursor-pointer items-center justify-center gap-2 rounded-full"
           >
             {active === themeIdx ? (
-              <Icon.solid className="w-5 h-5 shrink-0 fill-gray-800" />
+              <Icon.solid className="h-5 w-5 shrink-0 fill-gray-800" />
             ) : (
-              <Icon.outline className="w-5 h-5 shrink-0 fill-gray-800" />
+              <Icon.outline className="h-5 w-5 shrink-0 fill-gray-800" />
             )}
             <span
               className={classNames("text-sm text-gray-800", {
@@ -74,14 +74,14 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
         ))}
         <div
           className={classNames(
-            "absolute inset-y-0 z-[-1] w-1/2 h-full py-1 rounded-full duration-500 transition-all",
+            "absolute inset-y-0 z-[-1] h-full w-1/2 rounded-full py-1 transition-all duration-500",
             {
-              "pr-1 left-1": hovered === 0,
-              "pl-1 left-[calc(50%-0.25rem)]": hovered === 1,
+              "left-1 pr-1": hovered === 0,
+              "left-[calc(50%-0.25rem)] pl-1": hovered === 1,
             }
           )}
         >
-          <span className="inline-block bg-white rounded-full w-full h-full"></span>
+          <span className="inline-block h-full w-full rounded-full bg-white"></span>
         </div>
       </div>
     </div>

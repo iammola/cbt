@@ -177,31 +177,31 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-start w-screen"
+        className="flex w-screen flex-col items-center justify-start"
       >
         <Bar exam={exam?.name} {...examState} save={saveExam} />
-        <section className="w-full grow py-10 px-10 bg-indigo-100 relative">
-          <div className="m-auto max-w-3xl h-full space-y-5">
-            <div className="w-full pt-6 pb-5 px-10 flex flex-col gap-3 bg-white rounded-xl shadow-sm">
+        <section className="relative w-full grow bg-indigo-100 py-10 px-10">
+          <div className="m-auto h-full max-w-3xl space-y-5">
+            <div className="flex w-full flex-col gap-3 rounded-xl bg-white px-10 pt-6 pb-5 shadow-sm">
               <ul className="mt-3">
-                <div className="text-sm text-gray-800 mb-2 relative w-max after:absolute after:-bottom-0 after:left-0 after:w-full after:border-b after:border-gray-500">
+                <div className="relative mb-2 w-max text-sm text-gray-800 after:absolute after:-bottom-0 after:left-0 after:w-full after:border-b after:border-gray-500">
                   Instructions
                 </div>
                 {instructions.map((instruction, idx) => (
                   <li
                     key={idx}
-                    className="flex gap-3 justify-start items-end relative text-sm group mb-2"
+                    className="group relative mb-2 flex items-end justify-start gap-3 text-sm"
                   >
-                    <span className="text-xs font-semibold -ml-4 text-gray-500">
+                    <span className="-ml-4 text-xs font-semibold text-gray-500">
                       {idx + 1}.
                     </span>
-                    <div className="grow h-full relative">
+                    <div className="relative h-full grow">
                       <input
                         type="text"
                         value={instruction}
                         placeholder="Add Instruction"
                         id={`${instruction}-${idx + 1}`}
-                        className="pt-1.5 pb-0.5 px-3 w-full focus:outline-none"
+                        className="w-full px-3 pt-1.5 pb-0.5 focus:outline-none"
                         onChange={({ target: { value } }) => {
                           const v = instructions
                             .map((j, i) => (i === idx ? value : j))
@@ -212,7 +212,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
                       />
                       <label
                         htmlFor={`${instruction}-${idx + 1}`}
-                        className="absolute left-2.5 bottom-0 w-full border-b border-gray-400 border-dotted group-focus-within:border-gray-500"
+                        className="absolute left-2.5 bottom-0 w-full border-b border-dotted border-gray-400 group-focus-within:border-gray-500"
                       />
                     </div>
                     {idx > 0 && instructions.length > 2 && (
@@ -222,9 +222,9 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
                             instructions.filter((_, i) => i !== idx)
                           )
                         }
-                        className="w-7 h-7 p-1.5 ml-5 rounded-full cursor-pointer hover:bg-gray-100"
+                        className="ml-5 h-7 w-7 cursor-pointer rounded-full p-1.5 hover:bg-gray-100"
                       >
-                        <XIcon className="w-full h-full fill-gray-500 hover:fill-gray-700" />
+                        <XIcon className="h-full w-full fill-gray-500 hover:fill-gray-700" />
                       </span>
                     )}
                   </li>
@@ -249,19 +249,19 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
           </div>
           <div
             onClick={() => setExamState({ ...examState, details: false })}
-            className="fixed right-4 top-24 rounded-full p-2 bg-white cursor-pointer group"
+            className="group fixed right-4 top-24 cursor-pointer rounded-full bg-white p-2"
           >
-            <CogIcon className="w-6 h-6 stroke-indigo-700" />
-            <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+            <CogIcon className="h-6 w-6 stroke-indigo-700" />
+            <span className="absolute -left-4 -top-10 hidden w-max -translate-x-1/2 rounded-md bg-white p-2 text-xs text-gray-600 shadow-md group-hover:inline">
               Change Settings
             </span>
           </div>
           <div
             onClick={() => scrollTo({ behavior: "smooth", top: 0 })}
-            className="fixed right-4 bottom-24 rounded-full p-2 bg-white cursor-pointer group"
+            className="group fixed right-4 bottom-24 cursor-pointer rounded-full bg-white p-2"
           >
-            <ArrowSmUpIcon className="w-6 h-6 stroke-indigo-700" />
-            <span className="hidden group-hover:inline absolute -left-4 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+            <ArrowSmUpIcon className="h-6 w-6 stroke-indigo-700" />
+            <span className="absolute -left-4 -top-10 hidden w-max -translate-x-1/2 rounded-md bg-white p-2 text-xs text-gray-600 shadow-md group-hover:inline">
               Scroll to Top
             </span>
           </div>

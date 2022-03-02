@@ -143,19 +143,19 @@ const CreateStudents: NextPage = () => {
         <title>Create Student Profile | CBT | Grand Regal School</title>
         <meta name="description" content="Student Registration | GRS CBT" />
       </Head>
-      <section className="flex items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10 w-screen min-h-screen">
+      <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white max-w-2xl"
+          className="flex max-w-2xl flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
         >
-          <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
             <span>Create a</span>{" "}
             <span className="text-indigo-500">Student Profile</span>
           </h1>
-          <div className="flex flex-col gap-2.5 w-full">
+          <div className="flex w-full flex-col gap-2.5">
             <label
               htmlFor="fullName"
-              className="text-sm text-gray-600 min-w-[20rem] font-semibold"
+              className="min-w-[20rem] text-sm font-semibold text-gray-600"
             >
               Full Name
             </label>
@@ -165,14 +165,14 @@ const CreateStudents: NextPage = () => {
               id="fullName"
               value={name.full ?? ""}
               onChange={(e) => setName({ ...name, full: e.target.value })}
-              className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
           </div>
-          <div className="flex items-center justify-between gap-4 w-full">
-            <div className="flex flex-col gap-2.5 w-full">
+          <div className="flex w-full items-center justify-between gap-4">
+            <div className="flex w-full flex-col gap-2.5">
               <label
                 htmlFor="initials"
-                className="text-sm text-gray-600 font-semibold"
+                className="text-sm font-semibold text-gray-600"
               >
                 Initials
               </label>
@@ -184,13 +184,13 @@ const CreateStudents: NextPage = () => {
                 id="initials"
                 value={name.initials ?? ""}
                 onChange={(e) => setName({ ...name, initials: e.target.value })}
-                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
-            <div className="flex flex-col gap-2.5 w-full">
+            <div className="flex w-full flex-col gap-2.5">
               <label
                 htmlFor="email"
-                className="text-sm text-gray-600 font-semibold"
+                className="text-sm font-semibold text-gray-600"
               >
                 E-mail
               </label>
@@ -200,15 +200,15 @@ const CreateStudents: NextPage = () => {
                 type="email"
                 value={email}
                 onChange={({ target: { value } }) => setEmail(value)}
-                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-4 w-full">
-            <div className="flex flex-col gap-2.5 w-full">
+          <div className="flex w-full items-center justify-between gap-4">
+            <div className="flex w-full flex-col gap-2.5">
               <label
                 htmlFor="firstName"
-                className="text-sm text-gray-600 font-semibold"
+                className="text-sm font-semibold text-gray-600"
               >
                 First Name
               </label>
@@ -218,13 +218,13 @@ const CreateStudents: NextPage = () => {
                 id="firstName"
                 value={name.first ?? ""}
                 onChange={(e) => setName({ ...name, first: e.target.value })}
-                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
-            <div className="flex flex-col gap-2.5 w-full">
+            <div className="flex w-full flex-col gap-2.5">
               <label
                 htmlFor="lastName"
-                className="text-sm text-gray-600 font-semibold"
+                className="text-sm font-semibold text-gray-600"
               >
                 Last Name
               </label>
@@ -234,11 +234,11 @@ const CreateStudents: NextPage = () => {
                 id="lastName"
                 value={name.last ?? ""}
                 onChange={(e) => setName({ ...name, last: e.target.value })}
-                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-4 w-full">
+          <div className="flex w-full items-center justify-between gap-4">
             <Select
               label="Gender"
               colorPallette={{
@@ -252,10 +252,10 @@ const CreateStudents: NextPage = () => {
               selected={selectedGender}
               handleChange={setSelectedGender}
             />
-            <div className="flex flex-col gap-2.5 w-full">
+            <div className="flex w-full flex-col gap-2.5">
               <label
                 htmlFor="birthday"
-                className="text-sm text-gray-600 font-semibold"
+                className="text-sm font-semibold text-gray-600"
               >
                 Birthday
               </label>
@@ -267,7 +267,7 @@ const CreateStudents: NextPage = () => {
                 value={
                   birthday !== undefined ? format(birthday, "yyyy-MM-dd") : ""
                 }
-                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
           </div>
@@ -284,13 +284,13 @@ const CreateStudents: NextPage = () => {
             selected={selectedClass}
             handleChange={setSelectedClass}
           />
-          <div className="flex flex-col gap-2 5 min-w-[20rem] w-full">
-            <span className="flex items-center justify-start gap-3 text-sm text-gray-600 font-semibold">
+          <div className="5 flex w-full min-w-[20rem] flex-col gap-2">
+            <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
               Subjects
               {subjects.length > 0 && (
                 <label
                   htmlFor="selectAll"
-                  className="flex gap-2 items-center justify-start text-gray-500"
+                  className="flex items-center justify-start gap-2 text-gray-500"
                 >
                   <input
                     type="checkbox"
@@ -316,7 +316,7 @@ const CreateStudents: NextPage = () => {
                 </label>
               )}
             </span>
-            <div className="flex flex-wrap gap-x-4 gap-y-3 w-full text-sm">
+            <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
               {subjects.map(({ _id, name }) => (
                 <label key={_id} htmlFor={_id} className="flex gap-3 p-2">
                   <input
@@ -353,7 +353,7 @@ const CreateStudents: NextPage = () => {
           <button
             type="submit"
             className={classNames(
-              "flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
+              "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
                 "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
                   success === undefined,
@@ -365,10 +365,10 @@ const CreateStudents: NextPage = () => {
             )}
           >
             {loading === true && (
-              <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="w-5 h-5 fill-white" />}
-            {success === false && <XIcon className="w-5 h-5 fill-white" />}
+            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Profile
           </button>
         </form>

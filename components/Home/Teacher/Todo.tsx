@@ -13,19 +13,19 @@ const Todo: Todo = ({ items }) => {
     .sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)));
 
   return (
-    <div className="flex flex-wrap flex-row grow items-start justify-start content-start gap-x-4 gap-y-3 w-full h-full">
+    <div className="flex h-full w-full grow flex-row flex-wrap content-start items-start justify-start gap-x-4 gap-y-3">
       {filtered?.map((item, i) => (
         <Todo.Item key={i} {...item} />
       ))}
       {filtered?.length === 0 && (
-        <div className="flex flex-col gap-1 items-center justify-center w-full h-full text-sm text-gray-600">
-          <CalendarIllustration className="w-28 h-28" />
+        <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-sm text-gray-600">
+          <CalendarIllustration className="h-28 w-28" />
           nothing to see here
         </div>
       )}
       {filtered === undefined && (
-        <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
-          <StandingChatIllustration className="w-32 h-32" />
+        <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-sm font-medium tracking-wider text-gray-600">
+          <StandingChatIllustration className="h-32 w-32" />
           Loading Exams...
         </div>
       )}
@@ -47,17 +47,17 @@ Todo.Item = function Item({ name, ...props }) {
   ];
 
   return (
-    <div className="flex gap-4 items-center justify-start w-[31%] p-3 rounded-xl cursor-pointer hover:bg-gray-50">
+    <div className="flex w-[31%] cursor-pointer items-center justify-start gap-4 rounded-xl p-3 hover:bg-gray-50">
       <div
         className={classNames(
-          "flex shrink-0 items-center justify-center rounded-full shadow-md w-10 h-10 text-sm text-white font-medium uppercase",
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-medium uppercase text-white shadow-md",
           colors[Math.floor(Math.random() * colors.length)]
         )}
       >
         {name.split(" ", 2).map((word) => word[0])}
       </div>
-      <div className="flex flex-col gap-0.5 items-start justify-center">
-        <span className="block truncate font-medium text-sm tracking-wide text-gray-700">
+      <div className="flex flex-col items-start justify-center gap-0.5">
+        <span className="block truncate text-sm font-medium tracking-wide text-gray-700">
           {name}
         </span>
         <span className="block truncate text-sm text-gray-600">

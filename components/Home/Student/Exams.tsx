@@ -42,7 +42,7 @@ const Exam: FunctionComponent<{
           message: "Loading Exams",
           timeout: 3e3,
           Icon: () => (
-            <DesktopComputerIcon className="w-6 h-6 stroke-blue-500" />
+            <DesktopComputerIcon className="h-6 w-6 stroke-blue-500" />
           ),
         })[0]
       );
@@ -53,13 +53,13 @@ const Exam: FunctionComponent<{
   return (
     <section
       className={classNames(
-        "flex gap-x-5 gap-y-3 items-start content-start justify-start",
+        "flex content-start items-start justify-start gap-x-5 gap-y-3",
         {
           hidden: show === false,
         }
       )}
     >
-      <table className="rounded-lg shadow-md overflow-hidden min-w-full">
+      <table className="min-w-full overflow-hidden rounded-lg shadow-md">
         <thead className="bg-gray-200 text-gray-700">
           <tr>
             {["Subject", "Status", "Date"].map((i) => (
@@ -68,7 +68,7 @@ const Exam: FunctionComponent<{
                 scope="col"
                 className={classNames("py-3", { "w-4": i === "#" })}
               >
-                <span className="flex items-center justify-start pl-6 pr-3 text-xs text-gray-500 font-normal uppercase tracking-wider">
+                <span className="flex items-center justify-start pl-6 pr-3 text-xs font-normal uppercase tracking-wider text-gray-500">
                   {i}
                 </span>
               </th>
@@ -78,10 +78,10 @@ const Exam: FunctionComponent<{
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+        <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
           {exams?.map((i) => (
             <tr key={i._id.toString()}>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="whitespace-nowrap px-6 py-4">
                 <div className="flex flex-col items-start justify-center text-sm">
                   <span className="text-gray-900">{i.subject}</span>
                   <span className="text-gray-500">
@@ -89,33 +89,33 @@ const Exam: FunctionComponent<{
                   </span>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="whitespace-nowrap px-6 py-4">
                 <span
                   className={classNames(
-                    "inline-flex text-sm leading-5 rounded-full px-3 py-0.5",
+                    "inline-flex rounded-full px-3 py-0.5 text-sm leading-5",
                     {
-                      "text-blue-600 bg-blue-200/25": i.locked === false,
-                      "text-slate-600 bg-slate-200/25": i.locked !== false,
+                      "bg-blue-200/25 text-blue-600": i.locked === false,
+                      "bg-slate-200/25 text-slate-600": i.locked !== false,
                     }
                   )}
                 >
                   {i.locked !== false ? "Locked" : "Unlocked"}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm">
+              <td className="whitespace-nowrap px-6 py-4 text-sm">
                 {(() => {
                   const date = formatRelative(new Date(i.date), new Date());
                   return date[0].toUpperCase() + date.slice(1);
                 })()}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="whitespace-nowrap px-6 py-4">
                 {i.locked === false && (
                   <button
                     type="button"
-                    className="flex items-center justify-center py-2 px-4 rounded-full bg-gray-500 hover:bg-gray-600"
+                    className="flex items-center justify-center rounded-full bg-gray-500 py-2 px-4 hover:bg-gray-600"
                   >
                     <Link href={`/exams/write/${i._id}`}>
-                      <a className="text-white text-xs font-medium tracking-wide">
+                      <a className="text-xs font-medium tracking-wide text-white">
                         Go to exam
                       </a>
                     </Link>

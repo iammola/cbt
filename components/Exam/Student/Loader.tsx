@@ -13,7 +13,7 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({
       <Dialog
         as="section"
         onClose={() => {}}
-        className="flex items-center justify-center fixed z-50 inset-0 h-screen w-full p-8 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex h-screen w-full items-center justify-center p-8 backdrop-blur-sm"
       >
         <Transition.Child
           as={Fragment}
@@ -24,7 +24,7 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="w-full h-full fixed z-[-1] inset-0 bg-black/30" />
+          <Dialog.Overlay className="fixed inset-0 z-[-1] h-full w-full bg-black/30" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -35,38 +35,38 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <div className="flex flex-col items-center gap-1 rounded-3xl shadow-lg p-12 bg-white w-full sm:w-[50rem]">
+          <div className="flex w-full flex-col items-center gap-1 rounded-3xl bg-white p-12 shadow-lg sm:w-[50rem]">
             {exam === undefined ? (
               <>
-                <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+                <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
                   <span>Loading</span>{" "}
                   <span className="text-sky-500">Exam</span> <span>🎲</span>
                 </Dialog.Title>
-                <div className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin mt-5 border-r-sky-500" />
+                <div className="mt-5 h-16 w-16 animate-spin rounded-full border-2 border-gray-200 border-r-sky-500" />
               </>
             ) : (
               <>
-                <Dialog.Description className="text-lg text-gray-600 font-bold tracking-wider text-center ">
+                <Dialog.Description className="text-center text-lg font-bold tracking-wider text-gray-600 ">
                   {exam.class}
                 </Dialog.Description>
-                <Dialog.Title className="text-4xl text-sky-500 font-bold tracking-tight text-center pb-1">
+                <Dialog.Title className="pb-1 text-center text-4xl font-bold tracking-tight text-sky-500">
                   {exam.subject}
                 </Dialog.Title>
-                <div className="text-sm text-center font-semibold text-gray-500">
+                <div className="text-center text-sm font-semibold text-gray-500">
                   {exam.duration} minutes • {exam.questions} questions
                 </div>
-                <div className="flex flex-col gap-2 pt-3 pb-5 w-full">
-                  <h6 className="text-sky-500 font-bold">Instructions</h6>
-                  <ul className="flex flex-col items-start justify-center gap-2 w-full">
+                <div className="flex w-full flex-col gap-2 pt-3 pb-5">
+                  <h6 className="font-bold text-sky-500">Instructions</h6>
+                  <ul className="flex w-full flex-col items-start justify-center gap-2">
                     {exam.instructions.map((instruction, i) => (
                       <li
                         key={instruction}
-                        className="flex gap-2 items-center justify-start"
+                        className="flex items-center justify-start gap-2"
                       >
                         <span className="text-xs font-bold text-gray-600">
                           {i + 1}.
                         </span>
-                        <p className="text-sm text-gray-800 font-medium">
+                        <p className="text-sm font-medium text-gray-800">
                           {instruction}
                         </p>
                       </li>
@@ -75,7 +75,7 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({
                 </div>
                 <button
                   onClick={start}
-                  className="shadow-md rounded-full text-sm text-white bg-sky-400 hover:bg-sky-500 px-8 py-3 focus:outline-none"
+                  className="rounded-full bg-sky-400 px-8 py-3 text-sm text-white shadow-md hover:bg-sky-500 focus:outline-none"
                 >
                   Start Exam
                 </button>

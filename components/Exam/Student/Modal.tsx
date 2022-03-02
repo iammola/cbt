@@ -18,7 +18,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
       <Dialog
         as="section"
         onClose={close}
-        className="flex items-center justify-center fixed z-50 inset-0 h-screen w-full p-8 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex h-screen w-full items-center justify-center p-8 backdrop-blur-sm"
       >
         <Transition.Child
           as={Fragment}
@@ -29,7 +29,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="w-full h-full fixed z-[-1] inset-0 bg-black/30" />
+          <Dialog.Overlay className="fixed inset-0 z-[-1] h-full w-full bg-black/30" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -40,8 +40,8 @@ const Modal: FunctionComponent<StudentModalProps> = ({
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <div className="flex flex-col gap-10 py-10 px-11 m-2 overflow-hidden transform transition-all rounded-2xl shadow-xl bg-white w-[65vw] lg:w-[42.5vw] xl:w-[35.5vw]">
-            <Dialog.Title className="text-4xl text-gray-900 font-bold tracking-tight text-center">
+          <div className="m-2 flex w-[65vw] transform flex-col gap-10 overflow-hidden rounded-2xl bg-white py-10 px-11 shadow-xl transition-all lg:w-[42.5vw] xl:w-[35.5vw]">
+            <Dialog.Title className="text-center text-4xl font-bold tracking-tight text-gray-900">
               {forced === false ? (
                 <>
                   <span>
@@ -59,12 +59,12 @@ const Modal: FunctionComponent<StudentModalProps> = ({
                 </>
               )}
             </Dialog.Title>
-            <div className="flex gap-6 item-center justify-center mt-2">
+            <div className="item-center mt-2 flex justify-center gap-6">
               {forced === false && (
                 <button
                   type="button"
                   onClick={close}
-                  className="inline-flex justify-center px-4 py-3 text-sm font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                  className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                 >
                   No, I&apos;m not ready
                 </button>
@@ -73,13 +73,13 @@ const Modal: FunctionComponent<StudentModalProps> = ({
                 type="button"
                 onClick={confirm}
                 disabled={success === -1}
-                className="inline-flex gap-3 justify-center px-5 py-3 text-sm font-medium tracking-wide text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:pointer-events-none"
+                className="inline-flex justify-center gap-3 rounded-md border border-transparent bg-blue-500 px-5 py-3 text-sm font-medium tracking-wide text-white shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed"
               >
                 {success === -1 && (
-                  <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+                  <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
                 )}
-                {success === 1 && <CheckIcon className="w-5 h-5 fill-white" />}
-                {success === 0 && <XIcon className="w-5 h-5 fill-white" />}
+                {success === 1 && <CheckIcon className="h-5 w-5 fill-white" />}
+                {success === 0 && <XIcon className="h-5 w-5 fill-white" />}
                 {forced === false ? <>Yes, I&apos;m ready</> : <>Submit Exam</>}
               </button>
             </div>

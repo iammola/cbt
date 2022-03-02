@@ -157,9 +157,9 @@ const Home: NextPage = () => {
         <title>Login | CBT | Grand Regal School</title>
         <meta name="description" content="Login Page to GRS CBT" />
       </Head>
-      <section className="flex flex-col items-center justify-center w-screen h-screen overflow-auto p-4 sm:p-6 md:p-8 z-0">
-        <div className="w-full h-full absolute inset-0 z-[-1]">
-          <div className="relative w-full h-full">
+      <section className="z-0 flex h-screen w-screen flex-col items-center justify-center overflow-auto p-4 sm:p-6 md:p-8">
+        <div className="absolute inset-0 z-[-1] h-full w-full">
+          <div className="relative h-full w-full">
             <Image
               layout="fill"
               alt="The Scenes"
@@ -168,19 +168,19 @@ const Home: NextPage = () => {
               placeholder="blur"
               objectPosition="center"
             />
-            <div className="absolute z-1 bg-indigo-400/50 w-full h-full"></div>
+            <div className="z-1 absolute h-full w-full bg-indigo-400/50"></div>
           </div>
         </div>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-y-6 sm:gap-y-8 md:gap-y-14 justify-between py-12 px-5 md:px-8 lg:px-12 bg-white rounded-2xl shadow-xl z-0 max-w-full"
+          className="z-0 flex max-w-full flex-col justify-between gap-y-6 rounded-2xl bg-white py-12 px-5 shadow-xl sm:gap-y-8 md:gap-y-14 md:px-8 lg:px-12"
         >
-          <h1 className="text-3xl sm:text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+          <h1 className="pb-4 text-center text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">
             <span className="sm:text-indigo-500">Log in</span>{" "}
             <span>to your</span> <span className="text-indigo-500">CBT</span>{" "}
             <span>account</span>
           </h1>
-          <div className="flex items-center justify-between py-3 sm:px-3 md:px-5 sm:gap-x-4 md:gap-x-6">
+          <div className="flex items-center justify-between py-3 sm:gap-x-4 sm:px-3 md:gap-x-6 md:px-5">
             {code.map((number, pos) => (
               <Input
                 key={pos}
@@ -198,7 +198,7 @@ const Home: NextPage = () => {
           <button
             type="submit"
             className={classNames(
-              "flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
+              "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
                 "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
                   success === undefined,
@@ -210,21 +210,21 @@ const Home: NextPage = () => {
             )}
           >
             {loading === true && (
-              <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="w-5 h-5 fill-white" />}
-            {success === false && <XIcon className="w-5 h-5 fill-white" />}
+            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Log In
           </button>
         </form>
       </section>
-      <footer className="absolute bottom-5 flex flex-col items-center justify-center text-sm text-gray-300 w-full">
-        <span className="tracking-wider text-center min-w-max">
+      <footer className="absolute bottom-5 flex w-full flex-col items-center justify-center text-sm text-gray-300">
+        <span className="min-w-max text-center tracking-wider">
           <span className="block sm:inline">© 2021 Grand Regal School.</span>{" "}
           <span className="block sm:inline">All rights reserved.</span>
         </span>
         <Link href="https://github.com/iammola/">
-          <a className="inline-block transition-transform origin-center font-medium tracking-wide text-gray-200 hover:underline">
+          <a className="inline-block origin-center font-medium tracking-wide text-gray-200 transition-transform hover:underline">
             Site by @a.mola
           </a>
         </Link>
@@ -232,7 +232,7 @@ const Home: NextPage = () => {
       <abbr
         title={`is ${dbState?.data?.state ?? "unknown"}`}
         className={classNames(
-          "w-3 h-3 fixed top-5 left-5 rounded-full shadow-md ring-2 ring-white transition-colors",
+          "fixed top-5 left-5 h-3 w-3 rounded-full shadow-md ring-2 ring-white transition-colors",
           {
             "bg-red-400": dbState?.data?.code === 0,
             "bg-emerald-400": dbState?.data?.code === 1,
@@ -291,7 +291,7 @@ const Input: FunctionComponent<InputProps> = ({
       onPaste={handlePaste}
       onBeforeInput={validateCharacter}
       onChange={(e) => onChange(e.target.value.slice(-1))}
-      className="text-lg sm:text-xl md:text-2xl text-gray-700 font-bold border rounded-md sm:p-3 md:p-4 w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 focus:ring-offset-white"
+      className="h-10 w-10 rounded-md border text-center text-lg font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-white sm:h-16 sm:w-16 sm:p-3 sm:text-xl md:h-20 md:w-20 md:p-4 md:text-2xl"
     />
   );
 };

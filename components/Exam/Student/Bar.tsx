@@ -12,9 +12,9 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
   );
 
   return (
-    <div className="flex items-center justify-end gap-6 w-full bg-white py-4 px-8 sticky left-0 top-0 rounded-b-lg drop-shadow-sm">
-      <div className="hidden md:flex items-center justify-start gap-2 grow text-gray-400 w-full text-sm font-medium">
-        <span className="w-max block truncate">
+    <div className="sticky left-0 top-0 flex w-full items-center justify-end gap-6 rounded-b-lg bg-white py-4 px-8 drop-shadow-sm">
+      <div className="hidden w-full grow items-center justify-start gap-2 text-sm font-medium text-gray-400 md:flex">
+        <span className="block w-max truncate">
           {currentSession !== undefined ? (
             currentSession.data !== null ? (
               <>
@@ -34,15 +34,15 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
             "Loading Session"
           )}
         </span>
-        <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
-        <span className="w-max block truncate">
+        <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
+        <span className="block w-max truncate">
           {exam?.class ?? "Loading Class"}
         </span>
-        <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
-        <span className="w-max block truncate">
+        <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
+        <span className="block w-max truncate">
           {exam?.subject ?? "Loading Subject"}
         </span>
-        <ChevronRightIcon className="w-5 h-5 fill-gray-500" />
+        <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
         <span className="text-gray-600">
           {format(new Date(), "EEEE do MMM, yyyy")}
         </span>
@@ -50,7 +50,7 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
       <button
         type="button"
         onClick={onSubmit}
-        className="flex gap-4 items-center justify-center mt-3 py-2.5 px-6 text-sm font-medium rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-violet-400 hover:bg-violet-500 focus:ring-violet-500"
+        className="mt-3 flex items-center justify-center gap-4 rounded-md bg-violet-400 py-2.5 px-6 text-sm font-medium text-white shadow-md transition-colors hover:bg-violet-500 focus:outline-none  focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-white"
       >
         Submit
       </button>

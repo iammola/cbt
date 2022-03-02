@@ -12,14 +12,14 @@ import type { MenuProps } from "types";
 const Menu: FunctionComponent<MenuProps> = ({ open }) => {
   return (
     <nav
-      className={classNames("grow w-full", {
+      className={classNames("w-full grow", {
         "px-5": open === true,
         "px-1 sm:px-4": open === false,
       })}
     >
       <span
         className={classNames(
-          "w-full inline-block text-gray-400 text-[0.6rem] font-semibold uppercase tracking-wider pb-4",
+          "inline-block w-full pb-4 text-[0.6rem] font-semibold uppercase tracking-wider text-gray-400",
           {
             "text-center": open === false,
           }
@@ -27,13 +27,13 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
       >
         Menu
       </span>
-      <ul className="flex flex-col gap-y-2 items-center justify-center w-full">
+      <ul className="flex w-full flex-col items-center justify-center gap-y-2">
         <MenuItem>
           <MenuItem.Main>
             <Link href="/home">
               <a
                 className={classNames(
-                  "flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5",
+                  "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                   {
                     "justify-start pr-3": open === true,
                     "justify-center sm:py-3": open === false,
@@ -41,12 +41,12 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 )}
               >
                 <HomeIcon
-                  className={classNames("shrink-0 w-6 h-6", {
+                  className={classNames("h-6 w-6 shrink-0", {
                     "ml-3": open === true,
                   })}
                 />
                 <span
-                  className={classNames("text-sm truncate", {
+                  className={classNames("truncate text-sm", {
                     hidden: open === false,
                     block: open === true,
                   })}
@@ -64,7 +64,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 <div
                   onClick={toggleExpand}
                   className={classNames(
-                    "flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5",
+                    "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                     {
                       "justify-start pr-3": open === true,
                       "justify-center": open === false,
@@ -72,12 +72,12 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   )}
                 >
                   <FileTextIcon
-                    className={classNames("shrink-0 w-6 h-6", {
+                    className={classNames("h-6 w-6 shrink-0", {
                       "ml-3": open === true,
                     })}
                   />
                   <span
-                    className={classNames("text-sm truncate", {
+                    className={classNames("truncate text-sm", {
                       hidden: open === false,
                       block: open === true,
                     })}
@@ -86,7 +86,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </span>
                   <ChevronDownIcon
                     className={classNames(
-                      "shrink-0 w-5 h-5 ml-auto text-gray-600",
+                      "ml-auto h-5 w-5 shrink-0 text-gray-600",
                       {
                         hidden: open === false,
                       }
@@ -98,8 +98,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 <MenuItem.List expand={expand}>
                   <li className="w-full">
                     <Link href="/exams/create/">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           Create an Exam
                         </span>
                       </a>
@@ -107,8 +107,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/exams/">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           View Exams
                         </span>
                       </a>
@@ -119,8 +119,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 <MenuItem.Panel expand={expand}>
                   <li className="w-full">
                     <Link href="/exams/create/">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           Create an Exam
                         </span>
                       </a>
@@ -128,8 +128,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/exams">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           View Exams
                         </span>
                       </a>
@@ -147,7 +147,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 <div
                   onClick={toggleExpand}
                   className={classNames(
-                    "flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5",
+                    "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                     {
                       "justify-start pr-3": open === true,
                       "justify-center": open === false,
@@ -155,12 +155,12 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   )}
                 >
                   <DesktopComputerIcon
-                    className={classNames("shrink-0 w-6 h-6", {
+                    className={classNames("h-6 w-6 shrink-0", {
                       "ml-3": open === true,
                     })}
                   />
                   <span
-                    className={classNames("text-sm truncate", {
+                    className={classNames("truncate text-sm", {
                       hidden: open === false,
                       block: open === true,
                     })}
@@ -169,7 +169,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </span>
                   <ChevronDownIcon
                     className={classNames(
-                      "shrink-0 w-5 h-5 ml-auto text-gray-600",
+                      "ml-auto h-5 w-5 shrink-0 text-gray-600",
                       {
                         hidden: open === false,
                       }
@@ -181,8 +181,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 <MenuItem.List expand={expand}>
                   <li className="w-full">
                     <Link href="/results/cbt">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           View CBT Results
                         </span>
                       </a>
@@ -190,8 +190,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/results/comments">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           Upload Term Comments
                         </span>
                       </a>
@@ -199,8 +199,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/results/create">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           Upload Term Result
                         </span>
                       </a>
@@ -208,8 +208,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/results/picker">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           View Term Results
                         </span>
                       </a>
@@ -220,8 +220,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 <MenuItem.Panel expand={expand}>
                   <li className="w-full">
                     <Link href="/results/cbt">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           View CBT Results
                         </span>
                       </a>
@@ -229,8 +229,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/results/comments">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           Upload Term Comments
                         </span>
                       </a>
@@ -238,8 +238,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/results/create">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           Upload Term Result
                         </span>
                       </a>
@@ -247,8 +247,8 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   </li>
                   <li className="w-full">
                     <Link href="/results/picker">
-                      <a className="flex gap-2.5 items-center justify-start w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 py-2.5 pr-3 pl-3 mt-2 cursor-pointer">
-                        <span className="text-sm block truncate">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">
                           View Term Result
                         </span>
                       </a>
@@ -264,7 +264,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
             <Link href="/calendar">
               <a
                 className={classNames(
-                  "flex gap-2.5 items-center w-full rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 cursor-pointer py-2.5",
+                  "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                   {
                     "justify-start pr-3": open === true,
                     "justify-center sm:py-3": open === false,
@@ -272,12 +272,12 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 )}
               >
                 <CalendarIcon
-                  className={classNames("shrink-0 w-6 h-6", {
+                  className={classNames("h-6 w-6 shrink-0", {
                     "ml-3": open === true,
                   })}
                 />
                 <span
-                  className={classNames("text-sm truncate", {
+                  className={classNames("truncate text-sm", {
                     hidden: open === false,
                     block: open === true,
                   })}
@@ -323,9 +323,9 @@ MenuItem.List = function List({ expand, children }) {
       leaveFrom="scale-y-100"
       leaveTo="scale-y-0"
     >
-      <ul className="flex flex-col gap-y-2 relative pl-9 overflow-y-hidden">
+      <ul className="relative flex flex-col gap-y-2 overflow-y-hidden pl-9">
         {children}
-        <div className="absolute inset-0 left-6 w-px bg-gray-200 h-full"></div>
+        <div className="absolute inset-0 left-6 h-full w-px bg-gray-200"></div>
       </ul>
     </Transition>
   );
@@ -344,10 +344,10 @@ MenuItem.Panel = function Panel({ expand, children }) {
       leaveFrom="scale-100 opacity-100"
       leaveTo="scale-0 opacity-0"
     >
-      <ul className="bg-white w-60 absolute left-10 pl-10 pr-4 py-5 rounded-lg shadow-lg">
-        <div className="flex flex-col gap-y-2 relative w-full">
+      <ul className="absolute left-10 w-60 rounded-lg bg-white py-5 pl-10 pr-4 shadow-lg">
+        <div className="relative flex w-full flex-col gap-y-2">
           {children}
-          <div className="absolute inset-0 -left-3 w-px bg-gray-200 h-full"></div>
+          <div className="absolute inset-0 -left-3 h-full w-px bg-gray-200"></div>
         </div>
       </ul>
     </Transition>

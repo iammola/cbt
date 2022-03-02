@@ -198,7 +198,7 @@ const Result: NextPage = () => {
   }, [data?.scores, data?.template, total]);
 
   return (
-    <section className="flex items-center justify-center w-screen min-h-screen bg-gray-200 py-16 print:p-0 print:bg-white">
+    <section className="flex min-h-screen w-screen items-center justify-center bg-gray-200 py-16 print:bg-white print:p-0">
       <Head>
         <title>
           {data?.student?.name.full ?? "Loading student"} Result |{" "}
@@ -216,9 +216,9 @@ const Result: NextPage = () => {
         data?.template !== undefined &&
         data?.term !== undefined &&
         total !== undefined && (
-          <main className="flex flex-col items-center justify-start bg-white rounded-lg shadow-xl shadow-gray-500/30 aspect-[1/1.4142] w-[60rem] p-12 print:px-8 print:py-5 print:shadow-none print:rounded-none">
-            <div className="flex gap-10 items-center justify-center w-full">
-              <figure className="w-24 h-24 relative">
+          <main className="flex aspect-[1/1.4142] w-[60rem] flex-col items-center justify-start rounded-lg bg-white p-12 shadow-xl shadow-gray-500/30 print:rounded-none print:px-8 print:py-5 print:shadow-none">
+            <div className="flex w-full items-center justify-center gap-10">
+              <figure className="relative h-24 w-24">
                 <Image
                   priority
                   layout="fill"
@@ -229,13 +229,13 @@ const Result: NextPage = () => {
                 />
               </figure>
               <div className="flex flex-col items-center justify-center text-center">
-                <h2 className="text-3xl font-extrabold uppercase text-gray-700 tracking-wider min-w-max">
+                <h2 className="min-w-max text-3xl font-extrabold uppercase tracking-wider text-gray-700">
                   Grand Regal International School
                 </h2>
-                <p className="text-sm text-gray-700 pb-2">
+                <p className="pb-2 text-sm text-gray-700">
                   Path to Peak for Excellence
                 </p>
-                <p className="text-xs text-gray-600 font-medium">
+                <p className="text-xs font-medium text-gray-600">
                   Hse. 2, 2nd Avenue, Wole Soyinka Drive, Gwarinpa, Abuja
                 </p>
               </div>
@@ -260,10 +260,10 @@ const Result: NextPage = () => {
               }}
             />
             <Divide className="w-full py-10" HRclassName="border-t-gray-300" />
-            <table className="min-w-full border border-gray-400 bg-white border-separate [border-spacing:0;] rounded-lg overflow-hidden">
-              <thead className="text-gray-700 bg-gray-50">
+            <table className="min-w-full border-separate overflow-hidden rounded-lg border border-gray-400 bg-white [border-spacing:0;]">
+              <thead className="bg-gray-50 text-gray-700">
                 <tr className="divide-x divide-gray-400">
-                  <th scope="col" className="py-5 border-b border-gray-400">
+                  <th scope="col" className="border-b border-gray-400 py-5">
                     <span className="sr-only">Subjects / Fields</span>
                   </th>
                   {[
@@ -274,16 +274,16 @@ const Result: NextPage = () => {
                     <th
                       scope="col"
                       key={field.alias}
-                      className="py-5 border-b border-gray-400 font-medium"
+                      className="border-b border-gray-400 py-5 font-medium"
                     >
-                      <span className="px-2 text-xs text-gray-700 font-semibold uppercase tracking-wider">
+                      <span className="px-2 text-xs font-semibold uppercase tracking-wider text-gray-700">
                         {field.alias}
                       </span>
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-400 text-gray-600">
+              <tbody className="divide-y divide-gray-400 bg-white text-gray-600">
                 {data.subjects
                   ?.filter(
                     (subject) =>
@@ -306,13 +306,13 @@ const Result: NextPage = () => {
                         <tr
                           key={subject.name}
                           className={classNames(
-                            "text-xs text-center text-gray-800 font-medium divide-x divide-gray-400",
+                            "divide-x divide-gray-400 text-center text-xs font-medium text-gray-800",
                             {
                               "bg-gray-100": index % 2 === 1,
                             }
                           )}
                         >
-                          <td className="text-gray-700 font-normal px-2 py-4 print:text-center">
+                          <td className="px-2 py-4 font-normal text-gray-700 print:text-center">
                             {subject.name}
                           </td>
                           {data.template?.fields.map((field) => {
@@ -323,7 +323,7 @@ const Result: NextPage = () => {
                             return (
                               <td
                                 key={field._id.toString()}
-                                className="py-4 w-16 print:w-12"
+                                className="w-16 py-4 print:w-12"
                               >
                                 {scores?.total === undefined
                                   ? item?.score
@@ -344,27 +344,27 @@ const Result: NextPage = () => {
               </tbody>
             </table>
             <Divide className="w-full py-10" HRclassName="border-t-gray-300" />
-            <div className="grid grid-cols-2 [grid-template-rows:max-content_1fr] gap-x-20 items-center justify-between w-full">
+            <div className="grid w-full grid-cols-2 items-center justify-between gap-x-20 [grid-template-rows:max-content_1fr]">
               <GradingScheme
                 scheme={data.template?.scheme ?? []}
-                className="row-start-1 row-end-2 col-start-2 col-end-3"
+                className="col-start-2 col-end-3 row-start-1 row-end-2"
               />
               <ResultFields
                 fields={data.template?.fields ?? []}
-                className="row-span-full col-start-1 col-end-2"
+                className="col-start-1 col-end-2 row-span-full"
               />
-              <div className="flex flex-col gap-0.5 items-start justify-center row-start-2 row-end-3 col-start-2 col-end-3 mt-3">
+              <div className="col-start-2 col-end-3 row-start-2 row-end-3 mt-3 flex flex-col items-start justify-center gap-0.5">
                 {data.comments !== undefined && (
                   <>
                     <span className="text-sm font-medium text-gray-800 underline underline-offset-2">
                       Comment
                     </span>
-                    <span className="text-sm text-gray-700 text-justify">
+                    <span className="text-justify text-sm text-gray-700">
                       {data.comments}
                     </span>
                   </>
                 )}
-                <div className="w-52 h-20 self-center mt-8 relative">
+                <div className="relative mt-8 h-20 w-52 self-center">
                   <Image
                     priority
                     layout="fill"
@@ -375,7 +375,7 @@ const Result: NextPage = () => {
                     className="brightness-50"
                   />
                 </div>
-                <span className="self-center text-sm mt-2 font-medium text-gray-600 tracking-wide">
+                <span className="mt-2 self-center text-sm font-medium tracking-wide text-gray-600">
                   V.P. Academics Signature
                 </span>
               </div>

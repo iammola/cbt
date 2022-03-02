@@ -14,29 +14,29 @@ const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
   ];
 
   return (
-    <div className="flex flex-col grow gap-2">
+    <div className="flex grow flex-col gap-2">
       <h5 className="font-semibold text-gray-800">{title}</h5>
-      <div className="flex flex-col gap-3 h-full">
+      <div className="flex h-full flex-col gap-3">
         {schedules.length === 0 && (
-          <div className="h-full flex items-center justify-center text-sm text-gray-600">
+          <div className="flex h-full items-center justify-center text-sm text-gray-600">
             Nothing to see here
           </div>
         )}
         {schedules.map(({ name, time, questions }, scheduleIdx) => (
           <div
             key={scheduleIdx}
-            className="flex gap-4 p-3 rounded-xl cursor-pointer hover:bg-gray-100"
+            className="flex cursor-pointer gap-4 rounded-xl p-3 hover:bg-gray-100"
           >
             <div
               className={classNames(
-                "flex shrink-0 items-center justify-center rounded-full shadow-xl w-12 h-12 text-white font-medium",
+                "flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-medium text-white shadow-xl",
                 colors[Math.floor(Math.random() * colors.length)]
               )}
             >
               {name.split(" ", 2).map((word) => word[0])}
             </div>
-            <div className="flex flex-col gap-0.5 items-start justify-center">
-              <span className="block truncate font-medium text-sm tracking-wide text-gray-700">
+            <div className="flex flex-col items-start justify-center gap-0.5">
+              <span className="block truncate text-sm font-medium tracking-wide text-gray-700">
                 {name}
               </span>
               <span className="block truncate text-xs text-gray-400">

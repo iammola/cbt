@@ -10,15 +10,15 @@ const Question: FunctionComponent<StudentQuestionProps> = ({
   onAnswer,
 }) => {
   return (
-    <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
-      <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
+    <div className="w-full rounded-xl bg-white pt-8 pb-3 pr-7 pl-4 shadow-sm">
+      <p className="w-full rounded-t py-3 pl-4 pr-10 text-sm font-medium text-gray-700">
         {question}
       </p>
-      <ul className="flex flex-col items-start justify-start gap-1 w-full mb-5 pl-4">
+      <ul className="mb-5 flex w-full flex-col items-start justify-start gap-1 pl-4">
         {answers.map((answer, answerIdx) => (
           <li
             key={answerIdx}
-            className="flex items-center justify-start gap-4 w-full pl-5 rounded-md hover:bg-gray-50"
+            className="flex w-full items-center justify-start gap-4 rounded-md pl-5 hover:bg-gray-50"
           >
             <Answer
               {...answer}

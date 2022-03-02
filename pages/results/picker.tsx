@@ -78,7 +78,7 @@ const ResultsPicker: NextPage = () => {
   }, [classes]);
 
   return (
-    <section className="flex flex-col gap-7 items-center justify-center w-screen h-screen">
+    <section className="flex h-screen w-screen flex-col items-center justify-center gap-7">
       <Head>
         <title>Results Picker | Portal | Grand Regal School</title>
         <meta name="description" content="Results | GRS Portal" />
@@ -88,7 +88,7 @@ const ResultsPicker: NextPage = () => {
           <h3 className="text-5xl font-bold tracking-wide text-gray-800">
             Load results for all students in a class
           </h3>
-          <div className="flex flex-wrap gap-4 items-center justify-center w-full px-10">
+          <div className="flex w-full flex-wrap items-center justify-center gap-4 px-10">
             {classes?.data.map((item) => {
               const data =
                 students.find((element) => element.class === item._id)
@@ -99,7 +99,7 @@ const ResultsPicker: NextPage = () => {
                   <div
                     key={item.name}
                     onClick={() => loadItems(item._id)}
-                    className="flex gap-6 items-center justify-center px-4 py-3 h-16 rounded-full shadow select-none cursor-pointer"
+                    className="flex h-16 cursor-pointer select-none items-center justify-center gap-6 rounded-full px-4 py-3 shadow"
                   >
                     <span className="text-sm font-medium text-gray-700">
                       {item.name}
@@ -112,13 +112,13 @@ const ResultsPicker: NextPage = () => {
               );
             })}
           </div>
-          <span className="text-gray-600 tracking-widest font-medium">or</span>
+          <span className="font-medium tracking-widest text-gray-600">or</span>
         </>
       )}
       <h3 className="text-5xl font-bold tracking-wider text-gray-600">
         Select student
       </h3>
-      <div className="flex flex-col gap-10 items-center justify-center pt-8">
+      <div className="flex flex-col items-center justify-center gap-10 pt-8">
         <Select
           selected={selectedStudent}
           handleChange={setSelectedStudent}
@@ -130,7 +130,7 @@ const ResultsPicker: NextPage = () => {
             const { _id } = selectedStudent;
             _id !== "" && openTab(_id);
           }}
-          className="px-10 py-3 bg-slate-500 hover:bg-slate-600 text-white text-xs font-bold shadow rounded-full uppercase tracking-widest min-w-max"
+          className="min-w-max rounded-full bg-slate-500 px-10 py-3 text-xs font-bold uppercase tracking-widest text-white shadow hover:bg-slate-600"
         >
           Go to Result
         </button>

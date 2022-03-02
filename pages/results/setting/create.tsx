@@ -90,12 +90,12 @@ const CreateScheme: NextPage = () => {
       {
         timeout: 5e3,
         message: verifyFields() ?? "",
-        Icon: () => <BanIcon className="w-6 h-6 stroke-rose-600" />,
+        Icon: () => <BanIcon className="h-6 w-6 stroke-rose-600" />,
       },
       {
         timeout: 5e3,
         message: verifyScheme() ?? "",
-        Icon: () => <BanIcon className="w-6 h-6 stroke-rose-600" />,
+        Icon: () => <BanIcon className="h-6 w-6 stroke-rose-600" />,
       },
     ].filter((i) => i.message !== "");
 
@@ -121,7 +121,7 @@ const CreateScheme: NextPage = () => {
             timeout: 5e3,
             message: "Success",
             Icon: () => (
-              <BadgeCheckIcon className="w-6 h-6 stroke-emerald-500" />
+              <BadgeCheckIcon className="h-6 w-6 stroke-emerald-500" />
             ),
           });
         else throw new Error(result.error);
@@ -137,12 +137,12 @@ const CreateScheme: NextPage = () => {
         <title>Create Scheme | Portal | Grand Regal School</title>
         <meta name="description" content="Create Scheme | GRS Portal" />
       </Head>
-      <section className="flex items-center justify-center bg-gray-300 p-10 w-screen min-h-screen">
+      <section className="flex min-h-screen w-screen items-center justify-center bg-gray-300 p-10">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-2 rounded-3xl shadow-lg p-8 bg-white"
+          className="flex flex-col gap-2 rounded-3xl bg-white p-8 shadow-lg"
         >
-          <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
             <span>Create a</span>{" "}
             <span className="text-stone-500">Result Setting</span>
           </h1>
@@ -159,14 +159,14 @@ const CreateScheme: NextPage = () => {
             }}
             handleChange={setSelectedClass}
           />
-          <div className="flex flex-col gap-3 items-start justify-start w-full py-2">
-            <span className="text-sm text-gray-600 font-semibold">
+          <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
+            <span className="text-sm font-semibold text-gray-600">
               Marking Scheme
             </span>
             {scheme.map((s, p, a) => (
               <div
                 key={s.limit}
-                className="flex items-center justify-start gap-2 w-full"
+                className="flex w-full items-center justify-start gap-2"
               >
                 <input
                   required
@@ -180,7 +180,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="w-14 p-2 text-xs text-gray-700 text-center font-bold border border-gray-200 rounded-md focus:border-none"
+                  className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
                 />
                 <input
                   required
@@ -194,7 +194,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="flex-grow p-2 text-sm text-gray-700 border border-gray-200 rounded-md focus:border-none"
+                  className="flex-grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
                   required
@@ -209,14 +209,14 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="w-14 p-2 text-xs text-gray-700 text-center font-bold border border-gray-200 rounded-md focus:border-none"
+                  className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
                 />
                 {a.length > 1 && (
                   <span
                     onClick={() => setScheme(a.filter((_, i) => i !== p))}
-                    className="flex items-center justify-center rounded-full hover:bg-gray-100 p-2 cursor-pointer"
+                    className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-100"
                   >
-                    <XIcon className="w-5 h-5 fill-gray-600" />
+                    <XIcon className="h-5 w-5 fill-gray-600" />
                   </span>
                 )}
               </div>
@@ -229,19 +229,19 @@ const CreateScheme: NextPage = () => {
                   { grade: "", description: "", limit: "" },
                 ])
               }
-              className="flex gap-4 items-center justify-center mt-2 py-1.5 px-5 rounded-full shadow-md text-sm text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-stone-400 hover:bg-stone-500 focus:ring-stone-500"
+              className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
             >
               Add Scheme
             </button>
           </div>
-          <div className="flex flex-col gap-3 items-start justify-start w-full py-2">
-            <span className="text-sm text-gray-600 font-semibold">
+          <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
+            <span className="text-sm font-semibold text-gray-600">
               Result Fields
             </span>
             {fields.map((f, b, a) => (
               <div
                 key={b}
-                className="flex items-center justify-start gap-2 w-full"
+                className="flex w-full items-center justify-start gap-2"
               >
                 <input
                   required
@@ -255,7 +255,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="flex-grow p-2 text-sm text-gray-700 border border-gray-200 rounded-md focus:border-none"
+                  className="flex-grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
                   required
@@ -269,7 +269,7 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="flex-grow p-2 text-sm text-gray-700 border border-gray-200 rounded-md focus:border-none"
+                  className="flex-grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
                   min={0}
@@ -284,14 +284,14 @@ const CreateScheme: NextPage = () => {
                       )
                     )
                   }
-                  className="w-14 p-2 text-xs text-gray-700 text-center font-bold border border-gray-200 rounded-md focus:border-none"
+                  className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
                 />
                 {a.length > 1 && (
                   <span
                     onClick={() => setFields(a.filter((_, i) => i !== b))}
-                    className="flex items-center justify-center rounded-full hover:bg-gray-100 p-2 cursor-pointer"
+                    className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-100"
                   >
-                    <XIcon className="w-5 h-5 fill-gray-600" />
+                    <XIcon className="h-5 w-5 fill-gray-600" />
                   </span>
                 )}
               </div>
@@ -301,14 +301,14 @@ const CreateScheme: NextPage = () => {
               onClick={() =>
                 setFields([...fields, { name: "", alias: "", max: "" }])
               }
-              className="flex gap-4 items-center justify-center mt-2 py-1.5 px-5 rounded-full shadow-md text-sm text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-stone-400 hover:bg-stone-500 focus:ring-stone-500"
+              className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
             >
               Add Field
             </button>
           </div>
           <button
             type="submit"
-            className="flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-stone-400 hover:bg-stone-500 focus:ring-stone-500"
+            className="mt-3 flex items-center justify-center gap-4 rounded-md bg-stone-400 py-2.5 px-3 text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
           >
             Create Result Setting
           </button>

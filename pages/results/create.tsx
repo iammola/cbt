@@ -233,12 +233,12 @@ const Results: NextPage = () => {
         <title>Results | Portal | Grand Regal School</title>
         <meta name="description" content="Results | GRS Portal" />
       </Head>
-      <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
+      <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
-        <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+        <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
           <Navbar />
-          <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
-            <div className="flex gap-4 items-end justify-center w-full">
+          <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+            <div className="flex w-full items-end justify-center gap-4">
               <Select
                 label="Class"
                 options={classes?.data}
@@ -269,19 +269,19 @@ const Results: NextPage = () => {
               />
               <button
                 onClick={getData}
-                className="px-4 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-xs mb-3 min-w-max"
+                className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
               >
                 Load Results
               </button>
             </div>
             {settings !== undefined && students !== undefined && (
               <>
-                <Divide className="px-2 py-7 text-gray-200 w-full" />
+                <Divide className="w-full px-2 py-7 text-gray-200" />
                 <form
                   onSubmit={submitData}
-                  className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow"
+                  className="flex w-full grow flex-col items-center justify-start gap-7 py-10 px-3"
                 >
-                  <table className="rounded-lg shadow-md overflow-hidden min-w-full">
+                  <table className="min-w-full overflow-hidden rounded-lg shadow-md">
                     <thead className="bg-gray-300 text-gray-700">
                       <tr className="divide-x divide-gray-200">
                         <th scope="col" className="relative px-6 py-3">
@@ -291,20 +291,20 @@ const Results: NextPage = () => {
                           <th key={i.alias} scope="col" className="py-5">
                             <abbr
                               title={`${i.name} - Max score ${i.max}`}
-                              className="flex items-center justify-center px-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                              className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500"
                             >
                               {i.alias} ({i.max})
                             </abbr>
                           </th>
                         ))}
                         <th scope="col" className="py-5">
-                          <span className="flex items-center justify-center px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <span className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                             Total - Grade
                           </span>
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+                    <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
                       {students.map(({ _id, name }) => {
                         const forceTotal = hardTotal.includes(_id);
                         const { scores: studentScores, total: studentTotal } =
@@ -315,9 +315,9 @@ const Results: NextPage = () => {
                             key={_id.toString()}
                             className="divide-x divide-gray-200"
                           >
-                            <td className="px-6 py-4 whitespace-nowrap">
+                            <td className="whitespace-nowrap px-6 py-4">
                               <div className="flex items-center gap-4 text-sm">
-                                <div className="shrink-0 h-10 w-10 relative">
+                                <div className="relative h-10 w-10 shrink-0">
                                   <UserImage
                                     src=""
                                     layout="fill"
@@ -336,7 +336,7 @@ const Results: NextPage = () => {
                             {settings.fields.map((field) => (
                               <td
                                 key={field.alias}
-                                className="p-2 whitespace-nowrap"
+                                className="whitespace-nowrap p-2"
                               >
                                 {forceTotal === false ? (
                                   <input
@@ -346,7 +346,7 @@ const Results: NextPage = () => {
                                     type="number"
                                     max={field.max}
                                     inputMode="numeric"
-                                    className="min-w-[3rem] py-3 w-full h-full text-center text-sm"
+                                    className="h-full w-full min-w-[3rem] py-3 text-center text-sm"
                                     onChange={(e) => {
                                       const value = +e.target.value;
                                       setScores(
@@ -414,7 +414,7 @@ const Results: NextPage = () => {
                                     : [...hardTotal, _id]
                                 )
                               }
-                              className="px-6 py-4 whitespace-nowrap text-sm text-center"
+                              className="whitespace-nowrap px-6 py-4 text-center text-sm"
                             >
                               {forceTotal === false ? (
                                 (() => {
@@ -430,7 +430,7 @@ const Results: NextPage = () => {
                                   return (studentScores?.length ?? 0) > 0 ? (
                                     <abbr
                                       title={scheme?.description}
-                                      className="text-sm text-center"
+                                      className="text-center text-sm"
                                     >
                                       {total.toFixed(1)} - {scheme?.grade}
                                     </abbr>
@@ -450,7 +450,7 @@ const Results: NextPage = () => {
                                     (a, b) => a + b.max,
                                     0
                                   )}
-                                  className="min-w-[3rem] py-3 w-full h-full text-center text-sm"
+                                  className="h-full w-full min-w-[3rem] py-3 text-center text-sm"
                                   onChange={(e) =>
                                     setScores(
                                       scores.map(
@@ -495,7 +495,7 @@ const Results: NextPage = () => {
                   </table>
                   <button
                     type="submit"
-                    className="flex gap-4 items-center justify-center mt-3 py-2.5 px-7 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white bg-gray-500 hover:bg-gray-600"
+                    className="mt-3 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
                   >
                     Save Changes
                   </button>

@@ -86,7 +86,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({
   }, [setCookies, started, submit, timeBounds, timeLeft]);
 
   return (
-    <div className="fixed right-6 top-20 py-3 px-4 rounded-md shadow-md bg-white text-sm font-medium text-gray-700 empty:hidden">
+    <div className="fixed right-6 top-20 rounded-md bg-white py-3 px-4 text-sm font-medium text-gray-700 shadow-md empty:hidden">
       {displayTime}
     </div>
   );

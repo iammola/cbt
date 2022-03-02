@@ -69,19 +69,19 @@ const CreateSession: NextPage = () => {
           content="School Session // Term Registration | GRS CBT"
         />
       </Head>
-      <section className="flex items-center justify-center bg-gradient-to-tr from-yellow-400 to-pink-500 p-10 w-screen min-h-screen">
+      <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-yellow-400 to-pink-500 p-10">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+          className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
         >
-          <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
             <span>Create a</span>{" "}
             <span className="text-amber-500">Session</span>
           </h1>
-          <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
+          <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
             <label
               htmlFor="name"
-              className="text-sm text-gray-600 font-semibold"
+              className="text-sm font-semibold text-gray-600"
             >
               Name
             </label>
@@ -91,13 +91,13 @@ const CreateSession: NextPage = () => {
               type="text"
               value={name}
               onChange={({ target: { value } }) => setName(value)}
-              className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
-          <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
+          <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
             <label
               htmlFor="alias"
-              className="text-sm text-gray-600 font-semibold"
+              className="text-sm font-semibold text-gray-600"
             >
               Alias
             </label>
@@ -107,15 +107,15 @@ const CreateSession: NextPage = () => {
               type="text"
               value={alias}
               onChange={({ target: { value } }) => setAlias(value)}
-              className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
-          <div className="flex flex-col gap-2.5 min-w-[20rem] w-full">
-            <span className="text-sm text-gray-600 font-semibold">Terms</span>
+          <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
+            <span className="text-sm font-semibold text-gray-600">Terms</span>
             {terms.map((term, termIdx) => (
               <div
                 key={termIdx}
-                className="flex flex-wrap gap-3 items-center justify-start"
+                className="flex flex-wrap items-center justify-start gap-3"
               >
                 <input
                   required
@@ -129,7 +129,7 @@ const CreateSession: NextPage = () => {
                       )
                     )
                   }
-                  className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
+                  className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
                 />
                 <input
                   required
@@ -143,11 +143,11 @@ const CreateSession: NextPage = () => {
                       )
                     )
                   }
-                  className="border rounded-md transition-shadow focus:ring-2 focus:ring-amber-400 focus:outline-none p-3 pl-5"
+                  className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
                 />
                 <label
                   htmlFor={`Term${termIdx}`}
-                  className="flex items-center shrink-0 gap-3 p-2 text-sm"
+                  className="flex shrink-0 items-center gap-3 p-2 text-sm"
                 >
                   <input
                     type="checkbox"
@@ -172,24 +172,24 @@ const CreateSession: NextPage = () => {
                     onClick={() =>
                       setTerms(terms.filter((_, i) => i !== termIdx))
                     }
-                    className="p-1 rounded-full hover:bg-gray-300"
+                    className="rounded-full p-1 hover:bg-gray-300"
                   >
-                    <XIcon className="w-4 h-4 fill-gray-500 hover:fill-gray-600" />
+                    <XIcon className="h-4 w-4 fill-gray-500 hover:fill-gray-600" />
                   </span>
                 )}
               </div>
             ))}
             <span
               onClick={() => setTerms([...terms, { ...termTemplate }])}
-              className="cursor-pointer w-max text-xs text-blue-400 hover:text-blue-500 hover:underline"
+              className="w-max cursor-pointer text-xs text-blue-400 hover:text-blue-500 hover:underline"
             >
               Add Term
             </span>
           </div>
-          <div className="flex min-w-[20rem] w-full">
+          <div className="flex w-full min-w-[20rem]">
             <label
               htmlFor="current"
-              className="flex items-center gap-3 p-2 w-full"
+              className="flex w-full items-center gap-3 p-2"
             >
               <input
                 id="current"
@@ -204,7 +204,7 @@ const CreateSession: NextPage = () => {
           <button
             type="submit"
             className={classNames(
-              "flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
+              "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
                 "bg-amber-400 hover:bg-amber-500 focus:ring-amber-500":
                   success === undefined,
@@ -216,10 +216,10 @@ const CreateSession: NextPage = () => {
             )}
           >
             {loading === true && (
-              <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="w-5 h-5 fill-white" />}
-            {success === false && <XIcon className="w-5 h-5 fill-white" />}
+            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Session
           </button>
         </form>

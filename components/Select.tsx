@@ -25,28 +25,28 @@ const Select: FunctionComponent<SelectProps> = ({
   return (
     <div
       className={classNames(
-        "flex flex-col min-w-[20rem] w-full relative",
+        "relative flex w-full min-w-[20rem] flex-col",
         className
       )}
     >
       <Listbox value={selected} onChange={handleChange}>
         <div className="relative">
           {label !== undefined && (
-            <Listbox.Label className="font-semibold text-sm text-gray-700">
+            <Listbox.Label className="text-sm font-semibold text-gray-700">
               {label}
             </Listbox.Label>
           )}
           <Listbox.Button
             className={classNames(
-              "relative w-full mt-2 py-3.5 pl-3 pr-10 text-left sm:text-sm bg-white rounded-lg border shadow-sm cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-2",
+              "relative mt-2 w-full cursor-pointer rounded-lg border bg-white py-3.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm",
               pallette.buttonOffsetFocusColor,
               pallette.buttonBorderColor
             )}
           >
             <span className="block truncate">{selected.name}</span>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <SelectorIcon
-                className="w-5 h-5 stroke-gray-400"
+                className="h-5 w-5 stroke-gray-400"
                 aria-hidden="true"
               />
             </span>
@@ -58,14 +58,14 @@ const Select: FunctionComponent<SelectProps> = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-20 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     value={option}
                     key={option._id}
                     className={({ active }) =>
                       classNames(
-                        "cursor-default select-none relative py-2 pl-10 pr-4",
+                        "relative cursor-default select-none py-2 pl-10 pr-4",
                         {
                           [pallette.activeOptionColor]: active,
                           "text-gray-900": !active,
@@ -87,7 +87,7 @@ const Select: FunctionComponent<SelectProps> = ({
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                             <CheckIcon
                               aria-hidden="true"
-                              className={classNames("w-5 h-5", {
+                              className={classNames("h-5 w-5", {
                                 [pallette.activeCheckIconColor]: active,
                                 [pallette.inactiveCheckIconColor]: !active,
                               })}

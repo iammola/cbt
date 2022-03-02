@@ -21,7 +21,7 @@ const UserImage: FunctionComponent<UserImageProps> = ({
   ) : (
     <span
       className={classNames(
-        "flex items-center justify-center h-full w-full text-white font-medium overflow-hidden",
+        "flex h-full w-full items-center justify-center overflow-hidden font-medium text-white",
         initials.className,
         {
           "text-sm": initials.text.length < 3,

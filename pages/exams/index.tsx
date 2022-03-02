@@ -28,22 +28,22 @@ const Exams: NextPage = () => {
         <title>Exams | CBT | Grand Regal School</title>
         <meta name="description" content="Registered Exams | GRS CBT" />
       </Head>
-      <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
+      <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
-        <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+        <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
           <Navbar />
-          <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
-            <table className="rounded-lg shadow-md overflow-hidden min-w-full">
+          <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+            <table className="min-w-full overflow-hidden rounded-lg shadow-md">
               <thead className="bg-gray-200 text-gray-700">
                 <tr>
-                  <th scope="col" className="py-5 w-4">
-                    <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="w-4 py-5">
+                    <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                       #
                     </span>
                   </th>
                   {["Class", "Subject", "Created At", "Created By"].map((i) => (
                     <th key={i} scope="col" className="py-5">
-                      <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                         {i}
                       </span>
                     </th>
@@ -71,7 +71,7 @@ const Exams: NextPage = () => {
                                      */}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+              <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
                 {exams?.data?.map(
                   (
                     {
@@ -84,13 +84,13 @@ const Exams: NextPage = () => {
                     examIdx
                   ) => (
                     <tr key={examIdx} className="text-sm font-medium">
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         {examIdx + 1}.
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         {exam.class}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         <div className="flex flex-col">
                           <span className="text-sm text-gray-900">
                             {subject}
@@ -100,15 +100,15 @@ const Exams: NextPage = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         {(() => {
                           const date = formatRelative(new Date(at), new Date());
                           return date[0].toUpperCase() + date.slice(1);
                         })()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="shrink-0 h-10 w-10 relative">
+                          <div className="relative h-10 w-10 shrink-0">
                             <UserImage
                               src=""
                               layout="fill"
@@ -124,9 +124,9 @@ const Exams: NextPage = () => {
                           <span>{by.name.full}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
+                      <td className="whitespace-nowrap px-6 py-4 text-right tracking-wider">
                         <Link href={`/exams/edit/${exam._id.toString()}`}>
-                          <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
+                          <a className="cursor-pointer text-indigo-500 hover:text-indigo-600">
                             Edit
                           </a>
                         </Link>
@@ -151,14 +151,14 @@ const Exams: NextPage = () => {
               </tbody>
             </table>
             {exams?.data?.length === 0 && (
-              <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
-                <MeditatingIllustration className="w-60 h-60" />
+              <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-sm font-medium tracking-wider text-gray-600">
+                <MeditatingIllustration className="h-60 w-60" />
                 nothing to see here
               </div>
             )}
             {exams === undefined && (
-              <div className="flex flex-col gap-1 items-center justify-center w-full h-full font-medium text-sm tracking-wider text-gray-600">
-                <SittingWithLaptopIllustration className="w-60 h-60" />
+              <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-sm font-medium tracking-wider text-gray-600">
+                <SittingWithLaptopIllustration className="h-60 w-60" />
                 Loading exams...
               </div>
             )}

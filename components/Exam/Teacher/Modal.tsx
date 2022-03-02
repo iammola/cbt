@@ -99,7 +99,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
       <Dialog
         as="section"
         onClose={() => {}}
-        className="flex items-center justify-center fixed z-10 inset-0 h-screen w-full"
+        className="fixed inset-0 z-10 flex h-screen w-full items-center justify-center"
       >
         <Transition.Child
           as={Fragment}
@@ -110,7 +110,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="w-full h-full fixed z-[-1] inset-0 bg-black/30" />
+          <Dialog.Overlay className="fixed inset-0 z-[-1] h-full w-full bg-black/30" />
         </Transition.Child>
         <Transition.Child
           enter="ease-out duration-300 transition"
@@ -122,9 +122,9 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
         >
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white w-full sm:w-[30rem]"
+            className="flex w-full flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg sm:w-[30rem]"
           >
-            <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+            <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
               <span>{isEdit === true ? "Edit" : "Create"} an</span>{" "}
               <span className="text-indigo-500">Exam</span> <span>🚀</span>
             </Dialog.Title>
@@ -154,10 +154,10 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
               }}
               handleChange={setSelectedSubject}
             />
-            <div className="flex flex-col gap-2.5 min-w-[20rem] w-full relative">
+            <div className="relative flex w-full min-w-[20rem] flex-col gap-2.5">
               <label
                 htmlFor="duration"
-                className="text-sm text-gray-600 font-semibold"
+                className="text-sm font-semibold text-gray-600"
               >
                 Duration
               </label>
@@ -173,15 +173,15 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
                 onChange={({ target: { valueAsNumber } }) =>
                   setDuration(valueAsNumber)
                 }
-                className="border rounded-md transition-shadow focus:ring-2 focus:ring-indigo-400 focus:outline-none p-3 pl-5"
+                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
-              <span className="absolute bottom-4 right-0 z-10 flex items-center pr-2 pointer-events-none text-gray-500 text-xs">
+              <span className="pointer-events-none absolute bottom-4 right-0 z-10 flex items-center pr-2 text-xs text-gray-500">
                 mins
               </span>
             </div>
             <button
               type="submit"
-              className="flex gap-4 items-center justify-center mt-7 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500"
+              className="mt-7 flex items-center justify-center gap-4 rounded-md bg-indigo-400 py-2.5 px-3 text-white shadow-md transition-colors hover:bg-indigo-500 focus:outline-none  focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-white"
             >
               Continue
             </button>

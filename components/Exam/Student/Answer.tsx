@@ -23,7 +23,7 @@ const Answer: FunctionComponent<StudentAnswerProps> = ({
       <label
         htmlFor={_id.toString()}
         className={classNames(
-          "w-3 h-3 rounded-full text-xs shrink-0 ring-2 ring-offset-4 ring-gray-400 ring-offset-white cursor-pointer",
+          "h-3 w-3 shrink-0 cursor-pointer rounded-full text-xs ring-2 ring-gray-400 ring-offset-4 ring-offset-white",
           {
             "bg-gray-400": selected,
             "bg-white": !selected,
@@ -31,7 +31,7 @@ const Answer: FunctionComponent<StudentAnswerProps> = ({
         )}
       />
       <label htmlFor={_id.toString()} className="w-full cursor-pointer">
-        <p className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm">
+        <p className="w-full rounded-t py-3 pl-4 pr-10 text-sm font-medium text-gray-700">
           {answer}
         </p>
       </label>

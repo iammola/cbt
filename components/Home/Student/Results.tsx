@@ -18,13 +18,13 @@ const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
   return (
     <section
       className={classNames(
-        "flex gap-x-5 gap-y-3 items-start content-start justify-start",
+        "flex content-start items-start justify-start gap-x-5 gap-y-3",
         {
           hidden: show === false,
         }
       )}
     >
-      <table className="rounded-lg shadow-md overflow-hidden min-w-full">
+      <table className="min-w-full overflow-hidden rounded-lg shadow-md">
         <thead className="bg-gray-200 text-gray-700">
           <tr>
             {["Subject", "Score", "Date"].map((i) => (
@@ -33,23 +33,23 @@ const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
                 scope="col"
                 className={classNames("py-3", { "w-4": i === "#" })}
               >
-                <span className="flex items-center justify-start pl-6 pr-3 text-xs text-gray-500 font-normal uppercase tracking-wider">
+                <span className="flex items-center justify-start pl-6 pr-3 text-xs font-normal uppercase tracking-wider text-gray-500">
                   {i}
                 </span>
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+        <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
           {data?.data.map((e) => (
             <tr key={e.subject}>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="whitespace-nowrap px-6 py-4">
                 <div className="flex flex-col items-start justify-center text-sm text-gray-900">
                   {e.subject}
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm">{e.score}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm">
+              <td className="whitespace-nowrap px-6 py-4 text-sm">{e.score}</td>
+              <td className="whitespace-nowrap px-6 py-4 text-sm">
                 {(() => {
                   const date = formatRelative(new Date(e.started), new Date());
                   return date[0].toUpperCase() + date.slice(1);

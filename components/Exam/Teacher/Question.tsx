@@ -18,20 +18,20 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({
   insertQuestionAbove,
 }) => {
   return (
-    <div className="w-full pt-8 pb-3 pr-7 pl-4 bg-white rounded-xl shadow-sm">
+    <div className="w-full rounded-xl bg-white pt-8 pb-3 pr-7 pl-4 shadow-sm">
       <input
         required
         type="text"
         value={record.question}
         placeholder={`Question ${number} `}
         onChange={({ target: { value } }) => onChange({ question: value })}
-        className="w-full rounded-t py-3 pl-4 pr-10 text-gray-700 font-medium text-sm border-b-2 border-transparent focus:bg-gray-50 focus:border-b-2 focus:border-indigo-300 focus:outline-none"
+        className="w-full rounded-t border-b-2 border-transparent py-3 pl-4 pr-10 text-sm font-medium text-gray-700 focus:border-b-2 focus:border-indigo-300 focus:bg-gray-50 focus:outline-none"
       />
-      <ul className="flex flex-col items-start justify-start gap-3 w-full my-5 pl-4">
+      <ul className="my-5 flex w-full flex-col items-start justify-start gap-3 pl-4">
         {record.answers.map((answer, answerIdx) => (
           <li
             key={answerIdx}
-            className="flex items-center justify-start gap-4 w-full"
+            className="flex w-full items-center justify-start gap-4"
           >
             <Answer
               {...answer}
@@ -66,36 +66,36 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({
           onClick={() =>
             onChange({ answers: [...record.answers, { answer: "" }] })
           }
-          className="text-sm text-white py-2 px-4 rounded-md bg-gray-500 hover:bg-gray-600 cursor-pointer focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white focus:outline-none"
+          className="cursor-pointer rounded-md bg-gray-500 py-2 px-4 text-sm text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white"
         >
           Add Option
         </button>
       </ul>
-      <div className="flex items-center justify-end gap-3 w-full border-t pl-4 py-1">
+      <div className="flex w-full items-center justify-end gap-3 border-t py-1 pl-4">
         <span
           onClick={insertQuestionAbove}
-          className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
+          className="group relative cursor-pointer rounded-full p-2.5 hover:bg-gray-100"
         >
-          <SortAscendingIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
-          <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+          <SortAscendingIcon className="h-5 w-5 stroke-gray-700 hover:stroke-gray-600" />
+          <span className="absolute left-1/2 -top-10 hidden w-max -translate-x-1/2 rounded-md bg-white p-2 text-xs text-gray-600 shadow-md group-hover:inline">
             Insert Question Above
           </span>
         </span>
         <span
           onClick={insertQuestionBelow}
-          className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
+          className="group relative cursor-pointer rounded-full p-2.5 hover:bg-gray-100"
         >
-          <SortDescendingIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
-          <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+          <SortDescendingIcon className="h-5 w-5 stroke-gray-700 hover:stroke-gray-600" />
+          <span className="absolute left-1/2 -top-10 hidden w-max -translate-x-1/2 rounded-md bg-white p-2 text-xs text-gray-600 shadow-md group-hover:inline">
             Insert Question Below
           </span>
         </span>
         <span
           onClick={deleteQuestion}
-          className="group relative p-2.5 rounded-full cursor-pointer hover:bg-gray-100"
+          className="group relative cursor-pointer rounded-full p-2.5 hover:bg-gray-100"
         >
-          <TrashIcon className="w-5 h-5 stroke-gray-700 hover:stroke-gray-600" />
-          <span className="hidden group-hover:inline absolute left-1/2 -top-10 -translate-x-1/2 p-2 rounded-md shadow-md text-xs text-gray-600 bg-white w-max">
+          <TrashIcon className="h-5 w-5 stroke-gray-700 hover:stroke-gray-600" />
+          <span className="absolute left-1/2 -top-10 hidden w-max -translate-x-1/2 rounded-md bg-white p-2 text-xs text-gray-600 shadow-md group-hover:inline">
             Delete Question
           </span>
         </span>

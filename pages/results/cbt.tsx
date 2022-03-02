@@ -90,12 +90,12 @@ const Results: NextPage = () => {
         <title>Results | CBT | Grand Regal School</title>
         <meta name="description" content="Written Results | GRS CBT" />
       </Head>
-      <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
+      <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
-        <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+        <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
           <Navbar />
-          <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
-            <div className="flex gap-4 items-end justify-center w-full">
+          <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+            <div className="flex w-full items-end justify-center gap-4">
               <Select
                 label="Class"
                 options={classes?.data}
@@ -126,33 +126,33 @@ const Results: NextPage = () => {
               />
               <button
                 onClick={getData}
-                className="px-4 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-xs mb-3 min-w-max"
+                className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
               >
                 Load Results
               </button>
             </div>
             {results !== undefined && (
-              <table className="rounded-lg shadow-md overflow-hidden min-w-full">
+              <table className="min-w-full overflow-hidden rounded-lg shadow-md">
                 <thead className="bg-gray-200 text-gray-700">
                   <tr>
                     {["Student", "Score", "Date"].map((i) => (
                       <th key={i} scope="col" className="py-5">
-                        <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                           {i}
                         </span>
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200 text-gray-600">
+                <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
                   {results.map(({ student, results }) => (
                     <tr
                       key={student._id.toString()}
                       className="text-sm font-medium"
                     >
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="shrink-0 h-10 w-10 relative">
+                          <div className="relative h-10 w-10 shrink-0">
                             <UserImage
                               src=""
                               layout="fill"
@@ -168,10 +168,10 @@ const Results: NextPage = () => {
                           <span>{student.name.full}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         {results[0].score}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="whitespace-nowrap px-6 py-4">
                         {(() => {
                           const date = formatRelative(
                             new Date(results[0].started),

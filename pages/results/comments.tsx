@@ -112,12 +112,12 @@ const Comments: NextPage = () => {
         <title>Comments | CBT | Grand Regal School</title>
         <meta name="description" content="Comments | GRS CBT" />
       </Head>
-      <section className="flex items-center justify-start w-screen h-screen divide-y-[1.5px] divide-gray-200">
+      <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
-        <main className="flex flex-col grow items-center justify-center divide-x-[1.5px] divide-gray-200 h-full">
+        <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
           <Navbar />
-          <section className="flex flex-col gap-3 items-center justify-start w-full py-10 px-6 grow bg-gray-50/80 overflow-y-auto">
-            <div className="flex gap-4 items-end justify-center w-full">
+          <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+            <div className="flex w-full items-end justify-center gap-4">
               <Select
                 label="Class"
                 options={classes?.data}
@@ -151,7 +151,7 @@ const Comments: NextPage = () => {
               />
               <button
                 onClick={getComments}
-                className="px-4 py-3 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white text-xs mb-3 min-w-max"
+                className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
               >
                 Load Comments
               </button>
@@ -159,24 +159,24 @@ const Comments: NextPage = () => {
             {comment !== undefined && loadedStudent !== "" && (
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-7 items-center justify-start w-full py-10 px-3 grow"
+                className="flex w-full grow flex-col items-center justify-start gap-7 py-10 px-3"
               >
                 <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">
                   {loadedStudent}
                 </h4>
-                <div className="flex flex-col gap-3 items-start justify-center w-full">
+                <div className="flex w-full flex-col items-start justify-center gap-3">
                   <h5 className="font-medium tracking-wide text-gray-700">
                     Comment
                   </h5>
                   <textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="border-2 border-gray-600 rounded-lg p-3 w-full"
+                    className="w-full rounded-lg border-2 border-gray-600 p-3"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="px-12 py-2 rounded-md shadow-md bg-gray-500 hover:bg-gray-600 text-white"
+                  className="rounded-md bg-gray-500 px-12 py-2 text-white shadow-md hover:bg-gray-600"
                 >
                   Save
                 </button>

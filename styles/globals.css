@@ -5,11 +5,11 @@
 @layer base {
   body,
   #main {
-    @apply w-screen min-h-screen overflow-x-hidden;
+    @apply min-h-screen w-screen overflow-x-hidden;
   }
 
   #main {
-    @apply flex relative;
+    @apply relative flex;
   }
 
   * {

@@ -110,12 +110,12 @@ const CreateEvent: NextPage = () => {
         <title>Create Event | CBT | Grand Regal School</title>
         <meta name="description" content="Event Registration | GRS CBT" />
       </Head>
-      <section className="flex items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 p-10 w-screen min-h-screen">
+      <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 p-10">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-7 rounded-3xl shadow-lg p-8 bg-white"
+          className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
         >
-          <h1 className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
             <span>Create an</span>{" "}
             <span className="text-violet-500">Event</span>
           </h1>
@@ -145,10 +145,10 @@ const CreateEvent: NextPage = () => {
             selected={selectedExam}
             handleChange={setSelectedExam}
           />
-          <div className="flex flex-col gap-2.5 w-full">
+          <div className="flex w-full flex-col gap-2.5">
             <label
               htmlFor="date"
-              className="text-sm text-gray-600 font-semibold"
+              className="text-sm font-semibold text-gray-600"
             >
               Event Date
             </label>
@@ -159,13 +159,13 @@ const CreateEvent: NextPage = () => {
               onChange={(e) => setDate(new Date(e.target.value))}
               min={format(addHours(new Date(), 1), "yyyy-MM-dd'T'HH:mm")}
               value={date === null ? "" : format(date, "yyyy-MM-dd'T'HH:mm")}
-              className="border rounded-md transition-shadow focus:ring-2 focus:ring-violet-400 focus:outline-none p-3 pl-5"
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-violet-400"
             />
           </div>
           <button
             type="submit"
             className={classNames(
-              "flex gap-4 items-center justify-center mt-3 py-2.5 px-3 rounded-md shadow-md text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
+              "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
                 "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500":
                   success === undefined,
@@ -177,10 +177,10 @@ const CreateEvent: NextPage = () => {
             )}
           >
             {loading === true && (
-              <LoadingIcon className="animate-spin w-5 h-5 stroke-white" />
+              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="w-5 h-5 fill-white" />}
-            {success === false && <XIcon className="w-5 h-5 fill-white" />}
+            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Event
           </button>
         </form>

@@ -7,7 +7,7 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
       <Dialog
         as="section"
         onClose={() => {}}
-        className="flex items-center justify-center fixed z-50 inset-0 h-screen w-full p-8 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex h-screen w-full items-center justify-center p-8 backdrop-blur-sm"
       >
         <Transition.Child
           as={Fragment}
@@ -18,7 +18,7 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="w-full h-full fixed z-[-1] inset-0 bg-black/30" />
+          <Dialog.Overlay className="fixed inset-0 z-[-1] h-full w-full bg-black/30" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -29,12 +29,12 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <div className="flex flex-col items-center gap-7 rounded-3xl shadow-lg p-12 bg-white w-full sm:w-[50rem]">
-            <Dialog.Title className="text-4xl text-gray-800 font-bold tracking-tight text-center pb-4">
+          <div className="flex w-full flex-col items-center gap-7 rounded-3xl bg-white p-12 shadow-lg sm:w-[50rem]">
+            <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
               <span>Loading</span> <span className="text-indigo-500">Exam</span>{" "}
               <span>🎲</span>
             </Dialog.Title>
-            <div className="w-16 h-16 rounded-full border-2 border-gray-200 animate-spin border-r-indigo-500" />
+            <div className="h-16 w-16 animate-spin rounded-full border-2 border-gray-200 border-r-indigo-500" />
           </div>
         </Transition.Child>
       </Dialog>
