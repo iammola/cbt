@@ -1,3 +1,3 @@
-export { default as ClassForm } from "./ClassForm";
-export { default as SessionForm } from "./SessionForm";
-export { default as SubjectForm } from "./SubjectForm";
+export { default as ClassForm } from "./Class";
+export { default as SessionForm } from "./Session";
+export { default as SubjectForm } from "./Subject";
