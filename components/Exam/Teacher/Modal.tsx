@@ -10,6 +10,7 @@ import type { TeacherExamModalProps, SelectOption } from "types";
 const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) => {
     const [{ account }] = useCookies(['account']);
     const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
+    const { data: currentSession } = useSWRImmutable('/api/sessions/current/', url => fetch(url).then(res => res.json()));
     const { data: classes, error } = useSWRImmutable(account !== undefined ? `/api/teachers/${account._id}/classes` : null, url => fetch(url ?? '').then(res => res.json()));
 
     const [duration, setDuration] = useState(0);
@@ -47,13 +48,15 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        if (selectedClass._id !== "" && selectedSubject._id !== "") {
+        if (selectedClass._id !== "" && selectedSubject._id !== "" && currentSession?.data) {
             onSubmit({
                 name: {
                     class: selectedClass.name,
                     subject: selectedSubject.name,
                 },
-                duration, subjectId: selectedSubject._id as any
+                duration,
+                subjectId: selectedSubject._id as any,
+                term: currentSession?.data.terms[0]._id,
             });
         }
     }
