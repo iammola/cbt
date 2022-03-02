@@ -5,6 +5,6 @@ module.exports = {
   trailingSlash: true,
   // swcMinify: true,
   images: {
-    domains: ["source.unsplash.com"]
-  }
-}
+    domains: ["source.unsplash.com"],
+  },
+};

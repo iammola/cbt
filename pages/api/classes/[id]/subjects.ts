@@ -5,64 +5,117 @@ import { connect } from "db";
 import { ClassModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
-import type { ClassSubjectGETData, ClassSubjectPOSTData } from "types/api/classes";
+import type {
+  ClassSubjectGETData,
+  ClassSubjectPOSTData,
+} from "types/api/classes";
 
-async function getSubjects(id: any, select: string): Promise<ServerResponse<ClassSubjectGETData>> {
-    await connect();
-    let [success, status, message]: ServerResponse<ClassSubjectGETData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+async function getSubjects(
+  id: any,
+  select: string
+): Promise<ServerResponse<ClassSubjectGETData>> {
+  await connect();
+  let [success, status, message]: ServerResponse<ClassSubjectGETData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
-    try {
-        const data = await SubjectsModel.findOne({ class: id }, { _id: 0, class: 0 }).lean();
-        [success, status, message] = [true, StatusCodes.OK, {
-            data,
-            message: ReasonPhrases.OK
-        }];
-    } catch (error: any) {
-        [status, message] = [StatusCodes.BAD_REQUEST, {
-            error: error.message,
-            message: ReasonPhrases.BAD_REQUEST
-        }];
-    }
+  try {
+    const data = await SubjectsModel.findOne(
+      { class: id },
+      { _id: 0, class: 0 }
+    ).lean();
+    [success, status, message] = [
+      true,
+      StatusCodes.OK,
+      {
+        data,
+        message: ReasonPhrases.OK,
+      },
+    ];
+  } catch (error: any) {
+    [status, message] = [
+      StatusCodes.BAD_REQUEST,
+      {
+        error: error.message,
+        message: ReasonPhrases.BAD_REQUEST,
+      },
+    ];
+  }
 
-    return [success, status, message];
+  return [success, status, message];
 }
 
-async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<ServerResponse<ClassSubjectPOSTData>> {
-    await connect();
-    let [success, status, message]: ServerResponse<ClassSubjectPOSTData> = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+async function createSubject(
+  id: any,
+  { name, alias }: SubjectRecord
+): Promise<ServerResponse<ClassSubjectPOSTData>> {
+  await connect();
+  let [success, status, message]: ServerResponse<ClassSubjectPOSTData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
-    try {
-        const data = await SubjectsModel.findOneAndUpdate({ class: id }, {
-            $push: { subjects: { name, alias } }
-        }, { runValidators: true, returnDocument: "after", upsert: !!(await ClassModel.exists({ _id: id })) }).lean();
+  try {
+    const data = await SubjectsModel.findOneAndUpdate(
+      { class: id },
+      {
+        $push: { subjects: { name, alias } },
+      },
+      {
+        runValidators: true,
+        returnDocument: "after",
+        upsert: !!(await ClassModel.exists({ _id: id })),
+      }
+    ).lean();
 
-        if (data === null) throw new Error('Class does not exist');
+    if (data === null) throw new Error("Class does not exist");
 
-        [success, status, message] = [true, StatusCodes.CREATED, {
-            data: { name, alias },
-            message: ReasonPhrases.CREATED
-        }];
-    } catch (error: any) {
-        [status, message] = [StatusCodes.BAD_REQUEST, {
-            error: error.message,
-            message: ReasonPhrases.BAD_REQUEST
-        }];
-    }
+    [success, status, message] = [
+      true,
+      StatusCodes.CREATED,
+      {
+        data: { name, alias },
+        message: ReasonPhrases.CREATED,
+      },
+    ];
+  } catch (error: any) {
+    [status, message] = [
+      StatusCodes.BAD_REQUEST,
+      {
+        error: error.message,
+        message: ReasonPhrases.BAD_REQUEST,
+      },
+    ];
+  }
 
-    return [success, status, message];
+  return [success, status, message];
 }
 
-export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
-    const { id, select } = query as { id: string; select: string };
-    let [success, status, message]: ServerResponse<ClassSubjectGETData | ClassSubjectPOSTData> = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
-    const allowedMethods = ["POST", "GET"];
+export default async function handler(
+  { method, query, body }: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { id, select } = query as { id: string; select: string };
+  let [success, status, message]: ServerResponse<
+    ClassSubjectGETData | ClassSubjectPOSTData
+  > = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
+  const allowedMethods = ["POST", "GET"];
 
-    if (allowedMethods.includes(method ?? '') === false) {
-        res.setHeader("Allow", allowedMethods);
-        [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-    } else[success, status, message] = await (method === "POST" ? createSubject(id, JSON.parse(body)) : getSubjects(id, select))
+  if (allowedMethods.includes(method ?? "") === false) {
+    res.setHeader("Allow", allowedMethods);
+    [status, message] = [
+      StatusCodes.METHOD_NOT_ALLOWED,
+      ReasonPhrases.METHOD_NOT_ALLOWED,
+    ];
+  } else
+    [success, status, message] = await (method === "POST"
+      ? createSubject(id, JSON.parse(body))
+      : getSubjects(id, select));
 
-    if (typeof message !== "object") message = { message, error: message };
+  if (typeof message !== "object") message = { message, error: message };
 
-    res.status(status).json({ success, ...message });
+  res.status(status).json({ success, ...message });
 }

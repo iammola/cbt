@@ -3,44 +3,35 @@ import { FunctionComponent } from "react";
 import { classNames } from "utils";
 
 const Badges: Badges = ({ className, text }) => {
-    return (
-        <span className={classNames("inline-block py-1 px-2.5 rounded-full text-xs font-medium", className)}>
-            {text}
-        </span>
-    )
-}
+  return (
+    <span
+      className={classNames(
+        "inline-block py-1 px-2.5 rounded-full text-xs font-medium",
+        className
+      )}
+    >
+      {text}
+    </span>
+  );
+};
 
 Badges.Beta = function Beta() {
-    return (
-        <Badges
-            text="Beta"
-            className="text-indigo-800 bg-indigo-50"
-        />
-    );
-}
+  return <Badges text="Beta" className="text-indigo-800 bg-indigo-50" />;
+};
 
 Badges.Soon = function Soon() {
-    return (
-        <Badges
-            text="Soon"
-            className="text-pink-800 bg-pink-50"
-        />
-    );
-}
+  return <Badges text="Soon" className="text-pink-800 bg-pink-50" />;
+};
 
 Badges.New = function New() {
-    return (
-        <Badges
-            text="New"
-            className="text-blue-800 bg-blue-50"
-        />
-    );
-}
+  return <Badges text="New" className="text-blue-800 bg-blue-50" />;
+};
 
-interface Badges extends FunctionComponent<{ className: string; text: string }> {
-    Beta: FunctionComponent;
-    Soon: FunctionComponent;
-    New: FunctionComponent;
+interface Badges
+  extends FunctionComponent<{ className: string; text: string }> {
+  Beta: FunctionComponent;
+  Soon: FunctionComponent;
+  New: FunctionComponent;
 }
 
 export default Badges;
