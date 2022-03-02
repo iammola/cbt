@@ -42,7 +42,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
         >
           <div className="m-2 flex w-[65vw] transform flex-col gap-10 overflow-hidden rounded-2xl bg-white py-10 px-11 shadow-xl transition-all lg:w-[42.5vw] xl:w-[35.5vw]">
             <Dialog.Title className="text-center text-4xl font-bold tracking-tight text-gray-900">
-              {forced === false ? (
+              {!forced ? (
                 <>
                   <span>
                     Are you sure you&apos;re <br /> ready to
@@ -60,7 +60,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
               )}
             </Dialog.Title>
             <div className="item-center mt-2 flex justify-center gap-6">
-              {forced === false && (
+              {!forced && (
                 <button
                   type="button"
                   onClick={close}
@@ -80,7 +80,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
                 )}
                 {success === 1 && <CheckIcon className="h-5 w-5 fill-white" />}
                 {success === 0 && <XIcon className="h-5 w-5 fill-white" />}
-                {forced === false ? <>Yes, I&apos;m ready</> : <>Submit Exam</>}
+                {!forced ? <>Yes, I&apos;m ready</> : <>Submit Exam</>}
               </button>
             </div>
           </div>

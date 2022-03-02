@@ -57,7 +57,7 @@ const WriteExam: NextPage = () => {
   const [success, setSuccess] = useState<"" | 0 | 1 | -1>("");
 
   useEffect(() => {
-    if (modified === true && firstLoad === false) {
+    if (modified && !firstLoad) {
       setCookies(
         "exam",
         JSON.stringify({
@@ -75,7 +75,7 @@ const WriteExam: NextPage = () => {
   }, [answered]);
 
   useEffect(() => {
-    if (firstLoad === true && started === true && exam !== undefined) {
+    if (firstLoad && started && exam !== undefined) {
       setFirstLoad(false);
 
       const obj = {
@@ -96,7 +96,7 @@ const WriteExam: NextPage = () => {
   useEffect(() => {
     const { answers, examId } = cookies.exam ?? { answers: {} };
     if (
-      firstLoad === true &&
+      firstLoad &&
       examId === router.query.id &&
       Object.keys(answers).length > 0
     ) {
@@ -123,7 +123,7 @@ const WriteExam: NextPage = () => {
       const result =
         (await res.json()) as ClientResponse<StudentResultPOSTData>;
 
-      if (result.success === true) {
+      if (result.success) {
         setSuccess(1);
         addNotification({
           timeout: 5e3,
@@ -215,14 +215,14 @@ const WriteExam: NextPage = () => {
                 instructions: exam.data.details.instructions,
               }
         }
-        show={exam === undefined || started === false}
+        show={exam === undefined || !started}
       />
       <Modal
-        show={submitting === true || forceSubmit === true}
+        show={submitting || forceSubmit}
         success={success}
         forced={forceSubmit}
         confirm={handleSubmit}
-        close={() => forceSubmit === false && setSubmitting(false)}
+        close={() => !forceSubmit && setSubmitting(false)}
       />
       {Notifications}
     </>

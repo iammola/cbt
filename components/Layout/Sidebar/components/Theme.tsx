@@ -42,8 +42,8 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
         className={classNames(
           "inline-block w-full pb-4 text-[0.6rem] font-semibold uppercase tracking-wider text-gray-400",
           {
-            "text-center": open === false,
-            "pl-5": open === true,
+            "text-center": !open,
+            "pl-5": open,
           }
         )}
       >
@@ -65,7 +65,7 @@ const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
             )}
             <span
               className={classNames("text-sm text-gray-800", {
-                hidden: open === false,
+                hidden: !open,
               })}
             >
               {label}

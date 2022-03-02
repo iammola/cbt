@@ -19,7 +19,7 @@ async function getExam(
   ];
 
   try {
-    if ((await TeacherModel.exists({ _id: teacherId })) === false)
+    if (!(await TeacherModel.exists({ _id: teacherId })))
       throw new Error("Teacher does not exist");
 
     const exam = await ExamModel.findById(examId, "-created -edited").lean();

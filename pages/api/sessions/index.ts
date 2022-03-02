@@ -51,7 +51,7 @@ async function createSession(
   ];
 
   try {
-    if (session.current === true)
+    if (session.current)
       await SessionModel.updateMany(
         { current: true },
         {
@@ -98,7 +98,7 @@ export default async function handler(
   ];
   const allowedMethods = ["POST", "GET"];
 
-  if (allowedMethods.includes(method ?? "") === false) {
+  if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [
       StatusCodes.METHOD_NOT_ALLOWED,

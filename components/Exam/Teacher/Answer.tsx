@@ -21,7 +21,7 @@ const Answer: FunctionComponent<TeacherAnswerProps> = ({
         className="hidden"
         checked={isCorrect ?? false}
         onChange={({ target: { checked } }) =>
-          handleChange({ isCorrect: checked === true ? true : undefined })
+          handleChange({ isCorrect: checked ? true : undefined })
         }
       />
       <label

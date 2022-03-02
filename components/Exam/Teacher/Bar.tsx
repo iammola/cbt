@@ -57,28 +57,26 @@ const Bar: FunctionComponent<TeacherBarProps> = ({
         type="button"
         onClick={() => save()}
         title={
-          modified === true
+          modified
             ? "Changes made. Don't forget to save"
-            : saved === true
+            : saved
             ? "No changes made."
             : ""
         }
         className="flex items-center justify-center gap-2 rounded-md bg-indigo-100 py-3 px-8 text-xs font-medium tracking-wider text-indigo-700 shadow-sm hover:bg-indigo-200"
       >
-        {modified === true && (
-          <span className="h-2 w-2 rounded-full bg-indigo-300" />
-        )}
-        {saved === true && <CheckIcon className="h-5 w-5 fill-indigo-700" />}
+        {modified && <span className="h-2 w-2 rounded-full bg-indigo-300" />}
+        {saved && <CheckIcon className="h-5 w-5 fill-indigo-700" />}
         Save
       </button>
       <button
         type="submit"
         className="flex items-center justify-center gap-2 rounded-md bg-indigo-500 py-3 px-8 text-xs font-medium tracking-wider text-white shadow-sm hover:bg-indigo-600"
       >
-        {uploading === true && (
+        {uploading && (
           <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
         )}
-        {uploaded === true && <CheckIcon className="h-5 w-5 fill-white" />}
+        {uploaded && <CheckIcon className="h-5 w-5 fill-white" />}
         Submit
       </button>
     </div>

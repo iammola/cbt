@@ -16,9 +16,7 @@ const Answer: FunctionComponent<StudentAnswerProps> = ({
         type="checkbox"
         className="hidden"
         checked={selected ?? false}
-        onChange={({ target: { checked } }) =>
-          checked === true && handleSelect(_id)
-        }
+        onChange={({ target: { checked } }) => checked && handleSelect(_id)}
       />
       <label
         htmlFor={_id.toString()}

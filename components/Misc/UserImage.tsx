@@ -11,7 +11,7 @@ const UserImage: FunctionComponent<UserImageProps> = ({
 }) => {
   const [error, setError] = useState(false);
 
-  return error === false && Boolean(props.src) === true ? (
+  return !error && props.src ? (
     <Image
       {...props}
       alt={props.alt ?? ""}

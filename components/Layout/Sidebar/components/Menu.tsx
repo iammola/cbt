@@ -13,15 +13,15 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
   return (
     <nav
       className={classNames("w-full grow", {
-        "px-5": open === true,
-        "px-1 sm:px-4": open === false,
+        "px-5": open,
+        "px-1 sm:px-4": !open,
       })}
     >
       <span
         className={classNames(
           "inline-block w-full pb-4 text-[0.6rem] font-semibold uppercase tracking-wider text-gray-400",
           {
-            "text-center": open === false,
+            "text-center": !open,
           }
         )}
       >
@@ -35,20 +35,20 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 className={classNames(
                   "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                   {
-                    "justify-start pr-3": open === true,
-                    "justify-center sm:py-3": open === false,
+                    "justify-start pr-3": open,
+                    "justify-center sm:py-3": !open,
                   }
                 )}
               >
                 <HomeIcon
                   className={classNames("h-6 w-6 shrink-0", {
-                    "ml-3": open === true,
+                    "ml-3": open,
                   })}
                 />
                 <span
                   className={classNames("truncate text-sm", {
-                    hidden: open === false,
-                    block: open === true,
+                    hidden: !open,
+                    block: open,
                   })}
                 >
                   Dashboard
@@ -66,20 +66,20 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   className={classNames(
                     "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                     {
-                      "justify-start pr-3": open === true,
-                      "justify-center": open === false,
+                      "justify-start pr-3": open,
+                      "justify-center": !open,
                     }
                   )}
                 >
                   <FileTextIcon
                     className={classNames("h-6 w-6 shrink-0", {
-                      "ml-3": open === true,
+                      "ml-3": open,
                     })}
                   />
                   <span
                     className={classNames("truncate text-sm", {
-                      hidden: open === false,
-                      block: open === true,
+                      hidden: !open,
+                      block: open,
                     })}
                   >
                     Exams
@@ -88,13 +88,13 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     className={classNames(
                       "ml-auto h-5 w-5 shrink-0 text-gray-600",
                       {
-                        hidden: open === false,
+                        hidden: !open,
                       }
                     )}
                   />
                 </div>
               </MenuItem.Main>
-              {open === true ? (
+              {open ? (
                 <MenuItem.List expand={expand}>
                   <li className="w-full">
                     <Link href="/exams/create/">
@@ -149,20 +149,20 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   className={classNames(
                     "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                     {
-                      "justify-start pr-3": open === true,
-                      "justify-center": open === false,
+                      "justify-start pr-3": open,
+                      "justify-center": !open,
                     }
                   )}
                 >
                   <DesktopComputerIcon
                     className={classNames("h-6 w-6 shrink-0", {
-                      "ml-3": open === true,
+                      "ml-3": open,
                     })}
                   />
                   <span
                     className={classNames("truncate text-sm", {
-                      hidden: open === false,
-                      block: open === true,
+                      hidden: !open,
+                      block: open,
                     })}
                   >
                     Results
@@ -171,13 +171,13 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     className={classNames(
                       "ml-auto h-5 w-5 shrink-0 text-gray-600",
                       {
-                        hidden: open === false,
+                        hidden: !open,
                       }
                     )}
                   />
                 </div>
               </MenuItem.Main>
-              {open === true ? (
+              {open ? (
                 <MenuItem.List expand={expand}>
                   <li className="w-full">
                     <Link href="/results/cbt">
@@ -266,20 +266,20 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                 className={classNames(
                   "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
                   {
-                    "justify-start pr-3": open === true,
-                    "justify-center sm:py-3": open === false,
+                    "justify-start pr-3": open,
+                    "justify-center sm:py-3": !open,
                   }
                 )}
               >
                 <CalendarIcon
                   className={classNames("h-6 w-6 shrink-0", {
-                    "ml-3": open === true,
+                    "ml-3": open,
                   })}
                 />
                 <span
                   className={classNames("truncate text-sm", {
-                    hidden: open === false,
-                    block: open === true,
+                    hidden: !open,
+                    block: open,
                   })}
                 >
                   Calendar

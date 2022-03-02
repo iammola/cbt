@@ -93,8 +93,7 @@ const CreateTeachers: NextPage = () => {
               return {
                 _id: _id.toString(),
                 name,
-                subjects:
-                  result.success === true ? result.data?.subjects ?? [] : [],
+                subjects: result.success ? result.data?.subjects ?? [] : [],
               };
             }
           )
@@ -125,7 +124,7 @@ const CreateTeachers: NextPage = () => {
 
       setSuccess(success);
 
-      if (success === true) {
+      if (success) {
         addNotification({
           timeout: 75e2,
           message: `Success... ${name.first}'s code is ${data.code}`,
@@ -294,7 +293,7 @@ const CreateTeachers: NextPage = () => {
                           }}
                           onChange={(e) =>
                             setSelectedSubjects(
-                              e.target.checked === true
+                              e.target.checked
                                 ? {
                                     ...selectedSubjects,
                                     [classID]: subjects.map(({ _id }) =>
@@ -327,7 +326,7 @@ const CreateTeachers: NextPage = () => {
                               _id.toString()
                             )}
                             onChange={({ target: { checked } }) => {
-                              checked === true
+                              checked
                                 ? setSelectedSubjects({
                                     ...selectedSubjects,
                                     [classID]: [
@@ -372,16 +371,16 @@ const CreateTeachers: NextPage = () => {
                 "bg-pink-400 hover:bg-pink-500 focus:ring-pink-500":
                   success === undefined,
                 "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success === true,
+                  success,
                 "bg-red-400 hover:bg-red-500 focus:ring-red-500":
                   success === false,
               }
             )}
           >
-            {loading === true && (
+            {loading && (
               <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Profile
           </button>

@@ -53,7 +53,7 @@ const Result: NextPage = () => {
       setData((data) => ({
         ...data,
         session: { _id, name },
-        term: terms.find((term) => term.current === true),
+        term: terms.find((term) => term.current),
       }));
     }
   }, [data, session]);
@@ -64,7 +64,7 @@ const Result: NextPage = () => {
         const res = await fetch(`/api/classes/${id}/?select=name`);
         const result = (await res.json()) as ClientResponse<ClassGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           if (result.data !== null)
             setData((data) => ({
               ...data,
@@ -104,7 +104,7 @@ const Result: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<ClassResultSettingsGETData>;
 
-        if (result.success === true)
+        if (result.success)
           setData((data) => ({
             ...data,
             template: result.data,
@@ -126,7 +126,7 @@ const Result: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<StudentSubjectsGETData>;
 
-        if (result.success === true)
+        if (result.success)
           setData((data) => ({
             ...data,
             subjects: result.data,
@@ -148,7 +148,7 @@ const Result: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<StudentResultGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           const { data: scores, comments } = result.data;
           setData((data) => ({ ...data, scores, comments }));
           setTotal(
@@ -175,7 +175,7 @@ const Result: NextPage = () => {
         const res = await fetch(`/api/classes/${id}/results/stats/`);
         const result = (await res.json()) as ClientResponse<ClassResultGETData>;
 
-        if (result.success === true)
+        if (result.success)
           setData((data) => ({ ...data, stats: result.data }));
         else throw new Error(result.error);
       } catch (error) {

@@ -61,7 +61,7 @@ const ResultsPicker: NextPage = () => {
           const result =
             (await res.json()) as ClientResponse<ClassStudentsGETData>;
 
-          if (result.success === true)
+          if (result.success)
             setStudents((students) => [
               ...students.filter((j) => j.class !== _id),
               {
@@ -83,7 +83,7 @@ const ResultsPicker: NextPage = () => {
         <title>Results Picker | Portal | Grand Regal School</title>
         <meta name="description" content="Results | GRS Portal" />
       </Head>
-      {advanced === true && (
+      {advanced && (
         <>
           <h3 className="text-5xl font-bold tracking-wide text-gray-800">
             Load results for all students in a class

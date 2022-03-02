@@ -79,7 +79,7 @@ const CreateStudents: NextPage = () => {
 
       setSuccess(success);
 
-      if (success === true) {
+      if (success) {
         setName({});
         setEmail("");
         setSubjects([]);
@@ -125,7 +125,7 @@ const CreateStudents: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<ClassSubjectGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           setSubjects(result.data?.subjects ?? []);
           setSubjectsLoadingState(undefined);
         } else throw new Error(result.error);
@@ -306,9 +306,7 @@ const CreateStudents: NextPage = () => {
                     }}
                     onChange={(e) =>
                       setSelectedSubjects(
-                        e.target.checked === true
-                          ? subjects.map(({ _id }) => _id)
-                          : []
+                        e.target.checked ? subjects.map(({ _id }) => _id) : []
                       )
                     }
                   />
@@ -325,7 +323,7 @@ const CreateStudents: NextPage = () => {
                     className="accent-indigo-500"
                     checked={selectedSubjects.includes(_id)}
                     onChange={({ target: { checked } }) =>
-                      checked === true
+                      checked
                         ? setSelectedSubjects([...selectedSubjects, _id])
                         : setSelectedSubjects(
                             selectedSubjects.filter(
@@ -345,7 +343,7 @@ const CreateStudents: NextPage = () => {
                     : classes !== undefined && "Select a class ⬆️")}
                 {subjectsLoadingState === false &&
                   "Error loading subjects. Change selected class to retry"}
-                {subjectsLoadingState === true &&
+                {subjectsLoadingState &&
                   `Loading ${selectedClass.name}'s subjects...`}
               </div>
             </div>
@@ -358,16 +356,16 @@ const CreateStudents: NextPage = () => {
                 "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
                   success === undefined,
                 "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success === true,
+                  success,
                 "bg-red-400 hover:bg-red-500 focus:ring-red-500":
                   success === false,
               }
             )}
           >
-            {loading === true && (
+            {loading && (
               <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Profile
           </button>

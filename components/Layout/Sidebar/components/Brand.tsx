@@ -10,7 +10,7 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
     <div
       className={classNames("flex w-full items-center gap-3", {
         "justify-start py-3 pl-5 pr-4": open,
-        "justify-center p-3": open === false,
+        "justify-center p-3": !open,
       })}
     >
       <div className="relative h-9 w-9 shrink-0">
@@ -24,7 +24,7 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
       </div>
       <span
         className={classNames("tracking-wider", {
-          hidden: open === false,
+          hidden: open,
         })}
       >
         Grand Regal School

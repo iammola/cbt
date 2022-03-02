@@ -14,7 +14,7 @@ export function classNames(
       acc.push(
         Object.keys(
           Object.fromEntries(
-            Object.entries(obj ?? {}).filter((i) => Boolean(i[1]) === true)
+            Object.entries(obj ?? {}).filter((i) => Boolean(i[1]))
           )
         ).join(" ")
       );

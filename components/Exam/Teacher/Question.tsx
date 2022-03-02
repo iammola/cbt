@@ -50,7 +50,7 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({
                       : {
                           ...value,
                           isCorrect:
-                            answer.isCorrect === true &&
+                            answer.isCorrect &&
                             record.type === "Multiple choice"
                               ? undefined
                               : value.isCorrect,

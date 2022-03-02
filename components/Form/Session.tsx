@@ -25,7 +25,7 @@ const SessionForm: FunctionComponent = () => {
 
       setSuccess(success);
 
-      if (success === true) {
+      if (success) {
         setName("");
         setAlias("");
         setCurrent(false);
@@ -95,15 +95,15 @@ const SessionForm: FunctionComponent = () => {
             "bg-amber-400 hover:bg-amber-500 focus:ring-amber-500":
               success === undefined,
             "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-              success === true,
+              success,
             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
           }
         )}
       >
-        {loading === true && (
+        {loading && (
           <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
         )}
-        {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+        {success && <CheckIcon className="h-5 w-5 fill-white" />}
         {success === false && <XIcon className="h-5 w-5 fill-white" />}
         Create Session
       </button>

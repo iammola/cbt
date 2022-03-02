@@ -56,7 +56,7 @@ const Comments: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<ClassStudentsGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           setStudents(result.data);
           setSelectedStudent({ _id: "", name: "Select student" });
         } else throw new Error(result.error);
@@ -78,7 +78,7 @@ const Comments: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<StudentCommentGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           setLoadedStudent(selectedStudent.name);
           setComment(result.data?.comments ?? "");
         } else throw new Error(result.error);
@@ -99,7 +99,7 @@ const Comments: NextPage = () => {
       const result =
         (await res.json()) as ClientResponse<StudentCommentPOSTData>;
 
-      if (result.success === true) alert("Done");
+      if (result.success) alert("Done");
       else throw new Error(result.error);
     } catch (error: any) {
       console.error({ error });

@@ -20,7 +20,7 @@ const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
       className={classNames(
         "flex content-start items-start justify-start gap-x-5 gap-y-3",
         {
-          hidden: show === false,
+          hidden: !show,
         }
       )}
     >

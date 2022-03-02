@@ -19,7 +19,7 @@ const Grid: FunctionComponent<StudentGridProps> = ({ questions }) => {
             )}
           >
             {++i}
-            {answered === true && (
+            {answered && (
               <span
                 aria-label={`Question ${i} answered`}
                 className={classNames(

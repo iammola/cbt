@@ -54,7 +54,7 @@ const Results: NextPage = () => {
         const res = await fetch(`/api/classes/${_id}/exams`);
         const result = (await res.json()) as ClientResponse<ClassExamGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           setExams(result.data.exams);
           setSelectedExam({ _id: "", name: "Select exam" });
         } else throw new Error(result.error);
@@ -75,7 +75,7 @@ const Results: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<TeacherCBTResultsGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           setResults(result.data);
         } else throw new Error(result.error);
       } catch (error: any) {

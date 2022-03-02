@@ -68,7 +68,7 @@ const Results: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<ClassSubjectGETData>;
 
-        if (result.success === true) {
+        if (result.success) {
           setSubjects(result.data?.subjects ?? []);
           setSelectedSubject({
             _id: "",
@@ -187,7 +187,7 @@ const Results: NextPage = () => {
               (await res.json()) as RouteData<StudentResultSubjectPOSTData>;
 
             removeNotifications(notificationId);
-            if (result?.data.ok === true) {
+            if (result?.data.ok) {
               addNotifications({
                 timeout: 1e3,
                 Icon: () => <></>,
@@ -338,7 +338,7 @@ const Results: NextPage = () => {
                                 key={field.alias}
                                 className="whitespace-nowrap p-2"
                               >
-                                {forceTotal === false ? (
+                                {!forceTotal ? (
                                   <input
                                     min={0}
                                     step={0.1}
@@ -362,10 +362,9 @@ const Results: NextPage = () => {
                                               _id === student
                                                 ? undefined
                                                 : total,
-                                            modified:
-                                              modified === false
-                                                ? student === _id
-                                                : modified,
+                                            modified: !modified
+                                              ? student === _id
+                                              : modified,
                                             scores: settings.fields
                                               .map((scoreField) => ({
                                                 fieldId: scoreField._id,
@@ -397,7 +396,7 @@ const Results: NextPage = () => {
                                         data: string;
                                       }
                                     ) =>
-                                      /\d|\./.test(e.data) === false &&
+                                      !/\d|\./.test(e.data) &&
                                       e.preventDefault()
                                     }
                                   />
@@ -416,7 +415,7 @@ const Results: NextPage = () => {
                               }
                               className="whitespace-nowrap px-6 py-4 text-center text-sm"
                             >
-                              {forceTotal === false ? (
+                              {!forceTotal ? (
                                 (() => {
                                   const total =
                                     studentScores?.reduce(
@@ -469,10 +468,9 @@ const Results: NextPage = () => {
                                             student === _id
                                               ? +e.target.value
                                               : total,
-                                          modified:
-                                            modified === false
-                                              ? student === _id
-                                              : modified,
+                                          modified: !modified
+                                            ? student === _id
+                                            : modified,
                                         })
                                       )
                                     )
@@ -482,8 +480,7 @@ const Results: NextPage = () => {
                                       data: string;
                                     }
                                   ) =>
-                                    /\d|\./.test(e.data) === false &&
-                                    e.preventDefault()
+                                    !/\d|\./.test(e.data) && e.preventDefault()
                                   }
                                 />
                               )}

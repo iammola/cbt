@@ -83,7 +83,7 @@ const Select: FunctionComponent<SelectProps> = ({
                         >
                           {option.name}
                         </span>
-                        {selected === true && (
+                        {selected && (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                             <CheckIcon
                               aria-hidden="true"

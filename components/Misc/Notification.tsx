@@ -34,7 +34,7 @@ export function useNotifications(): NotificationsHook {
   };
 
   const removeNotification = (idx: number, ext: boolean = false) => {
-    if (ext === true)
+    if (ext)
       setNotifications((notifications) =>
         notifications.map((item) =>
           item.id === idx ? { ...item, out: true } : item

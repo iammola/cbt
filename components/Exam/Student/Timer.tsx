@@ -27,7 +27,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({
   const [timeLeft, setTimeLeft] = useState(timeBounds?.left ?? 0);
 
   useEffect(() => {
-    if (started === true && (timeBounds === undefined || displayTime === "")) {
+    if (started && (timeBounds === undefined || displayTime === "")) {
       const obj = {
         start: Date.now(),
         examId: router.query.id as string,
@@ -43,7 +43,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({
   }, [displayTime, router.query.id, setCookies, started, timeBounds, timeout]);
 
   useEffect(() => {
-    if (started === true && (timeBounds?.left ?? 0) > 0)
+    if (started && (timeBounds?.left ?? 0) > 0)
       setDisplay(
         `${formatDuration(
           intervalToDuration({
@@ -62,7 +62,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({
       setDisplay("Time's up!! 🙅‍♂️");
     }
 
-    if (started === true && timeBounds !== undefined) {
+    if (started && timeBounds !== undefined) {
       if (timeLeft > 0) {
         const timer = setInterval(() => {
           if (timeLeft === 1e3) setTimeout(timeUp, 1e3, timer);

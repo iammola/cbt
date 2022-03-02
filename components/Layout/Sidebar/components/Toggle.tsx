@@ -13,7 +13,7 @@ const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
         "absolute top-8 z-50 cursor-pointer rounded-full bg-white p-1 drop-shadow-sm transition-transform hover:scale-105",
         {
           "right-8 sm:-right-4": open,
-          "-right-12": open === false,
+          "-right-12": !open,
         }
       )}
     >
@@ -22,9 +22,7 @@ const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
           "hidden rotate-180 sm:block": open,
         })}
       />
-      {open === true && (
-        <XIcon className="block h-5 w-5 fill-gray-600 sm:hidden" />
-      )}
+      {open && <XIcon className="block h-5 w-5 fill-gray-600 sm:hidden" />}
     </div>
   );
 };

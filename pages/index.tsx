@@ -79,7 +79,7 @@ const Home: NextPage = () => {
       const result = (await res.json()) as ClientResponse<LoginData>;
 
       setSuccess(result.success);
-      if (result.success === true) {
+      if (result.success) {
         removeCookies("exam", { path: "/" });
         removeCookies("timeBounds", { path: "/" });
         setTimeout(
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
     } catch (error: any) {
       setActive(0);
       setCode(Array.from({ length: 6 }));
-      if (navigator.onLine === false) setTimeout(handleOnline, 1e3);
+      if (!navigator.onLine) setTimeout(handleOnline, 1e3);
       addNotification({
         message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
         timeout: 5e3,
@@ -120,14 +120,14 @@ const Home: NextPage = () => {
   const handleOnline = useCallback(() => {
     let lastId = online.i;
 
-    if (online.o === false && navigator.onLine === true)
+    if (!online.o && navigator.onLine)
       lastId = addNotification({
         message: "Back Online. 💯",
         timeout: 75e2,
         Icon: () => StatusOnlineIcon({ className: "w-6 h-6 stroke-blue-600" }),
       })[0];
 
-    if (online.o === true && navigator.onLine === false)
+    if (online.o && !navigator.onLine)
       lastId = addNotification({
         message: "Offline!! Its that bad huh? 🤷‍♂️",
         timeout: 15e3,
@@ -203,16 +203,16 @@ const Home: NextPage = () => {
                 "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
                   success === undefined,
                 "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success === true,
+                  success,
                 "bg-red-400 hover:bg-red-500 focus:ring-red-500":
                   success === false,
               }
             )}
           >
-            {loading === true && (
+            {loading && (
               <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
             )}
-            {success === true && <CheckIcon className="h-5 w-5 fill-white" />}
+            {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Log In
           </button>
@@ -267,13 +267,13 @@ const Input: FunctionComponent<InputProps> = ({
   }
 
   useEffect(() => {
-    if (focus === true) ref.current?.focus();
+    if (focus) ref.current?.focus();
   }, [focus]);
 
   function validateCharacter(
     e: FormEvent<HTMLInputElement> & { data: string }
   ) {
-    if (/\d/.test(e.data) === false) e.preventDefault();
+    if (!/\d/.test(e.data)) e.preventDefault();
   }
 
   return (

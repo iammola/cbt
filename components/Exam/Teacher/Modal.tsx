@@ -62,7 +62,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
         );
         const { success, data, error } = await res.json();
 
-        if (success === true) {
+        if (success) {
           setSubjects(data.subjects);
           setSelectedSubject({ _id: "", name: "Select subject" });
         } else throw new Error(error);
@@ -125,7 +125,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
             className="flex w-full flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg sm:w-[30rem]"
           >
             <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-              <span>{isEdit === true ? "Edit" : "Create"} an</span>{" "}
+              <span>{isEdit ? "Edit" : "Create"} an</span>{" "}
               <span className="text-indigo-500">Exam</span> <span>🚀</span>
             </Dialog.Title>
             <Select

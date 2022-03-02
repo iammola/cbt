@@ -135,7 +135,7 @@ export default async function handler(
   ];
   const allowedMethods = ["GET", "POST"];
 
-  if (allowedMethods.includes(method ?? "") === false) {
+  if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [
       StatusCodes.METHOD_NOT_ALLOWED,

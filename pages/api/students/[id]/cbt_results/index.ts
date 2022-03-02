@@ -32,7 +32,7 @@ async function createResult(
   ];
 
   try {
-    if ((await StudentModel.exists({ _id: id })) === false)
+    if (!(await StudentModel.exists({ _id: id })))
       throw new Error("Student does not exist");
     const exam = await ExamModel.findById(
       result.examId,
@@ -179,7 +179,7 @@ export default async function handler(
   ];
   const allowedMethods = ["POST", "GET"];
 
-  if (allowedMethods.includes(method ?? "") === false) {
+  if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [
       StatusCodes.METHOD_NOT_ALLOWED,

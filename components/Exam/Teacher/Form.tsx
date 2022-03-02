@@ -68,7 +68,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
   }, [data]);
 
   function saveExam(obj?: { [key: string]: any }) {
-    if (exam !== undefined && examState.modified === true) {
+    if (exam !== undefined && examState.modified) {
       setCookies(
         "savedExams",
         JSON.stringify(
@@ -124,7 +124,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
 
         setExamState({ ...examState, uploaded: success });
 
-        if (success === true) {
+        if (success) {
           setTimeout(router.reload, 35e2);
           addNotification({
             message: "Upload Success... Reloading",
@@ -274,7 +274,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
           setExamState({ ...examState, details: true });
         }}
         isEdit={!!router.query.id}
-        open={exam === undefined || examState.details === false}
+        open={exam === undefined || !examState.details}
       />
       {Notifications}
     </>

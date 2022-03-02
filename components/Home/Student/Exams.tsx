@@ -29,13 +29,13 @@ const Exam: FunctionComponent<{
       setExams(
         data.data.map((exam) => ({
           ...exam,
-          locked: isPast(new Date(exam.date)) === false,
+          locked: !isPast(new Date(exam.date)),
         }))
       );
   }, [data]);
 
   useEffect(() => {
-    if (firstLoad === true && data === undefined) {
+    if (firstLoad && data === undefined) {
       setFirstLoad(false);
       setNotification(
         addNotification({
@@ -55,7 +55,7 @@ const Exam: FunctionComponent<{
       className={classNames(
         "flex content-start items-start justify-start gap-x-5 gap-y-3",
         {
-          hidden: show === false,
+          hidden: !show,
         }
       )}
     >

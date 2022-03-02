@@ -79,7 +79,7 @@ const CreateScheme: NextPage = () => {
       ? "Duplicate scheme description found"
       : new Set(limit).size !== limit.length
       ? "Duplicate scheme limit found"
-      : limit.includes(100) === false
+      : !limit.includes(100)
       ? "100 limit scheme not found"
       : undefined;
   }
@@ -116,7 +116,7 @@ const CreateScheme: NextPage = () => {
         const result =
           (await res.json()) as ClientResponse<ClassResultSettingsPOSTData>;
 
-        if (result.success === true)
+        if (result.success)
           addNotifications({
             timeout: 5e3,
             message: "Success",

@@ -22,7 +22,7 @@ async function createEvent({
   ];
 
   try {
-    if ((await ExamModel.exists({ _id: examId })) === false)
+    if (!(await ExamModel.exists({ _id: examId })))
       throw new Error("Invalid Exam ID");
     const data = await EventModel.findOneAndUpdate(
       { from: date },
@@ -116,7 +116,7 @@ export default async function handler(
   ];
   const allowedMethods = ["POST", "GET"];
 
-  if (allowedMethods.includes(method ?? "") === false) {
+  if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [
       StatusCodes.METHOD_NOT_ALLOWED,
