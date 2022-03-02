@@ -20,9 +20,7 @@ const Answer: FunctionComponent<TeacherAnswerProps> = ({
         type="checkbox"
         className="hidden"
         checked={isCorrect ?? false}
-        onChange={({ target: { checked } }) =>
-          handleChange({ isCorrect: checked ? true : undefined })
-        }
+        onChange={(e) => handleChange({ isCorrect: e.target.checked })}
       />
       <label
         htmlFor={id}

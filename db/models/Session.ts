@@ -18,6 +18,7 @@ const SessionSchema = new Schema<SessionRecord>({
   current: {
     type: Boolean,
     default: undefined,
+    set: (e?: boolean) => (e === false ? undefined : true),
   },
   terms: [
     {
@@ -33,6 +34,7 @@ const SessionSchema = new Schema<SessionRecord>({
         current: {
           type: Boolean,
           default: undefined,
+          set: (e?: boolean) => (!e ? undefined : true),
         },
       },
       default: undefined,

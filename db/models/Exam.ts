@@ -21,6 +21,7 @@ const AnswerSchema = new Schema<AnswerRecord>({
   isCorrect: {
     type: Boolean,
     default: undefined,
+    set: (e?: boolean) => (e === false ? undefined : true),
   },
   answer: {
     type: String,
