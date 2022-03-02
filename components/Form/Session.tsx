@@ -73,9 +73,12 @@ const SessionForm: FunctionComponent = () => {
         />
       </div>
       <div className="flex w-full min-w-[20rem]">
-        <label htmlFor="current" className="flex w-full items-center gap-3 p-2">
+        <label
+          htmlFor="currentSession"
+          className="flex w-full items-center gap-3 p-2"
+        >
           <input
-            id="current"
+            id="currentSession"
             type="checkbox"
             checked={current}
             className="accent-amber-500"
