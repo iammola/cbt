@@ -1,7 +1,6 @@
-import type { NextPage } from "next";
 import { useSWRConfig } from "swr";
-import { FormEvent, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
+import { FormEvent, FunctionComponent, useState } from "react";
 
 import { classNames } from "utils";
 import { LoadingIcon } from "components/Misc/Icons";
@@ -9,7 +8,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import type { ClientResponse } from "types";
 import type { ClassesPOSTData } from "types/api/classes";
 
-const ClassForm: NextPage = () => {
+const ClassForm: FunctionComponent = () => {
   const { mutate } = useSWRConfig();
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
