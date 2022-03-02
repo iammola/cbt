@@ -19,6 +19,19 @@ async function createTerm(
   ];
 
   try {
+    if (term.current) {
+      const updateSession = SessionModel.updateMany(
+        { current: true, _id: { $ne: id } },
+        { $unset: { current: "" } }
+      );
+      const updateTerm = SessionModel.updateMany(
+        { "terms.current": true },
+        { $unset: { "terms.$[i].current": "" } },
+        { arrayFilters: [{ "i.current": true }] }
+      );
+      await Promise.all([updateSession, updateTerm]);
+    }
+
     const data = await SessionModel.findByIdAndUpdate(
       id,
       { $push: { terms: term } },
