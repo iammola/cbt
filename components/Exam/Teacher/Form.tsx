@@ -19,9 +19,9 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData; }> = ({ data }) => {
         type: "Multiple choice",
         answers: [{ answer: "", isCorrect: true }, { answer: "" }],
     }), []);
-    const [exam, setExam] = useState<Omit<TeacherExamGETData['details'], 'instructions'>>();
-    const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
     const [instructions, setInstructions] = useState(['Answer all questions', '']);
+    const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
+    const [exam, setExam] = useState<Omit<TeacherExamGETData['details'], 'instructions'> & { term: string; }>();
 
     const [examState, setExamState] = useState({ details: true, modified: false, saved: false, uploaded: false, uploading: false });
 
