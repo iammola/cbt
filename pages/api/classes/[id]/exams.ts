@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, SubjectsModel } from "db/models";
+import { ExamModel, SessionModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { ClassExamGETData } from "types/api/classes";
@@ -18,14 +18,23 @@ async function getExams(
   ];
 
   try {
-    const data = await SubjectsModel.findOne(
-      { class: classId },
-      "-subjects.teachers"
-    ).lean();
+    const [currentSession, data] = await Promise.all([
+      SessionModel.findOne(
+        { "terms.current": true },
+        { "terms._id.$": true }
+      ).lean(),
+      SubjectsModel.findOne({ class: classId }, "-subjects.teachers").lean(),
+    ]);
+
     if (data === null) throw new Error("Class does not exist");
+    if (currentSession === null)
+      throw new Error("Current Session does not exist");
 
     const examsRecord = await ExamModel.find(
-      { subjectId: data.subjects.map(({ _id }) => _id) },
+      {
+        termId: currentSession.terms[0]._id,
+        subjectId: data.subjects.map(({ _id }) => _id),
+      },
       "subjectId"
     ).lean();
     const exams = examsRecord.map(({ _id, subjectId }) => {

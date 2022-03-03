@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, SubjectsModel } from "db/models";
+import { ExamModel, SessionModel, SubjectsModel } from "db/models";
 
 import type { TeacherExamsGETData } from "types/api/teachers";
 import type { ExamRecord, ServerResponse, SubjectsRecord } from "types";
@@ -16,10 +16,15 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
   ];
 
   try {
+    const currentSession = await SessionModel.findOne(
+      { "terms.current": true },
+      { "terms._id.$": true }
+    ).lean();
     const exam: (Omit<ExamRecord, "created"> &
       Pick<ExamRecord<true>, "created">)[] = await ExamModel.find(
       {
-        /* "created.by": id */
+        "created.by": id,
+        termId: currentSession?.terms[0]._id,
       },
       "-instructions -edited"
     )
