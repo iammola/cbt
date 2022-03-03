@@ -77,6 +77,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
             [exam.subjectId.toString()]: {
               exam,
               questions,
+              instructions,
               lastSaved: new Date(),
             } as SavedExam,
           }
@@ -292,6 +293,7 @@ type ExamDetails = Omit<TeacherExamGETData["details"], "instructions"> & {
 type SavedExam = {
   lastSaved: Date;
   exam: ExamDetails;
+  instructions: string[];
   questions: CreateQuestion[];
 };
 
