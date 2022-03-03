@@ -29,7 +29,7 @@ export type TeacherExamGETData = RecordId & {
       class: string;
       subject: string;
     };
-    term: string;
+    termId: string;
   };
 };
 

@@ -89,7 +89,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
         },
         duration,
         subjectId: selectedSubject._id as any,
-        term: currentSession?.data.terms[0]._id,
+        termId: currentSession?.data.terms[0]._id,
       });
     }
   }

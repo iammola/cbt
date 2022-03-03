@@ -54,7 +54,7 @@ async function getExam(
           _id: examId,
           questions,
           details: {
-            term: termId.toHexString(),
+            termId: termId.toHexString(),
             duration,
             subjectId,
             instructions,

@@ -77,7 +77,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
 
     if (savedExams) {
       const saved = savedExams[exam.subjectId.toString()];
-      if (saved.exam.term === exam.term) {
+      if (saved.exam.termId === exam.termId) {
         const decision = confirm(
           `Do you want to restore the questions saved on ${format(
             new Date(saved.lastSaved),
@@ -317,7 +317,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
 type Cookies = Partial<{ savedExams: Record<string, SavedExam> }>;
 
 type ExamDetails = Omit<TeacherExamGETData["details"], "instructions"> & {
-  term: string;
+  termId: string;
 };
 
 type SavedExam = {
