@@ -91,7 +91,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         addNotification({
           message: "Saved Locally",
           timeout: 3e3,
-          Icon: () => BellIcon({ className: "w-6 h-6 stroke-blue-700" }),
+          Icon: () => <BellIcon className="h-6 w-6 stroke-blue-700" />,
         });
       setExamState({ ...examState, modified: false, saved: true });
     }
@@ -129,8 +129,9 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
           addNotification({
             message: "Upload Success... Reloading",
             timeout: 3e3,
-            Icon: () =>
-              CheckCircleIcon({ className: "w-6 h-6 stroke-emerald-700" }),
+            Icon: () => (
+              <CheckCircleIcon className="h-6 w-6 stroke-emerald-700" />
+            ),
           });
           if (savedExams !== undefined)
             saveExam(
@@ -146,13 +147,14 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         addNotification({
           message: "Upload Failed... Try again",
           timeout: 5e3,
-          Icon: () => XCircleIcon({ className: "w-6 h-6 stroke-red-700" }),
+          Icon: () => <XCircleIcon className="h-6 w-6 stroke-red-700" />,
         });
         setTimeout(addNotification, 1e3, {
           message: error.message,
           timeout: 5e3,
-          Icon: () =>
-            ExclamationCircleIcon({ className: "w-6 h-6 stroke-red-700" }),
+          Icon: () => (
+            <ExclamationCircleIcon className="h-6 w-6 stroke-red-700" />
+          ),
         });
         console.error(error);
       }

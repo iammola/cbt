@@ -128,7 +128,7 @@ const CreateTeachers: NextPage = () => {
         addNotification({
           timeout: 75e2,
           message: `Success... ${name.first}'s code is ${data.code}`,
-          Icon: () => BriefcaseIcon({ className: "w-5 h-5 text-indigo-600" }),
+          Icon: () => <BriefcaseIcon className="h-5 w-5 text-indigo-600" />,
         });
         setName({});
         setEmail("");

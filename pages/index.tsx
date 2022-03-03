@@ -97,8 +97,7 @@ const Home: NextPage = () => {
         addNotification({
           message: "Success 👍 ...  Redirecting!! 🚀",
           timeout: 10e3,
-          Icon: () =>
-            BadgeCheckIcon({ className: "w-6 h-6 stroke-emerald-600" }),
+          Icon: () => <BadgeCheckIcon className="h-6 w-6 stroke-emerald-600" />,
         });
       } else throw new Error(result.error);
     } catch (error: any) {
@@ -108,7 +107,7 @@ const Home: NextPage = () => {
       addNotification({
         message: "Wrong 🙅‍♂️ ... Try again!! 🧨",
         timeout: 5e3,
-        Icon: () => BanIcon({ className: "w-6 h-6 stroke-red-600" }),
+        Icon: () => <BanIcon className="h-6 w-6 stroke-red-600" />,
       });
       console.log({ error });
     }
@@ -124,14 +123,14 @@ const Home: NextPage = () => {
       lastId = addNotification({
         message: "Back Online. 💯",
         timeout: 75e2,
-        Icon: () => StatusOnlineIcon({ className: "w-6 h-6 stroke-blue-600" }),
+        Icon: () => <StatusOnlineIcon className="h-6 w-6 stroke-blue-600" />,
       })[0];
 
     if (online.o && !navigator.onLine)
       lastId = addNotification({
         message: "Offline!! Its that bad huh? 🤷‍♂️",
         timeout: 15e3,
-        Icon: () => StatusOfflineIcon({ className: "w-6 h-6 stroke-red-600" }),
+        Icon: () => <StatusOfflineIcon className="h-6 w-6 stroke-red-600" />,
       })[0];
 
     if (lastId !== -1) {
