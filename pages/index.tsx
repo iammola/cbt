@@ -167,7 +167,7 @@ const Home: NextPage = () => {
               placeholder="blur"
               objectPosition="center"
             />
-            <div className="z-1 absolute h-full w-full bg-indigo-400/50"></div>
+            <div className="z-1 absolute h-full w-full bg-blue-400/50"></div>
           </div>
         </div>
         <form
@@ -175,8 +175,8 @@ const Home: NextPage = () => {
           className="z-0 flex max-w-full flex-col justify-between gap-y-6 rounded-2xl bg-white py-12 px-5 shadow-xl sm:gap-y-8 md:gap-y-14 md:px-8 lg:px-12"
         >
           <h1 className="pb-4 text-center text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">
-            <span className="sm:text-indigo-500">Log in</span>{" "}
-            <span>to your</span> <span className="text-indigo-500">CBT</span>{" "}
+            <span className="sm:text-blue-500">Log in</span>{" "}
+            <span>to your</span> <span className="text-blue-500">CBT</span>{" "}
             <span>account</span>
           </h1>
           <div className="flex items-center justify-between py-3 sm:gap-x-4 sm:px-3 md:gap-x-6 md:px-5">
@@ -199,7 +199,7 @@ const Home: NextPage = () => {
             className={classNames(
               "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
-                "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
+                "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500":
                   success === undefined,
                 "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
                   success,
@@ -292,7 +292,7 @@ const Input: FunctionComponent<InputProps> = ({
       onPaste={handlePaste}
       onBeforeInput={validateCharacter}
       onChange={(e) => onChange(e.target.value.slice(-1))}
-      className="h-10 w-10 rounded-md border text-center text-lg font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-white sm:h-16 sm:w-16 sm:p-3 sm:text-xl md:h-20 md:w-20 md:p-4 md:text-2xl"
+      className="h-10 w-10 rounded-md border text-center text-lg font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white sm:h-16 sm:w-16 sm:p-3 sm:text-xl md:h-20 md:w-20 md:p-4 md:text-2xl"
     />
   );
 };
