@@ -89,9 +89,9 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         );
 
         if (decision) {
-          setExam(saved.exam);
-          setQuestions(saved.questions);
-          setInstructions(saved.instructions);
+          setExam((e) => saved.exam ?? e);
+          setQuestions((q) => saved.questions ?? q);
+          setInstructions((i) => saved.instructions ?? i);
         }
       }
     }
