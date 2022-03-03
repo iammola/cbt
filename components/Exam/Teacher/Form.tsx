@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
+import { format, formatDistance } from "date-fns";
 import {
   FormEvent,
   FunctionComponent,
@@ -25,6 +26,7 @@ import type { TeacherExamGETData } from "types/api/teachers";
 
 const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
   const router = useRouter();
+  const [firstLoad, setFirstLoad] = useState(true);
   const [addNotification, , Notifications] = useNotifications();
   const [{ savedExams }, setCookies] = useCookies<"savedExams", Cookies>([
     "savedExams",
@@ -66,6 +68,34 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
       setInstructions([...instructions, ""]);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (exam === undefined) return;
+
+    if (!firstLoad) return;
+    setFirstLoad(false);
+
+    if (savedExams) {
+      const saved = savedExams[exam.subjectId.toString()];
+      if (saved.exam.term === exam.term) {
+        const decision = confirm(
+          `Do you want to restore the questions saved on ${format(
+            new Date(saved.lastSaved),
+            "do MMM YYY"
+          )} (${formatDistance(new Date(saved.lastSaved), new Date(), {
+            addSuffix: true,
+            includeSeconds: true,
+          })}) for this subject and class?`
+        );
+
+        if (decision) {
+          setExam(saved.exam);
+          setQuestions(saved.questions);
+          setInstructions(saved.instructions);
+        }
+      }
+    }
+  }, [exam, firstLoad, savedExams]);
 
   function saveExam(obj?: { [key: string]: any }) {
     if (exam !== undefined && examState.modified) {
