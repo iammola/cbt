@@ -1,110 +1,150 @@
 import { FunctionComponent } from "react";
 import { formatDuration, intervalToDuration } from "date-fns";
 
-const Info: FunctionComponent<InfoProps> = ({ average, birthday, gender, name, scores, session, term, ...props }) => {
-    return (
-        <div className="grid grid-cols-3 grid-rows-5 grid-flow-col gap-y-2.5 gap-x-40 w-full px-5">
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Full Name:</span>{' '}
-                <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max uppercase">
-                    {name}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Age:</span>{' '}
-                <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max">
-                    {birthday !== undefined && formatDuration(intervalToDuration({
-                        start: new Date(birthday),
-                        end: new Date(),
-                    }), { format: ["years"] })} old
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Gender:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {gender === "M" ? "Male" : "Female"}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Session:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {session}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Term:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {term}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Final Grade:</span>{' '}
-                <span className="text-sm font-bold tracking-wide text-gray-800 min-w-max">
-                    {scores.grade}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Class:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {props.class}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Highest Class Average:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {average.highest.toFixed(1)}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Lowest Class Average:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {average.lowest.toFixed(1)}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Class Average:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {average.class.toFixed(1)}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Expected Score:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {scores.expected}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Total Score:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {scores.total.toFixed(1)}
-                </span>
-            </div>
-            <div className="flex gap-1.5 items-center justify-start">
-                <span className="text-xs text-gray-700 font-semibold tracking-wide min-w-max">Average:</span>{' '}
-                <span className="text-sm font-medium tracking-wide text-gray-800 min-w-max">
-                    {average.average.toFixed(1)}
-                </span>
-            </div>
-        </div>
-    );
-}
+const Info: FunctionComponent<InfoProps> = ({
+  average,
+  birthday,
+  gender,
+  name,
+  scores,
+  session,
+  term,
+  ...props
+}) => {
+  return (
+    <div className="grid w-full grid-flow-col grid-cols-3 grid-rows-5 gap-y-2.5 gap-x-40 px-5">
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Full Name:
+        </span>{" "}
+        <span className="min-w-max text-sm font-bold uppercase tracking-wide text-gray-800">
+          {name}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Age:
+        </span>{" "}
+        <span className="min-w-max text-sm font-bold tracking-wide text-gray-800">
+          {birthday !== undefined &&
+            formatDuration(
+              intervalToDuration({
+                start: new Date(birthday),
+                end: new Date(),
+              }),
+              { format: ["years"] }
+            )}{" "}
+          old
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Gender:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {gender === "M" ? "Male" : "Female"}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Session:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {session}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Term:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {term}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Final Grade:
+        </span>{" "}
+        <span className="min-w-max text-sm font-bold tracking-wide text-gray-800">
+          {scores.grade}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Class:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {props.class}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Highest Class Average:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {average.highest.toFixed(1)}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Lowest Class Average:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {average.lowest.toFixed(1)}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Class Average:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {average.class.toFixed(1)}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Expected Score:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {scores.expected}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Total Score:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {scores.total.toFixed(1)}
+        </span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
+          Average:
+        </span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
+          {average.average.toFixed(1)}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 type InfoProps = {
-    [K in "name" | "class" | "term" | "session"]: string;
+  [K in "name" | "class" | "term" | "session"]: string;
 } & {
-    birthday?: Date;
-    gender: "M" | "F";
-    average: {
-        class: number;
-        lowest: number;
-        average: number;
-        highest: number;
-    };
-    scores: {
-        grade: string;
-        total: number;
-        expected: number;
-    }
+  birthday?: Date;
+  gender: "M" | "F";
+  average: {
+    class: number;
+    lowest: number;
+    average: number;
+    highest: number;
+  };
+  scores: {
+    grade: string;
+    total: number;
+    expected: number;
+  };
 };
 
 export default Info;

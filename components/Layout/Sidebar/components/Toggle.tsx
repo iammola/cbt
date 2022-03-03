@@ -6,24 +6,25 @@ import { classNames } from "utils";
 import type { ToggleProps } from "types";
 
 const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
-    return (
-        <div
-            onClick={toggleOpen}
-            className={classNames("bg-white absolute z-50 top-8 p-1 rounded-full drop-shadow-sm cursor-pointer transition-transform hover:scale-105", {
-                "sm:-right-4 right-8": open,
-                "-right-12": open === false
-            })}
-        >
-            <ChevronRightIcon
-                className={classNames("w-5 h-5 transition-transform fill-gray-600", {
-                    "rotate-180 hidden sm:block": open
-                })}
-            />
-            {open === true && (
-                <XIcon className="block sm:hidden w-5 h-5 fill-gray-600" />
-            )}
-        </div>
-    );
-}
+  return (
+    <div
+      onClick={toggleOpen}
+      className={classNames(
+        "absolute top-8 z-50 cursor-pointer rounded-full bg-white p-1 drop-shadow-sm transition-transform hover:scale-105",
+        {
+          "right-8 sm:-right-4": open,
+          "-right-12": !open,
+        }
+      )}
+    >
+      <ChevronRightIcon
+        className={classNames("h-5 w-5 fill-gray-600 transition-transform", {
+          "hidden rotate-180 sm:block": open,
+        })}
+      />
+      {open && <XIcon className="block h-5 w-5 fill-gray-600 sm:hidden" />}
+    </div>
+  );
+};
 
 export default Toggle;

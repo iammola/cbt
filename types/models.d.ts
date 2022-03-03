@@ -5,148 +5,151 @@ type RecordId = { _id: ObjectId };
 /* Class and Subject */
 
 export type ClassRecord = RecordId & {
-    name: string;
-    alias: string;
-    resultTemplate: {
-        session: ObjectId,
-        terms: ClassResultTemplate[];
-    }[];
+  name: string;
+  alias: string;
+  resultTemplate: {
+    session: ObjectId;
+    terms: ClassResultTemplate[];
+  }[];
 };
 
 export type ClassResultTemplate = {
-    term: ObjectId;
-    fields: (RecordId & {
-        max: number;
-        name: string;
-        alias: string;
-    })[];
-    scheme: {
-        limit: number;
-        grade: string;
-        description: string;
-    }[];
-}
-
-export type SubjectRecord = RecordId & {
+  term: ObjectId;
+  fields: (RecordId & {
+    max: number;
     name: string;
     alias: string;
-    teachers: ObjectId[];
-}
+  })[];
+  scheme: {
+    limit: number;
+    grade: string;
+    description: string;
+  }[];
+};
+
+export type SubjectRecord = RecordId & {
+  name: string;
+  alias: string;
+  teachers: ObjectId[];
+};
 
 export type SubjectsRecord<P = false> = RecordId & {
-    class: P extends true ? ClassRecord : ObjectId;
-    subjects: SubjectRecord[];
-}
-
+  class: P extends true ? ClassRecord : ObjectId;
+  subjects: SubjectRecord[];
+};
 
 /* Student and Teacher */
 
 type UserRecord<T = never> = RecordId & {
-    name: {
-        title: T;
-        initials: string;
-        full: string;
-        first: string;
-        last: string;
-    };
-    image: string;
-    email: string;
-    code: number;
-}
-
-export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
-
-export type StudentRecord = UserRecord & {
-    birthday: Date;
-    gender: "M" | "F";
-    academic: {
-        session: ObjectId;
-        terms: {
-            term: ObjectId;
-            class: ObjectId;
-            subjects: ObjectId[];
-        }[];
-    }[];
+  name: {
+    title: T;
+    initials: string;
+    full: string;
+    first: string;
+    last: string;
+  };
+  image: string;
+  email: string;
+  code: number;
 };
 
+export type TeacherRecord = UserRecord<
+  "Mr." | "Mrs." | "Ms." | "Dr." | "Master"
+>;
+
+export type StudentRecord = UserRecord & {
+  birthday: Date;
+  gender: "M" | "F";
+  academic: {
+    session: ObjectId;
+    terms: {
+      term: ObjectId;
+      class: ObjectId;
+      subjects: ObjectId[];
+    }[];
+  }[];
+};
 
 /* Event and Exam and Answer */
 
 export type EventRecord<P = false> = RecordId & {
-    from: Date;
-    exams: (P extends true ? ExamRecord : ObjectId)[];
+  from: Date;
+  exams: (P extends true ? ExamRecord : ObjectId)[];
 };
 
 type DateRecord<P = false> = {
-    at: Date;
-    by: P extends true ? TeacherRecord : ObjectId;
-}
+  at: Date;
+  by: P extends true ? TeacherRecord : ObjectId;
+};
 
 export type ExamRecord<P = false> = RecordId & {
-    duration: number;
-    subjectId: P extends true ? SubjectRecord : ObjectId;
-    instructions: string[];
-    questions: QuestionRecord[];
-    created: DateRecord<P>;
-    edited: DateRecord<P>[];
+  duration: number;
+  termId: ObjectId;
+  subjectId: P extends true ? SubjectRecord : ObjectId;
+  instructions: string[];
+  questions: QuestionRecord[];
+  created: DateRecord<P>;
+  edited: DateRecord<P>[];
 };
 
 export type AnswerRecord = RecordId & {
-    answer: string
-    isCorrect?: boolean;
+  answer: string;
+  isCorrect?: boolean;
 };
 
 export type QuestionRecord = RecordId & {
-    question: string;
-} & ({
-    type: "Multiple choice" | "Short Answer" | "Long Answer";
-    answers: AnswerRecord[];
-} | {
-    answers: never;
-    type: "Checkboxes";
-    maxLength?: number;
-    minLength?: number;
-});
+  question: string;
+} & (
+    | {
+        type: "Multiple choice" | "Short Answer" | "Long Answer";
+        answers: AnswerRecord[];
+      }
+    | {
+        answers: never;
+        type: "Checkboxes";
+        maxLength?: number;
+        minLength?: number;
+      }
+  );
 
 export type CBTResultRecord<P = false> = RecordId & {
-    student: P extends true ? StudentRecord : ObjectId;
-    results: {
-        ended: Date;
-        started: Date;
-        score: number;
-        examId: P extends true ? ExamRecord : ObjectId;
-        answers: {
-            answer: ObjectId;
-            question: ObjectId;
-        }[];
+  student: P extends true ? StudentRecord : ObjectId;
+  results: {
+    ended: Date;
+    started: Date;
+    score: number;
+    examId: P extends true ? ExamRecord : ObjectId;
+    answers: {
+      answer: ObjectId;
+      question: ObjectId;
     }[];
-}
+  }[];
+};
 
 export type ResultRecord = RecordId & {
-    student: ObjectId;
-    comments: string;
-    data: {
-        subject: ObjectId;
-        total?: number;
-        scores?: {
-            score: number;
-            fieldId: ObjectId;
-        }[];
+  student: ObjectId;
+  comments: string;
+  data: {
+    subject: ObjectId;
+    total?: number;
+    scores?: {
+      score: number;
+      fieldId: ObjectId;
     }[];
-}
-
+  }[];
+};
 
 /* Session and Term */
 
 export type SessionRecord = RecordId & {
-    name: string;
-    alias: string;
-    current?: boolean;
-    terms: TermRecord[];
+  name: string;
+  alias: string;
+  current?: boolean;
+  terms: TermRecord[];
 };
 
 export type TermRecord = RecordId & {
-    name: string;
-    alias: string;
-    current?: boolean;
+  name: string;
+  alias: string;
+  current?: boolean;
 };
