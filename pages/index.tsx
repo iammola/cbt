@@ -219,7 +219,9 @@ const Home: NextPage = () => {
       </section>
       <footer className="absolute bottom-5 flex w-full flex-col items-center justify-center text-sm text-gray-300">
         <span className="min-w-max text-center tracking-wider">
-          <span className="block sm:inline">© 2021 Grand Regal School.</span>{" "}
+          <span className="block sm:inline">
+            © {new Date().getFullYear()} Grand Regal School.
+          </span>{" "}
           <span className="block sm:inline">All rights reserved.</span>
         </span>
         <Link href="https://github.com/iammola/">
