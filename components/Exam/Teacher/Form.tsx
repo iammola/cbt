@@ -26,8 +26,11 @@ import type { TeacherExamGETData } from "types/api/teachers";
 const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
   const router = useRouter();
   const [addNotification, , Notifications] = useNotifications();
-  const [{ savedExams }, setCookies] = useCookies(["savedExams"]);
+  const [{ savedExams }, setCookies] = useCookies<"savedExams", Cookies>([
+    "savedExams",
+  ]);
 
+  const [exam, setExam] = useState<ExamDetails>();
   const recordTemplate = useMemo<CreateQuestion>(
     () => ({
       question: "",
@@ -43,9 +46,6 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
   const [questions, setQuestions] = useState<CreateQuestion[]>([
     { ...recordTemplate },
   ]);
-  const [exam, setExam] = useState<
-    Omit<TeacherExamGETData["details"], "instructions"> & { term: string }
-  >();
 
   const [examState, setExamState] = useState({
     details: true,
@@ -74,11 +74,11 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         JSON.stringify(
           obj ?? {
             ...(savedExams ?? {}),
-            [exam.subjectId as unknown as string]: {
+            [exam.subjectId.toString()]: {
               exam,
               questions,
-              lastSaved: new Date().toISOString(),
-            },
+              lastSaved: new Date(),
+            } as SavedExam,
           }
         ),
         {
@@ -281,6 +281,18 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
       {Notifications}
     </>
   );
+};
+
+type Cookies = Partial<{ savedExams: Record<string, SavedExam> }>;
+
+type ExamDetails = Omit<TeacherExamGETData["details"], "instructions"> & {
+  term: string;
+};
+
+type SavedExam = {
+  lastSaved: Date;
+  exam: ExamDetails;
+  questions: CreateQuestion[];
 };
 
 export default Form;
