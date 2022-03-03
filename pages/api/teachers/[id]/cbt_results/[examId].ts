@@ -19,10 +19,6 @@ async function getCBTResults(
   ];
 
   try {
-    const j = await ExamModel.findOne(
-      { _id: exam, "created.by": id },
-      "subjectId"
-    ).lean();
     const data: Pick<CBTResultRecord<true>, "student" | "results">[] =
       await CBTResultModel.find(
         { "results.examId": exam },
