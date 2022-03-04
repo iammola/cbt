@@ -159,7 +159,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         if (success) {
           setTimeout(router.push, 11e2, "/home");
           addNotification({
-            message: "Upload Success... Redirectiong",
+            message: "Upload Success... Redirecting",
             timeout: 1e3,
             Icon: () => (
               <CheckCircleIcon className="h-6 w-6 stroke-emerald-700" />
