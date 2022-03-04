@@ -157,10 +157,10 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         setExamState({ ...examState, uploaded: success });
 
         if (success) {
-          setTimeout(router.reload, 35e2);
+          setTimeout(router.push, 11e2, "/home");
           addNotification({
-            message: "Upload Success... Reloading",
-            timeout: 3e3,
+            message: "Upload Success... Redirectiong",
+            timeout: 1e3,
             Icon: () => (
               <CheckCircleIcon className="h-6 w-6 stroke-emerald-700" />
             ),
