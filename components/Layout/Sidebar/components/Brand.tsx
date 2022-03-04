@@ -24,7 +24,7 @@ const Brand: FunctionComponent<BrandProps> = ({ open }) => {
       </div>
       <span
         className={classNames("tracking-wider", {
-          hidden: open,
+          hidden: !open,
         })}
       >
         Grand Regal School
