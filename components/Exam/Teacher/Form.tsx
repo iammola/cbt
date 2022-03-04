@@ -77,7 +77,8 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
 
     if (savedExams) {
       const saved = savedExams[exam.subjectId.toString()];
-      if (saved.exam.termId === exam.termId) {
+
+      if (saved?.exam.termId === exam.termId) {
         const decision = confirm(
           `Do you want to restore the questions saved on ${format(
             new Date(saved.lastSaved),
