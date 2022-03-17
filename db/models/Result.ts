@@ -48,6 +48,10 @@ const ResultSchema = new Schema<ResultRecord>({
     type: String,
     trim: true,
   },
+  term: {
+    type: Schema.Types.ObjectId,
+    required: [true, "Result term required"],
+  },
 });
 
 export const ResultModel =

@@ -127,6 +127,7 @@ export type CBTResultRecord<P = false> = RecordId & {
 };
 
 export type ResultRecord = RecordId & {
+  term: ObjectId;
   student: ObjectId;
   comments: string;
   data: {
