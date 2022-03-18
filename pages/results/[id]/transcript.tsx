@@ -1,11 +1,13 @@
 import Head from "next/head";
-import { Fragment } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
+import { Fragment, useEffect, useState } from "react";
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
+import { LoadingIcon } from "components/Misc/Icons";
 import { GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
 import type { RouteData } from "types";
@@ -13,14 +15,20 @@ import type { StudentGETData, StudentTranscriptGETData } from "types/api/student
 
 const ResultTranscript: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWRImmutable<RouteData<StudentTranscriptGETData>>(
+  const [errors, setErrors] = useState<string[]>([]);
+  const { data, error } = useSWRImmutable<RouteData<StudentTranscriptGETData>>(
     router.isReady && `/api/students/${router.query.id}/results/transcript/`,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
-  const { data: student } = useSWRImmutable<RouteData<StudentGETData>>(
+  const { data: student, error: studentError } = useSWRImmutable<RouteData<StudentGETData>>(
     router.isReady && `/api/students/${router.query.id}/?select=gender birthday name.full`,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
+
+  useEffect(() => {
+    if (error) setErrors((errors) => [...new Set([...errors, "data"])]);
+    if (studentError) setErrors((errors) => [...new Set([...errors, "student"])]);
+  }, [error, studentError]);
 
   return (
     <section className="flex min-h-screen w-screen items-center justify-center bg-gray-200 py-16 print:bg-white print:p-0">
@@ -126,6 +134,28 @@ const ResultTranscript: NextPage = () => {
           </div>
         </div>
       </main>
+      {Object.values({ student, data }).includes(undefined) && (
+        <div className="fixed inset-0 z-[10000] flex h-screen w-screen flex-col items-center justify-center gap-y-10 bg-white text-3xl tracking-wide text-slate-600">
+          Loading Transcript Data...
+          <ul className="space-y-3 text-sm">
+            {Object.entries({ student, data }).map(([key, val]) => (
+              <li
+                key={key}
+                className={classNames("flex items-center justify-start gap-x-4", {
+                  "text-emerald-500": val,
+                  "text-red-500": errors.includes(key),
+                  "text-blue-500": !val && !errors.includes(key),
+                })}
+              >
+                {!val && !errors.includes(key) && <LoadingIcon className="h-5 w-5 animate-spin stroke-blue-500" />}
+                {val && <CheckCircleIcon className="h-5 w-5 stroke-emerald-500" />}
+                {errors.includes(key) && <XCircleIcon className="h-5 w-5 stroke-red-500" />}
+                <span className="capitalize">{key}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 };
