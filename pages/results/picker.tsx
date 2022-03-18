@@ -14,7 +14,7 @@ import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 const ResultsPicker: NextPage = () => {
   const [selectedStudent, setSelectedStudent] = useState({
     _id: "",
-    name: "Select student",
+    name: "Select term",
   });
   const [selectedTerm, setSelectedTerm] = useState({
     _id: "",
@@ -56,9 +56,15 @@ const ResultsPicker: NextPage = () => {
 
   useEffect(() => {
     async function getStudents(classes: ClassesGETData) {
+      setSelectedStudent({
+        _id: "",
+        name: "Loading students...",
+      });
       await Promise.all(
         classes.map(async ({ _id }) => {
-          const res = await fetch(`/api/classes/${_id}/students/`);
+          const res = await fetch(
+            `/api/classes/${_id}/students/?term=${selectedTerm._id}`
+          );
           const result =
             (await res.json()) as ClientResponse<ClassStudentsGETData>;
 
@@ -70,13 +76,17 @@ const ResultsPicker: NextPage = () => {
                 students: result.data,
               },
             ]);
+          setSelectedStudent({
+            _id: "",
+            name: "Select student",
+          });
         })
       );
       console.log("Loaded Students");
     }
 
-    if (classes?.data) getStudents(classes.data);
-  }, [classes]);
+    if (classes?.data && selectedTerm._id) getStudents(classes.data);
+  }, [classes, selectedTerm]);
 
   useEffect(() => {
     if (!selectedTerm._id && terms?.data !== undefined) {
@@ -100,20 +110,20 @@ const ResultsPicker: NextPage = () => {
         <meta name="description" content="Results | GRS Portal" />
       </Head>
       <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
-        <span className="block">Select student</span>{" "}
-        <span className="block">and term</span>
+        <span className="block">Select term</span>{" "}
+        <span className="block">and student</span>
       </h3>
       <div className="flex flex-col items-center justify-center gap-10 pt-8">
         <div className="flex items-center justify-center gap-x-10">
           <Select
-            selected={selectedStudent}
-            handleChange={setSelectedStudent}
-            options={studentOptions}
-          />
-          <Select
             options={terms?.data}
             selected={selectedTerm}
             handleChange={setSelectedTerm}
+          />
+          <Select
+            selected={selectedStudent}
+            handleChange={setSelectedStudent}
+            options={studentOptions}
           />
         </div>
         <Link
