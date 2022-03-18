@@ -9,10 +9,9 @@ import {
   SubjectsModel,
 } from "db/models";
 
-import type { ServerResponse, SubjectsRecord } from "types";
+import type { ServerResponse, SubjectRecord } from "types";
 import type {
   StudentTranscriptGETData,
-  TranscriptScore,
   TranscriptTermScore,
 } from "types/api/students";
 
@@ -38,101 +37,95 @@ async function getStudentTranscript(
       .map((i) => i.terms.map((t) => t.subjects).flat())
       .flat();
 
-    const subjects = (
-      await SubjectsModel.aggregate([
-        { $match: { "subjects._id": { $in: subjectIDs } } },
-        {
-          $project: {
-            subjects: {
-              $filter: {
-                input: "$subjects",
-                cond: {
-                  $in: ["$$this._id", subjectIDs],
-                },
+    const subjects = await SubjectsModel.aggregate([
+      { $match: { "subjects._id": { $in: subjectIDs } } },
+      {
+        $project: {
+          subjects: {
+            $filter: {
+              input: "$subjects",
+              cond: {
+                $in: ["$$this._id", subjectIDs],
               },
             },
           },
         },
-      ])
-    )
-      .map((j) =>
-        (j as SubjectsRecord).subjects
-          .map(({ _id, name }) => ({ _id, name }))
-          .flat()
-      )
-      .flat();
+      },
+    ]).then((data) =>
+      data
+        .map(({ subjects }) =>
+          subjects.map(({ _id, name }: SubjectRecord) => ({ _id, name })).flat()
+        )
+        .flat()
+    );
 
-    const scores = results
-      .reduce(
-        (acc, { data, term }) => [
-          ...acc,
-          ...data.map(({ subject, scores, total }) => ({
-            subject,
-            term,
-            score: total ?? scores?.reduce((acc, item) => acc + item.score, 0),
-          })),
-        ],
-        [] as TranscriptTermScore[]
-      )
-      .reduce((acc, { term, score, subject }) => {
-        const session = sessions.find((session) =>
-          session.terms.find((item) => item._id.equals(term))
-        )?._id;
-
-        if (!session) {
-          console.log("Term: ", term, ". No session found");
-          return acc;
-        }
-
-        if (!score) return acc;
-
-        const subjectIdx = acc.findIndex(({ data, ...item }) =>
-          item.subject.equals(subject)
-        );
-
-        const newValue = {
-          score,
-          session,
-          termsCount: 1,
-        };
-
-        if (subjectIdx === -1)
+    const scores = Object.entries(
+      results
+        .reduce((acc, { data, term }) => {
           return [
             ...acc,
             {
-              subject,
-              data: [newValue],
+              term,
+              subjects: Object.fromEntries(
+                data.map(
+                  ({ subject, scores, total }) =>
+                    [
+                      subjects.find((i) => i._id.equals(subject))?.name ??
+                        "Undefined Subject",
+                      total ??
+                        scores?.reduce((acc, item) => acc + item.score, 0),
+                    ] as const
+                )
+              ),
             },
           ];
+        }, [] as TranscriptTermScore[])
+        .reduce((acc, { subjects, term }) => {
+          const session = sessions.find((session) =>
+            session.terms.find((item) => item._id.equals(term))
+          )?._id;
 
-        const [item] = acc.splice(subjectIdx, 1);
-        const sessionIdx = item.data.findIndex((t) =>
-          t.session.equals(session)
-        );
+          if (!session) return acc;
 
-        if (sessionIdx > -1) {
-          ++item.data[sessionIdx].termsCount;
-          item.data[sessionIdx].score =
-            score + (item.data[sessionIdx].score ?? 0);
-        } else item.data.push(newValue);
+          Object.entries(subjects).forEach(([subject, score]) => {
+            const newValue = { score, session, termsCount: 1 };
 
-        return [...acc, item];
-      }, [] as TranscriptScore[])
-      .reduce((acc, b) => {
-        b.data.forEach((i) => {
-          if (i.score) {
-            i.score /= i.termsCount;
-            i.grade = i.score.toString(); // Find Grade
-          }
-        });
-        return [...acc, b];
-      }, [] as StudentTranscriptGETData["scores"]);
+            if (acc[subject] === undefined) return (acc[subject] = [newValue]);
+            if (score === undefined) return acc;
+
+            const sessionIdx = acc[subject].findIndex((t) =>
+              t.session.equals(session)
+            );
+
+            if (sessionIdx < 0) acc[subject].push(newValue);
+            else {
+              ++acc[subject][sessionIdx].termsCount;
+              acc[subject][sessionIdx].score =
+                score + (acc[subject][sessionIdx].score ?? 0);
+            }
+          });
+
+          return acc;
+        }, {} as StudentTranscriptGETData["scores"])
+    ).reduce((acc, [subject, data]) => {
+      data.forEach((item) => {
+        if (item.score) {
+          item.score /= item.termsCount;
+          item.grade = item.score.toString(); // Find Grade
+        }
+      });
+
+      return {
+        ...acc,
+        [subject]: data,
+      };
+    }, {} as StudentTranscriptGETData["scores"]);
 
     [success, status, message] = [
       true,
       StatusCodes.OK,
       {
-        data: { sessions, scores, subjects },
+        data: { sessions, scores },
         message: ReasonPhrases.OK,
       },
     ];
