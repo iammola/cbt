@@ -14,9 +14,7 @@ const EditExam: NextPage = () => {
   const router = useRouter();
   const [{ account }] = useCookies(["account"]);
   const { data: exam } = useSWRImmutable<RouteData<TeacherExamGETData>>(
-    router.query.id !== undefined
-      ? `/api/teachers/${account?._id}/exams/${router.query.id}/`
-      : null,
+    router.query.id !== undefined ? `/api/teachers/${account?._id}/exams/${router.query.id}/` : null,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
 
@@ -28,7 +26,10 @@ const EditExam: NextPage = () => {
     <>
       <Head>
         <title>Edit Exam | CBT | Grand Regal School</title>
-        <meta name="description" content="Exam Editing | GRS CBT" />
+        <meta
+          name="description"
+          content="Exam Editing | GRS CBT"
+        />
       </Head>
       <Form data={exam?.data} />
       <Loader show={exam?.data === undefined} />

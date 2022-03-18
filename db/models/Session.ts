@@ -42,5 +42,4 @@ const SessionSchema = new Schema<SessionRecord>({
   ],
 });
 
-export const SessionModel =
-  (models.Session as Model<SessionRecord>) ?? model("Session", SessionSchema);
+export const SessionModel = (models.Session as Model<SessionRecord>) ?? model("Session", SessionSchema);

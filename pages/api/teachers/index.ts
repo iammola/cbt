@@ -13,9 +13,7 @@ import { TeachersPOSTData } from "types/api/teachers";
 async function createTeacher({
   subjects,
   ...teacher
-}: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<
-  ServerResponse<TeachersPOSTData>
-> {
+}: TeacherRecord & { subjects: { [key: string]: string[] } }): Promise<ServerResponse<TeachersPOSTData>> {
   await connect();
   const session = await startSession();
   let [success, status, message]: ServerResponse<TeachersPOSTData> = [
@@ -66,10 +64,7 @@ async function createTeacher({
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query, body }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<TeachersPOSTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -79,10 +74,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? createTeacher(JSON.parse(body))

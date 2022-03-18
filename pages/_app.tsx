@@ -8,11 +8,27 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <CookiesProvider>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#ffffff" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="msapplication-TileColor" content="#b91d47" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <link
+          rel="icon"
+          href="/favicon.ico"
+        />
+        <meta
+          name="theme-color"
+          content="#ffffff"
+        />
+        <link
+          rel="manifest"
+          href="/site.webmanifest"
+        />
+        <meta
+          name="msapplication-TileColor"
+          content="#b91d47"
+        />
+        <link
+          rel="mask-icon"
+          href="/safari-pinned-tab.svg"
+          color="#5bbad5"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

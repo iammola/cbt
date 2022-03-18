@@ -3,7 +3,11 @@ import { Transition, Dialog } from "@headlessui/react";
 
 const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
   return (
-    <Transition show={show} appear as={Fragment}>
+    <Transition
+      appear
+      show={show}
+      as={Fragment}
+    >
       <Dialog
         as="section"
         onClose={() => {}}
@@ -31,8 +35,7 @@ const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
         >
           <div className="flex w-full flex-col items-center gap-7 rounded-3xl bg-white p-12 shadow-lg sm:w-[50rem]">
             <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-              <span>Loading</span> <span className="text-indigo-500">Exam</span>{" "}
-              <span>🎲</span>
+              <span>Loading</span> <span className="text-indigo-500">Exam</span> <span>🎲</span>
             </Dialog.Title>
             <div className="h-16 w-16 animate-spin rounded-full border-2 border-gray-200 border-r-indigo-500" />
           </div>

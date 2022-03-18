@@ -109,5 +109,4 @@ const ExamSchema = new Schema<ExamRecord>({
   questions: [QuestionSchema],
 });
 
-export const ExamModel =
-  (models.Exam as Model<ExamRecord>) ?? model("Exam", ExamSchema);
+export const ExamModel = (models.Exam as Model<ExamRecord>) ?? model("Exam", ExamSchema);

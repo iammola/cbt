@@ -16,10 +16,9 @@ const SubjectForm: FunctionComponent = () => {
   const [alias, setAlias] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
-  const { data: classes, error } = useSWR<
-    RouteData<ClassesGETData>,
-    RouteError
-  >("/api/classes/?select=name", (url) => fetch(url).then((res) => res.json()));
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
+  );
 
   const [selectedClass, setSelectedClass] = useState({
     _id: "",
@@ -48,8 +47,7 @@ const SubjectForm: FunctionComponent = () => {
           method: "POST",
           body: JSON.stringify({ name, alias }),
         });
-        const result =
-          (await res.json()) as ClientResponse<ClassSubjectPOSTData>;
+        const result = (await res.json()) as ClientResponse<ClassSubjectPOSTData>;
 
         setSuccess(result.success);
 
@@ -94,7 +92,10 @@ const SubjectForm: FunctionComponent = () => {
         handleChange={setSelectedClass}
       />
       <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
-        <label htmlFor="name" className="text-sm font-semibold text-gray-600">
+        <label
+          htmlFor="name"
+          className="text-sm font-semibold text-gray-600"
+        >
           Name
         </label>
         <input
@@ -107,7 +108,10 @@ const SubjectForm: FunctionComponent = () => {
         />
       </div>
       <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
-        <label htmlFor="alias" className="text-sm font-semibold text-gray-600">
+        <label
+          htmlFor="alias"
+          className="text-sm font-semibold text-gray-600"
+        >
           Alias
         </label>
         <input
@@ -124,17 +128,13 @@ const SubjectForm: FunctionComponent = () => {
         className={classNames(
           "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
           {
-            "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500":
-              success === undefined,
-            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-              success,
+            "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500": success === undefined,
+            "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
             "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
           }
         )}
       >
-        {loading && (
-          <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-        )}
+        {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
         {success && <CheckIcon className="h-5 w-5 fill-white" />}
         {success === false && <XIcon className="h-5 w-5 fill-white" />}
         Create Subject

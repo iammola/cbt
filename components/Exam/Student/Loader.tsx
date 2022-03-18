@@ -3,13 +3,13 @@ import { Transition, Dialog } from "@headlessui/react";
 
 import type { StudentLoaderProps } from "types";
 
-const Loader: FunctionComponent<StudentLoaderProps> = ({
-  show,
-  start,
-  exam,
-}) => {
+const Loader: FunctionComponent<StudentLoaderProps> = ({ show, start, exam }) => {
   return (
-    <Transition show={show} appear as={Fragment}>
+    <Transition
+      appear
+      show={show}
+      as={Fragment}
+    >
       <Dialog
         as="section"
         onClose={() => {}}
@@ -39,8 +39,7 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({
             {exam === undefined ? (
               <>
                 <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-                  <span>Loading</span>{" "}
-                  <span className="text-sky-500">Exam</span> <span>🎲</span>
+                  <span>Loading</span> <span className="text-sky-500">Exam</span> <span>🎲</span>
                 </Dialog.Title>
                 <div className="mt-5 h-16 w-16 animate-spin rounded-full border-2 border-gray-200 border-r-sky-500" />
               </>
@@ -63,12 +62,8 @@ const Loader: FunctionComponent<StudentLoaderProps> = ({
                         key={instruction}
                         className="flex items-center justify-start gap-2"
                       >
-                        <span className="text-xs font-bold text-gray-600">
-                          {i + 1}.
-                        </span>
-                        <p className="text-sm font-medium text-gray-800">
-                          {instruction}
-                        </p>
+                        <span className="text-xs font-bold text-gray-600">{i + 1}.</span>
+                        <p className="text-sm font-medium text-gray-800">{instruction}</p>
                       </li>
                     ))}
                   </ul>

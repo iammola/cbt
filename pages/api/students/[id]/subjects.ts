@@ -7,9 +7,7 @@ import { SessionModel, StudentModel, SubjectsModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { StudentSubjectsGETData } from "types/api/students";
 
-async function getStudentSubjects(
-  _id: any
-): Promise<ServerResponse<StudentSubjectsGETData>> {
+async function getStudentSubjects({ id, term }: any): Promise<ServerResponse<StudentSubjectsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentSubjectsGETData> = [
     false,
@@ -18,21 +16,11 @@ async function getStudentSubjects(
   ];
 
   try {
-    const currentSession = await SessionModel.findOne(
-      { current: true, "terms.current": true },
-      "terms._id.$"
-    ).lean();
-    if (currentSession === null) throw new Error("Current session");
-
-    const term = currentSession.terms[0]._id;
     const data = await StudentModel.findOne(
       {
-        _id,
-        academic: {
-          $elemMatch: {
-            session: currentSession._id,
-            "terms.term": term,
-          },
+        _id: id,
+        "academic.terms": {
+          $elemMatch: { term },
         },
       },
       "academic.terms.$"
@@ -54,10 +42,7 @@ async function getStudentSubjects(
       StatusCodes.OK,
       {
         data:
-          subjects?.subjects.filter(
-            (subject) =>
-              d?.subjects.find((i) => i.equals(subject._id)) !== undefined
-          ) ?? [],
+          subjects?.subjects.filter((subject) => d?.subjects.find((i) => i.equals(subject._id)) !== undefined) ?? [],
         message: ReasonPhrases.OK,
       },
     ];
@@ -74,10 +59,7 @@ async function getStudentSubjects(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<StudentSubjectsGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -87,11 +69,8 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
-  } else [success, status, message] = await getStudentSubjects(query.id);
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
+  } else [success, status, message] = await getStudentSubjects(query);
 
   if (typeof message !== "object") message = { message, error: message };
 

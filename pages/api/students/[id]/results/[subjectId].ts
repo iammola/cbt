@@ -4,29 +4,26 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ResultModel } from "db/models";
 
-import type { ServerResponse } from "types";
-import type {
-  StudentResultSubjectGETData,
-  StudentResultSubjectPOSTData,
-} from "types/api/students";
+import type { ResultRecord, ServerResponse } from "types";
+import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
 
-async function getStudentSubjectResult(
-  student: any,
-  subject: any
-): Promise<ServerResponse<StudentResultSubjectGETData>> {
+async function getStudentSubjectResult({
+  subjectId,
+  ...query
+}: any): Promise<ServerResponse<StudentResultSubjectGETData>> {
   await connect();
-  let [success, status, message]: ServerResponse<StudentResultSubjectGETData> =
-    [
-      false,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      ReasonPhrases.INTERNAL_SERVER_ERROR,
-    ];
+  let [success, status, message]: ServerResponse<StudentResultSubjectGETData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
   try {
     const result = await ResultModel.findOne(
       {
-        student,
-        "data.subject": subject,
+        term: query.term,
+        student: query.id,
+        "data.subject": subjectId,
       },
       "data.total data.scores.$"
     ).lean();
@@ -55,15 +52,14 @@ async function getStudentSubjectResult(
 async function updateStudentSubjectResult(
   student: any,
   subject: any,
-  { scores, total }: any
+  { term, ...body }: Omit<ResultRecord["data"], "subject"> & { term: string }
 ): Promise<ServerResponse<StudentResultSubjectPOSTData>> {
   await connect();
-  let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> =
-    [
-      false,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      ReasonPhrases.INTERNAL_SERVER_ERROR,
-    ];
+  let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
   try {
     const record = await ResultModel.findOne(
@@ -74,23 +70,12 @@ async function updateStudentSubjectResult(
       "_id"
     ).lean();
 
-    const [filter, update, options] =
+    const args =
       record === null
-        ? [
-            { student },
-            {
-              $push: { data: { scores, subject, total } },
-            },
-            { upsert: true },
-          ]
+        ? [{ student }, { term, $push: { data: { subject, ...body } } }, { upsert: true }]
         : [
             { _id: record._id },
-            {
-              $set: {
-                "data.$[i].total": total,
-                "data.$[i].scores": scores,
-              },
-            },
+            { term, $set: { "data.$[i]": { subject, ...body } } },
             {
               runValidators: true,
               fields: "_id",
@@ -103,8 +88,7 @@ async function updateStudentSubjectResult(
       StatusCodes.OK,
       {
         data: {
-          ok: (await ResultModel.updateOne(filter, update, options))
-            .acknowledged,
+          ok: (await ResultModel.updateOne(...args)).acknowledged,
         },
         message: ReasonPhrases.OK,
       },
@@ -122,13 +106,8 @@ async function updateStudentSubjectResult(
   return [success, status, message];
 }
 
-export default async function handler(
-  { body, method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    StudentResultSubjectGETData | StudentResultSubjectPOSTData
-  > = [
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<StudentResultSubjectGETData | StudentResultSubjectPOSTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -137,14 +116,11 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body))
-      : getStudentSubjectResult(query.id, query.subjectId));
+      : getStudentSubjectResult(query));
 
   if (typeof message !== "object") message = { message, error: message };
 

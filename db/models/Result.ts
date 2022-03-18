@@ -13,8 +13,7 @@ const ResultSchema = new Schema<ResultRecord>({
     _id: false,
     validate: [
       (val: ResultRecord["data"][number]) =>
-        val.scores !== val.total ||
-        (val.scores !== undefined && val.total !== undefined),
+        val.scores !== val.total || (val.scores !== undefined && val.total !== undefined),
       "One of forced total or scores must be provided",
     ],
     type: [
@@ -48,7 +47,10 @@ const ResultSchema = new Schema<ResultRecord>({
     type: String,
     trim: true,
   },
+  term: {
+    type: Schema.Types.ObjectId,
+    required: [true, "Result term required"],
+  },
 });
 
-export const ResultModel =
-  (models.Result as Model<ResultRecord>) ?? model("Result", ResultSchema);
+export const ResultModel = (models.Result as Model<ResultRecord>) ?? model("Result", ResultSchema);

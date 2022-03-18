@@ -41,10 +41,7 @@ const TeacherSchema = new Schema<TeacherRecord>({
     type: String,
     trim: true,
     lowercase: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/,
-      "Please fill a valid email address",
-    ],
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "Please fill a valid email address"],
   },
   code: {
     type: Number,
@@ -58,5 +55,4 @@ const TeacherSchema = new Schema<TeacherRecord>({
   },
 });
 
-export const TeacherModel =
-  (models.Teacher as Model<TeacherRecord>) ?? model("Teacher", TeacherSchema);
+export const TeacherModel = (models.Teacher as Model<TeacherRecord>) ?? model("Teacher", TeacherSchema);

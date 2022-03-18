@@ -6,10 +6,7 @@ import { useState, useEffect, FormEvent } from "react";
 import Select from "components/Select";
 import { Sidebar, Navbar } from "components/Layout";
 
-import type {
-  StudentCommentGETData,
-  StudentCommentPOSTData,
-} from "types/api/students";
+import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api/students";
 import type { ClientResponse, RouteData, StudentRecord } from "types";
 import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
@@ -17,8 +14,7 @@ const Comments: NextPage = () => {
   const [students, setStudents] = useState<ClassStudentsGETData>([]);
 
   const [loadedStudent, setLoadedStudent] = useState("");
-  const [comment, setComment] =
-    useState<NonNullable<StudentCommentGETData>["comments"]>();
+  const [comment, setComment] = useState<NonNullable<StudentCommentGETData>["comments"]>();
 
   const [selectedStudent, setSelectedStudent] = useState({
     _id: "",
@@ -28,9 +24,8 @@ const Comments: NextPage = () => {
     _id: "",
     name: "Loading classes...",
   });
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>>(
-    "/api/classes?select=name",
-    (url) => fetch(url).then((res) => res.json())
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>>("/api/classes?select=name", (url) =>
+    fetch(url).then((res) => res.json())
   );
 
   useEffect(() => {
@@ -53,8 +48,7 @@ const Comments: NextPage = () => {
       setSelectedStudent({ _id: "", name: "Loading students..." });
       try {
         const res = await fetch(`/api/classes/${selectedClass._id}/students`);
-        const result =
-          (await res.json()) as ClientResponse<ClassStudentsGETData>;
+        const result = (await res.json()) as ClientResponse<ClassStudentsGETData>;
 
         if (result.success) {
           setStudents(result.data);
@@ -72,11 +66,8 @@ const Comments: NextPage = () => {
       setComment(undefined);
 
       try {
-        const res = await fetch(
-          `/api/students/${selectedStudent._id}/comments`
-        );
-        const result =
-          (await res.json()) as ClientResponse<StudentCommentGETData>;
+        const res = await fetch(`/api/students/${selectedStudent._id}/comments`);
+        const result = (await res.json()) as ClientResponse<StudentCommentGETData>;
 
         if (result.success) {
           setLoadedStudent(selectedStudent.name);
@@ -96,8 +87,7 @@ const Comments: NextPage = () => {
         method: "POST",
         body: JSON.stringify({ comment }),
       });
-      const result =
-        (await res.json()) as ClientResponse<StudentCommentPOSTData>;
+      const result = (await res.json()) as ClientResponse<StudentCommentPOSTData>;
 
       if (result.success) alert("Done");
       else throw new Error(result.error);
@@ -110,7 +100,10 @@ const Comments: NextPage = () => {
     <>
       <Head>
         <title>Comments | CBT | Grand Regal School</title>
-        <meta name="description" content="Comments | GRS CBT" />
+        <meta
+          name="description"
+          content="Comments | GRS CBT"
+        />
       </Head>
       <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
@@ -127,8 +120,7 @@ const Comments: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={getStudents}
               />
@@ -144,8 +136,7 @@ const Comments: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={setSelectedStudent}
               />
@@ -161,13 +152,9 @@ const Comments: NextPage = () => {
                 onSubmit={handleSubmit}
                 className="flex w-full grow flex-col items-center justify-start gap-7 py-10 px-3"
               >
-                <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">
-                  {loadedStudent}
-                </h4>
+                <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">{loadedStudent}</h4>
                 <div className="flex w-full flex-col items-start justify-center gap-3">
-                  <h5 className="font-medium tracking-wide text-gray-700">
-                    Comment
-                  </h5>
+                  <h5 className="font-medium tracking-wide text-gray-700">Comment</h5>
                   <textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}

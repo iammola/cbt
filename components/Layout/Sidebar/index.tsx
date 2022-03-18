@@ -18,7 +18,10 @@ const Sidebar: FunctionComponent = () => {
         }
       )}
     >
-      <Toggle open={open} toggleOpen={() => setOpen(!open)} />
+      <Toggle
+        open={open}
+        toggleOpen={() => setOpen(!open)}
+      />
       <Brand open={open} />
       <Divide className="w-[85%] max-w-full" />
       <Menu open={open} />

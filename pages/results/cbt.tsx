@@ -69,11 +69,8 @@ const Results: NextPage = () => {
   async function getData() {
     if (selectedExam._id !== "") {
       try {
-        const res = await fetch(
-          `/api/teachers/${account._id}/cbt_results/${selectedExam._id}`
-        );
-        const result =
-          (await res.json()) as ClientResponse<TeacherCBTResultsGETData>;
+        const res = await fetch(`/api/teachers/${account._id}/cbt_results/${selectedExam._id}`);
+        const result = (await res.json()) as ClientResponse<TeacherCBTResultsGETData>;
 
         if (result.success) {
           setResults(result.data);
@@ -88,7 +85,10 @@ const Results: NextPage = () => {
     <>
       <Head>
         <title>Results | CBT | Grand Regal School</title>
-        <meta name="description" content="Written Results | GRS CBT" />
+        <meta
+          name="description"
+          content="Written Results | GRS CBT"
+        />
       </Head>
       <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
@@ -105,8 +105,7 @@ const Results: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={setSelectedClass}
               />
@@ -119,8 +118,7 @@ const Results: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={setSelectedExam}
               />
@@ -136,7 +134,11 @@ const Results: NextPage = () => {
                 <thead className="bg-gray-200 text-gray-700">
                   <tr>
                     {["Student", "Score", "Date"].map((i) => (
-                      <th key={i} scope="col" className="py-5">
+                      <th
+                        key={i}
+                        scope="col"
+                        className="py-5"
+                      >
                         <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                           {i}
                         </span>
@@ -168,15 +170,10 @@ const Results: NextPage = () => {
                           <span>{student.name.full}</span>
                         </div>
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {results[0].score}
-                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">{results[0].score}</td>
                       <td className="whitespace-nowrap px-6 py-4">
                         {(() => {
-                          const date = formatRelative(
-                            new Date(results[0].started),
-                            new Date()
-                          );
+                          const date = formatRelative(new Date(results[0].started), new Date());
                           return date[0].toUpperCase() + date.slice(1);
                         })()}
                       </td>

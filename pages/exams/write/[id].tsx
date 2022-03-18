@@ -7,20 +7,10 @@ import useSWRImmutable from "swr/immutable";
 import { BanIcon, BellIcon, DatabaseIcon } from "@heroicons/react/outline";
 
 import { useNotifications } from "components/Misc/Notification";
-import {
-  Bar,
-  Grid,
-  Loader,
-  Modal,
-  Timer,
-  Question,
-} from "components/Exam/Student";
+import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Student";
 
 import type { ClientResponse, RouteData, UserRecord } from "types";
-import type {
-  StudentExamGETData,
-  StudentResultPOSTData,
-} from "types/api/students";
+import type { StudentExamGETData, StudentResultPOSTData } from "types/api/students";
 
 type PageCookies = {
   exam?: {
@@ -34,17 +24,14 @@ type PageCookies = {
 const WriteExam: NextPage = () => {
   const [addNotification, , Notifications] = useNotifications();
   const router = useRouter();
-  const [cookies, setCookies, removeCookies] = useCookies<
-    "exam" | "account" | "timeBounds",
-    PageCookies
-  >(["exam", "account", "timeBounds"]);
-  const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>(
-    {}
-  );
+  const [cookies, setCookies, removeCookies] = useCookies<"exam" | "account" | "timeBounds", PageCookies>([
+    "exam",
+    "account",
+    "timeBounds",
+  ]);
+  const [answered, setAnswered] = useState<{ [QuestionId: string]: string }>({});
   const { data: exam } = useSWRImmutable<RouteData<StudentExamGETData>>(
-    router.query.id !== undefined
-      ? `/api/students/${cookies.account?._id}/exams/${router.query.id}/`
-      : null,
+    router.query.id !== undefined ? `/api/students/${cookies.account?._id}/exams/${router.query.id}/` : null,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
 
@@ -95,11 +82,7 @@ const WriteExam: NextPage = () => {
 
   useEffect(() => {
     const { answers, examId } = cookies.exam ?? { answers: {} };
-    if (
-      firstLoad &&
-      examId === router.query.id &&
-      Object.keys(answers).length > 0
-    ) {
+    if (firstLoad && examId === router.query.id && Object.keys(answers).length > 0) {
       setFirstLoad(false);
       setAnswered(answers);
     }
@@ -113,15 +96,11 @@ const WriteExam: NextPage = () => {
     setSuccess(-1);
 
     try {
-      const res = await fetch(
-        `/api/students/${cookies.account?._id}/cbt_results/`,
-        {
-          method: "POST",
-          body: JSON.stringify(cookies.exam),
-        }
-      );
-      const result =
-        (await res.json()) as ClientResponse<StudentResultPOSTData>;
+      const res = await fetch(`/api/students/${cookies.account?._id}/cbt_results/`, {
+        method: "POST",
+        body: JSON.stringify(cookies.exam),
+      });
+      const result = (await res.json()) as ClientResponse<StudentResultPOSTData>;
 
       if (result.success) {
         setSuccess(1);
@@ -156,11 +135,13 @@ const WriteExam: NextPage = () => {
     <>
       <Head>
         <title>
-          {exam?.data.details.name.class}{" "}
-          {exam?.data.details.name.subject ?? "Loading"} |{" "}
-          {cookies.account?.name.full} | Exam | CBT | Grand Regal School
+          {exam?.data.details.name.class} {exam?.data.details.name.subject ?? "Loading"} | {cookies.account?.name.full}{" "}
+          | Exam | CBT | Grand Regal School
         </title>
-        <meta name="description" content="Subject Exam | GRS CBT" />
+        <meta
+          name="description"
+          content="Subject Exam | GRS CBT"
+        />
         <style>{`
                     #main,
                     body { overflow: unset !important; }

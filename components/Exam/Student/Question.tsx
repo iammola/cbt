@@ -3,17 +3,10 @@ import { FunctionComponent } from "react";
 import { Answer } from ".";
 import type { StudentQuestionProps } from "types";
 
-const Question: FunctionComponent<StudentQuestionProps> = ({
-  chosen,
-  question,
-  answers,
-  onAnswer,
-}) => {
+const Question: FunctionComponent<StudentQuestionProps> = ({ chosen, question, answers, onAnswer }) => {
   return (
     <div className="w-full rounded-xl bg-white pt-8 pb-3 pr-7 pl-4 shadow-sm">
-      <p className="w-full rounded-t py-3 pl-4 pr-10 text-sm font-medium text-gray-700">
-        {question}
-      </p>
+      <p className="w-full rounded-t py-3 pl-4 pr-10 text-sm font-medium text-gray-700">{question}</p>
       <ul className="mb-5 flex w-full flex-col items-start justify-start gap-1 pl-4">
         {answers.map((answer, answerIdx) => (
           <li

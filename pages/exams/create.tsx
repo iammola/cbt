@@ -8,7 +8,10 @@ const CreateExams: NextPage = () => {
     <>
       <Head>
         <title>Create Exam | CBT | Grand Regal School</title>
-        <meta name="description" content="Exam Registration | GRS CBT" />
+        <meta
+          name="description"
+          content="Exam Registration | GRS CBT"
+        />
       </Head>
       <Form />
     </>

@@ -1,13 +1,9 @@
-import {
-  RecordId,
-  ExamRecord,
-  UserRecord,
-  ResultRecord,
-  StudentRecord,
-  SubjectRecord,
-} from "types";
+import { ResultGrade } from "types/models";
+import { RecordId, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
-export type StudentsPOSTData = Pick<UserRecord, "code">;
+export type StudentsGETData = StudentRecord[];
+
+export type StudentsPOSTData = Pick<StudentRecord, "code">;
 
 export type StudentResultPOSTData = {
   score: number;
@@ -38,10 +34,7 @@ export type StudentExamGETData = RecordId & {
   };
 };
 
-export type StudentResultSubjectGETData = Omit<
-  ResultRecord["data"][number],
-  "subject"
->;
+export type StudentResultSubjectGETData = Omit<ResultRecord["data"][number], "subject">;
 
 export type StudentResultSubjectPOSTData = {
   ok: boolean;
@@ -54,3 +47,21 @@ export type StudentCommentPOSTData = { ok: boolean };
 export type StudentSubjectsGETData = Pick<SubjectRecord, "_id" | "name">[];
 
 export type StudentResultGETData = Pick<ResultRecord, "comments" | "data">;
+
+export type StudentTranscriptGETData = {
+  grading: ResultGrade[];
+  scores: Record<string, TranscriptScore[]>;
+  sessions: (Pick<SessionRecord, "_id" | "name"> & { termsCount?: number })[];
+};
+
+export type TranscriptScore = {
+  score?: number;
+  grade?: string;
+  termsCount: number;
+  session: RecordId["_id"];
+};
+
+type TranscriptTermScore = {
+  term: RecordId["_id"];
+  subjects: Record<string, number | undefined>;
+};

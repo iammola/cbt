@@ -2,6 +2,18 @@ import type { ObjectId } from "bson";
 
 type RecordId = { _id: ObjectId };
 
+type ResultGrade = {
+  limit: number;
+  grade: string;
+  description: string;
+};
+
+type ResultFields = RecordId & {
+  max: number;
+  name: string;
+  alias: string;
+};
+
 /* Class and Subject */
 
 export type ClassRecord = RecordId & {
@@ -15,16 +27,8 @@ export type ClassRecord = RecordId & {
 
 export type ClassResultTemplate = {
   term: ObjectId;
-  fields: (RecordId & {
-    max: number;
-    name: string;
-    alias: string;
-  })[];
-  scheme: {
-    limit: number;
-    grade: string;
-    description: string;
-  }[];
+  scheme: ResultGrade[];
+  fields: ResultFields[];
 };
 
 export type SubjectRecord = RecordId & {
@@ -53,9 +57,7 @@ type UserRecord<T = never> = RecordId & {
   code: number;
 };
 
-export type TeacherRecord = UserRecord<
-  "Mr." | "Mrs." | "Ms." | "Dr." | "Master"
->;
+export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
 
 export type StudentRecord = UserRecord & {
   birthday: Date;
@@ -127,6 +129,7 @@ export type CBTResultRecord<P = false> = RecordId & {
 };
 
 export type ResultRecord = RecordId & {
+  term: ObjectId;
   student: ObjectId;
   comments: string;
   data: {
@@ -152,4 +155,11 @@ export type TermRecord = RecordId & {
   name: string;
   alias: string;
   current?: boolean;
+};
+
+/* Settings */
+
+export type SettingsRecord = RecordId & {
+  active?: true;
+  transcriptGrade: ResultGrade[];
 };

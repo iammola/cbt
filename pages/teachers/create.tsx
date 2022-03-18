@@ -11,13 +11,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
-import type {
-  ClassRecord,
-  ClientResponse,
-  RouteData,
-  RouteError,
-  SubjectRecord,
-} from "types";
+import type { ClassRecord, ClientResponse, RouteData, RouteError, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {
   const [addNotification, , Notifications] = useNotifications();
@@ -56,25 +50,23 @@ const CreateTeachers: NextPage = () => {
     []
   );
 
-  const { data: classes, error } = useSWR<
-    RouteData<ClassesGETData>,
-    RouteError
-  >("/api/classes/?select=name", (url) => fetch(url).then((res) => res.json()));
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
+  );
 
   const [selectedSubjects, setSelectedSubjects] = useState<{
     [key: string]: string[];
   }>({});
-  const [subjectsData, setSubjectsData] = useState<
-    { _id: string; name: string; subjects: SubjectRecord[] }[] | string
-  >("");
+  const [subjectsData, setSubjectsData] = useState<{ _id: string; name: string; subjects: SubjectRecord[] }[] | string>(
+    ""
+  );
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
 
   useEffect(() => {
     if (typeof subjectsData === "string") {
-      if (error !== undefined && classes === undefined)
-        setSubjectsData("⚠️ Error loading subjects");
+      if (error !== undefined && classes === undefined) setSubjectsData("⚠️ Error loading subjects");
       else if (classes === undefined) setSubjectsData("Loading classes...");
       else setSubjectsData("Loading subjects...");
     }
@@ -84,19 +76,16 @@ const CreateTeachers: NextPage = () => {
     async function fetchSubjects() {
       try {
         const data = await Promise.all(
-          (classes?.data as Pick<ClassRecord, "_id" | "name">[]).map(
-            async ({ _id, name }) => {
-              const res = await fetch(`/api/classes/${_id}/subjects`);
-              const result =
-                (await res.json()) as ClientResponse<ClassSubjectGETData>;
+          (classes?.data as Pick<ClassRecord, "_id" | "name">[]).map(async ({ _id, name }) => {
+            const res = await fetch(`/api/classes/${_id}/subjects`);
+            const result = (await res.json()) as ClientResponse<ClassSubjectGETData>;
 
-              return {
-                _id: _id.toString(),
-                name,
-                subjects: result.success ? result.data?.subjects ?? [] : [],
-              };
-            }
-          )
+            return {
+              _id: _id.toString(),
+              name,
+              subjects: result.success ? result.data?.subjects ?? [] : [],
+            };
+          })
         );
         setSubjectsData(data.filter(({ subjects }) => subjects.length > 0));
       } catch (error: any) {
@@ -150,7 +139,10 @@ const CreateTeachers: NextPage = () => {
     <>
       <Head>
         <title>Create Teacher Profile | CBT | Grand Regal School</title>
-        <meta name="description" content="Teacher Registration | GRS CBT" />
+        <meta
+          name="description"
+          content="Teacher Registration | GRS CBT"
+        />
       </Head>
       <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-purple-400 to-pink-500 p-10">
         <form
@@ -158,8 +150,7 @@ const CreateTeachers: NextPage = () => {
           className="flex min-w-min max-w-[75%] flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
         >
           <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create a</span>{" "}
-            <span className="text-pink-500">Teacher Profile</span>
+            <span>Create a</span> <span className="text-pink-500">Teacher Profile</span>
           </h1>
           <div className="flex w-full flex-col gap-2.5">
             <label
@@ -261,15 +252,16 @@ const CreateTeachers: NextPage = () => {
             />
           </div>
           <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
-            <span className="text-sm font-semibold text-gray-600">
-              Subjects
-            </span>
+            <span className="text-sm font-semibold text-gray-600">Subjects</span>
             <div className="flex w-full flex-col gap-y-4">
               {typeof subjectsData === "string" ? (
                 <span className="text-center text-sm">{subjectsData}</span>
               ) : subjectsData.length > 0 ? (
                 subjectsData.map(({ _id: classID, name, subjects }) => (
-                  <div key={classID} className="flex flex-col gap-2">
+                  <div
+                    key={classID}
+                    className="flex flex-col gap-2"
+                  >
                     <span className="flex w-full items-center justify-start gap-3 text-xs font-medium text-gray-600">
                       {name}
                       <label
@@ -282,13 +274,10 @@ const CreateTeachers: NextPage = () => {
                           className="accent-pink-500"
                           ref={(e) => {
                             if (e !== null) {
-                              e.checked =
-                                selectedSubjects[classID]?.length ===
-                                subjects.length;
+                              e.checked = selectedSubjects[classID]?.length === subjects.length;
                               e.indeterminate =
                                 selectedSubjects[classID]?.length > 0 &&
-                                selectedSubjects[classID]?.length <
-                                  subjects.length;
+                                selectedSubjects[classID]?.length < subjects.length;
                             }
                           }}
                           onChange={(e) =>
@@ -296,14 +285,10 @@ const CreateTeachers: NextPage = () => {
                               e.target.checked
                                 ? {
                                     ...selectedSubjects,
-                                    [classID]: subjects.map(({ _id }) =>
-                                      _id.toString()
-                                    ),
+                                    [classID]: subjects.map(({ _id }) => _id.toString()),
                                   }
                                 : Object.fromEntries(
-                                    Object.entries(selectedSubjects).filter(
-                                      ([key]) => key !== classID
-                                    )
+                                    Object.entries(selectedSubjects).filter(([key]) => key !== classID)
                                   )
                             )
                           }
@@ -322,32 +307,21 @@ const CreateTeachers: NextPage = () => {
                             id={_id.toString()}
                             type="checkbox"
                             className="accent-pink-500"
-                            checked={(selectedSubjects[classID] ?? []).includes(
-                              _id.toString()
-                            )}
+                            checked={(selectedSubjects[classID] ?? []).includes(_id.toString())}
                             onChange={({ target: { checked } }) => {
                               checked
                                 ? setSelectedSubjects({
                                     ...selectedSubjects,
-                                    [classID]: [
-                                      ...(selectedSubjects[classID] ?? []),
-                                      _id.toString(),
-                                    ],
+                                    [classID]: [...(selectedSubjects[classID] ?? []), _id.toString()],
                                   })
                                 : setSelectedSubjects(
                                     Object.fromEntries(
                                       Object.entries(selectedSubjects)
                                         .map(([key, selected]) => [
                                           key,
-                                          key === classID
-                                            ? selected.filter(
-                                                (i) => i !== _id.toString()
-                                              )
-                                            : selected,
+                                          key === classID ? selected.filter((i) => i !== _id.toString()) : selected,
                                         ])
-                                        .filter(
-                                          ([, selected]) => selected.length > 0
-                                        )
+                                        .filter(([, selected]) => selected.length > 0)
                                     )
                                   );
                             }}
@@ -368,18 +342,13 @@ const CreateTeachers: NextPage = () => {
             className={classNames(
               "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
-                "bg-pink-400 hover:bg-pink-500 focus:ring-pink-500":
-                  success === undefined,
-                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success,
-                "bg-red-400 hover:bg-red-500 focus:ring-red-500":
-                  success === false,
+                "bg-pink-400 hover:bg-pink-500 focus:ring-pink-500": success === undefined,
+                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+                "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
               }
             )}
           >
-            {loading && (
-              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-            )}
+            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
             {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Profile

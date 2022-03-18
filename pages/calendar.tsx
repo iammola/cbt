@@ -22,10 +22,7 @@ import type { EventsRangeGETData } from "types/api/events";
 const Calendar: NextPage = () => {
   const activeYear = useMemo(() => 2021, []);
   const selectedColors = useMemo<{ [key: string]: string }>(() => ({}), []);
-  const days = useMemo(
-    () => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    []
-  );
+  const days = useMemo(() => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], []);
   const colors = useMemo(
     () => [
       "bg-amber-400",
@@ -58,9 +55,7 @@ const Calendar: NextPage = () => {
     []
   );
 
-  const [selectedMonth, setSelectedMonth] = useState(
-    new Date(activeYear, new Date().getMonth()).getMonth()
-  );
+  const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
   const [datesObj, setDatesObj] = useState<{
     dates: number[];
     range: number[];
@@ -70,9 +65,7 @@ const Calendar: NextPage = () => {
   }>();
 
   const { data: events } = useSWR<RouteData<EventsRangeGETData>>(
-    datesObj !== undefined
-      ? `/api/events/range/?from=${datesObj.range[0]}&to=${datesObj.range[1]}`
-      : null,
+    datesObj !== undefined ? `/api/events/range/?from=${datesObj.range[0]}&to=${datesObj.range[1]}` : null,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
 
@@ -89,8 +82,7 @@ const Calendar: NextPage = () => {
     if (start > 0) {
       const lastMonth = subMonths(date, 1);
       range.push(lastMonth.getTime());
-      for (let i = 1; i <= start; i++)
-        dates.push(getDaysInMonth(lastMonth) - start + i);
+      for (let i = 1; i <= start; i++) dates.push(getDaysInMonth(lastMonth) - start + i);
     }
 
     for (let i = 1; i <= getDaysInMonth(date); i++) dates.push(i);
@@ -116,9 +108,7 @@ const Calendar: NextPage = () => {
       start,
       range,
       today: dates.findIndex(
-        (b, i) =>
-          b === today.getDate() &&
-          (i >= thisMonthRange.start || i <= thisMonthRange.start)
+        (b, i) => b === today.getDate() && (i >= thisMonthRange.start || i <= thisMonthRange.start)
       ),
     });
   }, [activeYear, selectedMonth]);
@@ -131,35 +121,28 @@ const Calendar: NextPage = () => {
     <>
       <Head>
         <title>Calendar | CBT | Grand Regal School</title>
-        <meta name="description" content="Calendar | GRS CBT" />
+        <meta
+          name="description"
+          content="Calendar | GRS CBT"
+        />
       </Head>
       <section className="flex h-screen w-screen flex-col items-start justify-start overflow-hidden bg-neutral-800 py-3 px-5">
         <div className="flex w-full items-center justify-between">
           <h2 className="text-5xl">
-            <span className="font-bold text-gray-100">
-              {months[selectedMonth]}
-            </span>{" "}
+            <span className="font-bold text-gray-100">{months[selectedMonth]}</span>{" "}
             <span className="font-normal text-gray-200">{activeYear}</span>
           </h2>
           <div className="flex items-center justify-center">
             <button
               type="button"
-              onClick={() =>
-                setSelectedMonth(
-                  selectedMonth > 0 ? selectedMonth - 1 : selectedMonth
-                )
-              }
+              onClick={() => setSelectedMonth(selectedMonth > 0 ? selectedMonth - 1 : selectedMonth)}
               className="rounded-tl-md rounded-bl-md bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none"
             >
               <ChevronLeftIcon className="h-5 w-5 fill-neutral-500" />
             </button>
             <button
               type="button"
-              onClick={() =>
-                setSelectedMonth(
-                  selectedMonth < 11 ? selectedMonth + 1 : selectedMonth
-                )
-              }
+              onClick={() => setSelectedMonth(selectedMonth < 11 ? selectedMonth + 1 : selectedMonth)}
               className="rounded-tr-md rounded-br-md bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none"
             >
               <ChevronRightIcon className="h-5 w-5 fill-neutral-500" />
@@ -193,16 +176,11 @@ const Calendar: NextPage = () => {
                   ({ date }) =>
                     startOfDay(new Date(date)).getTime() ===
                     setDate(
-                      subMonths(
-                        new Date(activeYear, selectedMonth),
-                        isPreviousMonth ? 1 : isNextMonth ? -1 : 0
-                      ),
+                      subMonths(new Date(activeYear, selectedMonth), isPreviousMonth ? 1 : isNextMonth ? -1 : 0),
                       d
                     ).getTime()
                 ) ?? [];
-              const eventsLength = dateEvents
-                .map(({ events }) => events.length)
-                .reduce((a, b) => a + b, 0);
+              const eventsLength = dateEvents.map(({ events }) => events.length).reduce((a, b) => a + b, 0);
 
               return (
                 <div
@@ -223,8 +201,7 @@ const Calendar: NextPage = () => {
                     className={classNames(
                       "-mt-1 -mr-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-center",
                       {
-                        "bg-red-500 text-sm font-semibold text-gray-800":
-                          i === datesObj.today,
+                        "bg-red-500 text-sm font-semibold text-gray-800": i === datesObj.today,
                       }
                     )}
                   >
@@ -242,19 +219,14 @@ const Calendar: NextPage = () => {
                               aria-hidden="true"
                               className={classNames(
                                 "h-1.5 w-1.5 shrink-0 rounded-full",
-                                (selectedColors[event.split(" ", 1)[0]] ??=
-                                  colors.splice(
-                                    Math.floor(Math.random() * colors.length),
-                                    1
-                                  )[0])
+                                (selectedColors[event.split(" ", 1)[0]] ??= colors.splice(
+                                  Math.floor(Math.random() * colors.length),
+                                  1
+                                )[0])
                               )}
                             />
-                            <span className="block grow truncate text-xs tracking-wide text-gray-50">
-                              {event}
-                            </span>
-                            <span className="shrink-0 text-[0.625rem] tracking-wider text-gray-200">
-                              {time}
-                            </span>
+                            <span className="block grow truncate text-xs tracking-wide text-gray-50">{event}</span>
+                            <span className="shrink-0 text-[0.625rem] tracking-wider text-gray-200">{time}</span>
                           </div>
                         ))
                       )

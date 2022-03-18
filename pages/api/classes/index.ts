@@ -7,9 +7,7 @@ import { ClassModel } from "db/models";
 import type { ServerResponse, ClassRecord } from "types";
 import type { ClassesGETData, ClassesPOSTData } from "types/api/classes";
 
-async function getClasses(
-  select: string = ""
-): Promise<ServerResponse<ClassesGETData>> {
+async function getClasses(select: string = ""): Promise<ServerResponse<ClassesGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassesGETData> = [
     false,
@@ -40,9 +38,7 @@ async function getClasses(
   return [success, status, message];
 }
 
-async function createClass(
-  item: ClassRecord
-): Promise<ServerResponse<ClassesPOSTData>> {
+async function createClass(item: ClassRecord): Promise<ServerResponse<ClassesPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassesPOSTData> = [
     false,
@@ -73,13 +69,8 @@ async function createClass(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query, body }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    ClassesPOSTData | ClassesGETData
-  > = [
+export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<ClassesPOSTData | ClassesGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -88,10 +79,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? createClass(JSON.parse(body))

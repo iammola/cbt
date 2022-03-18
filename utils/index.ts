@@ -1,25 +1,13 @@
-export function classNames(
-  ...arg: (string | string[] | { [key: string]: any } | null | undefined)[]
-): string {
+export function classNames(...arg: (string | string[] | { [key: string]: any } | null | undefined)[]): string {
   return [
-    arg.filter((item) => Array.isArray(item) || typeof item === "string") as (
-      | string
-      | string[]
-    )[],
-    (
-      arg.filter(
-        (item) => !Array.isArray(item) && typeof item === "object"
-      ) as { [key: string]: any }[]
-    ).reduce((acc: string[], obj: any) => {
-      acc.push(
-        Object.keys(
-          Object.fromEntries(
-            Object.entries(obj ?? {}).filter((i) => Boolean(i[1]))
-          )
-        ).join(" ")
-      );
-      return acc;
-    }, []),
+    arg.filter((item) => Array.isArray(item) || typeof item === "string") as (string | string[])[],
+    (arg.filter((item) => !Array.isArray(item) && typeof item === "object") as { [key: string]: any }[]).reduce(
+      (acc: string[], obj: any) => {
+        acc.push(Object.keys(Object.fromEntries(Object.entries(obj ?? {}).filter((i) => Boolean(i[1])))).join(" "));
+        return acc;
+      },
+      []
+    ),
   ]
     .flat()
     .join(" ");
@@ -34,16 +22,9 @@ export function generateCode() {
  * @param iterable promise return value
  * @returns The first Promise that resolves or an Error if they all reject
  */
-export function promiseAny<T>(
-  iterable: Iterable<T | PromiseLike<T>>
-): Promise<T> {
+export function promiseAny<T>(iterable: Iterable<T | PromiseLike<T>>): Promise<T> {
   return Promise.all(
-    [...iterable].map(
-      (promise) =>
-        new Promise((resolve, reject) =>
-          Promise.resolve(promise).then(reject, resolve)
-        )
-    )
+    [...iterable].map((promise) => new Promise((resolve, reject) => Promise.resolve(promise).then(reject, resolve)))
   ).then(
     (errors) => Promise.reject(errors),
     (value) => Promise.resolve<T>(value)

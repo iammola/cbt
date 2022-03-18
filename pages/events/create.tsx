@@ -10,12 +10,7 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
 import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
-import type {
-  ClientResponse,
-  RouteData,
-  RouteError,
-  SelectOption,
-} from "types";
+import type { ClientResponse, RouteData, RouteError, SelectOption } from "types";
 import { EventsGETData } from "types/api/events";
 
 const CreateEvent: NextPage = () => {
@@ -30,10 +25,9 @@ const CreateEvent: NextPage = () => {
   });
 
   const [exams, setExams] = useState<SelectOption[]>();
-  const { data: classes, error } = useSWR<
-    RouteData<ClassesGETData>,
-    RouteError
-  >("/api/classes/?select=name", (url) => fetch(url).then((res) => res.json()));
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
+  );
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
@@ -108,7 +102,10 @@ const CreateEvent: NextPage = () => {
     <>
       <Head>
         <title>Create Event | CBT | Grand Regal School</title>
-        <meta name="description" content="Event Registration | GRS CBT" />
+        <meta
+          name="description"
+          content="Event Registration | GRS CBT"
+        />
       </Head>
       <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 p-10">
         <form
@@ -116,8 +113,7 @@ const CreateEvent: NextPage = () => {
           className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
         >
           <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create an</span>{" "}
-            <span className="text-violet-500">Event</span>
+            <span>Create an</span> <span className="text-violet-500">Event</span>
           </h1>
           <Select
             label="Classes"
@@ -167,18 +163,13 @@ const CreateEvent: NextPage = () => {
             className={classNames(
               "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
-                "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500":
-                  success === undefined,
-                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success,
-                "bg-red-400 hover:bg-red-500 focus:ring-red-500":
-                  success === false,
+                "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500": success === undefined,
+                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+                "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
               }
             )}
           >
-            {loading && (
-              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-            )}
+            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
             {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Event

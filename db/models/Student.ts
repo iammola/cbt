@@ -42,10 +42,7 @@ const StudentSchema = new Schema<StudentRecord>({
     type: String,
     trim: true,
     lowercase: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/,
-      "Please fill a valid email address",
-    ],
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "Please fill a valid email address"],
   },
   academic: [
     {
@@ -63,8 +60,7 @@ const StudentSchema = new Schema<StudentRecord>({
             subjects: [Schema.Types.ObjectId],
           },
           validate: [
-            (v: StudentRecord["academic"]) =>
-              v.every((i) => i.terms.length > 0),
+            (v: StudentRecord["academic"]) => v.every((i) => i.terms.length > 0),
             "At least one term required",
           ],
         },
@@ -83,5 +79,4 @@ const StudentSchema = new Schema<StudentRecord>({
   },
 });
 
-export const StudentModel =
-  (models.Student as Model<StudentRecord>) ?? model("Student", StudentSchema);
+export const StudentModel = (models.Student as Model<StudentRecord>) ?? model("Student", StudentSchema);

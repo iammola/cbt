@@ -33,6 +33,4 @@ const SubjectsSchema = new Schema<SubjectsRecord>({
   subjects: [SubjectSchema],
 });
 
-export const SubjectsModel =
-  (models.Subjects as Model<SubjectsRecord>) ??
-  model("Subjects", SubjectsSchema);
+export const SubjectsModel = (models.Subjects as Model<SubjectsRecord>) ?? model("Subjects", SubjectsSchema);

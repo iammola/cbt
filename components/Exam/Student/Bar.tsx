@@ -6,9 +6,8 @@ import { ChevronRightIcon } from "@heroicons/react/solid";
 import type { StudentBarProps } from "types/components";
 
 const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
-  const { data: currentSession } = useSWRImmutable(
-    "/api/sessions/current/",
-    (url) => fetch(url).then((res) => res.json())
+  const { data: currentSession } = useSWRImmutable("/api/sessions/current/", (url) =>
+    fetch(url).then((res) => res.json())
   );
 
   return (
@@ -19,8 +18,7 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
             currentSession.data !== null ? (
               <>
                 <span className="inline-block sm:hidden">
-                  {currentSession.data.alias}{" "}
-                  {currentSession.data.terms[0].alias}
+                  {currentSession.data.alias} {currentSession.data.terms[0].alias}
                 </span>
                 <span className="hidden sm:inline-block">
                   {currentSession.data.name} {currentSession.data.terms[0].name}
@@ -35,17 +33,11 @@ const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
           )}
         </span>
         <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
-        <span className="block w-max truncate">
-          {exam?.class ?? "Loading Class"}
-        </span>
+        <span className="block w-max truncate">{exam?.class ?? "Loading Class"}</span>
         <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
-        <span className="block w-max truncate">
-          {exam?.subject ?? "Loading Subject"}
-        </span>
+        <span className="block w-max truncate">{exam?.subject ?? "Loading Subject"}</span>
         <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
-        <span className="text-gray-600">
-          {format(new Date(), "EEEE do MMM, yyyy")}
-        </span>
+        <span className="text-gray-600">{format(new Date(), "EEEE do MMM, yyyy")}</span>
       </div>
       <button
         type="button"

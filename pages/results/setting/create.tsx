@@ -8,10 +8,7 @@ import { BadgeCheckIcon, BanIcon } from "@heroicons/react/outline";
 import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
 
-import type {
-  ClassesGETData,
-  ClassResultSettingsPOSTData,
-} from "types/api/classes";
+import type { ClassesGETData, ClassResultSettingsPOSTData } from "types/api/classes";
 import type { ClassResultTemplate, ClientResponse, RouteData } from "types";
 
 type Fields = Omit<ClassResultTemplate["fields"][number], "_id" | "max"> & {
@@ -42,9 +39,8 @@ const CreateScheme: NextPage = () => {
     },
   ]);
 
-  const { data: classes } = useSWR<RouteData<ClassesGETData>>(
-    "/api/classes/?select=name",
-    (url) => fetch(url).then((res) => res.json())
+  const { data: classes } = useSWR<RouteData<ClassesGETData>>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
   );
 
   function verifyFields() {
@@ -103,26 +99,20 @@ const CreateScheme: NextPage = () => {
 
     if (notifications.length === 0) {
       try {
-        const res = await fetch(
-          `/api/classes/${selectedClass._id}/results/setting`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              fields,
-              scheme: scheme.sort((a, b) => +a.limit - +b.limit),
-            }),
-          }
-        );
-        const result =
-          (await res.json()) as ClientResponse<ClassResultSettingsPOSTData>;
+        const res = await fetch(`/api/classes/${selectedClass._id}/results/setting`, {
+          method: "POST",
+          body: JSON.stringify({
+            fields,
+            scheme: scheme.sort((a, b) => +a.limit - +b.limit),
+          }),
+        });
+        const result = (await res.json()) as ClientResponse<ClassResultSettingsPOSTData>;
 
         if (result.success)
           addNotifications({
             timeout: 5e3,
             message: "Success",
-            Icon: () => (
-              <BadgeCheckIcon className="h-6 w-6 stroke-emerald-500" />
-            ),
+            Icon: () => <BadgeCheckIcon className="h-6 w-6 stroke-emerald-500" />,
           });
         else throw new Error(result.error);
       } catch (error: any) {
@@ -135,7 +125,10 @@ const CreateScheme: NextPage = () => {
     <>
       <Head>
         <title>Create Scheme | Portal | Grand Regal School</title>
-        <meta name="description" content="Create Scheme | GRS Portal" />
+        <meta
+          name="description"
+          content="Create Scheme | GRS Portal"
+        />
       </Head>
       <section className="flex min-h-screen w-screen items-center justify-center bg-gray-300 p-10">
         <form
@@ -143,8 +136,7 @@ const CreateScheme: NextPage = () => {
           className="flex flex-col gap-2 rounded-3xl bg-white p-8 shadow-lg"
         >
           <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create a</span>{" "}
-            <span className="text-stone-500">Result Setting</span>
+            <span>Create a</span> <span className="text-stone-500">Result Setting</span>
           </h1>
           <Select
             label="Class"
@@ -160,9 +152,7 @@ const CreateScheme: NextPage = () => {
             handleChange={setSelectedClass}
           />
           <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
-            <span className="text-sm font-semibold text-gray-600">
-              Marking Scheme
-            </span>
+            <span className="text-sm font-semibold text-gray-600">Marking Scheme</span>
             {scheme.map((s, p, a) => (
               <div
                 key={s.limit}
@@ -173,13 +163,7 @@ const CreateScheme: NextPage = () => {
                   type="text"
                   value={s.grade}
                   placeholder="Grade"
-                  onChange={(e) =>
-                    setScheme(
-                      a.map((s, j) =>
-                        j === p ? { ...s, grade: e.target.value } : s
-                      )
-                    )
-                  }
+                  onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, grade: e.target.value } : s)))}
                   className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
                 />
                 <input
@@ -187,13 +171,7 @@ const CreateScheme: NextPage = () => {
                   type="text"
                   value={s.description}
                   placeholder="Description"
-                  onChange={(e) =>
-                    setScheme(
-                      a.map((s, j) =>
-                        j === p ? { ...s, description: e.target.value } : s
-                      )
-                    )
-                  }
+                  onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, description: e.target.value } : s)))}
                   className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
@@ -202,13 +180,7 @@ const CreateScheme: NextPage = () => {
                   type="number"
                   value={s.limit}
                   placeholder="Upper Limit"
-                  onChange={(e) =>
-                    setScheme(
-                      a.map((s, j) =>
-                        j === p ? { ...s, limit: +e.target.value } : s
-                      )
-                    )
-                  }
+                  onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, limit: +e.target.value } : s)))}
                   className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
                 />
                 {a.length > 1 && (
@@ -223,21 +195,14 @@ const CreateScheme: NextPage = () => {
             ))}
             <button
               type="button"
-              onClick={() =>
-                setScheme([
-                  ...scheme,
-                  { grade: "", description: "", limit: "" },
-                ])
-              }
+              onClick={() => setScheme([...scheme, { grade: "", description: "", limit: "" }])}
               className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
             >
               Add Scheme
             </button>
           </div>
           <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
-            <span className="text-sm font-semibold text-gray-600">
-              Result Fields
-            </span>
+            <span className="text-sm font-semibold text-gray-600">Result Fields</span>
             {fields.map((f, b, a) => (
               <div
                 key={b}
@@ -248,13 +213,7 @@ const CreateScheme: NextPage = () => {
                   type="text"
                   value={f.name}
                   placeholder="Name"
-                  onChange={(e) =>
-                    setFields(
-                      a.map((s, j) =>
-                        j === b ? { ...s, name: e.target.value } : s
-                      )
-                    )
-                  }
+                  onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, name: e.target.value } : s)))}
                   className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
@@ -262,13 +221,7 @@ const CreateScheme: NextPage = () => {
                   type="text"
                   value={f.alias}
                   placeholder="Alias"
-                  onChange={(e) =>
-                    setFields(
-                      a.map((s, j) =>
-                        j === b ? { ...s, alias: e.target.value } : s
-                      )
-                    )
-                  }
+                  onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, alias: e.target.value } : s)))}
                   className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
                 />
                 <input
@@ -277,13 +230,7 @@ const CreateScheme: NextPage = () => {
                   type="number"
                   value={f.max}
                   placeholder="Max"
-                  onChange={(e) =>
-                    setFields(
-                      a.map((s, j) =>
-                        j === b ? { ...s, max: +e.target.value } : s
-                      )
-                    )
-                  }
+                  onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, max: +e.target.value } : s)))}
                   className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
                 />
                 {a.length > 1 && (
@@ -298,9 +245,7 @@ const CreateScheme: NextPage = () => {
             ))}
             <button
               type="button"
-              onClick={() =>
-                setFields([...fields, { name: "", alias: "", max: "" }])
-              }
+              onClick={() => setFields([...fields, { name: "", alias: "", max: "" }])}
               className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
             >
               Add Field

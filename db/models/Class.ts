@@ -75,5 +75,4 @@ const ClassSchema = new Schema<ClassRecord>({
   },
 });
 
-export const ClassModel =
-  (models.Class as Model<ClassRecord>) ?? model("Class", ClassSchema);
+export const ClassModel = (models.Class as Model<ClassRecord>) ?? model("Class", ClassSchema);

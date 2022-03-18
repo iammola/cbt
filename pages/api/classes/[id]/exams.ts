@@ -7,9 +7,7 @@ import { ExamModel, SessionModel, SubjectsModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { ClassExamGETData } from "types/api/classes";
 
-async function getExams(
-  classId: any
-): Promise<ServerResponse<ClassExamGETData>> {
+async function getExams(classId: any): Promise<ServerResponse<ClassExamGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassExamGETData> = [
     false,
@@ -19,16 +17,12 @@ async function getExams(
 
   try {
     const [currentSession, data] = await Promise.all([
-      SessionModel.findOne(
-        { "terms.current": true },
-        { "terms._id.$": true }
-      ).lean(),
+      SessionModel.findOne({ "terms.current": true }, { "terms._id.$": true }).lean(),
       SubjectsModel.findOne({ class: classId }, "-subjects.teachers").lean(),
     ]);
 
     if (data === null) throw new Error("Class does not exist");
-    if (currentSession === null)
-      throw new Error("Current Session does not exist");
+    if (currentSession === null) throw new Error("Current Session does not exist");
 
     const examsRecord = await ExamModel.find(
       {
@@ -38,8 +32,7 @@ async function getExams(
       "subjectId"
     ).lean();
     const exams = examsRecord.map(({ _id, subjectId }) => {
-      const { name = "", alias } =
-        data.subjects.find(({ _id }) => _id.equals(subjectId)) ?? {};
+      const { name = "", alias } = data.subjects.find(({ _id }) => _id.equals(subjectId)) ?? {};
       return { _id, name, alias };
     });
 
@@ -64,10 +57,7 @@ async function getExams(
   return [success, status, message];
 }
 
-export default async function handler(
-  { query, method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<ClassExamGETData> = [
     false,
     StatusCodes.BAD_REQUEST,
@@ -77,10 +67,7 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else [success, status, message] = await getExams(query.id);
 
   if (typeof message !== "object") message = { message, error: message };

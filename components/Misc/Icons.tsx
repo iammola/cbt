@@ -1,8 +1,6 @@
 import { FunctionComponent, ComponentProps } from "react";
 
-export const LoadingIcon: FunctionComponent<ComponentProps<"svg">> = (
-  props
-) => {
+export const LoadingIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -75,9 +73,7 @@ export const HomeIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const FileTextIcon: FunctionComponent<ComponentProps<"svg">> = (
-  props
-) => {
+export const FileTextIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -93,9 +89,7 @@ export const FileTextIcon: FunctionComponent<ComponentProps<"svg">> = (
   );
 };
 
-export const CommentTextIcon: FunctionComponent<ComponentProps<"svg">> = (
-  props
-) => {
+export const CommentTextIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -143,9 +137,7 @@ export const UsersIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const CalendarIcon: FunctionComponent<ComponentProps<"svg">> = (
-  props
-) => {
+export const CalendarIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}

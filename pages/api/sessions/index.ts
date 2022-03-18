@@ -7,9 +7,7 @@ import { SessionModel } from "db/models";
 import type { SessionRecord, ServerResponse } from "types";
 import type { SessionsGETData, SessionsPOSTData } from "types/api/sessions";
 
-async function getSessions(
-  select: string
-): Promise<ServerResponse<SessionsGETData>> {
+async function getSessions(select: string): Promise<ServerResponse<SessionsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<SessionsGETData> = [
     false,
@@ -40,9 +38,7 @@ async function getSessions(
   return [success, status, message];
 }
 
-async function createSession(
-  session: Omit<SessionRecord, "terms">
-): Promise<ServerResponse<SessionsPOSTData>> {
+async function createSession(session: Omit<SessionRecord, "terms">): Promise<ServerResponse<SessionsPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<SessionsPOSTData> = [
     false,
@@ -85,13 +81,8 @@ async function createSession(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query, body }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    SessionsPOSTData | SessionsGETData
-  > = [
+export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<SessionsPOSTData | SessionsGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -100,10 +91,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? createSession(JSON.parse(body))

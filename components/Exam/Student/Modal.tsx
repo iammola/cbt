@@ -6,15 +6,13 @@ import { LoadingIcon } from "components/Misc/Icons";
 
 import type { StudentModalProps } from "types";
 
-const Modal: FunctionComponent<StudentModalProps> = ({
-  forced,
-  show,
-  success,
-  close,
-  confirm,
-}) => {
+const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, close, confirm }) => {
   return (
-    <Transition show={show} appear as={Fragment}>
+    <Transition
+      appear
+      show={show}
+      as={Fragment}
+    >
       <Dialog
         as="section"
         onClose={close}
@@ -51,8 +49,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
                 </>
               ) : (
                 <>
-                  <span>You&apos;ve</span>{" "}
-                  <span className="text-blue-500">used up</span>{" "}
+                  <span>You&apos;ve</span> <span className="text-blue-500">used up</span>{" "}
                   <span>
                     your <br /> allocated time for this exam
                   </span>
@@ -75,9 +72,7 @@ const Modal: FunctionComponent<StudentModalProps> = ({
                 disabled={success === -1}
                 className="inline-flex justify-center gap-3 rounded-md border border-transparent bg-blue-500 px-5 py-3 text-sm font-medium tracking-wide text-white shadow-sm hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed"
               >
-                {success === -1 && (
-                  <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-                )}
+                {success === -1 && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
                 {success === 1 && <CheckIcon className="h-5 w-5 fill-white" />}
                 {success === 0 && <XIcon className="h-5 w-5 fill-white" />}
                 {!forced ? <>Yes, I&apos;m ready</> : <>Submit Exam</>}

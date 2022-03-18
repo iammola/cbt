@@ -13,18 +13,18 @@ const TeacherHome = dynamic(() => import("components/Home/Teacher"), {
 });
 
 const Home: NextPage = () => {
-  const [{ account }] = useCookies<"account", { account?: LoginData }>([
-    "account",
-  ]);
+  const [{ account }] = useCookies<"account", { account?: LoginData }>(["account"]);
 
   return (
     <>
       <Head>
         <title>Home | CBT | Grand Regal School</title>
-        <meta name="description" content="Home | GRS CBT" />
+        <meta
+          name="description"
+          content="Home | GRS CBT"
+        />
       </Head>
-      {account !== undefined &&
-        (account.access === "Teacher" ? <TeacherHome /> : <StudentHome />)}
+      {account !== undefined && (account.access === "Teacher" ? <TeacherHome /> : <StudentHome />)}
     </>
   );
 };

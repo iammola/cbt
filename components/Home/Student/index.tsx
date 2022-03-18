@@ -52,20 +52,20 @@ const Home: FunctionComponent = () => {
               )}
             >
               <span
-                className={classNames(
-                  "w-max font-semibold transition-all group-hover:text-gray-800",
-                  {
-                    "text-gray-500": activeTab !== label,
-                    "text-gray-800": activeTab === label,
-                  }
-                )}
+                className={classNames("w-max font-semibold transition-all group-hover:text-gray-800", {
+                  "text-gray-500": activeTab !== label,
+                  "text-gray-800": activeTab === label,
+                })}
               >
                 {label}
               </span>
             </div>
           ))}
         </div>
-        <Exams show={activeTab === "Exams"} addNotification={addNotification} />
+        <Exams
+          show={activeTab === "Exams"}
+          addNotification={addNotification}
+        />
         <Results show={activeTab === "Results"} />
       </div>
       {Notifications}

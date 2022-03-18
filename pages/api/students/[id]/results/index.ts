@@ -7,9 +7,7 @@ import { ResultModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { StudentResultGETData } from "types/api/students";
 
-async function getStudentResult(
-  student: any
-): Promise<ServerResponse<StudentResultGETData>> {
+async function getStudentResult({ id, term }: any): Promise<ServerResponse<StudentResultGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultGETData> = [
     false,
@@ -18,7 +16,7 @@ async function getStudentResult(
   ];
 
   try {
-    const data = await ResultModel.findOne({ student }, "-_id -student").lean();
+    const data = await ResultModel.findOne({ student: id, term }, "-_id -student").lean();
     if (data === null) throw new Error("Student has no result record");
 
     [success, status, message] = [
@@ -42,10 +40,7 @@ async function getStudentResult(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<StudentResultGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -55,11 +50,8 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
-  } else [success, status, message] = await getStudentResult(query.id);
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
+  } else [success, status, message] = await getStudentResult(query);
 
   if (typeof message !== "object") message = { message, error: message };
 

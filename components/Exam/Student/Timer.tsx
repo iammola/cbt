@@ -1,11 +1,7 @@
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FunctionComponent, useEffect, useState } from "react";
-import {
-  formatDuration,
-  intervalToDuration,
-  minutesToMilliseconds,
-} from "date-fns";
+import { formatDuration, intervalToDuration, minutesToMilliseconds } from "date-fns";
 
 import type { StudentTimerProps } from "types";
 
@@ -13,17 +9,10 @@ type PageCookie = {
   timeBounds: { left: number; start: number; examId: string };
 };
 
-const Timer: FunctionComponent<StudentTimerProps> = ({
-  started,
-  submit,
-  timeout,
-}) => {
+const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout }) => {
   const router = useRouter();
   const [displayTime, setDisplay] = useState("");
-  const [{ timeBounds }, setCookies] = useCookies<
-    "timeBounds",
-    Partial<PageCookie>
-  >(["timeBounds"]);
+  const [{ timeBounds }, setCookies] = useCookies<"timeBounds", Partial<PageCookie>>(["timeBounds"]);
   const [timeLeft, setTimeLeft] = useState(timeBounds?.left ?? 0);
 
   useEffect(() => {
@@ -33,12 +22,10 @@ const Timer: FunctionComponent<StudentTimerProps> = ({
         examId: router.query.id as string,
         left: minutesToMilliseconds(timeout ?? 1 / 12),
       };
-      if (displayTime === "" && timeBounds?.examId === obj.examId)
-        obj.left = timeBounds.left;
+      if (displayTime === "" && timeBounds?.examId === obj.examId) obj.left = timeBounds.left;
 
       if (obj.left > (timeBounds?.left ?? 0)) setTimeLeft(obj.left);
-      if (timeBounds === undefined)
-        setCookies("timeBounds", JSON.stringify(obj), { path: "/" });
+      if (timeBounds === undefined) setCookies("timeBounds", JSON.stringify(obj), { path: "/" });
     }
   }, [displayTime, router.query.id, setCookies, started, timeBounds, timeout]);
 

@@ -7,22 +7,16 @@ import { SubjectsModel } from "db/models";
 import type { ServerResponse, SubjectsRecord } from "types";
 import type { TeacherSubjectsExtendGETData } from "types/api/teachers";
 
-async function getExtendedTeacherSubjects(
-  id: any
-): Promise<ServerResponse<TeacherSubjectsExtendGETData>> {
+async function getExtendedTeacherSubjects(id: any): Promise<ServerResponse<TeacherSubjectsExtendGETData>> {
   await connect();
-  let [success, status, message]: ServerResponse<TeacherSubjectsExtendGETData> =
-    [
-      false,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      ReasonPhrases.INTERNAL_SERVER_ERROR,
-    ];
+  let [success, status, message]: ServerResponse<TeacherSubjectsExtendGETData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
   try {
-    const subjects: SubjectsRecord<true>[] = await SubjectsModel.find(
-      { "subjects.teachers": id },
-      "-_id"
-    )
+    const subjects: SubjectsRecord<true>[] = await SubjectsModel.find({ "subjects.teachers": id }, "-_id")
       .populate("class", "name")
       .lean();
 
@@ -33,9 +27,7 @@ async function getExtendedTeacherSubjects(
         data: subjects.map((cur) => ({
           name: cur.class.name,
           subjects: cur.subjects
-            .filter(({ teachers }) =>
-              teachers.find((teacher) => teacher.equals(id))
-            )
+            .filter(({ teachers }) => teachers.find((teacher) => teacher.equals(id)))
             .map(({ teachers, ...item }) => item),
         })),
         message: ReasonPhrases.OK,
@@ -54,26 +46,18 @@ async function getExtendedTeacherSubjects(
   return [success, status, message];
 }
 
-export default async function handler(
-  { query, method }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<TeacherSubjectsExtendGETData> =
-    [
-      false,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      ReasonPhrases.INTERNAL_SERVER_ERROR,
-    ];
+export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<TeacherSubjectsExtendGETData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
   const allowedMethods = "GET";
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
-  } else
-    [success, status, message] = await getExtendedTeacherSubjects(query.id);
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
+  } else [success, status, message] = await getExtendedTeacherSubjects(query.id);
 
   if (typeof message !== "object") message = { message, error: message };
 

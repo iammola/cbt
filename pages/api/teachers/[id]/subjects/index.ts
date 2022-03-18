@@ -7,9 +7,7 @@ import { SubjectsModel, TeacherModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { TeacherSubjectsGETData } from "types/api/teachers";
 
-async function getTeacherSubjects(
-  id: string
-): Promise<ServerResponse<TeacherSubjectsGETData>> {
+async function getTeacherSubjects(id: string): Promise<ServerResponse<TeacherSubjectsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<TeacherSubjectsGETData> = [
     false,
@@ -18,17 +16,10 @@ async function getTeacherSubjects(
   ];
 
   try {
-    const subjects = await SubjectsModel.find(
-      { "subjects.teacher": id },
-      "-class"
-    ).lean();
+    const subjects = await SubjectsModel.find({ "subjects.teacher": id }, "-class").lean();
     const data = subjects
       .map(({ subjects }) =>
-        subjects
-          .filter(({ teachers }) =>
-            teachers.find((teacher) => teacher.equals(id))
-          )
-          .map(({ _id }) => _id)
+        subjects.filter(({ teachers }) => teachers.find((teacher) => teacher.equals(id))).map(({ _id }) => _id)
       )
       .flat();
 
@@ -53,10 +44,7 @@ async function getTeacherSubjects(
   return [success, status, message];
 }
 
-export default async function handler(
-  { query, method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
   const { id } = query as { id: string };
   let [success, status, message]: ServerResponse<TeacherSubjectsGETData> = [
     false,
@@ -67,10 +55,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else [success, status, message] = await getTeacherSubjects(id);
 
   if (typeof message !== "object") message = { message, error: message };

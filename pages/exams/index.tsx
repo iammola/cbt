@@ -7,10 +7,7 @@ import { formatRelative } from "date-fns";
 
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
-import {
-  MeditatingIllustration,
-  SittingWithLaptopIllustration,
-} from "components/Misc/Illustrations";
+import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
 
 import type { RouteData } from "types";
 import type { TeacherExamsGETData } from "types/api/teachers";
@@ -26,7 +23,10 @@ const Exams: NextPage = () => {
     <>
       <Head>
         <title>Exams | CBT | Grand Regal School</title>
-        <meta name="description" content="Registered Exams | GRS CBT" />
+        <meta
+          name="description"
+          content="Registered Exams | GRS CBT"
+        />
       </Head>
       <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
@@ -36,19 +36,29 @@ const Exams: NextPage = () => {
             <table className="min-w-full overflow-hidden rounded-lg shadow-md">
               <thead className="bg-gray-200 text-gray-700">
                 <tr>
-                  <th scope="col" className="w-4 py-5">
+                  <th
+                    scope="col"
+                    className="w-4 py-5"
+                  >
                     <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                       #
                     </span>
                   </th>
                   {["Class", "Subject", "Created At", "Created By"].map((i) => (
-                    <th key={i} scope="col" className="py-5">
+                    <th
+                      key={i}
+                      scope="col"
+                      className="py-5"
+                    >
                       <span className="flex items-center justify-start pl-6 pr-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                         {i}
                       </span>
                     </th>
                   ))}
-                  <th scope="col" className="relative px-6 py-3">
+                  <th
+                    scope="col"
+                    className="relative px-6 py-3"
+                  >
                     <span className="sr-only">Edit</span>
                   </th>
                   {/* 
@@ -72,66 +82,51 @@ const Exams: NextPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
-                {exams?.data?.map(
-                  (
-                    {
-                      subject,
-                      duration,
-                      questions,
-                      created: { at, by },
-                      ...exam
-                    },
-                    examIdx
-                  ) => (
-                    <tr key={examIdx} className="text-sm font-medium">
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {examIdx + 1}.
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {exam.class}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="flex flex-col">
-                          <span className="text-sm text-gray-900">
-                            {subject}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {duration} mins - {questions} questions
-                          </span>
+                {exams?.data?.map(({ subject, duration, questions, created: { at, by }, ...exam }, examIdx) => (
+                  <tr
+                    key={examIdx}
+                    className="text-sm font-medium"
+                  >
+                    <td className="whitespace-nowrap px-6 py-4">{examIdx + 1}.</td>
+                    <td className="whitespace-nowrap px-6 py-4">{exam.class}</td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="flex flex-col">
+                        <span className="text-sm text-gray-900">{subject}</span>
+                        <span className="text-sm text-gray-500">
+                          {duration} mins - {questions} questions
+                        </span>
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {(() => {
+                        const date = formatRelative(new Date(at), new Date());
+                        return date[0].toUpperCase() + date.slice(1);
+                      })()}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="flex items-center gap-4">
+                        <div className="relative h-10 w-10 shrink-0">
+                          <UserImage
+                            src=""
+                            layout="fill"
+                            objectFit="cover"
+                            objectPosition="center"
+                            className="rounded-full"
+                            initials={{
+                              text: by.name.initials,
+                              className: "rounded-full bg-indigo-300",
+                            }}
+                          />
                         </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {(() => {
-                          const date = formatRelative(new Date(at), new Date());
-                          return date[0].toUpperCase() + date.slice(1);
-                        })()}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4">
-                        <div className="flex items-center gap-4">
-                          <div className="relative h-10 w-10 shrink-0">
-                            <UserImage
-                              src=""
-                              layout="fill"
-                              objectFit="cover"
-                              objectPosition="center"
-                              className="rounded-full"
-                              initials={{
-                                text: by.name.initials,
-                                className: "rounded-full bg-indigo-300",
-                              }}
-                            />
-                          </div>
-                          <span>{by.name.full}</span>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-right tracking-wider">
-                        <Link href={`/exams/edit/${exam._id.toString()}`}>
-                          <a className="cursor-pointer text-indigo-500 hover:text-indigo-600">
-                            Edit
-                          </a>
-                        </Link>
-                      </td>
-                      {/* 
+                        <span>{by.name.full}</span>
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 text-right tracking-wider">
+                      <Link href={`/exams/edit/${exam._id.toString()}`}>
+                        <a className="cursor-pointer text-indigo-500 hover:text-indigo-600">Edit</a>
+                      </Link>
+                    </td>
+                    {/* 
                                     <td className="px-6 py-4 whitespace-nowrap text-right tracking-wider">
                                         <Link href="/exams/loops">
                                             <a className="text-indigo-500 cursor-pointer hover:text-indigo-600">
@@ -145,9 +140,8 @@ const Exams: NextPage = () => {
                                         </span>
                                     </td>
                                     */}
-                    </tr>
-                  )
-                )}
+                  </tr>
+                ))}
               </tbody>
             </table>
             {exams?.data?.length === 0 && (

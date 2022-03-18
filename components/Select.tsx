@@ -23,18 +23,14 @@ const Select: FunctionComponent<SelectProps> = ({
   };
 
   return (
-    <div
-      className={classNames(
-        "relative flex w-full min-w-[20rem] flex-col",
-        className
-      )}
-    >
-      <Listbox value={selected} onChange={handleChange}>
+    <div className={classNames("relative flex w-full min-w-[20rem] flex-col", className)}>
+      <Listbox
+        value={selected}
+        onChange={handleChange}
+      >
         <div className="relative">
           {label !== undefined && (
-            <Listbox.Label className="text-sm font-semibold text-gray-700">
-              {label}
-            </Listbox.Label>
+            <Listbox.Label className="text-sm font-semibold text-gray-700">{label}</Listbox.Label>
           )}
           <Listbox.Button
             className={classNames(
@@ -64,13 +60,10 @@ const Select: FunctionComponent<SelectProps> = ({
                     value={option}
                     key={option._id}
                     className={({ active }) =>
-                      classNames(
-                        "relative cursor-default select-none py-2 pl-10 pr-4",
-                        {
-                          [pallette.activeOptionColor]: active,
-                          "text-gray-900": !active,
-                        }
-                      )
+                      classNames("relative cursor-default select-none py-2 pl-10 pr-4", {
+                        [pallette.activeOptionColor]: active,
+                        "text-gray-900": !active,
+                      })
                     }
                   >
                     {({ selected, active }) => (

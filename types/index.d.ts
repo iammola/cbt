@@ -25,8 +25,4 @@ export type ClientResponse<D, E extends object = {}> =
       success: false;
     });
 
-export type ServerResponse<D, E extends object = {}> = [
-  boolean,
-  number,
-  string | RouteData<D> | RouteError<E>
-];
+export type ServerResponse<D, E extends object = {}> = [boolean, number, string | RouteData<D> | RouteError<E>];

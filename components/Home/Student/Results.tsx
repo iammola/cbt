@@ -10,19 +10,15 @@ import type { StudentCBTResultsGETData } from "types/api/students";
 
 const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
   const [{ account }] = useCookies(["account"]);
-  const { data } = useSWR<RouteData<StudentCBTResultsGETData>>(
-    `/api/students/${account?._id}/cbt_results/`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+  const { data } = useSWR<RouteData<StudentCBTResultsGETData>>(`/api/students/${account?._id}/cbt_results/`, (url) =>
+    fetch(url ?? "").then((res) => res.json())
   );
 
   return (
     <section
-      className={classNames(
-        "flex content-start items-start justify-start gap-x-5 gap-y-3",
-        {
-          hidden: !show,
-        }
-      )}
+      className={classNames("flex content-start items-start justify-start gap-x-5 gap-y-3", {
+        hidden: !show,
+      })}
     >
       <table className="min-w-full overflow-hidden rounded-lg shadow-md">
         <thead className="bg-gray-200 text-gray-700">
@@ -44,9 +40,7 @@ const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
           {data?.data.map((e) => (
             <tr key={e.subject}>
               <td className="whitespace-nowrap px-6 py-4">
-                <div className="flex flex-col items-start justify-center text-sm text-gray-900">
-                  {e.subject}
-                </div>
+                <div className="flex flex-col items-start justify-center text-sm text-gray-900">{e.subject}</div>
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-sm">{e.score}</td>
               <td className="whitespace-nowrap px-6 py-4 text-sm">

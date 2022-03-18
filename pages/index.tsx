@@ -7,21 +7,8 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import {
-  BadgeCheckIcon,
-  BanIcon,
-  StatusOfflineIcon,
-  StatusOnlineIcon,
-} from "@heroicons/react/outline";
-import {
-  ClipboardEvent,
-  FormEvent,
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { BadgeCheckIcon, BanIcon, StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline";
+import { ClipboardEvent, FormEvent, FunctionComponent, useCallback, useEffect, useRef, useState } from "react";
 
 import { classNames } from "utils";
 import Background from "/public/BG.jpg";
@@ -34,16 +21,9 @@ import type { LoginData } from "types/api/login";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const [, setCookies, removeCookies] = useCookies([
-    "account",
-    "exam",
-    "timeBounds",
-  ]);
-  const [addNotification, removeNotification, Notifications] =
-    useNotifications();
-  const { data: dbState } = useSWR<RouteData<PingData>>("/api/ping/", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const [, setCookies, removeCookies] = useCookies(["account", "exam", "timeBounds"]);
+  const [addNotification, removeNotification, Notifications] = useNotifications();
+  const { data: dbState } = useSWR<RouteData<PingData>>("/api/ping/", (url) => fetch(url).then((res) => res.json()));
 
   const [active, setActive] = useState(0);
   const [code, setCode] = useState<string[]>(Array.from({ length: 6 }));
@@ -54,8 +34,7 @@ const Home: NextPage = () => {
 
   const focusPrevious = (index: number) => setActive(--index >= 0 ? index : 0);
 
-  const focusNext = (index: number) =>
-    setActive(++index < code.length ? index : 0);
+  const focusNext = (index: number) => setActive(++index < code.length ? index : 0);
 
   function handlePaste(e: ClipboardEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -85,9 +64,7 @@ const Home: NextPage = () => {
         setTimeout(
           router.push,
           55e1,
-          router.query.to === undefined
-            ? "/home"
-            : decodeURIComponent(router.query.to as string)
+          router.query.to === undefined ? "/home" : decodeURIComponent(router.query.to as string)
         );
         setCookies("account", JSON.stringify(result.data), {
           path: "/",
@@ -134,8 +111,7 @@ const Home: NextPage = () => {
       })[0];
 
     if (lastId !== -1) {
-      if (online.i !== -1 && online.o !== navigator.onLine)
-        removeNotification(online.i);
+      if (online.i !== -1 && online.o !== navigator.onLine) removeNotification(online.i);
       setOnline({ i: lastId, o: navigator.onLine });
     }
   }, [addNotification, online, removeNotification]);
@@ -154,7 +130,10 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Login | CBT | Grand Regal School</title>
-        <meta name="description" content="Login Page to GRS CBT" />
+        <meta
+          name="description"
+          content="Login Page to GRS CBT"
+        />
       </Head>
       <section className="z-0 flex h-screen w-screen flex-col items-center justify-center overflow-auto p-4 sm:p-6 md:p-8">
         <div className="absolute inset-0 z-[-1] h-full w-full">
@@ -175,9 +154,8 @@ const Home: NextPage = () => {
           className="z-0 flex max-w-full flex-col justify-between gap-y-6 rounded-2xl bg-white py-12 px-5 shadow-xl sm:gap-y-8 md:gap-y-14 md:px-8 lg:px-12"
         >
           <h1 className="pb-4 text-center text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">
-            <span className="sm:text-blue-500">Log in</span>{" "}
-            <span>to your</span> <span className="text-blue-500">CBT</span>{" "}
-            <span>account</span>
+            <span className="sm:text-blue-500">Log in</span> <span>to your</span>{" "}
+            <span className="text-blue-500">CBT</span> <span>account</span>
           </h1>
           <div className="flex items-center justify-between py-3 sm:gap-x-4 sm:px-3 md:gap-x-6 md:px-5">
             {code.map((number, pos) => (
@@ -188,9 +166,7 @@ const Home: NextPage = () => {
                 handlePaste={handlePaste}
                 focusPrevious={() => pos !== 0 && focusPrevious(pos)}
                 focusNext={() => pos !== code.length - 1 && focusNext(pos)}
-                handleChange={(val) =>
-                  setCode(code.map((number, i) => (pos === i ? val : number)))
-                }
+                handleChange={(val) => setCode(code.map((number, i) => (pos === i ? val : number)))}
               />
             ))}
           </div>
@@ -199,18 +175,13 @@ const Home: NextPage = () => {
             className={classNames(
               "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
-                "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500":
-                  success === undefined,
-                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success,
-                "bg-red-400 hover:bg-red-500 focus:ring-red-500":
-                  success === false,
+                "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500": success === undefined,
+                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+                "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
               }
             )}
           >
-            {loading && (
-              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-            )}
+            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
             {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Log In
@@ -219,9 +190,7 @@ const Home: NextPage = () => {
       </section>
       <footer className="absolute bottom-5 flex w-full flex-col items-center justify-center text-sm text-gray-300">
         <span className="min-w-max text-center tracking-wider">
-          <span className="block sm:inline">
-            © {new Date().getFullYear()} Grand Regal School.
-          </span>{" "}
+          <span className="block sm:inline">© {new Date().getFullYear()} Grand Regal School.</span>{" "}
           <span className="block sm:inline">All rights reserved.</span>
         </span>
         <Link href="https://github.com/iammola/">
@@ -232,16 +201,13 @@ const Home: NextPage = () => {
       </footer>
       <abbr
         title={`is ${dbState?.data?.state ?? "unknown"}`}
-        className={classNames(
-          "fixed top-5 left-5 h-3 w-3 rounded-full shadow-md ring-2 ring-white transition-colors",
-          {
-            "bg-red-400": dbState?.data?.code === 0,
-            "bg-emerald-400": dbState?.data?.code === 1,
-            "bg-amber-400": dbState?.data?.code === 2,
-            "bg-pink-400": dbState?.data?.code === 3,
-            "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code ?? -1),
-          }
-        )}
+        className={classNames("fixed top-5 left-5 h-3 w-3 rounded-full shadow-md ring-2 ring-white transition-colors", {
+          "bg-red-400": dbState?.data?.code === 0,
+          "bg-emerald-400": dbState?.data?.code === 1,
+          "bg-amber-400": dbState?.data?.code === 2,
+          "bg-pink-400": dbState?.data?.code === 3,
+          "bg-gray-300": ![0, 1, 2, 3].includes(dbState?.data?.code ?? -1),
+        })}
       />
       {Notifications}
     </>
@@ -271,9 +237,7 @@ const Input: FunctionComponent<InputProps> = ({
     if (focus) ref.current?.focus();
   }, [focus]);
 
-  function validateCharacter(
-    e: FormEvent<HTMLInputElement> & { data: string }
-  ) {
+  function validateCharacter(e: FormEvent<HTMLInputElement> & { data: string }) {
     if (!/\d/.test(e.data)) e.preventDefault();
   }
 

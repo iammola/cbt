@@ -2,14 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SessionModel, StudentModel } from "db/models";
+import { StudentModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { SubjectStudentsGETData } from "types/api/subjects";
 
-async function getStudents(
-  subjectId: any
-): Promise<ServerResponse<SubjectStudentsGETData>> {
+async function getStudents({ id, term }: any): Promise<ServerResponse<SubjectStudentsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<SubjectStudentsGETData> = [
     false,
@@ -18,26 +16,8 @@ async function getStudents(
   ];
 
   try {
-    const currentSession = await SessionModel.findOne(
-      { current: true, "terms.current": true },
-      "terms._id.$"
-    ).lean();
-    if (currentSession === null) throw new Error("Current session not found");
-
     const students = await StudentModel.find(
-      {
-        academic: {
-          $elemMatch: {
-            session: currentSession._id,
-            terms: {
-              $elemMatch: {
-                term: currentSession.terms[0]._id,
-                subjects: subjectId,
-              },
-            },
-          },
-        },
-      },
+      { "academic.terms": { $elemMatch: { term, subjects: id } } },
       "name"
     ).lean();
 
@@ -62,10 +42,7 @@ async function getStudents(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<SubjectStudentsGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -75,11 +52,8 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
-  } else [success, status, message] = await getStudents(query.id);
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
+  } else [success, status, message] = await getStudents(query);
 
   if (typeof message !== "object") message = { message, error: message };
 
