@@ -2,7 +2,7 @@ import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
 import type { NextPage } from "next";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
@@ -13,7 +13,7 @@ import type { StudentsGETData } from "types/api/students";
 const TranscriptPicker: NextPage = () => {
   const [selectedStudent, setSelectedStudent] = useState({
     _id: "",
-    name: "Select student",
+    name: "Loading students...",
   });
 
   const { data: students } = useSWR<RouteData<StudentsGETData>>(`/api/students/?select=name.full`, (url) =>
@@ -31,6 +31,14 @@ const TranscriptPicker: NextPage = () => {
         }),
     [students]
   );
+
+  useEffect(() => {
+    if (students && !selectedStudent._id)
+      setSelectedStudent({
+        _id: "",
+        name: "Select student",
+      });
+  }, [selectedStudent._id, students]);
 
   return (
     <section className="flex h-screen w-screen flex-col items-center justify-center gap-7">
