@@ -37,7 +37,7 @@ const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({
           Gender:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {gender && gender === "M" ? "Male" : "Female"}
+          {gender && (gender === "M" ? "Male" : "Female")}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
