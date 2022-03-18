@@ -1,4 +1,4 @@
-import { RecordId, SessionRecord } from "types";
+import { RecordId, TermRecord, SessionRecord } from "types";
 
 export type SessionsGETData = SessionRecord[];
 export type SessionsPOSTData = SessionRecord;
@@ -11,3 +11,7 @@ export type AllTermsGetData = (RecordId & {
   name: string;
   current?: boolean;
 })[];
+
+export type TermGetData = TermRecord & {
+  session: Omit<SessionRecord, "current" | "terms">;
+};

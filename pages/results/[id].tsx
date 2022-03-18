@@ -9,7 +9,7 @@ import { classNames } from "utils";
 import { Divide } from "components/Misc";
 import { Info, GradingScheme, ResultFields } from "components/Result";
 
-import type { SessionCurrentGETData } from "types/api/sessions";
+import type { TermGetData } from "types/api/sessions";
 import type {
   ClassGETData,
   ClassResultGETData,
@@ -37,8 +37,8 @@ const Result: NextPage = () => {
   const [total, setTotal] = useState<{ subject: any; total: number }[]>();
   const [data, setData] = useState<Partial<Data>>();
 
-  const { data: session } = useSWRImmutable<RouteData<SessionCurrentGETData>>(
-    `/api/sessions/current/`,
+  const { data: selectedTerm } = useSWRImmutable<RouteData<TermGetData>>(
+    `/api/terms/${router.query.term ?? "current"}/`,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
   const { data: student } = useSWRImmutable<RouteData<StudentGETData>>(
@@ -47,16 +47,11 @@ const Result: NextPage = () => {
   );
 
   useEffect(() => {
-    if (session?.data != undefined && data?.session === undefined) {
-      const { _id, name, terms } = session.data;
-
-      setData((data) => ({
-        ...data,
-        session: { _id, name },
-        term: terms.find((term) => term.current),
-      }));
+    if (selectedTerm?.data != undefined && data?.session === undefined) {
+      const { session, ...term } = selectedTerm.data;
+      setData((data) => ({ ...data, session, term }));
     }
-  }, [data, session]);
+  }, [data, selectedTerm]);
 
   useEffect(() => {
     async function getClass(id: any) {
