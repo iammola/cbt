@@ -108,7 +108,7 @@ const Results: NextPage = () => {
   }, [selectedClass]);
 
   async function getData() {
-    if (selectedClass._id !== "" && selectedSubject._id !== "") {
+    if (selectedClass._id && selectedSubject._id && selectedTerm._id) {
       setScores([]);
       setStudents([]);
       setHardTotal([]);
@@ -154,7 +154,7 @@ const Results: NextPage = () => {
         const scores = await Promise.all(
           students.map(async (j) => {
             const res = await fetch(
-              `/api/students/${j._id}/results/${selectedSubject._id}/`
+              `/api/students/${j._id}/results/${selectedSubject._id}/?term=${selectedTerm._id}`
             );
             const {
               data: { scores, total },

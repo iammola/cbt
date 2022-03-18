@@ -10,10 +10,10 @@ import type {
   StudentResultSubjectPOSTData,
 } from "types/api/students";
 
-async function getStudentSubjectResult(
-  student: any,
-  subject: any
-): Promise<ServerResponse<StudentResultSubjectGETData>> {
+async function getStudentSubjectResult({
+  subjectId,
+  ...query
+}: any): Promise<ServerResponse<StudentResultSubjectGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultSubjectGETData> =
     [
@@ -25,8 +25,9 @@ async function getStudentSubjectResult(
   try {
     const result = await ResultModel.findOne(
       {
-        student,
-        "data.subject": subject,
+        term: query.term,
+        student: query.id,
+        "data.subject": subjectId,
       },
       "data.total data.scores.$"
     ).lean();
@@ -136,7 +137,7 @@ export default async function handler(
   } else
     [success, status, message] = await (method === "POST"
       ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body))
-      : getStudentSubjectResult(query.id, query.subjectId));
+      : getStudentSubjectResult(query));
 
   if (typeof message !== "object") message = { message, error: message };
 
