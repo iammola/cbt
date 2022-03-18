@@ -8,7 +8,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
-import { Info, GradingScheme, ResultFields } from "components/Result";
+import { Header, Info, GradingScheme, ResultFields } from "components/Result";
 
 import type { TermGetData } from "types/api/sessions";
 import type {
@@ -234,29 +234,7 @@ const Result: NextPage = () => {
         <meta name="description" content="Student • Results | GRS CBT" />
       </Head>
       <main className="flex aspect-[1/1.4142] w-[60rem] flex-col items-center justify-start rounded-lg bg-white p-12 shadow-xl shadow-gray-500/30 print:rounded-none print:px-8 print:py-5 print:shadow-none">
-        <div className="flex w-full items-center justify-center gap-10">
-          <figure className="relative h-24 w-24">
-            <Image
-              priority
-              layout="fill"
-              alt="GRS Logo"
-              src="/Logo.png"
-              objectFit="contain"
-              objectPosition="center"
-            />
-          </figure>
-          <div className="flex flex-col items-center justify-center text-center">
-            <h2 className="min-w-max text-3xl font-extrabold uppercase tracking-wider text-gray-700">
-              Grand Regal International School
-            </h2>
-            <p className="pb-2 text-sm text-gray-700">
-              Path to Peak for Excellence
-            </p>
-            <p className="text-xs font-medium text-gray-600">
-              Hse. 2, 2nd Avenue, Wole Soyinka Drive, Gwarinpa, Abuja
-            </p>
-          </div>
-        </div>
+        <Header />
         <Divide className="w-full py-7" HRclassName="border-t-gray-300" />
         <Info
           term={data.term?.name}
