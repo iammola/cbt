@@ -6,7 +6,7 @@ import useSWRImmutable from "swr/immutable";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
-import { Header, TranscriptInfo, TranscriptFooter } from "components/Result";
+import { GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
 import type { RouteData } from "types";
 import type { StudentGETData, StudentTranscriptGETData } from "types/api/students";
@@ -116,7 +116,15 @@ const ResultTranscript: NextPage = () => {
           className="w-full py-10"
           HRclassName="border-t-gray-300"
         />
-        <TranscriptFooter />
+        <div className="flex items-center justify-between gap-x-10">
+          <GradingScheme
+            className="w-5/12"
+            scheme={data?.data?.grading ?? []}
+          />
+          <div className="w-7/12">
+            <TranscriptFooter />
+          </div>
+        </div>
       </main>
     </section>
   );
