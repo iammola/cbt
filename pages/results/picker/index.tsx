@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useEffect, useMemo, useState } from "react";
+import { ExternalLinkIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 import Select from "components/Select";
@@ -122,13 +123,12 @@ const ResultsPicker: NextPage = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={classNames(
-              "min-w-max rounded-full bg-slate-500 px-10 py-3 text-xs font-bold uppercase tracking-widest text-white shadow hover:bg-slate-600",
-              {
-                "pointer-events-none": !selectedStudent._id && !selectedTerm._id,
-              }
+              "flex min-w-max items-center justify-center gap-x-2 rounded-full bg-slate-500 px-10 py-3 text-xs font-bold uppercase tracking-widest text-white shadow hover:bg-slate-600",
+              { "pointer-events-none": !selectedStudent._id && !selectedTerm._id }
             )}
           >
-            Go to Result
+            Load Result
+            <ExternalLinkIcon className="h-5 w-5 fill-white" />
           </a>
         </Link>
       </div>
