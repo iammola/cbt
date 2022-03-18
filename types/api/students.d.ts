@@ -1,3 +1,4 @@
+import { ResultGrade } from "types/models";
 import { RecordId, ExamRecord, UserRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
 export type StudentsPOSTData = Pick<UserRecord, "code">;
@@ -46,6 +47,7 @@ export type StudentSubjectsGETData = Pick<SubjectRecord, "_id" | "name">[];
 export type StudentResultGETData = Pick<ResultRecord, "comments" | "data">;
 
 export type StudentTranscriptGETData = {
+  grading: ResultGrade[];
   sessions: Pick<SessionRecord, "_id" | "name">[];
   scores: Record<
     string,

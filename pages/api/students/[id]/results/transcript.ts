@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
+import { ResultModel, SettingsModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
 import type { StudentTranscriptGETData, TranscriptTermScore } from "types/api/students";
@@ -16,13 +16,16 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
   ];
 
   try {
-    const [sessions, student, results] = await Promise.all([
+    const [sessions, student, results, settings] = await Promise.all([
       SessionModel.find({}, "name terms._id").lean(),
       StudentModel.findById(id, "academic").lean(),
       ResultModel.find({ student: id }, "data term").lean(),
+      SettingsModel.findOne({ active: true }, "transcriptGrade").lean(),
     ]);
 
     if (!student) throw new Error("Student not found");
+    if (!settings?.transcriptGrade) throw new Error("Transcript Grading Required");
+
     const subjectIDs = student.academic.map((i) => i.terms.map((t) => t.subjects).flat()).flat();
 
     const subjects = await SubjectsModel.aggregate([
@@ -88,7 +91,7 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
       data.forEach((item) => {
         if (item.score) {
           item.score /= item.termsCount;
-          item.grade = item.score.toString(); // Find Grade
+          item.grade = settings.transcriptGrade?.find((scheme) => (item.score ?? 0) < scheme.limit)?.grade;
         }
       });
 
@@ -102,8 +105,12 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
       true,
       StatusCodes.OK,
       {
-        data: { sessions, scores },
         message: ReasonPhrases.OK,
+        data: {
+          sessions,
+          scores,
+          grading: settings.transcriptGrade,
+        },
       },
     ];
   } catch (error: any) {
