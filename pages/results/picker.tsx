@@ -12,7 +12,6 @@ import type { AllTermsGetData } from "types/api/sessions";
 import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
 const ResultsPicker: NextPage = () => {
-  const [advanced, setAdvanced] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState({
     _id: "",
     name: "Select student",
@@ -21,6 +20,7 @@ const ResultsPicker: NextPage = () => {
     _id: "",
     name: "Loading terms...",
   });
+
   const [students, setStudents] = useState<
     { class: any; students: ClassStudentsGETData }[]
   >([]);
@@ -53,18 +53,6 @@ const ResultsPicker: NextPage = () => {
         }),
     [classes?.data, students]
   );
-
-  const loadItems = (id: any) =>
-    students
-      .find((item) => item.class === id)
-      ?.students.map((student) => openTab(student._id));
-
-  const openTab = (id: any) =>
-    Object.assign(document.createElement("a"), {
-      target: "_blank",
-      href: `/results/${id}`,
-      rel: "noopener, noreferrer",
-    }).click();
 
   useEffect(() => {
     async function getStudents(classes: ClassesGETData) {
