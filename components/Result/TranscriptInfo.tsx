@@ -7,7 +7,7 @@ const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({
   name,
 }) => {
   return (
-    <div className="grid w-full grid-flow-col grid-cols-3 grid-rows-1 gap-y-2.5 gap-x-40 px-5">
+    <div className="grid w-full grid-flow-col grid-cols-3 grid-rows-2 gap-y-2.5 gap-x-40 px-5">
       <div className="flex items-center justify-start gap-1.5">
         <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">
           Full Name
