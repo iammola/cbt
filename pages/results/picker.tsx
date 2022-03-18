@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import Select from "components/Select";
 
 import type { ClientResponse, RouteData } from "types";
+import type { AllTermsGetData } from "types/api/sessions";
 import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
 
 const ResultsPicker: NextPage = () => {
@@ -14,12 +15,21 @@ const ResultsPicker: NextPage = () => {
     _id: "",
     name: "Select student",
   });
+  const [selectedTerm, setSelectedTerm] = useState({
+    _id: "",
+    name: "Loading terms...",
+  });
   const [students, setStudents] = useState<
     { class: any; students: ClassStudentsGETData }[]
   >([]);
+
   const { data: classes } = useSWR<RouteData<ClassesGETData>>(
     `/api/classes/?select=name alias`,
     (url) => fetch(url ?? "").then((res) => res.json())
+  );
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>>(
+    "/api/terms/all",
+    (url) => fetch(url).then((res) => res.json())
   );
 
   const studentOptions = useMemo(
@@ -46,6 +56,7 @@ const ResultsPicker: NextPage = () => {
     students
       .find((item) => item.class === id)
       ?.students.map((student) => openTab(student._id));
+
   const openTab = (id: any) =>
     Object.assign(document.createElement("a"), {
       target: "_blank",
@@ -77,53 +88,44 @@ const ResultsPicker: NextPage = () => {
     if (classes !== undefined) getStudents(classes.data);
   }, [classes]);
 
+  useEffect(() => {
+    if (!selectedTerm._id && terms?.data !== undefined) {
+      const term = terms.data.find(
+        (i) => i.current
+      ) as unknown as typeof selectedTerm;
+
+      setSelectedTerm(
+        term ?? {
+          _id: "",
+          name: "Select term",
+        }
+      );
+    }
+  }, [selectedTerm, terms]);
+
   return (
     <section className="flex h-screen w-screen flex-col items-center justify-center gap-7">
       <Head>
         <title>Results Picker | Portal | Grand Regal School</title>
         <meta name="description" content="Results | GRS Portal" />
       </Head>
-      {advanced && (
-        <>
-          <h3 className="text-5xl font-bold tracking-wide text-gray-800">
-            Load results for all students in a class
-          </h3>
-          <div className="flex w-full flex-wrap items-center justify-center gap-4 px-10">
-            {classes?.data.map((item) => {
-              const data =
-                students.find((element) => element.class === item._id)
-                  ?.students ?? [];
-
-              return (
-                data?.length > 0 && (
-                  <div
-                    key={item.name}
-                    onClick={() => loadItems(item._id)}
-                    className="flex h-16 cursor-pointer select-none items-center justify-center gap-6 rounded-full px-4 py-3 shadow"
-                  >
-                    <span className="text-sm font-medium text-gray-700">
-                      {item.name}
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      {data.length} student{data.length > 1 && "s"}
-                    </span>
-                  </div>
-                )
-              );
-            })}
-          </div>
-          <span className="font-medium tracking-widest text-gray-600">or</span>
-        </>
-      )}
-      <h3 className="text-5xl font-bold tracking-wider text-gray-600">
-        Select student
+      <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
+        <span className="block">Select student</span>{" "}
+        <span className="block">and term</span>
       </h3>
       <div className="flex flex-col items-center justify-center gap-10 pt-8">
-        <Select
-          selected={selectedStudent}
-          handleChange={setSelectedStudent}
-          options={studentOptions}
-        />
+        <div className="flex items-center justify-center gap-x-10">
+          <Select
+            selected={selectedStudent}
+            handleChange={setSelectedStudent}
+            options={studentOptions}
+          />
+          <Select
+            options={terms?.data}
+            selected={selectedTerm}
+            handleChange={setSelectedTerm}
+          />
+        </div>
         <button
           type="button"
           onClick={() => {
