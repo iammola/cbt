@@ -5,22 +5,18 @@ import { connect } from "db";
 import { ResultModel } from "db/models";
 
 import type { ResultRecord, ServerResponse } from "types";
-import type {
-  StudentResultSubjectGETData,
-  StudentResultSubjectPOSTData,
-} from "types/api/students";
+import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
 
 async function getStudentSubjectResult({
   subjectId,
   ...query
 }: any): Promise<ServerResponse<StudentResultSubjectGETData>> {
   await connect();
-  let [success, status, message]: ServerResponse<StudentResultSubjectGETData> =
-    [
-      false,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      ReasonPhrases.INTERNAL_SERVER_ERROR,
-    ];
+  let [success, status, message]: ServerResponse<StudentResultSubjectGETData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
   try {
     const result = await ResultModel.findOne(
@@ -59,12 +55,11 @@ async function updateStudentSubjectResult(
   { term, ...body }: Omit<ResultRecord["data"], "subject"> & { term: string }
 ): Promise<ServerResponse<StudentResultSubjectPOSTData>> {
   await connect();
-  let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> =
-    [
-      false,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      ReasonPhrases.INTERNAL_SERVER_ERROR,
-    ];
+  let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
 
   try {
     const record = await ResultModel.findOne(
@@ -77,11 +72,7 @@ async function updateStudentSubjectResult(
 
     const args =
       record === null
-        ? [
-            { student },
-            { term, $push: { data: { subject, ...body } } },
-            { upsert: true },
-          ]
+        ? [{ student }, { term, $push: { data: { subject, ...body } } }, { upsert: true }]
         : [
             { _id: record._id },
             { term, $set: { "data.$[i]": { subject, ...body } } },
@@ -115,13 +106,8 @@ async function updateStudentSubjectResult(
   return [success, status, message];
 }
 
-export default async function handler(
-  { body, method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    StudentResultSubjectGETData | StudentResultSubjectPOSTData
-  > = [
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<StudentResultSubjectGETData | StudentResultSubjectPOSTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -130,10 +116,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body))

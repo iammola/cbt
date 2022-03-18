@@ -18,9 +18,7 @@ const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
       <h5 className="font-semibold text-gray-800">{title}</h5>
       <div className="flex h-full flex-col gap-3">
         {schedules.length === 0 && (
-          <div className="flex h-full items-center justify-center text-sm text-gray-600">
-            Nothing to see here
-          </div>
+          <div className="flex h-full items-center justify-center text-sm text-gray-600">Nothing to see here</div>
         )}
         {schedules.map(({ name, time, questions }, scheduleIdx) => (
           <div
@@ -36,9 +34,7 @@ const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
               {name.split(" ", 2).map((word) => word[0])}
             </div>
             <div className="flex flex-col items-start justify-center gap-0.5">
-              <span className="block truncate text-sm font-medium tracking-wide text-gray-700">
-                {name}
-              </span>
+              <span className="block truncate text-sm font-medium tracking-wide text-gray-700">{name}</span>
               <span className="block truncate text-xs text-gray-400">
                 {time} mins · {questions} questions
               </span>

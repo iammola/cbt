@@ -18,12 +18,8 @@ const Header: FunctionComponent = () => {
         <h2 className="min-w-max text-3xl font-extrabold uppercase tracking-wider text-gray-700">
           Grand Regal International School
         </h2>
-        <p className="pb-2 text-sm text-gray-700">
-          Path to Peak for Excellence
-        </p>
-        <p className="text-xs font-medium text-gray-600">
-          Hse. 2, 2nd Avenue, Wole Soyinka Drive, Gwarinpa, Abuja
-        </p>
+        <p className="pb-2 text-sm text-gray-700">Path to Peak for Excellence</p>
+        <p className="text-xs font-medium text-gray-600">Hse. 2, 2nd Avenue, Wole Soyinka Drive, Gwarinpa, Abuja</p>
       </div>
     </div>
   );

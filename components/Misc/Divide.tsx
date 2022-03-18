@@ -4,7 +4,10 @@ import type { DivideProps } from "types";
 
 const Divide: FunctionComponent<DivideProps> = ({ className, HRclassName }) => {
   return (
-    <div aria-hidden="true" className={className}>
+    <div
+      aria-hidden="true"
+      className={className}
+    >
       <hr className={HRclassName} />
     </div>
   );

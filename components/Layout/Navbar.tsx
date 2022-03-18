@@ -9,11 +9,7 @@ import { BellIcon, CommentTextIcon, UsersIcon } from "components/Misc/Icons";
 const Navbar: FunctionComponent = () => {
   const router = useRouter();
   const [show, setShow] = useState(false);
-  const [{ account }, , removeCookies] = useCookies([
-    "account",
-    "exam",
-    "timeBounds",
-  ]);
+  const [{ account }, , removeCookies] = useCookies(["account", "exam", "timeBounds"]);
 
   function logout() {
     removeCookies("exam", { path: "/" });
@@ -36,9 +32,7 @@ const Navbar: FunctionComponent = () => {
           className="relative h-10 w-10 cursor-pointer overflow-hidden rounded-full"
         >
           <UserImage
-            src={
-              account?.image ?? "https://source.unsplash.com/featured/?random"
-            }
+            src={account?.image ?? "https://source.unsplash.com/featured/?random"}
             layout="fill"
             objectFit="cover"
             objectPosition="center"

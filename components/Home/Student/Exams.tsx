@@ -19,9 +19,8 @@ const Exam: FunctionComponent<{
   const [firstLoad, setFirstLoad] = useState(true);
   const [, setNotification] = useState<number>();
   const [exams, setExams] = useState<StudentExamsGETData>([]);
-  const { data } = useSWR<RouteData<StudentExamsGETData>>(
-    `/api/students/${account?._id}/exams/`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+  const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, (url) =>
+    fetch(url ?? "").then((res) => res.json())
   );
 
   useEffect(() => {
@@ -41,9 +40,7 @@ const Exam: FunctionComponent<{
         addNotification({
           message: "Loading Exams",
           timeout: 3e3,
-          Icon: () => (
-            <DesktopComputerIcon className="h-6 w-6 stroke-blue-500" />
-          ),
+          Icon: () => <DesktopComputerIcon className="h-6 w-6 stroke-blue-500" />,
         })[0]
       );
       setTimeout(setNotification, 5e3, undefined);
@@ -52,12 +49,9 @@ const Exam: FunctionComponent<{
 
   return (
     <section
-      className={classNames(
-        "flex content-start items-start justify-start gap-x-5 gap-y-3",
-        {
-          hidden: !show,
-        }
-      )}
+      className={classNames("flex content-start items-start justify-start gap-x-5 gap-y-3", {
+        hidden: !show,
+      })}
     >
       <table className="min-w-full overflow-hidden rounded-lg shadow-md">
         <thead className="bg-gray-200 text-gray-700">
@@ -73,7 +67,10 @@ const Exam: FunctionComponent<{
                 </span>
               </th>
             ))}
-            <th scope="col" className="relative px-6 py-3">
+            <th
+              scope="col"
+              className="relative px-6 py-3"
+            >
               <span className="sr-only">Start Exam</span>
             </th>
           </tr>
@@ -91,13 +88,10 @@ const Exam: FunctionComponent<{
               </td>
               <td className="whitespace-nowrap px-6 py-4">
                 <span
-                  className={classNames(
-                    "inline-flex rounded-full px-3 py-0.5 text-sm leading-5",
-                    {
-                      "bg-blue-200/25 text-blue-600": i.locked === false,
-                      "bg-slate-200/25 text-slate-600": i.locked !== false,
-                    }
-                  )}
+                  className={classNames("inline-flex rounded-full px-3 py-0.5 text-sm leading-5", {
+                    "bg-blue-200/25 text-blue-600": i.locked === false,
+                    "bg-slate-200/25 text-slate-600": i.locked !== false,
+                  })}
                 >
                   {i.locked !== false ? "Locked" : "Unlocked"}
                 </span>
@@ -115,9 +109,7 @@ const Exam: FunctionComponent<{
                     className="flex items-center justify-center rounded-full bg-gray-500 py-2 px-4 hover:bg-gray-600"
                   >
                     <Link href={`/exams/write/${i._id}`}>
-                      <a className="text-xs font-medium tracking-wide text-white">
-                        Go to exam
-                      </a>
+                      <a className="text-xs font-medium tracking-wide text-white">Go to exam</a>
                     </Link>
                   </button>
                 )}

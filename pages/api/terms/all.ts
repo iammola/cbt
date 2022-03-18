@@ -48,10 +48,7 @@ async function getTerms(): Promise<ServerResponse<AllTermsGetData>> {
   return [success, status, message];
 }
 
-export default async function handler(
-  { method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<AllTermsGetData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -61,10 +58,7 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else [success, status, message] = await getTerms();
 
   if (typeof message !== "object") message = { message, error: message };

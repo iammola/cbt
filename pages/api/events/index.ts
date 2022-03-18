@@ -7,13 +7,7 @@ import { EventModel, ExamModel } from "db/models";
 import type { ServerResponse } from "types";
 import { EventsGETData, EventsPOSTData } from "types/api/events";
 
-async function createEvent({
-  date,
-  examId,
-}: {
-  date: Date;
-  examId: string;
-}): Promise<ServerResponse<EventsPOSTData>> {
+async function createEvent({ date, examId }: { date: Date; examId: string }): Promise<ServerResponse<EventsPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<EventsPOSTData> = [
     false,
@@ -22,8 +16,7 @@ async function createEvent({
   ];
 
   try {
-    if (!(await ExamModel.exists({ _id: examId })))
-      throw new Error("Invalid Exam ID");
+    if (!(await ExamModel.exists({ _id: examId }))) throw new Error("Invalid Exam ID");
     const data = await EventModel.findOneAndUpdate(
       { from: date },
       {
@@ -77,10 +70,7 @@ async function getEvents({
 
   try {
     const data = await EventModel.find({
-      date:
-        exact !== undefined
-          ? new Date(exact)
-          : { $gte: new Date(+from), $lte: new Date(+to) },
+      date: exact !== undefined ? new Date(exact) : { $gte: new Date(+from), $lte: new Date(+to) },
     }).lean();
     [success, status, message] = [
       true,
@@ -103,13 +93,8 @@ async function getEvents({
   return [success, status, message];
 }
 
-export default async function handler(
-  { body, query, method }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    EventsGETData | EventsPOSTData
-  > = [
+export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<EventsGETData | EventsPOSTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -118,14 +103,9 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
-    [success, status, message] = await (method === "POST"
-      ? createEvent(JSON.parse(body))
-      : getEvents(query as any));
+    [success, status, message] = await (method === "POST" ? createEvent(JSON.parse(body)) : getEvents(query as any));
 
   if (typeof message !== "object") message = { message, error: message };
 

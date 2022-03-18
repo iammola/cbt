@@ -53,9 +53,7 @@ type UserRecord<T = never> = RecordId & {
   code: number;
 };
 
-export type TeacherRecord = UserRecord<
-  "Mr." | "Mrs." | "Ms." | "Dr." | "Master"
->;
+export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
 
 export type StudentRecord = UserRecord & {
   birthday: Date;

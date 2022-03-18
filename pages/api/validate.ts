@@ -7,25 +7,17 @@ import type { ServerResponse } from "types";
 import type { PingData, PingError } from "types/api/ping";
 import { StudentModel, ResultModel } from "db/models";
 
-export default async function handler(
-  { body, method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
   await connect();
   const students = await StudentModel.find({}, "name.full academic").lean();
   const data = (
     await Promise.all(
       students.map(async (student) => {
-        const result = await ResultModel.findOne(
-          { student: student._id },
-          "data"
-        ).lean();
+        const result = await ResultModel.findOne({ student: student._id }, "data").lean();
         if (result === null) return;
         const errors = student.academic[0].terms[0].subjects
           .map((subject) => {
-            const subjectResult = result.data.filter((res) =>
-              res.subject.equals(subject)
-            ).length;
+            const subjectResult = result.data.filter((res) => res.subject.equals(subject)).length;
 
             if (subjectResult > 1) return `Duplicate Subject ${subject}`;
             if (subjectResult === 0) return `Subject ${subject} non-existent`;

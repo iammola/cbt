@@ -16,12 +16,8 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
   ];
 
   try {
-    const currentSession = await SessionModel.findOne(
-      { "terms.current": true },
-      { "terms._id.$": true }
-    ).lean();
-    const exam: (Omit<ExamRecord, "created"> &
-      Pick<ExamRecord<true>, "created">)[] = await ExamModel.find(
+    const currentSession = await SessionModel.findOne({ "terms.current": true }, { "terms._id.$": true }).lean();
+    const exam: (Omit<ExamRecord, "created"> & Pick<ExamRecord<true>, "created">)[] = await ExamModel.find(
       {
         "created.by": id,
         termId: currentSession?.terms[0]._id,
@@ -39,16 +35,13 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
       .lean();
 
     const data = exam.map(({ subjectId, questions, ...exam }) => {
-      const item = subjects.find(({ subjects }) =>
-        subjects.find(({ _id }) => subjectId.equals(_id))
-      );
+      const item = subjects.find(({ subjects }) => subjects.find(({ _id }) => subjectId.equals(_id)));
 
       return {
         ...exam,
         class: item?.class?.name ?? "",
         questions: questions.length,
-        subject:
-          item?.subjects.find(({ _id }) => _id.equals(subjectId))?.name ?? "",
+        subject: item?.subjects.find(({ _id }) => _id.equals(subjectId))?.name ?? "",
       };
     });
 
@@ -73,10 +66,7 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<TeacherExamsGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -86,10 +76,7 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else [success, status, message] = await getExams(query.id);
 
   if (typeof message !== "object") message = { message, error: message };

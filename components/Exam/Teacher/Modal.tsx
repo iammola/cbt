@@ -1,28 +1,17 @@
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  FormEvent,
-  Fragment,
-  FunctionComponent,
-  useEffect,
-  useState,
-} from "react";
+import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
 
 import Select from "components/Select";
 
 import type { TeacherExamModalProps, SelectOption } from "types";
 
-const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
-  isEdit,
-  open,
-  onSubmit,
-}) => {
+const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) => {
   const [{ account }] = useCookies(["account"]);
   const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
-  const { data: currentSession } = useSWRImmutable(
-    "/api/sessions/current/",
-    (url) => fetch(url).then((res) => res.json())
+  const { data: currentSession } = useSWRImmutable("/api/sessions/current/", (url) =>
+    fetch(url).then((res) => res.json())
   );
   const { data: classes, error } = useSWRImmutable(
     account !== undefined ? `/api/teachers/${account._id}/classes` : null,
@@ -57,9 +46,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
     async function fetchSubjects() {
       setSelectedSubject({ _id: "", name: "Loading subjects..." });
       try {
-        const res = await fetch(
-          `/api/teachers/${account._id}/classes/${_id}/subjects`
-        );
+        const res = await fetch(`/api/teachers/${account._id}/classes/${_id}/subjects`);
         const { success, data, error } = await res.json();
 
         if (success) {
@@ -77,11 +64,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (
-      selectedClass._id !== "" &&
-      selectedSubject._id !== "" &&
-      currentSession?.data
-    ) {
+    if (selectedClass._id !== "" && selectedSubject._id !== "" && currentSession?.data) {
       onSubmit({
         name: {
           class: selectedClass.name,
@@ -95,7 +78,11 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
   }
 
   return (
-    <Transition show={open} appear as={Fragment}>
+    <Transition
+      appear
+      show={open}
+      as={Fragment}
+    >
       <Dialog
         as="section"
         onClose={() => {}}
@@ -125,8 +112,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
             className="flex w-full flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg sm:w-[30rem]"
           >
             <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-              <span>{isEdit ? "Edit" : "Create"} an</span>{" "}
-              <span className="text-indigo-500">Exam</span> <span>🚀</span>
+              <span>{isEdit ? "Edit" : "Create"} an</span> <span className="text-indigo-500">Exam</span> <span>🚀</span>
             </Dialog.Title>
             <Select
               label="Classes"
@@ -170,9 +156,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({
                 type="number"
                 inputMode="numeric"
                 value={duration === 0 ? "" : duration}
-                onChange={({ target: { valueAsNumber } }) =>
-                  setDuration(valueAsNumber)
-                }
+                onChange={({ target: { valueAsNumber } }) => setDuration(valueAsNumber)}
                 className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
               <span className="pointer-events-none absolute bottom-4 right-0 z-10 flex items-center pr-2 text-xs text-gray-500">

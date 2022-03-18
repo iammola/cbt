@@ -45,14 +45,11 @@ const CreateStudents: NextPage = () => {
     []
   );
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
-  const { data: classes, error } = useSWR<
-    RouteData<ClassesGETData>,
-    RouteError
-  >("/api/classes/?select=name", (url) => fetch(url).then((res) => res.json()));
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
+  );
 
-  const [subjectsLoadingState, setSubjectsLoadingState] = useState<
-    boolean | undefined
-  >();
+  const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
@@ -122,8 +119,7 @@ const CreateStudents: NextPage = () => {
 
       try {
         const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
-        const result =
-          (await res.json()) as ClientResponse<ClassSubjectGETData>;
+        const result = (await res.json()) as ClientResponse<ClassSubjectGETData>;
 
         if (result.success) {
           setSubjects(result.data?.subjects ?? []);
@@ -141,7 +137,10 @@ const CreateStudents: NextPage = () => {
     <>
       <Head>
         <title>Create Student Profile | CBT | Grand Regal School</title>
-        <meta name="description" content="Student Registration | GRS CBT" />
+        <meta
+          name="description"
+          content="Student Registration | GRS CBT"
+        />
       </Head>
       <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10">
         <form
@@ -149,8 +148,7 @@ const CreateStudents: NextPage = () => {
           className="flex max-w-2xl flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
         >
           <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create a</span>{" "}
-            <span className="text-indigo-500">Student Profile</span>
+            <span>Create a</span> <span className="text-indigo-500">Student Profile</span>
           </h1>
           <div className="flex w-full flex-col gap-2.5">
             <label
@@ -264,9 +262,7 @@ const CreateStudents: NextPage = () => {
                 type="date"
                 id="birthday"
                 onChange={(e) => setBirthday(e.target.valueAsDate ?? undefined)}
-                value={
-                  birthday !== undefined ? format(birthday, "yyyy-MM-dd") : ""
-                }
+                value={birthday !== undefined ? format(birthday, "yyyy-MM-dd") : ""}
                 className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
             </div>
@@ -299,16 +295,10 @@ const CreateStudents: NextPage = () => {
                     ref={(e) => {
                       if (e !== null) {
                         e.checked = selectedSubjects.length === subjects.length;
-                        e.indeterminate =
-                          selectedSubjects.length > 0 &&
-                          selectedSubjects.length < subjects.length;
+                        e.indeterminate = selectedSubjects.length > 0 && selectedSubjects.length < subjects.length;
                       }
                     }}
-                    onChange={(e) =>
-                      setSelectedSubjects(
-                        e.target.checked ? subjects.map(({ _id }) => _id) : []
-                      )
-                    }
+                    onChange={(e) => setSelectedSubjects(e.target.checked ? subjects.map(({ _id }) => _id) : [])}
                   />
                   Select All
                 </label>
@@ -316,7 +306,11 @@ const CreateStudents: NextPage = () => {
             </span>
             <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
               {subjects.map(({ _id, name }) => (
-                <label key={_id} htmlFor={_id} className="flex gap-3 p-2">
+                <label
+                  key={_id}
+                  htmlFor={_id}
+                  className="flex gap-3 p-2"
+                >
                   <input
                     id={_id}
                     type="checkbox"
@@ -325,11 +319,7 @@ const CreateStudents: NextPage = () => {
                     onChange={({ target: { checked } }) =>
                       checked
                         ? setSelectedSubjects([...selectedSubjects, _id])
-                        : setSelectedSubjects(
-                            selectedSubjects.filter(
-                              (selected) => selected !== _id
-                            )
-                          )
+                        : setSelectedSubjects(selectedSubjects.filter((selected) => selected !== _id))
                     }
                   />
                   {name}
@@ -341,10 +331,8 @@ const CreateStudents: NextPage = () => {
                   (selectedClass._id !== ""
                     ? "No subjects linked to this class"
                     : classes !== undefined && "Select a class ⬆️")}
-                {subjectsLoadingState === false &&
-                  "Error loading subjects. Change selected class to retry"}
-                {subjectsLoadingState &&
-                  `Loading ${selectedClass.name}'s subjects...`}
+                {subjectsLoadingState === false && "Error loading subjects. Change selected class to retry"}
+                {subjectsLoadingState && `Loading ${selectedClass.name}'s subjects...`}
               </div>
             </div>
           </div>
@@ -353,18 +341,13 @@ const CreateStudents: NextPage = () => {
             className={classNames(
               "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
-                "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
-                  success === undefined,
-                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                  success,
-                "bg-red-400 hover:bg-red-500 focus:ring-red-500":
-                  success === false,
+                "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
+                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+                "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
               }
             )}
           >
-            {loading && (
-              <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-            )}
+            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
             {success && <CheckIcon className="h-5 w-5 fill-white" />}
             {success === false && <XIcon className="h-5 w-5 fill-white" />}
             Create Profile

@@ -1,9 +1,5 @@
 import { FunctionComponent } from "react";
-import {
-  SortAscendingIcon,
-  SortDescendingIcon,
-  TrashIcon,
-} from "@heroicons/react/outline";
+import { SortAscendingIcon, SortDescendingIcon, TrashIcon } from "@heroicons/react/outline";
 
 import { Answer } from ".";
 
@@ -50,10 +46,7 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({
                       : {
                           ...value,
                           isCorrect:
-                            answer.isCorrect &&
-                            record.type === "Multiple choice"
-                              ? undefined
-                              : value.isCorrect,
+                            answer.isCorrect && record.type === "Multiple choice" ? undefined : value.isCorrect,
                         }
                   ),
                 })
@@ -63,9 +56,7 @@ const Question: FunctionComponent<TeacherQuestionProps> = ({
         ))}
         <button
           type="button"
-          onClick={() =>
-            onChange({ answers: [...record.answers, { answer: "" }] })
-          }
+          onClick={() => onChange({ answers: [...record.answers, { answer: "" }] })}
           className="cursor-pointer rounded-md bg-gray-500 py-2 px-4 text-sm text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white"
         >
           Add Option

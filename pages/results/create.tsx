@@ -9,26 +9,13 @@ import { Navbar, Sidebar } from "components/Layout";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { SubjectStudentsGETData } from "types/api/subjects";
-import type {
-  ClientResponse,
-  RouteData,
-  RouteError,
-  StudentRecord,
-} from "types";
-import type {
-  StudentResultSubjectGETData,
-  StudentResultSubjectPOSTData,
-} from "types/api/students";
-import type {
-  ClassesGETData,
-  ClassResultSettingsGETData,
-  ClassSubjectGETData,
-} from "types/api/classes";
+import type { ClientResponse, RouteData, RouteError, StudentRecord } from "types";
+import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
+import type { ClassesGETData, ClassResultSettingsGETData, ClassSubjectGETData } from "types/api/classes";
 import type { AllTermsGetData } from "types/api/sessions";
 
 const Results: NextPage = () => {
-  const [addNotifications, removeNotifications, Notifications] =
-    useNotifications();
+  const [addNotifications, removeNotifications, Notifications] = useNotifications();
   const [hardTotal, setHardTotal] = useState<StudentRecord["_id"][]>([]);
   const [settings, setSettings] = useState<ClassResultSettingsGETData>();
   const [scores, setScores] = useState<
@@ -37,18 +24,14 @@ const Results: NextPage = () => {
       modified: boolean;
     })[]
   >([]);
-  const [students, setStudents] = useState<
-    Pick<StudentRecord, "_id" | "name">[]
-  >([]);
+  const [students, setStudents] = useState<Pick<StudentRecord, "_id" | "name">[]>([]);
 
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
-  const { data: classes } = useSWR<RouteData<ClassesGETData>, RouteError>(
-    "/api/classes/?select=name",
-    (url) => fetch(url).then((res) => res.json())
+  const { data: classes } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
   );
-  const { data: terms } = useSWR<RouteData<AllTermsGetData>, RouteError>(
-    "/api/terms/all",
-    (url) => fetch(url).then((res) => res.json())
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>, RouteError>("/api/terms/all", (url) =>
+    fetch(url).then((res) => res.json())
   );
 
   const [selectedClass, setSelectedClass] = useState({
@@ -66,9 +49,7 @@ const Results: NextPage = () => {
 
   useEffect(() => {
     if (!selectedTerm._id && terms?.data !== undefined) {
-      const term = terms.data.find(
-        (i) => i.current
-      ) as unknown as typeof selectedTerm;
+      const term = terms.data.find((i) => i.current) as unknown as typeof selectedTerm;
 
       setSelectedTerm(
         term ?? {
@@ -89,8 +70,7 @@ const Results: NextPage = () => {
 
       try {
         const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
-        const result =
-          (await res.json()) as ClientResponse<ClassSubjectGETData>;
+        const result = (await res.json()) as ClientResponse<ClassSubjectGETData>;
 
         if (result.success) {
           setSubjects(result.data?.subjects ?? []);
@@ -134,16 +114,12 @@ const Results: NextPage = () => {
             data: { students },
           },
         ] = await Promise.all([
-          fetch(
-            `/api/classes/${selectedClass._id}/results/setting/?term=${selectedTerm._id}`
-          ).then((res) => res.json()) as Promise<
-            RouteData<ClassResultSettingsGETData>
-          >,
-          fetch(
-            `/api/subjects/${selectedSubject._id}/students/?term=${selectedTerm._id}`
-          ).then((res) => res.json()) as Promise<
-            RouteData<SubjectStudentsGETData>
-          >,
+          fetch(`/api/classes/${selectedClass._id}/results/setting/?term=${selectedTerm._id}`).then((res) =>
+            res.json()
+          ) as Promise<RouteData<ClassResultSettingsGETData>>,
+          fetch(`/api/subjects/${selectedSubject._id}/students/?term=${selectedTerm._id}`).then((res) =>
+            res.json()
+          ) as Promise<RouteData<SubjectStudentsGETData>>,
         ]);
         setStudents(students);
         setSettings(settings);
@@ -157,9 +133,7 @@ const Results: NextPage = () => {
 
         const scores = await Promise.all(
           students.map(async (j) => {
-            const res = await fetch(
-              `/api/students/${j._id}/results/${selectedSubject._id}/?term=${selectedTerm._id}`
-            );
+            const res = await fetch(`/api/students/${j._id}/results/${selectedSubject._id}/?term=${selectedTerm._id}`);
             const {
               data: { scores, total },
             } = (await res.json()) as RouteData<StudentResultSubjectGETData>;
@@ -174,9 +148,7 @@ const Results: NextPage = () => {
         );
 
         setScores(scores);
-        setHardTotal(
-          scores.filter((i) => i.total !== undefined).map((i) => i.student)
-        );
+        setHardTotal(scores.filter((i) => i.total !== undefined).map((i) => i.student));
         removeNotifications(notifications[0]);
       } catch (error: any) {
         console.log({ error });
@@ -197,22 +169,17 @@ const Results: NextPage = () => {
         scores
           .filter((i) => i.modified)
           .map(async ({ student, scores, total }) => {
-            const name =
-              students.find((i) => i._id === student)?.name.full ?? "";
+            const name = students.find((i) => i._id === student)?.name.full ?? "";
             const notificationId = addNotifications({
               timeout: 2e3,
               Icon: () => <></>,
               message: `Saving for ${name}`,
             })[0];
-            const res = await fetch(
-              `/api/students/${student}/results/${selectedSubject._id}/`,
-              {
-                method: "POST",
-                body: JSON.stringify({ scores, total, term: selectedTerm._id }),
-              }
-            );
-            const result =
-              (await res.json()) as RouteData<StudentResultSubjectPOSTData>;
+            const res = await fetch(`/api/students/${student}/results/${selectedSubject._id}/`, {
+              method: "POST",
+              body: JSON.stringify({ scores, total, term: selectedTerm._id }),
+            });
+            const result = (await res.json()) as RouteData<StudentResultSubjectPOSTData>;
 
             removeNotifications(notificationId);
             if (result?.data.ok) {
@@ -259,7 +226,10 @@ const Results: NextPage = () => {
     <>
       <Head>
         <title>Results | Portal | Grand Regal School</title>
-        <meta name="description" content="Results | GRS Portal" />
+        <meta
+          name="description"
+          content="Results | GRS Portal"
+        />
       </Head>
       <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
         <Sidebar />
@@ -276,8 +246,7 @@ const Results: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={setSelectedTerm}
               />
@@ -290,8 +259,7 @@ const Results: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={setSelectedClass}
               />
@@ -304,8 +272,7 @@ const Results: NextPage = () => {
                   inactiveCheckIconColor: "stroke-indigo-800",
                   activeOptionColor: "text-indigo-900 bg-indigo-100",
                   buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor:
-                    "focus-visible:ring-offset-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
                 }}
                 handleChange={setSelectedSubject}
               />
@@ -326,11 +293,18 @@ const Results: NextPage = () => {
                   <table className="min-w-full overflow-hidden rounded-lg shadow-md">
                     <thead className="bg-gray-300 text-gray-700">
                       <tr className="divide-x divide-gray-200">
-                        <th scope="col" className="relative px-6 py-3">
+                        <th
+                          scope="col"
+                          className="relative px-6 py-3"
+                        >
                           <span className="sr-only">Students</span>
                         </th>
                         {settings.fields.map((i) => (
-                          <th key={i.alias} scope="col" className="py-5">
+                          <th
+                            key={i.alias}
+                            scope="col"
+                            className="py-5"
+                          >
                             <abbr
                               title={`${i.name} - Max score ${i.max}`}
                               className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500"
@@ -339,7 +313,10 @@ const Results: NextPage = () => {
                             </abbr>
                           </th>
                         ))}
-                        <th scope="col" className="py-5">
+                        <th
+                          scope="col"
+                          className="py-5"
+                        >
                           <span className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500">
                             Total - Grade
                           </span>
@@ -392,55 +369,31 @@ const Results: NextPage = () => {
                                     onChange={(e) => {
                                       const value = +e.target.value;
                                       setScores(
-                                        scores.map(
-                                          ({
-                                            modified,
-                                            student,
-                                            scores,
-                                            total,
-                                          }) => ({
-                                            student,
-                                            total:
-                                              _id === student
-                                                ? undefined
-                                                : total,
-                                            modified: !modified
-                                              ? student === _id
-                                              : modified,
-                                            scores: settings.fields
-                                              .map((scoreField) => ({
-                                                fieldId: scoreField._id,
-                                                score:
-                                                  scoreField._id ===
-                                                    field._id && _id === student
-                                                    ? value
-                                                    : ((scores?.find(
-                                                        (score) =>
-                                                          score.fieldId ===
-                                                          scoreField._id
-                                                      )?.score ?? "") as any),
-                                              }))
-                                              .filter((i) => i.score !== ""),
-                                          })
-                                        )
+                                        scores.map(({ modified, student, scores, total }) => ({
+                                          student,
+                                          total: _id === student ? undefined : total,
+                                          modified: !modified ? student === _id : modified,
+                                          scores: settings.fields
+                                            .map((scoreField) => ({
+                                              fieldId: scoreField._id,
+                                              score:
+                                                scoreField._id === field._id && _id === student
+                                                  ? value
+                                                  : ((scores?.find((score) => score.fieldId === scoreField._id)
+                                                      ?.score ?? "") as any),
+                                            }))
+                                            .filter((i) => i.score !== ""),
+                                        }))
                                       );
 
-                                      if (value > field.max || value < 0)
-                                        e.target.reportValidity();
+                                      if (value > field.max || value < 0) e.target.reportValidity();
                                     }}
-                                    value={
-                                      studentScores?.find(
-                                        (i) => i.fieldId === field._id
-                                      )?.score ?? ""
-                                    }
+                                    value={studentScores?.find((i) => i.fieldId === field._id)?.score ?? ""}
                                     onBeforeInput={(
                                       e: FormEvent<HTMLInputElement> & {
                                         data: string;
                                       }
-                                    ) =>
-                                      !/\d|\./.test(e.data) &&
-                                      e.preventDefault()
-                                    }
+                                    ) => !/\d|\./.test(e.data) && e.preventDefault()}
                                   />
                                 ) : (
                                   ""
@@ -449,24 +402,14 @@ const Results: NextPage = () => {
                             ))}
                             <td
                               onDoubleClick={() =>
-                                setHardTotal(
-                                  forceTotal
-                                    ? hardTotal.filter((i) => i !== _id)
-                                    : [...hardTotal, _id]
-                                )
+                                setHardTotal(forceTotal ? hardTotal.filter((i) => i !== _id) : [...hardTotal, _id])
                               }
                               className="whitespace-nowrap px-6 py-4 text-center text-sm"
                             >
                               {!forceTotal ? (
                                 (() => {
-                                  const total =
-                                    studentScores?.reduce(
-                                      (a, b) => a + b.score,
-                                      0
-                                    ) ?? 0;
-                                  const scheme = settings.scheme.find(
-                                    (i) => total <= i.limit
-                                  );
+                                  const total = studentScores?.reduce((a, b) => a + b.score, 0) ?? 0;
+                                  const scheme = settings.scheme.find((i) => total <= i.limit);
 
                                   return (studentScores?.length ?? 0) > 0 ? (
                                     <abbr
@@ -487,43 +430,23 @@ const Results: NextPage = () => {
                                   type="number"
                                   inputMode="numeric"
                                   value={studentTotal ?? ""}
-                                  max={settings.fields.reduce(
-                                    (a, b) => a + b.max,
-                                    0
-                                  )}
+                                  max={settings.fields.reduce((a, b) => a + b.max, 0)}
                                   className="h-full w-full min-w-[3rem] py-3 text-center text-sm"
                                   onChange={(e) =>
                                     setScores(
-                                      scores.map(
-                                        ({
-                                          modified,
-                                          student,
-                                          scores,
-                                          total,
-                                        }) => ({
-                                          student,
-                                          scores:
-                                            student === _id
-                                              ? undefined
-                                              : scores,
-                                          total:
-                                            student === _id
-                                              ? +e.target.value
-                                              : total,
-                                          modified: !modified
-                                            ? student === _id
-                                            : modified,
-                                        })
-                                      )
+                                      scores.map(({ modified, student, scores, total }) => ({
+                                        student,
+                                        scores: student === _id ? undefined : scores,
+                                        total: student === _id ? +e.target.value : total,
+                                        modified: !modified ? student === _id : modified,
+                                      }))
                                     )
                                   }
                                   onBeforeInput={(
                                     e: FormEvent<HTMLInputElement> & {
                                       data: string;
                                     }
-                                  ) =>
-                                    !/\d|\./.test(e.data) && e.preventDefault()
-                                  }
+                                  ) => !/\d|\./.test(e.data) && e.preventDefault()}
                                 />
                               )}
                             </td>

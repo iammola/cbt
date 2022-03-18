@@ -6,10 +6,7 @@ import { connect } from "db";
 import type { ServerResponse } from "types";
 import type { PingData, PingError } from "types/api/ping";
 
-export default async function handler(
-  { body, method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<PingData, PingError> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -19,10 +16,7 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else {
     let start = Date.now();
 
@@ -52,8 +46,7 @@ export default async function handler(
     }
   }
 
-  if (typeof message !== "object")
-    message = { message, time: 0, error: message };
+  if (typeof message !== "object") message = { message, time: 0, error: message };
 
   res.status(status).json({ success, ...message });
 }

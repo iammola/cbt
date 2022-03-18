@@ -85,12 +85,9 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     Exams
                   </span>
                   <ChevronDownIcon
-                    className={classNames(
-                      "ml-auto h-5 w-5 shrink-0 text-gray-600",
-                      {
-                        hidden: !open,
-                      }
-                    )}
+                    className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", {
+                      hidden: !open,
+                    })}
                   />
                 </div>
               </MenuItem.Main>
@@ -99,18 +96,14 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   <li className="w-full">
                     <Link href="/exams/create/">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          Create an Exam
-                        </span>
+                        <span className="block truncate text-sm">Create an Exam</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/exams/">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          View Exams
-                        </span>
+                        <span className="block truncate text-sm">View Exams</span>
                       </a>
                     </Link>
                   </li>
@@ -120,18 +113,14 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   <li className="w-full">
                     <Link href="/exams/create/">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          Create an Exam
-                        </span>
+                        <span className="block truncate text-sm">Create an Exam</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/exams">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          View Exams
-                        </span>
+                        <span className="block truncate text-sm">View Exams</span>
                       </a>
                     </Link>
                   </li>
@@ -168,12 +157,9 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     Results
                   </span>
                   <ChevronDownIcon
-                    className={classNames(
-                      "ml-auto h-5 w-5 shrink-0 text-gray-600",
-                      {
-                        hidden: !open,
-                      }
-                    )}
+                    className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", {
+                      hidden: !open,
+                    })}
                   />
                 </div>
               </MenuItem.Main>
@@ -182,36 +168,28 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   <li className="w-full">
                     <Link href="/results/cbt">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          View CBT Results
-                        </span>
+                        <span className="block truncate text-sm">View CBT Results</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/results/comments">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          Upload Term Comments
-                        </span>
+                        <span className="block truncate text-sm">Upload Term Comments</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/results/create">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          Upload Term Result
-                        </span>
+                        <span className="block truncate text-sm">Upload Term Result</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/results/picker">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          View Term Results
-                        </span>
+                        <span className="block truncate text-sm">View Term Results</span>
                       </a>
                     </Link>
                   </li>
@@ -221,36 +199,28 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                   <li className="w-full">
                     <Link href="/results/cbt">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          View CBT Results
-                        </span>
+                        <span className="block truncate text-sm">View CBT Results</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/results/comments">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          Upload Term Comments
-                        </span>
+                        <span className="block truncate text-sm">Upload Term Comments</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/results/create">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          Upload Term Result
-                        </span>
+                        <span className="block truncate text-sm">Upload Term Result</span>
                       </a>
                     </Link>
                   </li>
                   <li className="w-full">
                     <Link href="/results/picker">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">
-                          View Term Result
-                        </span>
+                        <span className="block truncate text-sm">View Term Result</span>
                       </a>
                     </Link>
                   </li>
@@ -297,13 +267,7 @@ const MenuItem: MenuItem = ({ children }) => {
   const [expand, setExpand] = useState(false);
   const toggleExpand = () => setExpand(!expand);
 
-  return (
-    <li className="w-full">
-      {typeof children === "function"
-        ? children({ expand, toggleExpand })
-        : children}
-    </li>
-  );
+  return <li className="w-full">{typeof children === "function" ? children({ expand, toggleExpand }) : children}</li>;
 };
 
 MenuItem.Main = function Main({ children }) {
@@ -354,10 +318,7 @@ MenuItem.Panel = function Panel({ expand, children }) {
   );
 };
 
-type RenderChildren = (o: {
-  expand: boolean;
-  toggleExpand(): void;
-}) => ReactNode;
+type RenderChildren = (o: { expand: boolean; toggleExpand(): void }) => ReactNode;
 
 interface MenuItem
   extends FunctionComponent<{

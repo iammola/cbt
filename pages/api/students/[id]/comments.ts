@@ -5,14 +5,9 @@ import { connect } from "db";
 import { ResultModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import type {
-  StudentCommentGETData,
-  StudentCommentPOSTData,
-} from "types/api/students";
+import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api/students";
 
-async function getComments(
-  student: any
-): Promise<ServerResponse<StudentCommentGETData>> {
+async function getComments(student: any): Promise<ServerResponse<StudentCommentGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCommentGETData> = [
     false,
@@ -44,10 +39,7 @@ async function getComments(
   return [success, status, message];
 }
 
-async function updateComments(
-  student: any,
-  comments: string
-): Promise<ServerResponse<StudentCommentPOSTData>> {
+async function updateComments(student: any, comments: string): Promise<ServerResponse<StudentCommentPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCommentPOSTData> = [
     false,
@@ -85,13 +77,8 @@ async function updateComments(
   return [success, status, message];
 }
 
-export default async function handler(
-  { body, method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    StudentCommentGETData | StudentCommentPOSTData
-  > = [
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<StudentCommentGETData | StudentCommentPOSTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -100,10 +87,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? updateComments(query.id, JSON.parse(body).comment)

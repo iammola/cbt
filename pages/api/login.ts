@@ -9,21 +9,14 @@ import type { LoginData } from "types/api/login";
 
 import { promiseAny } from "utils";
 
-async function findUser(
-  model: typeof TeacherModel | typeof StudentModel,
-  access: "Teacher" | "Student",
-  code: number
-) {
+async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Teacher" | "Student", code: number) {
   const data = await model.findOne({ code }).select("name email").lean();
   if (data === null) throw new Error("User does not exist");
 
   return { ...data, access };
 }
 
-export default async function handler(
-  { body, method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<LoginData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -33,19 +26,13 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else {
     const { code } = JSON.parse(body);
 
     try {
       await connect();
-      const promises = [
-        findUser(TeacherModel, "Teacher", code),
-        findUser(StudentModel, "Student", code),
-      ];
+      const promises = [findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)];
       const data = await (Promise.any?.(promises) ?? promiseAny(promises));
 
       [success, status, message] = [

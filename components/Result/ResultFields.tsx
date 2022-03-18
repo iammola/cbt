@@ -4,16 +4,17 @@ import { classNames } from "utils";
 
 import type { ClassRecord } from "types";
 
-const ResultFields: FunctionComponent<ResultFieldsProps> = ({
-  fields,
-  className,
-}) => {
+const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className }) => {
   return (
     <div className={className}>
       <table className="w-full border-separate overflow-hidden rounded-lg border border-gray-400 bg-white [border-spacing:0;]">
         <thead className="divide-y divide-gray-400 font-medium text-gray-700">
           <tr>
-            <th scope="col" colSpan={2} className="py-1.5 text-center text-xs">
+            <th
+              scope="col"
+              colSpan={2}
+              className="py-1.5 text-center text-xs"
+            >
               Result fields
             </th>
           </tr>
@@ -33,12 +34,9 @@ const ResultFields: FunctionComponent<ResultFieldsProps> = ({
           {fields.map((item, index) => (
             <tr
               key={item.name}
-              className={classNames(
-                "divide-x divide-gray-400 text-center text-xs font-medium text-gray-800",
-                {
-                  "bg-gray-100": index % 2 === 1,
-                }
-              )}
+              className={classNames("divide-x divide-gray-400 text-center text-xs font-medium text-gray-800", {
+                "bg-gray-100": index % 2 === 1,
+              })}
             >
               <td className="p-4">
                 {item.name} ({item.alias})
@@ -52,11 +50,7 @@ const ResultFields: FunctionComponent<ResultFieldsProps> = ({
   );
 };
 
-interface ResultFieldsProps
-  extends Pick<
-    ClassRecord["resultTemplate"][number]["terms"][number],
-    "fields"
-  > {
+interface ResultFieldsProps extends Pick<ClassRecord["resultTemplate"][number]["terms"][number], "fields"> {
   className: string;
 }
 

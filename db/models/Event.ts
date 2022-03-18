@@ -7,10 +7,7 @@ const EventSchema = new Schema<EventRecord>({
   from: {
     type: Date,
     unique: true,
-    validate: [
-      (v: Date) => isFuture(v),
-      "New events must be after the current date",
-    ],
+    validate: [(v: Date) => isFuture(v), "New events must be after the current date"],
   },
   exams: [
     {
@@ -21,5 +18,4 @@ const EventSchema = new Schema<EventRecord>({
   ],
 });
 
-export const EventModel =
-  (models.Event as Model<EventRecord>) ?? model("Event", EventSchema);
+export const EventModel = (models.Event as Model<EventRecord>) ?? model("Event", EventSchema);

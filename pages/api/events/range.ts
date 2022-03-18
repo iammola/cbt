@@ -8,10 +8,7 @@ import { EventModel, SubjectsModel } from "db/models";
 import type { EventsRangeGETData } from "types/api/events";
 import type { EventRecord, ServerResponse, SubjectsRecord } from "types";
 
-async function getEventsRange(
-  from: any,
-  to: any
-): Promise<ServerResponse<EventsRangeGETData>> {
+async function getEventsRange(from: any, to: any): Promise<ServerResponse<EventsRangeGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<EventsRangeGETData> = [
     false,
@@ -39,19 +36,16 @@ async function getEventsRange(
         events: (
           await Promise.all(
             exams.map(async ({ subjectId }) => {
-              const record: SubjectsRecord<true> | null =
-                await SubjectsModel.findOne(
-                  {
-                    "subjects._id": subjectId,
-                  },
-                  "class subjects.name.$"
-                )
-                  .populate("class", "alias")
-                  .lean();
+              const record: SubjectsRecord<true> | null = await SubjectsModel.findOne(
+                {
+                  "subjects._id": subjectId,
+                },
+                "class subjects.name.$"
+              )
+                .populate("class", "alias")
+                .lean();
 
-              return record === null
-                ? ""
-                : `${record.class.alias} ${record.subjects[0].name}`;
+              return record === null ? "" : `${record.class.alias} ${record.subjects[0].name}`;
             })
           )
         ).filter(Boolean),
@@ -79,10 +73,7 @@ async function getEventsRange(
   return [success, status, message];
 }
 
-export default async function handler(
-  { query, method }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ query, method }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<EventsRangeGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -92,12 +83,8 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
-  } else
-    [success, status, message] = await getEventsRange(query.from, query.to);
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
+  } else [success, status, message] = await getEventsRange(query.from, query.to);
 
   if (typeof message !== "object") message = { message, error: message };
 

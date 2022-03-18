@@ -1,13 +1,7 @@
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { format, formatDistance } from "date-fns";
-import {
-  FormEvent,
-  FunctionComponent,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { FormEvent, FunctionComponent, useEffect, useMemo, useState } from "react";
 import {
   CogIcon,
   CheckCircleIcon,
@@ -28,9 +22,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
   const router = useRouter();
   const [firstLoad, setFirstLoad] = useState(true);
   const [addNotification, , Notifications] = useNotifications();
-  const [{ savedExams }, setCookies] = useCookies<"savedExams", Cookies>([
-    "savedExams",
-  ]);
+  const [{ savedExams }, setCookies] = useCookies<"savedExams", Cookies>(["savedExams"]);
 
   const [exam, setExam] = useState<ExamDetails>();
   const recordTemplate = useMemo<CreateQuestion>(
@@ -41,13 +33,8 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
     }),
     []
   );
-  const [instructions, setInstructions] = useState([
-    "Answer all questions",
-    "",
-  ]);
-  const [questions, setQuestions] = useState<CreateQuestion[]>([
-    { ...recordTemplate },
-  ]);
+  const [instructions, setInstructions] = useState(["Answer all questions", ""]);
+  const [questions, setQuestions] = useState<CreateQuestion[]>([{ ...recordTemplate }]);
 
   const [examState, setExamState] = useState({
     details: true,
@@ -137,10 +124,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
 
       try {
         const { name, ...details } = exam;
-        const [url, method] =
-          data?._id === undefined
-            ? ["/api/exams/", "POST"]
-            : [`/api/exams/${data._id}/`, "PUT"];
+        const [url, method] = data?._id === undefined ? ["/api/exams/", "POST"] : [`/api/exams/${data._id}/`, "PUT"];
         const res = await fetch(url, {
           method,
           body: JSON.stringify({
@@ -161,17 +145,11 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
           addNotification({
             message: "Upload Success... Redirecting",
             timeout: 1e3,
-            Icon: () => (
-              <CheckCircleIcon className="h-6 w-6 stroke-emerald-700" />
-            ),
+            Icon: () => <CheckCircleIcon className="h-6 w-6 stroke-emerald-700" />,
           });
           if (savedExams !== undefined)
             saveExam(
-              Object.fromEntries(
-                Object.entries(savedExams ?? {}).filter(
-                  ([key]) => key !== exam.subjectId.toString()
-                )
-              )
+              Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.subjectId.toString()))
             );
         } else throw new Error(error);
       } catch (error: any) {
@@ -184,9 +162,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         setTimeout(addNotification, 1e3, {
           message: error.message,
           timeout: 5e3,
-          Icon: () => (
-            <ExclamationCircleIcon className="h-6 w-6 stroke-red-700" />
-          ),
+          Icon: () => <ExclamationCircleIcon className="h-6 w-6 stroke-red-700" />,
         });
         console.error(error);
       }
@@ -195,11 +171,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
     }
   }
 
-  function questionActions(
-    pos: number,
-    count: 1 | 0 = 0,
-    data?: CreateQuestion
-  ) {
+  function questionActions(pos: number, count: 1 | 0 = 0, data?: CreateQuestion) {
     const items: any[] = [...questions];
     const replace = count === 0 ? { ...recordTemplate } : data;
     items.splice(pos, count, replace);
@@ -213,7 +185,11 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         onSubmit={handleSubmit}
         className="flex w-screen flex-col items-center justify-start"
       >
-        <Bar exam={exam?.name} {...examState} save={saveExam} />
+        <Bar
+          {...examState}
+          save={saveExam}
+          exam={exam?.name}
+        />
         <section className="relative w-full grow bg-indigo-100 py-10 px-10">
           <div className="m-auto h-full max-w-3xl space-y-5">
             <div className="flex w-full flex-col gap-3 rounded-xl bg-white px-10 pt-6 pb-5 shadow-sm">
@@ -226,9 +202,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
                     key={idx}
                     className="group relative mb-2 flex items-end justify-start gap-3 text-sm"
                   >
-                    <span className="-ml-4 text-xs font-semibold text-gray-500">
-                      {idx + 1}.
-                    </span>
+                    <span className="-ml-4 text-xs font-semibold text-gray-500">{idx + 1}.</span>
                     <div className="relative h-full grow">
                       <input
                         type="text"
@@ -237,9 +211,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
                         id={`${instruction}-${idx + 1}`}
                         className="w-full px-3 pt-1.5 pb-0.5 focus:outline-none"
                         onChange={({ target: { value } }) => {
-                          const v = instructions
-                            .map((j, i) => (i === idx ? value : j))
-                            .filter(Boolean);
+                          const v = instructions.map((j, i) => (i === idx ? value : j)).filter(Boolean);
                           v.at(-1) !== "" && v.push("");
                           setInstructions(v);
                         }}
@@ -251,11 +223,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
                     </div>
                     {idx > 0 && instructions.length > 2 && (
                       <span
-                        onClick={() =>
-                          setInstructions(
-                            instructions.filter((_, i) => i !== idx)
-                          )
-                        }
+                        onClick={() => setInstructions(instructions.filter((_, i) => i !== idx))}
                         className="ml-5 h-7 w-7 cursor-pointer rounded-full p-1.5 hover:bg-gray-100"
                       >
                         <XIcon className="h-full w-full fill-gray-500 hover:fill-gray-700" />
@@ -272,12 +240,8 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
                 record={question}
                 insertQuestionAbove={() => questionActions(i)}
                 insertQuestionBelow={() => questionActions(i + 1)}
-                deleteQuestion={() =>
-                  questions.length > 1 && questionActions(i, 1)
-                }
-                onChange={(newQuestion) =>
-                  questionActions(i, 1, { ...question, ...newQuestion })
-                }
+                deleteQuestion={() => questions.length > 1 && questionActions(i, 1)}
+                onChange={(newQuestion) => questionActions(i, 1, { ...question, ...newQuestion })}
               />
             ))}
           </div>
@@ -300,7 +264,11 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
             </span>
           </div>
         </section>
-        <Bar exam={exam?.name} {...examState} save={saveExam} />
+        <Bar
+          {...examState}
+          save={saveExam}
+          exam={exam?.name}
+        />
       </form>
       <Modal
         onSubmit={(d) => {

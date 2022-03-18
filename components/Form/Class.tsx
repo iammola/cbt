@@ -50,7 +50,10 @@ const ClassForm: FunctionComponent = () => {
           <span>Create a</span> <span className="text-indigo-500">Class</span>
         </h1>
         <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
-          <label htmlFor="name" className="text-sm font-semibold text-gray-600">
+          <label
+            htmlFor="name"
+            className="text-sm font-semibold text-gray-600"
+          >
             Name
           </label>
           <input
@@ -83,18 +86,13 @@ const ClassForm: FunctionComponent = () => {
           className={classNames(
             "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white",
             {
-              "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500":
-                success === undefined,
-              "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500":
-                success,
-              "bg-red-400 hover:bg-red-500 focus:ring-red-500":
-                success === false,
+              "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
+              "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+              "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
             }
           )}
         >
-          {loading && (
-            <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />
-          )}
+          {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
           {success && <CheckIcon className="h-5 w-5 fill-white" />}
           {success === false && <XIcon className="h-5 w-5 fill-white" />}
           Create Class

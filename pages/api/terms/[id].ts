@@ -7,9 +7,7 @@ import { SessionModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { TermGetData } from "types/api/sessions";
 
-async function getTerm(
-  id: any | "current"
-): Promise<ServerResponse<TermGetData>> {
+async function getTerm(id: any | "current"): Promise<ServerResponse<TermGetData>> {
   await connect();
   let [success, status, message]: ServerResponse<TermGetData> = [
     false,
@@ -47,10 +45,7 @@ async function getTerm(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<TermGetData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -60,10 +55,7 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else [success, status, message] = await getTerm(query.id);
 
   if (typeof message !== "object") message = { message, error: message };

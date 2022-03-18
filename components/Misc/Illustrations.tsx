@@ -1,8 +1,6 @@
 import { ComponentProps, FunctionComponent } from "react";
 
-export const CalendarIllustration: FunctionComponent<ComponentProps<"svg">> = (
-  props
-) => {
+export const CalendarIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -11,7 +9,10 @@ export const CalendarIllustration: FunctionComponent<ComponentProps<"svg">> = (
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <path d="M0 0h265v322H0z" fill="url(#CalendarIllustration)" />
+      <path
+        d="M0 0h265v322H0z"
+        fill="url(#CalendarIllustration)"
+      />
       <defs>
         <pattern
           width="1"
@@ -35,9 +36,7 @@ export const CalendarIllustration: FunctionComponent<ComponentProps<"svg">> = (
   );
 };
 
-export const MeditatingIllustration: FunctionComponent<
-  ComponentProps<"svg">
-> = (props) => {
+export const MeditatingIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -46,7 +45,10 @@ export const MeditatingIllustration: FunctionComponent<
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <path d="M0 0h357v283H0z" fill="url(#MeditatingIllustration)" />
+      <path
+        d="M0 0h357v283H0z"
+        fill="url(#MeditatingIllustration)"
+      />
       <defs>
         <pattern
           width="1"
@@ -70,9 +72,7 @@ export const MeditatingIllustration: FunctionComponent<
   );
 };
 
-export const StandingChatIllustration: FunctionComponent<
-  ComponentProps<"svg">
-> = (props) => {
+export const StandingChatIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -81,7 +81,10 @@ export const StandingChatIllustration: FunctionComponent<
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <path d="M0 0h357v283H0z" fill="url(#StandingChatIllustration)" />
+      <path
+        d="M0 0h357v283H0z"
+        fill="url(#StandingChatIllustration)"
+      />
       <defs>
         <pattern
           width="1"
@@ -105,9 +108,7 @@ export const StandingChatIllustration: FunctionComponent<
   );
 };
 
-export const StandingWithPencilIllustration: FunctionComponent<
-  ComponentProps<"svg">
-> = (props) => {
+export const StandingWithPencilIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -116,7 +117,10 @@ export const StandingWithPencilIllustration: FunctionComponent<
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <path d="M0 0h265v322H0z" fill="url(#StandingWithPencilIllustration)" />
+      <path
+        d="M0 0h265v322H0z"
+        fill="url(#StandingWithPencilIllustration)"
+      />
       <defs>
         <pattern
           width="1"
@@ -140,9 +144,7 @@ export const StandingWithPencilIllustration: FunctionComponent<
   );
 };
 
-export const SittingWithLaptopIllustration: FunctionComponent<
-  ComponentProps<"svg">
-> = (props) => {
+export const SittingWithLaptopIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -151,7 +153,10 @@ export const SittingWithLaptopIllustration: FunctionComponent<
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <path d="M0 0h356v335H0z" fill="url(#SittingWithLaptopIllustration)" />
+      <path
+        d="M0 0h356v335H0z"
+        fill="url(#SittingWithLaptopIllustration)"
+      />
       <defs>
         <pattern
           width="1"

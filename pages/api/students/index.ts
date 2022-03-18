@@ -24,10 +24,7 @@ async function createStudent({
 
   try {
     const code = generateCode();
-    const currentSession = await SessionModel.findOne(
-      { current: true, "terms.current": true },
-      "terms"
-    ).lean();
+    const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, "terms").lean();
 
     await StudentModel.create({
       ...student,
@@ -68,10 +65,7 @@ async function createStudent({
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, body }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, body }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<StudentsPOSTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -81,10 +75,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? createStudent(JSON.parse(body))

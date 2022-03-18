@@ -5,10 +5,7 @@ import { classNames } from "utils";
 
 import type { UserImageProps } from "types";
 
-const UserImage: FunctionComponent<UserImageProps> = ({
-  initials,
-  ...props
-}) => {
+const UserImage: FunctionComponent<UserImageProps> = ({ initials, ...props }) => {
   const [error, setError] = useState(false);
 
   return !error && props.src ? (

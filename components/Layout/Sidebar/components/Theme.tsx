@@ -1,14 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import {
-  MoonIcon as MoonSolidIcon,
-  SunIcon as SunSolidIcon,
-} from "@heroicons/react/solid";
+import { MoonIcon as MoonSolidIcon, SunIcon as SunSolidIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
-import {
-  MoonIcon as MoonOutlineIcon,
-  SunIcon as SunOutlineIcon,
-} from "components/Misc/Icons";
+import { MoonIcon as MoonOutlineIcon, SunIcon as SunOutlineIcon } from "components/Misc/Icons";
 
 import type { ThemeProps } from "types";
 

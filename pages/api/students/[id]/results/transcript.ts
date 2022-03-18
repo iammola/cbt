@@ -2,22 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import {
-  ResultModel,
-  SessionModel,
-  StudentModel,
-  SubjectsModel,
-} from "db/models";
+import { ResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
-import type {
-  StudentTranscriptGETData,
-  TranscriptTermScore,
-} from "types/api/students";
+import type { StudentTranscriptGETData, TranscriptTermScore } from "types/api/students";
 
-async function getStudentTranscript(
-  id: any
-): Promise<ServerResponse<StudentTranscriptGETData>> {
+async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTranscriptGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentTranscriptGETData> = [
     false,
@@ -33,9 +23,7 @@ async function getStudentTranscript(
     ]);
 
     if (!student) throw new Error("Student not found");
-    const subjectIDs = student.academic
-      .map((i) => i.terms.map((t) => t.subjects).flat())
-      .flat();
+    const subjectIDs = student.academic.map((i) => i.terms.map((t) => t.subjects).flat()).flat();
 
     const subjects = await SubjectsModel.aggregate([
       { $match: { "subjects._id": { $in: subjectIDs } } },
@@ -52,11 +40,7 @@ async function getStudentTranscript(
         },
       },
     ]).then((data) =>
-      data
-        .map(({ subjects }) =>
-          subjects.map(({ _id, name }: SubjectRecord) => ({ _id, name })).flat()
-        )
-        .flat()
+      data.map(({ subjects }) => subjects.map(({ _id, name }: SubjectRecord) => ({ _id, name })).flat()).flat()
     );
 
     const scores = Object.entries(
@@ -70,10 +54,8 @@ async function getStudentTranscript(
                 data.map(
                   ({ subject, scores, total }) =>
                     [
-                      subjects.find((i) => i._id.equals(subject))?.name ??
-                        "Undefined Subject",
-                      total ??
-                        scores?.reduce((acc, item) => acc + item.score, 0),
+                      subjects.find((i) => i._id.equals(subject))?.name ?? "Undefined Subject",
+                      total ?? scores?.reduce((acc, item) => acc + item.score, 0),
                     ] as const
                 )
               ),
@@ -81,9 +63,7 @@ async function getStudentTranscript(
           ];
         }, [] as TranscriptTermScore[])
         .reduce((acc, { subjects, term }) => {
-          const session = sessions.find((session) =>
-            session.terms.find((item) => item._id.equals(term))
-          )?._id;
+          const session = sessions.find((session) => session.terms.find((item) => item._id.equals(term)))?._id;
 
           if (!session) return acc;
 
@@ -93,15 +73,12 @@ async function getStudentTranscript(
             if (acc[subject] === undefined) return (acc[subject] = [newValue]);
             if (score === undefined) return acc;
 
-            const sessionIdx = acc[subject].findIndex((t) =>
-              t.session.equals(session)
-            );
+            const sessionIdx = acc[subject].findIndex((t) => t.session.equals(session));
 
             if (sessionIdx < 0) acc[subject].push(newValue);
             else {
               ++acc[subject][sessionIdx].termsCount;
-              acc[subject][sessionIdx].score =
-                score + (acc[subject][sessionIdx].score ?? 0);
+              acc[subject][sessionIdx].score = score + (acc[subject][sessionIdx].score ?? 0);
             }
           });
 
@@ -142,10 +119,7 @@ async function getStudentTranscript(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<StudentTranscriptGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -155,10 +129,7 @@ export default async function handler(
 
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else [success, status, message] = await getStudentTranscript(query.id);
 
   if (typeof message !== "object") message = { message, error: message };

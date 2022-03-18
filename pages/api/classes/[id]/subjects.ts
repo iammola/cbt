@@ -5,15 +5,9 @@ import { connect } from "db";
 import { ClassModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
-import type {
-  ClassSubjectGETData,
-  ClassSubjectPOSTData,
-} from "types/api/classes";
+import type { ClassSubjectGETData, ClassSubjectPOSTData } from "types/api/classes";
 
-async function getSubjects(
-  id: any,
-  select: string
-): Promise<ServerResponse<ClassSubjectGETData>> {
+async function getSubjects(id: any, select: string): Promise<ServerResponse<ClassSubjectGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassSubjectGETData> = [
     false,
@@ -22,10 +16,7 @@ async function getSubjects(
   ];
 
   try {
-    const data = await SubjectsModel.findOne(
-      { class: id },
-      { _id: 0, class: 0 }
-    ).lean();
+    const data = await SubjectsModel.findOne({ class: id }, { _id: 0, class: 0 }).lean();
     [success, status, message] = [
       true,
       StatusCodes.OK,
@@ -47,10 +38,7 @@ async function getSubjects(
   return [success, status, message];
 }
 
-async function createSubject(
-  id: any,
-  { name, alias }: SubjectRecord
-): Promise<ServerResponse<ClassSubjectPOSTData>> {
+async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<ServerResponse<ClassSubjectPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassSubjectPOSTData> = [
     false,
@@ -94,22 +82,18 @@ async function createSubject(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query, body }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
   const { id, select } = query as { id: string; select: string };
-  let [success, status, message]: ServerResponse<
-    ClassSubjectGETData | ClassSubjectPOSTData
-  > = [false, StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST];
+  let [success, status, message]: ServerResponse<ClassSubjectGETData | ClassSubjectPOSTData> = [
+    false,
+    StatusCodes.BAD_REQUEST,
+    ReasonPhrases.BAD_REQUEST,
+  ];
   const allowedMethods = ["POST", "GET"];
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? createSubject(id, JSON.parse(body))

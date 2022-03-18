@@ -2,28 +2,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import {
-  ExamModel,
-  CBTResultModel,
-  StudentModel,
-  SubjectsModel,
-} from "db/models";
+import { ExamModel, CBTResultModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { CBTResultRecord, ServerResponse } from "types";
-import type {
-  StudentCBTResultsGETData,
-  StudentResultPOSTData,
-} from "types/api/students";
+import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api/students";
 
-type RequestBody = Omit<
-  CBTResultRecord["results"][number],
-  "score" | "ended" | "answers"
-> & { answers: { [key: string]: string } };
+type RequestBody = Omit<CBTResultRecord["results"][number], "score" | "ended" | "answers"> & {
+  answers: { [key: string]: string };
+};
 
-async function createResult(
-  id: any,
-  result: RequestBody
-): Promise<ServerResponse<StudentResultPOSTData>> {
+async function createResult(id: any, result: RequestBody): Promise<ServerResponse<StudentResultPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultPOSTData> = [
     false,
@@ -32,8 +20,7 @@ async function createResult(
   ];
 
   try {
-    if (!(await StudentModel.exists({ _id: id })))
-      throw new Error("Student does not exist");
+    if (!(await StudentModel.exists({ _id: id }))) throw new Error("Student does not exist");
     const exam = await ExamModel.findById(
       result.examId,
       "-_id questions._id questions.answers._id questions.answers.isCorrect"
@@ -104,9 +91,7 @@ async function createResult(
   return [success, status, message];
 }
 
-async function getResults(
-  id: any
-): Promise<ServerResponse<StudentCBTResultsGETData>> {
+async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCBTResultsGETData> = [
     false,
@@ -115,28 +100,20 @@ async function getResults(
   ];
 
   try {
-    const record = await CBTResultModel.findOne(
-      { student: id },
-      "results.started results.score results.examId"
-    ).lean();
+    const record = await CBTResultModel.findOne({ student: id }, "results.started results.score results.examId").lean();
 
-    const exams = await ExamModel.find(
-      { _id: record?.results.map((i) => i.examId) ?? [] },
-      "subjectId"
-    ).lean();
+    const exams = await ExamModel.find({ _id: record?.results.map((i) => i.examId) ?? [] }, "subjectId").lean();
     const subjects = (
-      await SubjectsModel.find(
-        { "subjects._id": exams.map((e) => e.subjectId) },
-        "subjects._id subjects.name"
-      ).lean()
+      await SubjectsModel.find({ "subjects._id": exams.map((e) => e.subjectId) }, "subjects._id subjects.name").lean()
     )
       .map((i) => i.subjects)
       .flat();
 
     const data = exams.map((e) => {
-      const { score, started } = record?.results.find((r) =>
-        r.examId.equals(e._id)
-      ) ?? { score: 0, started: new Date() };
+      const { score, started } = record?.results.find((r) => r.examId.equals(e._id)) ?? {
+        score: 0,
+        started: new Date(),
+      };
 
       return {
         score,
@@ -166,13 +143,8 @@ async function getResults(
   return [success, status, message];
 }
 
-export default async function handler(
-  { body, query, method }: NextApiRequest,
-  res: NextApiResponse
-) {
-  let [success, status, message]: ServerResponse<
-    StudentResultPOSTData | StudentCBTResultsGETData
-  > = [
+export default async function handler({ body, query, method }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<StudentResultPOSTData | StudentCBTResultsGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -181,10 +153,7 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
       ? createResult(query.id, JSON.parse(body))

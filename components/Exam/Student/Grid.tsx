@@ -22,13 +22,10 @@ const Grid: FunctionComponent<StudentGridProps> = ({ questions }) => {
             {answered && (
               <span
                 aria-label={`Question ${i} answered`}
-                className={classNames(
-                  "absolute top-1.5 right-1.5 h-1 w-1 rounded-full",
-                  {
-                    "bg-gray-200": active,
-                    "bg-gray-700": !active,
-                  }
-                )}
+                className={classNames("absolute top-1.5 right-1.5 h-1 w-1 rounded-full", {
+                  "bg-gray-200": active,
+                  "bg-gray-700": !active,
+                })}
               />
             )}
             <span className="absolute left-1/2 -top-9 hidden w-max -translate-x-1/2 rounded-md bg-white p-2 text-xs font-normal text-gray-600 shadow-md group-hover:inline">
@@ -38,8 +35,7 @@ const Grid: FunctionComponent<StudentGridProps> = ({ questions }) => {
         ))}
       </ul>
       <span className="mt-6 inline-block text-xs font-medium text-gray-500">
-        {questions.filter(({ answered }) => answered).length} out of{" "}
-        {questions.length} answered
+        {questions.filter(({ answered }) => answered).length} out of {questions.length} answered
       </span>
     </div>
   );

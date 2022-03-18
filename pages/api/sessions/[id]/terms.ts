@@ -7,10 +7,7 @@ import { SessionModel } from "db/models";
 import type { TermGETData } from "types/api/sessions";
 import type { ServerResponse, TermRecord } from "types";
 
-async function createTerm(
-  id: string,
-  term: TermRecord
-): Promise<ServerResponse<TermGETData>> {
+async function createTerm(id: string, term: TermRecord): Promise<ServerResponse<TermGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<TermGETData> = [
     false,
@@ -20,10 +17,7 @@ async function createTerm(
 
   try {
     if (term.current) {
-      const updateSession = SessionModel.updateMany(
-        { current: true, _id: { $ne: id } },
-        { $unset: { current: "" } }
-      );
+      const updateSession = SessionModel.updateMany({ current: true, _id: { $ne: id } }, { $unset: { current: "" } });
       const updateTerm = SessionModel.updateMany(
         { "terms.current": true },
         { $unset: { "terms.$[i].current": "" } },
@@ -64,10 +58,7 @@ async function createTerm(
   return [success, status, message];
 }
 
-export default async function handler(
-  { method, query, body }: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler({ method, query, body }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<TermGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -77,15 +68,8 @@ export default async function handler(
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
-    [status, message] = [
-      StatusCodes.METHOD_NOT_ALLOWED,
-      ReasonPhrases.METHOD_NOT_ALLOWED,
-    ];
-  } else
-    [success, status, message] = await createTerm(
-      query.id as string,
-      JSON.parse(body)
-    );
+    [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
+  } else [success, status, message] = await createTerm(query.id as string, JSON.parse(body));
 
   if (typeof message !== "object") message = { message, error: message };
 

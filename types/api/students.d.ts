@@ -1,11 +1,4 @@
-import {
-  RecordId,
-  ExamRecord,
-  UserRecord,
-  ResultRecord,
-  StudentRecord,
-  SubjectRecord,
-} from "types";
+import { RecordId, ExamRecord, UserRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
 export type StudentsPOSTData = Pick<UserRecord, "code">;
 
@@ -38,10 +31,7 @@ export type StudentExamGETData = RecordId & {
   };
 };
 
-export type StudentResultSubjectGETData = Omit<
-  ResultRecord["data"][number],
-  "subject"
->;
+export type StudentResultSubjectGETData = Omit<ResultRecord["data"][number], "subject">;
 
 export type StudentResultSubjectPOSTData = {
   ok: boolean;
@@ -57,12 +47,15 @@ export type StudentResultGETData = Pick<ResultRecord, "comments" | "data">;
 
 export type StudentTranscriptGETData = {
   sessions: Pick<SessionRecord, "_id" | "name">[];
-  scores: Record<string, {
-    score?: number;
-    grade?: string;
-    termsCount: number;
-    session: RecordId["_id"];
-  }[]>;
+  scores: Record<
+    string,
+    {
+      score?: number;
+      grade?: string;
+      termsCount: number;
+      session: RecordId["_id"];
+    }[]
+  >;
 };
 
 type TranscriptTermScore = {
