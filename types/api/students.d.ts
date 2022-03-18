@@ -54,3 +54,25 @@ export type StudentCommentPOSTData = { ok: boolean };
 export type StudentSubjectsGETData = Pick<SubjectRecord, "_id" | "name">[];
 
 export type StudentResultGETData = Pick<ResultRecord, "comments" | "data">;
+
+export type StudentTranscriptGETData = {
+  subjects: Pick<SubjectRecord, "_id" | "name">[];
+  sessions: Pick<SessionRecord, "_id" | "name">[];
+  scores: TranscriptScore[];
+};
+
+export type TranscriptScore = {
+  subject: RecordId["_id"];
+  data: {
+    score?: number;
+    grade?: string;
+    termsCount: number;
+    session: RecordId["_id"];
+  }[];
+};
+
+type TranscriptTermScore = {
+  score?: number;
+  term: RecordId["_id"];
+  subject: RecordId["_id"];
+};
