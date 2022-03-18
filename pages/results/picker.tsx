@@ -116,7 +116,11 @@ const ResultsPicker: NextPage = () => {
             handleChange={setSelectedTerm}
           />
         </div>
-        <Link href={`/results/${selectedStudent._id}?term=${selectedTerm._id}`}>
+        <Link
+          href={`/results/${selectedStudent._id}${
+            "current" in selectedTerm ? "" : `?term=${selectedTerm._id}`
+          }`}
+        >
           <a
             target="_blank"
             rel="noopener noreferrer"
