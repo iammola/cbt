@@ -72,9 +72,10 @@ async function createResultSetting(
   return [success, status, message];
 }
 
-async function getResultSetting(
-  _id: any
-): Promise<ServerResponse<ClassResultSettingsGETData>> {
+async function getResultSetting({
+  id,
+  term,
+}: any): Promise<ServerResponse<ClassResultSettingsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassResultSettingsGETData> = [
     false,
@@ -83,19 +84,10 @@ async function getResultSetting(
   ];
 
   try {
-    const currentSession = await SessionModel.findOne(
-      { current: true, "terms.current": true },
-      "terms._id.$"
-    ).lean();
     const classRecord = await ClassModel.findOne(
       {
-        _id,
-        resultTemplate: {
-          $elemMatch: {
-            session: currentSession?._id,
-            "terms.term": currentSession?.terms[0]._id,
-          },
-        },
+        _id: id,
+        "resultTemplate.terms.term": term,
       },
       "resultTemplate.terms.$"
     ).lean();
@@ -143,7 +135,7 @@ export default async function handler(
   } else
     [success, status, message] = await (method === "POST"
       ? createResultSetting(query.id, JSON.parse(body))
-      : getResultSetting(query.id));
+      : getResultSetting(query));
 
   if (typeof message !== "object") message = { message, error: message };
 

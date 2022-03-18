@@ -134,12 +134,16 @@ const Results: NextPage = () => {
             data: { students },
           },
         ] = await Promise.all([
-          fetch(`/api/classes/${selectedClass._id}/results/setting/`).then(
-            (res) => res.json()
-          ) as Promise<RouteData<ClassResultSettingsGETData>>,
-          fetch(`/api/subjects/${selectedSubject._id}/students/`).then((res) =>
-            res.json()
-          ) as Promise<RouteData<SubjectStudentsGETData>>,
+          fetch(
+            `/api/classes/${selectedClass._id}/results/setting/?term=${selectedTerm._id}`
+          ).then((res) => res.json()) as Promise<
+            RouteData<ClassResultSettingsGETData>
+          >,
+          fetch(
+            `/api/subjects/${selectedSubject._id}/students/?term=${selectedTerm._id}`
+          ).then((res) => res.json()) as Promise<
+            RouteData<SubjectStudentsGETData>
+          >,
         ]);
         setStudents(students);
         setSettings(settings);
