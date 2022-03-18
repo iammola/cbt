@@ -24,6 +24,7 @@ import type {
   ClassResultSettingsGETData,
   ClassSubjectGETData,
 } from "types/api/classes";
+import type { AllTermsGetData } from "types/api/sessions";
 
 const Results: NextPage = () => {
   const [addNotifications, removeNotifications, Notifications] =
@@ -45,6 +46,10 @@ const Results: NextPage = () => {
     "/api/classes/?select=name",
     (url) => fetch(url).then((res) => res.json())
   );
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>, RouteError>(
+    "/api/terms/all",
+    (url) => fetch(url).then((res) => res.json())
+  );
 
   const [selectedClass, setSelectedClass] = useState({
     _id: "",
@@ -54,6 +59,25 @@ const Results: NextPage = () => {
     _id: "",
     name: "Select subject",
   });
+  const [selectedTerm, setSelectedTerm] = useState({
+    _id: "",
+    name: "Loading...",
+  });
+
+  useEffect(() => {
+    if (!selectedTerm._id && terms?.data !== undefined) {
+      const term = terms.data.find(
+        (i) => i.current
+      ) as unknown as typeof selectedTerm;
+
+      setSelectedTerm(
+        term ?? {
+          _id: "",
+          name: "Select term",
+        }
+      );
+    }
+  }, [selectedTerm, terms]);
 
   useEffect(() => {
     async function fetchSubjects() {
@@ -180,7 +204,7 @@ const Results: NextPage = () => {
               `/api/students/${student}/results/${selectedSubject._id}/`,
               {
                 method: "POST",
-                body: JSON.stringify({ scores, total }),
+                body: JSON.stringify({ scores, total, term: selectedTerm._id }),
               }
             );
             const result =
@@ -239,6 +263,20 @@ const Results: NextPage = () => {
           <Navbar />
           <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
             <div className="flex w-full items-end justify-center gap-4">
+              <Select
+                label="Terms"
+                options={terms?.data}
+                selected={selectedTerm}
+                colorPallette={{
+                  activeCheckIconColor: "stroke-indigo-600",
+                  inactiveCheckIconColor: "stroke-indigo-800",
+                  activeOptionColor: "text-indigo-900 bg-indigo-100",
+                  buttonBorderColor: "focus-visible:border-indigo-500",
+                  buttonOffsetFocusColor:
+                    "focus-visible:ring-offset-indigo-500",
+                }}
+                handleChange={setSelectedTerm}
+              />
               <Select
                 label="Class"
                 options={classes?.data}
