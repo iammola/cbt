@@ -7,9 +7,10 @@ import { ResultModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { StudentResultGETData } from "types/api/students";
 
-async function getStudentResult(
-  student: any
-): Promise<ServerResponse<StudentResultGETData>> {
+async function getStudentResult({
+  id,
+  term,
+}: any): Promise<ServerResponse<StudentResultGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultGETData> = [
     false,
@@ -18,7 +19,10 @@ async function getStudentResult(
   ];
 
   try {
-    const data = await ResultModel.findOne({ student }, "-_id -student").lean();
+    const data = await ResultModel.findOne(
+      { student: id, term },
+      "-_id -student"
+    ).lean();
     if (data === null) throw new Error("Student has no result record");
 
     [success, status, message] = [
@@ -59,7 +63,7 @@ export default async function handler(
       StatusCodes.METHOD_NOT_ALLOWED,
       ReasonPhrases.METHOD_NOT_ALLOWED,
     ];
-  } else [success, status, message] = await getStudentResult(query.id);
+  } else [success, status, message] = await getStudentResult(query);
 
   if (typeof message !== "object") message = { message, error: message };
 

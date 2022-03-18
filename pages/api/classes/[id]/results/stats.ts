@@ -7,9 +7,10 @@ import { ResultModel, SessionModel, StudentModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { ClassResultGETData } from "types/api/classes";
 
-async function getClassResultStats(
-  id: any
-): Promise<ServerResponse<ClassResultGETData>> {
+async function getClassResultStats({
+  id,
+  term,
+}: any): Promise<ServerResponse<ClassResultGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassResultGETData> = [
     false,
@@ -18,20 +19,10 @@ async function getClassResultStats(
   ];
 
   try {
-    const currentSession = await SessionModel.findOne(
-      { current: true, "terms.current": true },
-      "terms._id.$"
-    ).lean();
-    if (currentSession === null) throw new Error("Current Session Error");
-
     const students = await StudentModel.find(
       {
-        academic: {
-          $elemMatch: {
-            "terms.class": id,
-            session: currentSession._id,
-            "terms.term": currentSession.terms[0]._id,
-          },
+        "academic.terms": {
+          $elemMatch: { term, class: id },
         },
       },
       "_id"
@@ -106,7 +97,7 @@ export default async function handler(
       StatusCodes.METHOD_NOT_ALLOWED,
       ReasonPhrases.METHOD_NOT_ALLOWED,
     ];
-  } else [success, status, message] = await getClassResultStats(query.id);
+  } else [success, status, message] = await getClassResultStats(query);
 
   if (typeof message !== "object") message = { message, error: message };
 
