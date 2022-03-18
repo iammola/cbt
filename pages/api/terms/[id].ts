@@ -20,7 +20,7 @@ async function getTerm(
   try {
     const data = await SessionModel.findOne(
       id === "current" ? { "terms.current": true } : { "terms._id": id },
-      "name alias terms._id.$"
+      "name alias terms.$"
     ).lean();
 
     if (data === null) throw new Error("Term not found");
