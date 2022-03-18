@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { formatDuration, intervalToDuration } from "date-fns";
 
-const Info: FunctionComponent<InfoProps> = ({
+const Info: FunctionComponent<DeepPartial<InfoProps>> = ({
   average,
   birthday,
   gender,
@@ -42,7 +42,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Gender:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {gender === "M" ? "Male" : "Female"}
+          {gender && gender === "M" ? "Male" : "Female"}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -66,7 +66,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Final Grade:
         </span>{" "}
         <span className="min-w-max text-sm font-bold tracking-wide text-gray-800">
-          {scores.grade}
+          {scores?.grade}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -82,7 +82,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Highest Class Average:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {average.highest.toFixed(1)}
+          {average?.highest?.toFixed(1)}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -90,7 +90,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Lowest Class Average:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {average.lowest.toFixed(1)}
+          {average?.lowest?.toFixed(1)}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -98,7 +98,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Class Average:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {average.class.toFixed(1)}
+          {average?.class?.toFixed(1)}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -106,7 +106,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Expected Score:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {scores.expected}
+          {scores?.expected}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -114,7 +114,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Total Score:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {scores.total.toFixed(1)}
+          {scores?.total?.toFixed(1)}
         </span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
@@ -122,7 +122,7 @@ const Info: FunctionComponent<InfoProps> = ({
           Average:
         </span>{" "}
         <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {average.average.toFixed(1)}
+          {average?.average?.toFixed(1)}
         </span>
       </div>
     </div>
@@ -145,6 +145,10 @@ type InfoProps = {
     total: number;
     expected: number;
   };
+};
+
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
 export default Info;
