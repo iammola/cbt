@@ -75,7 +75,7 @@ const ResultsPicker: NextPage = () => {
       console.log("Loaded Students");
     }
 
-    if (classes !== undefined) getStudents(classes.data);
+    if (classes?.data) getStudents(classes.data);
   }, [classes]);
 
   useEffect(() => {
