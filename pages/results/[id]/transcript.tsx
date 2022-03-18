@@ -92,27 +92,27 @@ const ResultTranscript: NextPage = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-400 bg-white text-gray-600">
-            {data?.data?.subjects.map((sub, index) => (
-              <tr
-                key={String(sub._id)}
-                className={classNames(
-                  "divide-x divide-gray-400 text-center text-xs font-medium text-gray-800",
-                  { "bg-gray-100": index % 2 === 1 }
-                )}
-              >
-                <td className="px-2 py-4 font-normal text-gray-700 print:text-center">
-                  {sub.name}
-                </td>
-                {data?.data.scores
-                  .find((sco) => sco.subject === sub._id)
-                  ?.data?.map((i) => (
+            {Object.entries(data?.data.scores ?? {}).map(
+              ([subject, values], idx) => (
+                <tr
+                  key={subject}
+                  className={classNames(
+                    "divide-x divide-gray-400 text-center text-xs font-medium text-gray-800",
+                    { "bg-gray-100": idx % 2 === 1 }
+                  )}
+                >
+                  <td className="px-2 py-4 font-normal text-gray-700 print:text-center">
+                    {subject}
+                  </td>
+                  {values.map((i) => (
                     <Fragment key={String(i.session)}>
                       <td className="w-20 py-4 print:w-12">{i.score ?? "-"}</td>
                       <td className="w-20 py-4 print:w-12">{i.grade ?? "-"}</td>
                     </Fragment>
                   ))}
-              </tr>
-            ))}
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <Divide className="w-full py-10" HRclassName="border-t-gray-300" />
