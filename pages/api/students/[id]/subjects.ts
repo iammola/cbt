@@ -8,7 +8,7 @@ import type { ServerResponse } from "types";
 import type { StudentSubjectsGETData } from "types/api/students";
 
 async function getStudentSubjects({
-  _id,
+  id,
   term,
 }: any): Promise<ServerResponse<StudentSubjectsGETData>> {
   await connect();
@@ -21,7 +21,7 @@ async function getStudentSubjects({
   try {
     const data = await StudentModel.findOne(
       {
-        _id,
+        _id: id,
         "academic.terms": {
           $elemMatch: { term },
         },
