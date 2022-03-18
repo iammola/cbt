@@ -55,7 +55,7 @@ async function getStudentSubjectResult(
 async function updateStudentSubjectResult(
   student: any,
   subject: any,
-  body: Omit<ResultRecord["data"], "subject">
+  { term, ...body }: Omit<ResultRecord["data"], "subject"> & { term: string }
 ): Promise<ServerResponse<StudentResultSubjectPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> =
@@ -78,12 +78,12 @@ async function updateStudentSubjectResult(
       record === null
         ? [
             { student },
-            { $push: { data: { subject, ...body } } },
+            { term, $push: { data: { subject, ...body } } },
             { upsert: true },
           ]
         : [
             { _id: record._id },
-            { $set: { "data.$[i]": { subject, ...body } } },
+            { term, $set: { "data.$[i]": { subject, ...body } } },
             {
               runValidators: true,
               fields: "_id",
