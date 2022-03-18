@@ -2,7 +2,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 
 import { Divide } from "components/Misc";
-import { Header, TranscriptInfo } from "components/Result";
+import { Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
 const ResultTranscript: NextPage = () => {
   return (
@@ -81,6 +81,7 @@ const ResultTranscript: NextPage = () => {
           </tbody>
         </table>
         <Divide className="w-full py-10" HRclassName="border-t-gray-300" />
+        <TranscriptFooter />
       </main>
     </section>
   );
