@@ -93,9 +93,11 @@ const Result: NextPage = () => {
   }, [data, student?.data]);
 
   useEffect(() => {
-    async function getResultTemplate(id: any) {
+    async function getResultTemplate(id: any, term: any) {
       try {
-        const res = await fetch(`/api/classes/${id}/results/setting/`);
+        const res = await fetch(
+          `/api/classes/${id}/results/setting/?term=${term}`
+        );
         const result =
           (await res.json()) as ClientResponse<ClassResultSettingsGETData>;
 
@@ -110,14 +112,16 @@ const Result: NextPage = () => {
       }
     }
 
-    if (data?.class !== undefined && data.template === undefined)
-      getResultTemplate(data.class?._id);
-  }, [data?.class, data?.template]);
+    if (selectedTerm && data?.class && !data.template)
+      getResultTemplate(data.class?._id, selectedTerm.data._id);
+  }, [data?.class, data?.template, selectedTerm]);
 
   useEffect(() => {
-    async function getSubjects(student: any) {
+    async function getSubjects(student: any, term: any) {
       try {
-        const res = await fetch(`/api/students/${student}/subjects/`);
+        const res = await fetch(
+          `/api/students/${student}/subjects/?term=${term}`
+        );
         const result =
           (await res.json()) as ClientResponse<StudentSubjectsGETData>;
 
@@ -132,14 +136,16 @@ const Result: NextPage = () => {
       }
     }
 
-    if (student?.data != undefined && data?.subjects === undefined)
-      getSubjects(student.data._id);
-  }, [data?.subjects, student?.data]);
+    if (selectedTerm && student?.data && !data?.subjects)
+      getSubjects(student.data._id, selectedTerm.data._id);
+  }, [data?.subjects, selectedTerm, student?.data]);
 
   useEffect(() => {
-    async function getScores(student: any) {
+    async function getScores(student: any, term: any) {
       try {
-        const res = await fetch(`/api/students/${student}/results/`);
+        const res = await fetch(
+          `/api/students/${student}/results/?term=${term}`
+        );
         const result =
           (await res.json()) as ClientResponse<StudentResultGETData>;
 
@@ -160,14 +166,16 @@ const Result: NextPage = () => {
         console.error({ error });
       }
     }
-    if (student?.data != undefined && data?.scores === undefined)
-      getScores(student.data._id);
-  }, [data?.scores, student?.data]);
+    if (selectedTerm && student?.data && !data?.scores)
+      getScores(student.data._id, selectedTerm.data._id);
+  }, [data?.scores, selectedTerm, student?.data]);
 
   useEffect(() => {
-    async function getClassStat(id: any) {
+    async function getClassStat(id: any, term: any) {
       try {
-        const res = await fetch(`/api/classes/${id}/results/stats/`);
+        const res = await fetch(
+          `/api/classes/${id}/results/stats/?term=${term}`
+        );
         const result = (await res.json()) as ClientResponse<ClassResultGETData>;
 
         if (result.success)
@@ -177,9 +185,9 @@ const Result: NextPage = () => {
         console.error({ error });
       }
     }
-    if (data?.class != undefined && data?.stats === undefined)
-      getClassStat(data.class._id);
-  }, [data?.class, data?.stats]);
+    if (selectedTerm && data?.class != undefined && data?.stats === undefined)
+      getClassStat(data.class._id, selectedTerm.data._id);
+  }, [data?.class, data?.stats, selectedTerm]);
 
   useEffect(() => {
     if (data?.template !== undefined && total !== undefined) {
