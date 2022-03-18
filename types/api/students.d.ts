@@ -1,7 +1,9 @@
 import { ResultGrade } from "types/models";
-import { RecordId, ExamRecord, UserRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
+import { RecordId, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
-export type StudentsPOSTData = Pick<UserRecord, "code">;
+export type StudentsGETData = StudentRecord[];
+
+export type StudentsPOSTData = Pick<StudentRecord, "code">;
 
 export type StudentResultPOSTData = {
   score: number;
