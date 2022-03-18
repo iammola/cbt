@@ -7,6 +7,7 @@ import { ExternalLinkIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 import Select from "components/Select";
+import { Sidebar } from "components/Layout";
 
 import type { RouteData } from "types";
 import type { StudentsGETData } from "types/api/students";
@@ -42,7 +43,8 @@ const TranscriptPicker: NextPage = () => {
   }, [selectedStudent._id, students]);
 
   return (
-    <section className="flex h-screen w-screen flex-col items-center justify-center gap-7">
+    <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
+      <Sidebar />
       <Head>
         <title>Transcript Picker | Portal | Grand Regal School</title>
         <meta
@@ -50,31 +52,33 @@ const TranscriptPicker: NextPage = () => {
           content="Transcript | GRS Portal"
         />
       </Head>
-      <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
-        <span className="block">Select student</span>
-      </h3>
-      <div className="flex flex-col items-center justify-center gap-10 pt-8">
-        <div className="flex items-center justify-center gap-x-10">
-          <Select
-            selected={selectedStudent}
-            handleChange={setSelectedStudent}
-            options={studentOptions}
-          />
+      <section className="flex h-screen w-screen flex-col items-center justify-center gap-7">
+        <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
+          <span className="block">Select student</span>
+        </h3>
+        <div className="flex flex-col items-center justify-center gap-10 pt-8">
+          <div className="flex items-center justify-center gap-x-10">
+            <Select
+              selected={selectedStudent}
+              handleChange={setSelectedStudent}
+              options={studentOptions}
+            />
+          </div>
+          <Link href={`/results/${`${selectedStudent._id}/`}transcript`}>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classNames(
+                "flex min-w-max items-center justify-center gap-x-2 rounded-full bg-slate-500 px-10 py-3 text-xs font-bold uppercase tracking-widest text-white shadow hover:bg-slate-600",
+                { "pointer-events-none": !selectedStudent._id }
+              )}
+            >
+              Load Transcript
+              <ExternalLinkIcon className="h-5 w-5 fill-white" />
+            </a>
+          </Link>
         </div>
-        <Link href={`/results/${`${selectedStudent._id}/`}transcript`}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            className={classNames(
-              "flex min-w-max items-center justify-center gap-x-2 rounded-full bg-slate-500 px-10 py-3 text-xs font-bold uppercase tracking-widest text-white shadow hover:bg-slate-600",
-              { "pointer-events-none": !selectedStudent._id }
-            )}
-          >
-            Load Transcript
-            <ExternalLinkIcon className="h-5 w-5 fill-white" />
-          </a>
-        </Link>
-      </div>
+      </section>
     </section>
   );
 };
