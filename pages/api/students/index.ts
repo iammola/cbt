@@ -54,25 +54,17 @@ async function createStudent({
 
   try {
     const code = generateCode();
-    const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, "terms").lean();
+    const currentSession = await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean();
 
     await StudentModel.create({
       ...student,
       code,
-      academic:
-        currentSession === null
-          ? []
-          : [
-              {
-                session: currentSession._id,
-                terms: [
-                  {
-                    ...academic,
-                    term: currentSession.terms[0]._id,
-                  },
-                ],
-              },
-            ],
+      academic: [
+        {
+          ...academic,
+          term: currentSession?.terms[0]._id,
+        },
+      ],
     });
     [success, status, message] = [
       true,
