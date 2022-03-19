@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
+import { sort } from "utils";
 import { SessionModel } from "db/models";
 
 import type { ServerResponse } from "types";
@@ -17,21 +18,22 @@ async function getTerms(): Promise<ServerResponse<AllTermsGetData>> {
 
   try {
     const data = await SessionModel.find({}, "-alias").lean();
+    const terms = data.reduce((acc, { name, terms }) => {
+      return [
+        ...acc,
+        ...terms.map(({ _id, alias, current }) => ({
+          _id,
+          current,
+          name: `${name} ${alias} Term`,
+        })),
+      ];
+    }, [] as AllTermsGetData);
+
     [success, status, message] = [
       true,
       StatusCodes.OK,
       {
-        data: data.reduce(
-          (acc, { name, terms }) => [
-            ...acc,
-            ...terms.map(({ _id, alias, current }) => ({
-              _id,
-              current,
-              name: `${name} ${alias} Term`,
-            })),
-          ],
-          [] as AllTermsGetData
-        ),
+        data: sort(terms),
         message: ReasonPhrases.OK,
       },
     ];
