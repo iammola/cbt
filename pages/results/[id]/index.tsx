@@ -145,7 +145,7 @@ const Result: NextPage = () => {
         const result = (await res.json()) as ClientResponse<StudentResultGETData>;
 
         if (result.success) {
-          const { data: scores, comments } = result.data;
+          const { data: scores, comments = "" } = result.data;
           setData((data) => ({ ...data, scores, comments }));
           setTotal(
             scores.map((score) => ({
