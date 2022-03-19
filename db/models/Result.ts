@@ -5,7 +5,7 @@ import type { ResultRecord } from "types";
 const ResultSchema = new Schema<ResultRecord>({
   student: {
     type: Schema.Types.ObjectId,
-    unique: true,
+    immutable: true,
     ref: "Student",
     required: [true, "Student ID required"],
   },
@@ -44,6 +44,7 @@ const ResultSchema = new Schema<ResultRecord>({
   },
   term: {
     type: Schema.Types.ObjectId,
+    immutable: true,
     required: [true, "Result term required"],
   },
 });
