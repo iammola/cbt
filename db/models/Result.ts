@@ -11,11 +11,6 @@ const ResultSchema = new Schema<ResultRecord>({
   },
   data: {
     _id: false,
-    validate: [
-      (val: ResultRecord["data"][number]) =>
-        val.scores !== val.total || (val.scores !== undefined && val.total !== undefined),
-      "One of forced total or scores must be provided",
-    ],
     type: [
       {
         subject: {
