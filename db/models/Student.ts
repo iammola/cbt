@@ -44,29 +44,25 @@ const StudentSchema = new Schema<StudentRecord>({
     lowercase: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "Please fill a valid email address"],
   },
-  academic: [
-    {
-      _id: false,
-      session: {
-        type: Schema.Types.ObjectId,
-        required: [true, "Session required"],
-      },
-      terms: [
-        {
-          type: {
-            _id: false,
-            term: Schema.Types.ObjectId,
-            class: Schema.Types.ObjectId,
-            subjects: [Schema.Types.ObjectId],
-          },
-          validate: [
-            (v: StudentRecord["academic"]) => v.every((i) => i.terms.length > 0),
-            "At least one term required",
-          ],
+  academic: {
+    _id: false,
+    type: [
+      {
+        term: {
+          type: Schema.Types.ObjectId,
+          required: [true, "Term ID required"],
         },
-      ],
-    },
-  ],
+        class: {
+          type: Schema.Types.ObjectId,
+          required: [true, "Class ID required"],
+        },
+        subjects: {
+          type: [Schema.Types.ObjectId],
+          required: [true, "Subject IDs required"],
+        },
+      },
+    ],
+  },
   code: {
     type: Number,
     required: [true, "User Login Code required"],

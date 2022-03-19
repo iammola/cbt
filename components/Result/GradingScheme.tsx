@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
-import type { ClassRecord } from "types";
+import type { ClassResultTemplate } from "types";
 
 const GradingScheme: FunctionComponent<GradingSchemeProps> = ({ scheme, className }) => {
   return (
@@ -51,7 +51,7 @@ const GradingScheme: FunctionComponent<GradingSchemeProps> = ({ scheme, classNam
   );
 };
 
-interface GradingSchemeProps extends Pick<ClassRecord["resultTemplate"][number]["terms"][number], "scheme"> {
+interface GradingSchemeProps extends Pick<ClassResultTemplate, "scheme"> {
   className: string;
 }
 

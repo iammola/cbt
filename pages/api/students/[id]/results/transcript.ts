@@ -26,7 +26,7 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
     if (!student) throw new Error("Student not found");
     if (!settings?.transcriptGrade) throw new Error("Transcript Grading Required");
 
-    const subjectIDs = student.academic.map((i) => i.terms.map((t) => t.subjects).flat()).flat();
+    const subjectIDs = student.academic.map((i) => i.subjects.flat()).flat();
 
     const subjects = await SubjectsModel.aggregate([
       { $match: { "subjects._id": { $in: subjectIDs } } },

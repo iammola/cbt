@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
-import type { ClassRecord } from "types";
+import type { ClassResultTemplate } from "types";
 
 const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className }) => {
   return (
@@ -50,7 +50,7 @@ const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className 
   );
 };
 
-interface ResultFieldsProps extends Pick<ClassRecord["resultTemplate"][number]["terms"][number], "fields"> {
+interface ResultFieldsProps extends Pick<ClassResultTemplate, "fields"> {
   className: string;
 }
 

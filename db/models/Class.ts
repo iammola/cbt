@@ -20,52 +20,44 @@ const ClassSchema = new Schema<ClassRecord>({
     default: undefined,
     type: [
       {
-        session: Schema.Types.ObjectId,
-        terms: {
+        term: Schema.Types.ObjectId,
+        fields: {
+          type: [
+            {
+              max: {
+                type: Number,
+                required: [true, "Field max required"],
+                min: [1, "Field max cannot be less than 1"],
+              },
+              name: {
+                type: String,
+                required: [true, "Field name required"],
+              },
+              alias: {
+                type: String,
+                uppercase: true,
+                required: [true, "Field Alias required"],
+              },
+            },
+          ],
+        },
+        scheme: {
           _id: false,
           type: [
             {
-              term: Schema.Types.ObjectId,
-              fields: {
-                type: [
-                  {
-                    max: {
-                      type: Number,
-                      required: [true, "Field max required"],
-                      min: [1, "Field max cannot be less than 1"],
-                    },
-                    name: {
-                      type: String,
-                      required: [true, "Field name required"],
-                    },
-                    alias: {
-                      type: String,
-                      uppercase: true,
-                      required: [true, "Field Alias required"],
-                    },
-                  },
-                ],
+              limit: {
+                type: Number,
+                min: [1, "Scheme limit cannot be less than 1"],
+                required: [true, "Scheme limit required"],
               },
-              scheme: {
-                _id: false,
-                type: [
-                  {
-                    limit: {
-                      type: Number,
-                      min: [1, "Scheme limit cannot be less than 1"],
-                      required: [true, "Scheme limit required"],
-                    },
-                    grade: {
-                      type: String,
-                      uppercase: true,
-                      required: [true, "Scheme grade required"],
-                    },
-                    description: {
-                      type: String,
-                      required: [true, "Scheme description required"],
-                    },
-                  },
-                ],
+              grade: {
+                type: String,
+                uppercase: true,
+                required: [true, "Scheme grade required"],
+              },
+              description: {
+                type: String,
+                required: [true, "Scheme description required"],
               },
             },
           ],

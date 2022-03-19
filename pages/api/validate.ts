@@ -15,7 +15,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
       students.map(async (student) => {
         const result = await ResultModel.findOne({ student: student._id }, "data").lean();
         if (result === null) return;
-        const errors = student.academic[0].terms[0].subjects
+        const errors = student.academic[0].subjects
           .map((subject) => {
             const subjectResult = result.data.filter((res) => res.subject.equals(subject)).length;
 
