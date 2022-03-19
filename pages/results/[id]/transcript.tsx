@@ -83,8 +83,8 @@ const ResultTranscript: NextPage = () => {
               ))}
             </tr>
             <tr>
-              {data?.data.sessions.map(() => (
-                <>
+              {data?.data.sessions.map((session) => (
+                <Fragment key={String(session._id)}>
                   <th
                     scope="col"
                     className="border-l border-b border-slate-400 font-normal"
@@ -97,7 +97,7 @@ const ResultTranscript: NextPage = () => {
                   >
                     Grade
                   </th>
-                </>
+                </Fragment>
               ))}
             </tr>
           </thead>
