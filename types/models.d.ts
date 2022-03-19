@@ -19,10 +19,7 @@ type ResultFields = RecordId & {
 export type ClassRecord = RecordId & {
   name: string;
   alias: string;
-  resultTemplate: {
-    session: ObjectId;
-    terms: ClassResultTemplate[];
-  }[];
+  resultTemplate: ClassResultTemplate[];
 };
 
 export type ClassResultTemplate = {
@@ -63,12 +60,9 @@ export type StudentRecord = UserRecord & {
   birthday: Date;
   gender: "M" | "F";
   academic: {
-    session: ObjectId;
-    terms: {
-      term: ObjectId;
-      class: ObjectId;
-      subjects: ObjectId[];
-    }[];
+    term: ObjectId;
+    class: ObjectId;
+    subjects: ObjectId[];
   }[];
 };
 
