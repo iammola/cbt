@@ -69,9 +69,9 @@ async function getResultSetting({ id, term }: any): Promise<ServerResponse<Class
     const classRecord = await ClassModel.findOne(
       {
         _id: id,
-        "resultTemplate.terms.term": term,
+        "resultTemplate.term": term,
       },
-      "resultTemplate.terms.$"
+      "resultTemplate.$"
     ).lean();
 
     [success, status, message] = [

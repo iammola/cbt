@@ -21,7 +21,7 @@ async function getStudents({ id, term }: any): Promise<ServerResponse<SubjectStu
         "academic.term": term,
         "academic.subjects": id,
       },
-      "name academic.$"
+      "name.full name.initials"
     ).lean();
 
     [success, status, message] = [
