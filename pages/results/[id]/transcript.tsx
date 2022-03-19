@@ -113,12 +113,16 @@ const ResultTranscript: NextPage = () => {
                 })}
               >
                 <td className="px-2 py-4 font-normal text-gray-700 print:text-center">{subject}</td>
-                {values.map((i) => (
-                  <Fragment key={String(i.session)}>
-                    <td className="w-20 py-4 print:w-12">{i.score ?? "-"}</td>
-                    <td className="w-20 py-4 print:w-12">{i.grade ?? "-"}</td>
-                  </Fragment>
-                ))}
+                {data?.data.sessions.map((session) => {
+                  const item = values.find((i) => i.session === session._id);
+
+                  return (
+                    <Fragment key={session.name}>
+                      <td className="w-20 py-4 print:w-12">{item?.score ?? "-"}</td>
+                      <td className="w-20 py-4 print:w-12">{item?.grade ?? "-"}</td>
+                    </Fragment>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
