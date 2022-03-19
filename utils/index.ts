@@ -13,7 +13,7 @@ export function classNames(...arg: (string | string[] | { [key: string]: any } |
     .join(" ");
 }
 
-export function sort<T extends Record<string, unknown>>(items: T[], by: keyof T) {
+export function sort<T extends Record<string, unknown>>(items: T[], by: keyof T = "name") {
   return [...items].sort((a, b) => {
     const itemA = String(a[by]).toUpperCase();
     const itemB = String(b[by]).toUpperCase();
