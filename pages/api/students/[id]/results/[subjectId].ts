@@ -70,7 +70,7 @@ async function updateStudentSubjectResult(
     ]);
 
     if (termExists === null) await ResultModel.create({ student, term, data: [data] });
-    if (termExists && termSubjectExists) {
+    else {
       const query = termSubjectExists ? { "data.$[i]": data } : { $push: { data } };
       ok = (
         await ResultModel.updateOne({ _id: termExists._id }, query, {
