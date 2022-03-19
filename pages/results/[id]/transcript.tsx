@@ -82,7 +82,7 @@ const ResultTranscript: NextPage = () => {
                 <th
                   colSpan={2}
                   key={String(session._id)}
-                  className="space-y-0.5 border-l border-gray-400 py-2 font-normal"
+                  className="space-y-0.5 border-l border-gray-400 py-2 font-medium tracking-wide text-slate-600"
                 >
                   {session.name}
                 </th>
