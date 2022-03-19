@@ -23,7 +23,7 @@ async function getClassStudents({ id, term }: any): Promise<ServerResponse<Class
         academic: {
           $elemMatch: {
             term,
-            subjects: record?.subjects.map((sub) => sub._id),
+            subjects: { $in: record?.subjects.map((sub) => sub._id) },
           },
         },
       },
