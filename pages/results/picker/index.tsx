@@ -5,8 +5,8 @@ import type { NextPage } from "next";
 import { useEffect, useMemo, useState } from "react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 
-import { classNames } from "utils";
 import Select from "components/Select";
+import { classNames, sort } from "utils";
 import { Sidebar } from "components/Layout";
 
 import type { ClientResponse, RouteData } from "types";
@@ -34,19 +34,16 @@ const ResultsPicker: NextPage = () => {
 
   const studentOptions = useMemo(
     () =>
-      students
-        .map((item) =>
-          item.students.map((student) => ({
-            ...student,
-            name: `${student.name.full} - ${classes?.data.find((i) => i._id === item.class)?.alias}`,
-          }))
-        )
-        .flat()
-        .sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-        }),
+      sort(
+        students
+          .map((item) =>
+            item.students.map((student) => ({
+              ...student,
+              name: `${student.name.full} - ${classes?.data.find((i) => i._id === item.class)?.alias}`,
+            }))
+          )
+          .flat()
+      ),
     [classes?.data, students]
   );
 
