@@ -62,32 +62,29 @@ async function updateStudentSubjectResult(
   ];
 
   try {
-    const record = await ResultModel.exists({
-      term,
-      student,
-      "data.subject": subject,
-    });
+    let ok = true;
+    const data = { subject, ...body };
+    const [termExists, termSubjectExists] = await Promise.all([
+      ResultModel.exists({ term, student }),
+      ResultModel.exists({ term, student, "data.subject": subject }),
+    ]);
 
-    const args =
-      record === null
-        ? [{ student }, { term, $push: { data: { subject, ...body } } }, { upsert: true }]
-        : [
-            { _id: record._id },
-            { term, $set: { "data.$[i]": { subject, ...body } } },
-            {
-              runValidators: true,
-              fields: "_id",
-              arrayFilters: [{ "i.subject": subject }],
-            },
-          ];
+    if (termExists === null) await ResultModel.create({ student, term, data: [data] });
+    if (termExists && termSubjectExists) {
+      const query = termSubjectExists ? { "data.$[i]": data } : { $push: { data } };
+      ok = (
+        await ResultModel.updateOne({ _id: termExists._id }, query, {
+          runValidators: true,
+          arrayFilters: [{ "i.subject": subject }],
+        })
+      ).acknowledged;
+    }
 
     [success, status, message] = [
       true,
       StatusCodes.OK,
       {
-        data: {
-          ok: (await ResultModel.updateOne(...args)).acknowledged,
-        },
+        data: { ok },
         message: ReasonPhrases.OK,
       },
     ];
