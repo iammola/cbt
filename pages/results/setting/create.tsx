@@ -192,6 +192,7 @@ const CreateScheme: NextPage = () => {
                 <input
                   required
                   max={100}
+                  step={0.1}
                   type="number"
                   value={s.limit}
                   placeholder="Upper Limit"
@@ -242,6 +243,7 @@ const CreateScheme: NextPage = () => {
                 <input
                   min={0}
                   required
+                  step={0.1}
                   type="number"
                   value={f.max}
                   placeholder="Max"
