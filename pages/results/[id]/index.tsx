@@ -12,7 +12,12 @@ import { Header, Info, GradingScheme, ResultFields } from "components/Result";
 
 import type { TermGetData } from "types/api/sessions";
 import type { ClassGETData, ClassResultGETData, ClassResultSettingsGETData } from "types/api/classes";
-import type { StudentGETData, StudentResultGETData, StudentSubjectsGETData } from "types/api/students";
+import type {
+  StudentClassGETData,
+  StudentGETData,
+  StudentResultGETData,
+  StudentSubjectsGETData,
+} from "types/api/students";
 import type {
   ClassRecord,
   ClientResponse,
@@ -32,6 +37,7 @@ const Result: NextPage = () => {
   const [total, setTotal] = useState<{ subject: any; total: number }[]>();
   const [data, setData] = useState<Data>({
     term: undefined,
+    class: undefined,
     student: undefined,
   });
 
@@ -41,6 +47,10 @@ const Result: NextPage = () => {
   );
   const { data: student, error: studentError } = useSWRImmutable<RouteData<StudentGETData>>(
     router.query.id !== undefined ? `/api/students/${router.query.id}/` : null,
+    (url) => fetch(url ?? "").then((res) => res.json())
+  );
+  const { data: currentClass, error: classError } = useSWRImmutable<RouteData<StudentClassGETData>>(
+    router.isReady && `/api/students/${router.query.id}/class`,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
 
@@ -54,47 +64,27 @@ const Result: NextPage = () => {
   }, [data, selectedTerm, termError]);
 
   useEffect(() => {
-    async function getClass(id: any) {
-      try {
-        const res = await fetch(`/api/classes/${id}/?select=name`);
-        const result = (await res.json()) as ClientResponse<ClassGETData>;
+    if (student?.data && !data.student)
+      setData((data) => ({
+        ...data,
+        scores: undefined,
+        comments: undefined,
+        subjects: undefined,
+        student: student.data!,
+      }));
 
-        if (result.success) {
-          if (result.data !== null)
-            setData((data) => ({
-              ...data,
-              stats: undefined,
-              class: result.data!,
-            }));
-          else alert("Class does not exist");
-        } else throw new Error(result.error);
-      } catch (error: any) {
-        console.error({ error });
-        setErrors((errors) => [...errors, "class"]);
-      }
-    }
-
-    if (student?.data != undefined) {
-      if (data.student === undefined)
-        setData((data) => ({
-          ...data,
-          class: undefined,
-          scores: undefined,
-          comments: undefined,
-          subjects: undefined,
-          student: student.data!,
-        }));
-
-      if (data.session !== undefined && data.class === undefined) {
-        const { academic } = student.data;
-        const active = academic.find((item) => item.term === data?.term?._id);
-
-        if (active?.class !== undefined && data.class === undefined) getClass(active.class);
-      }
-    }
-
-    if (studentError) setErrors((errors) => [...errors, "class"]);
+    if (studentError) setErrors((errors) => [...errors, "student"]);
   }, [data, student?.data, studentError]);
+
+  useEffect(() => {
+    if (currentClass?.data && !data.class)
+      setData((data) => ({
+        ...data,
+        class: currentClass.data,
+      }));
+
+    if (classError) setErrors((errors) => [...errors, "class"]);
+  }, [data, currentClass?.data, classError]);
 
   useEffect(() => {
     async function getResultTemplate(id: any, term: any) {
