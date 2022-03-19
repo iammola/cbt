@@ -17,10 +17,7 @@ async function getStudents({ id, term }: any): Promise<ServerResponse<SubjectStu
 
   try {
     const students = await StudentModel.find(
-      {
-        "academic.term": term,
-        "academic.subjects": id,
-      },
+      { academic: { $elemMAtch: { term, subjects: id } } },
       "name.full name.initials"
     ).lean();
 

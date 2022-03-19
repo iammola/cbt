@@ -17,10 +17,7 @@ async function getClassResultStats({ id, term }: any): Promise<ServerResponse<Cl
 
   try {
     const students = await StudentModel.find(
-      {
-        "academic.class": id,
-        "academic.term": term,
-      },
+      { academic: { $elemMatch: { class: id, term } } },
       "_id academic.$"
     ).lean();
 
