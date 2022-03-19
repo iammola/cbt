@@ -295,7 +295,7 @@ const Result: NextPage = () => {
             className="col-start-1 col-end-2 row-span-full"
           />
           <div className="col-start-2 col-end-3 row-start-2 row-end-3 mt-3 flex flex-col items-start justify-center gap-0.5">
-            {data.comments !== undefined && (
+            {data.comments && (
               <>
                 <span className="text-sm font-medium text-gray-800 underline underline-offset-2">Comment</span>
                 <span className="text-justify text-sm text-gray-700">{data.comments}</span>
