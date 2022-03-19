@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, StudentModel } from "db/models";
+import { ClassModel, SessionModel, StudentModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { StudentClassGETData } from "types/api/students";
@@ -16,6 +16,12 @@ async function getStudentClass({ id, term }: any): Promise<ServerResponse<Studen
   ];
 
   try {
+    if (!term) {
+      const session = await SessionModel.findOne({ "terms.current": true }, "terms._id.$");
+      if (!session) throw new Error("Term not defined");
+
+      term = session.terms[0]._id;
+    }
     const student = await StudentModel.findOne(
       {
         _id: id,
