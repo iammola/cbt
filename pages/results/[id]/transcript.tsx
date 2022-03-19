@@ -8,7 +8,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
 import { LoadingIcon } from "components/Misc/Icons";
-import { GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
+import { Actions, GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
 import type { RouteData } from "types";
 import type { StudentClassGETData, StudentGETData, StudentTranscriptGETData } from "types/api/students";
@@ -144,6 +144,7 @@ const ResultTranscript: NextPage = () => {
           </div>
         </div>
       </main>
+      <Actions pickerLink="/results/picker/transcript" />
       {Object.values({ student, data, class: currentClass }).includes(undefined) && (
         <div className="fixed inset-0 z-[10000] flex h-screen w-screen flex-col items-center justify-center gap-y-10 bg-white text-3xl tracking-wide text-slate-600">
           Loading Transcript Data...

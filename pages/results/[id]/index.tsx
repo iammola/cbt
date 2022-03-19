@@ -8,7 +8,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
-import { Header, Info, GradingScheme, ResultFields } from "components/Result";
+import { Actions, Header, Info, GradingScheme, ResultFields } from "components/Result";
 
 import type { TermGetData } from "types/api/sessions";
 import type { ClassGETData, ClassResultGETData, ClassResultSettingsGETData } from "types/api/classes";
@@ -308,6 +308,7 @@ const Result: NextPage = () => {
           </div>
         </div>
       </main>
+      <Actions pickerLink="/results/picker" />
       {Object.values(data).includes(undefined) && (
         <div className="fixed inset-0 z-[10000] flex h-screen w-screen flex-col items-center justify-center gap-y-10 bg-white text-3xl tracking-wide text-slate-600">
           Loading Result Data...
