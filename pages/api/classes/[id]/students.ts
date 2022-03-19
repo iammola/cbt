@@ -20,14 +20,10 @@ async function getClassStudents({ id, term }: any): Promise<ServerResponse<Class
 
     const data = await StudentModel.find(
       {
-        "academic.terms": {
-          $elemMatch: {
-            term,
-            subjects: { $in: record?.subjects.map((sub) => sub._id) },
-          },
-        },
+        "academic.term": term,
+        "academic.subjects": { $in: record?.subjects.map((sub) => sub._id) },
       },
-      "name"
+      "name academic.$"
     ).lean();
 
     [success, status, message] = [

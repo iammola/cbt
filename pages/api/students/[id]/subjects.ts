@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { SessionModel, StudentModel, SubjectsModel } from "db/models";
 
-import type { ServerResponse } from "types";
+import type { ServerResponse, SubjectRecord } from "types";
 import type { StudentSubjectsGETData } from "types/api/students";
 
 async function getStudentSubjects({ id, term }: any): Promise<ServerResponse<StudentSubjectsGETData>> {
@@ -19,30 +19,35 @@ async function getStudentSubjects({ id, term }: any): Promise<ServerResponse<Stu
     const data = await StudentModel.findOne(
       {
         _id: id,
-        "academic.terms": {
-          $elemMatch: { term },
-        },
+        "academic.term": term,
       },
-      "academic.terms.$"
+      "academic.$"
     ).lean();
 
     if (data === null) throw new Error("Invalid Student");
 
-    const d = data.academic[0].terms.find((item) => item.term.equals(term));
-
-    const subjects = await SubjectsModel.findOne(
+    const subjectIDs = data.academic[0].subjects;
+    const subjects = await SubjectsModel.aggregate([
+      { $match: { "subjects._id": { $in: subjectIDs } } },
       {
-        class: d?.class,
+        $project: {
+          subjects: {
+            $filter: {
+              input: "$subjects",
+              cond: {
+                $in: ["$$this._id", subjectIDs],
+              },
+            },
+          },
+        },
       },
-      "subjects._id subjects.name"
-    ).lean();
+    ]).then((doc) => doc.map((item) => item.subjects.map(({ _id, name }: SubjectRecord) => ({ _id, name }))));
 
     [success, status, message] = [
       true,
       StatusCodes.OK,
       {
-        data:
-          subjects?.subjects.filter((subject) => d?.subjects.find((i) => i.equals(subject._id)) !== undefined) ?? [],
+        data: subjects,
         message: ReasonPhrases.OK,
       },
     ];

@@ -86,7 +86,7 @@ async function getResultSetting({ id, term }: any): Promise<ServerResponse<Class
       true,
       StatusCodes.OK,
       {
-        data: classRecord?.resultTemplate?.[0]?.terms?.[0],
+        data: classRecord?.resultTemplate?.[0],
         message: ReasonPhrases.OK,
       },
     ];

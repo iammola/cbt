@@ -87,8 +87,7 @@ const Result: NextPage = () => {
 
       if (data.session !== undefined && data.class === undefined) {
         const { academic } = student.data;
-        const { session, term } = data ?? {};
-        const active = academic.find((i) => i.session === session?._id)?.terms.find((i) => i.term === term?._id);
+        const active = academic.find((item) => item.term === data?.term?._id);
 
         if (active?.class !== undefined && data.class === undefined) getClass(active.class);
       }

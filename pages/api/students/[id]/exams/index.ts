@@ -16,20 +16,22 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
   ];
 
   try {
-    const session = await SessionModel.findOne({ current: true, "terms.current": true }, "terms.$").lean();
+    const session = await SessionModel.findOne({ "terms.current": true }, "terms.$").lean();
     if (session === null) throw new Error("No Current Session");
 
-    const student = await StudentModel.findOne({ _id, "academic.session": session._id }, "-_id academic.$").lean();
+    const student = await StudentModel.findOne(
+      {
+        _id,
+        "academic.term": session.terms[0]._id,
+      },
+      "-_id academic.$"
+    ).lean();
 
     if (student === null) throw new Error("Student does not exist");
     if (student.academic.length === 0) throw new Error("Student does not have current session");
 
     const exams = await ExamModel.find(
-      {
-        subjectId: {
-          $in: student.academic[0].terms.find((i) => i.term.equals(session.terms[0]._id))?.subjects,
-        },
-      },
+      { subjectId: { $in: student.academic[0].subjects } },
       "_id duration questions subjectId"
     ).lean();
     const result = await CBTResultModel.findOne({ student: _id }).lean();

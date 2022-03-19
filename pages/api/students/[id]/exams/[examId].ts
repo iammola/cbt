@@ -16,13 +16,13 @@ async function getExam(studentId: any, examId: any): Promise<ServerResponse<Stud
   ];
 
   try {
-    const session = await SessionModel.findOne({ current: true, "terms.current": true }, "terms.$").lean();
+    const session = await SessionModel.findOne({ "terms.current": true }, "terms.$").lean();
     if (session === null) throw new Error("No Current Session");
 
     const student = await StudentModel.findOne(
       {
         _id: studentId,
-        "academic.session": session._id,
+        "academic.term": session.terms[0]._id,
       },
       "-_id academic.$"
     ).lean();
@@ -33,9 +33,7 @@ async function getExam(studentId: any, examId: any): Promise<ServerResponse<Stud
     const exam = await ExamModel.findOne(
       {
         _id: examId,
-        subjectId: {
-          $in: student.academic[0].terms.find((i) => i.term.equals(session.terms[0]._id))?.subjects,
-        },
+        subjectId: { $in: student.academic[0].subjects },
       },
       "-created -edited"
     ).lean();
@@ -45,9 +43,7 @@ async function getExam(studentId: any, examId: any): Promise<ServerResponse<Stud
     const { duration, instructions, questions, subjectId } = exam;
 
     const subject: SubjectsRecord<true> = await SubjectsModel.findOne(
-      {
-        "subjects._id": subjectId,
-      },
+      { "subjects._id": subjectId },
       "class subjects.name.$"
     )
       .populate("class", "-_id name")
