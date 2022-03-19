@@ -1,12 +1,16 @@
 import { FunctionComponent } from "react";
 import { format, formatDuration, intervalToDuration } from "date-fns";
 
-const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({ birthday, gender, name }) => {
+const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({ birthday, gender, name, ...props }) => {
   return (
     <div className="grid w-full grid-flow-col grid-cols-3 grid-rows-2 gap-y-2.5 gap-x-40 px-5">
       <div className="flex items-center justify-start gap-1.5">
         <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Full Name</span>{" "}
         <span className="min-w-max text-sm font-bold uppercase tracking-wide text-gray-800">{name}</span>
+      </div>
+      <div className="flex items-center justify-start gap-1.5">
+        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Class:</span>{" "}
+        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{props.class}</span>
       </div>
       <div className="flex items-center justify-start gap-1.5">
         <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Age:</span>{" "}
@@ -40,6 +44,7 @@ const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({ birthday, gend
 
 type TranscriptInfoProps = {
   name?: string;
+  class?: string;
   birthday?: Date;
   gender?: "M" | "F";
 };

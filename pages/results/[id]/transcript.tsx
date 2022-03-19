@@ -11,7 +11,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
 import type { RouteData } from "types";
-import type { StudentGETData, StudentTranscriptGETData } from "types/api/students";
+import type { StudentClassGETData, StudentGETData, StudentTranscriptGETData } from "types/api/students";
 
 const ResultTranscript: NextPage = () => {
   const router = useRouter();
@@ -24,11 +24,16 @@ const ResultTranscript: NextPage = () => {
     router.isReady && `/api/students/${router.query.id}/?select=gender birthday name.full`,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
+  const { data: currentClass, error: classError } = useSWRImmutable<RouteData<StudentClassGETData>>(
+    router.isReady && `/api/students/${router.query.id}/class`,
+    (url) => fetch(url ?? "").then((res) => res.json())
+  );
 
   useEffect(() => {
     if (error) setErrors((errors) => [...new Set([...errors, "data"])]);
+    if (classError) setErrors((errors) => [...new Set([...errors, "class"])]);
     if (studentError) setErrors((errors) => [...new Set([...errors, "student"])]);
-  }, [error, studentError]);
+  }, [classError, error, studentError]);
 
   return (
     <section className="flex min-h-screen w-screen items-center justify-center bg-gray-200 py-16 print:bg-white print:p-0">
@@ -48,6 +53,7 @@ const ResultTranscript: NextPage = () => {
         <TranscriptInfo
           gender={student?.data?.gender}
           name={student?.data?.name.full}
+          class={currentClass?.data?.name}
           birthday={student?.data?.birthday}
         />
         <Divide
@@ -138,11 +144,11 @@ const ResultTranscript: NextPage = () => {
           </div>
         </div>
       </main>
-      {Object.values({ student, data }).includes(undefined) && (
+      {Object.values({ student, data, class: currentClass }).includes(undefined) && (
         <div className="fixed inset-0 z-[10000] flex h-screen w-screen flex-col items-center justify-center gap-y-10 bg-white text-3xl tracking-wide text-slate-600">
           Loading Transcript Data...
           <ul className="space-y-3 text-sm">
-            {Object.entries({ student, data }).map(([key, val]) => (
+            {Object.entries({ student, data, class: currentClass }).map(([key, val]) => (
               <li
                 key={key}
                 className={classNames("flex items-center justify-start gap-x-4", {
