@@ -13,6 +13,14 @@ export function classNames(...arg: (string | string[] | { [key: string]: any } |
     .join(" ");
 }
 
+export function sort<T extends Record<string, unknown>>(items: T[], by: keyof T = "name") {
+  return [...items].sort((a, b) => {
+    const itemA = String(a[by]).toUpperCase();
+    const itemB = String(b[by]).toUpperCase();
+    return itemA < itemB ? -1 : itemA > itemB ? 1 : 0;
+  });
+}
+
 export function generateCode() {
   return Math.floor(1e5 + Math.random() * 9e5);
 }

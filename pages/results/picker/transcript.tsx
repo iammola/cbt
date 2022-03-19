@@ -5,8 +5,8 @@ import type { NextPage } from "next";
 import { useEffect, useMemo, useState } from "react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 
-import { classNames } from "utils";
 import Select from "components/Select";
+import { classNames, sort } from "utils";
 import { Sidebar } from "components/Layout";
 
 import type { RouteData } from "types";
@@ -23,14 +23,7 @@ const TranscriptPicker: NextPage = () => {
   );
 
   const studentOptions = useMemo(
-    () =>
-      students?.data
-        ?.map((item) => ({ ...item, name: `${item.name.full}` }))
-        .sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
-          return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-        }),
+    () => sort(students?.data?.map((item) => ({ ...item, name: `${item.name.full}` })) ?? []),
     [students]
   );
 

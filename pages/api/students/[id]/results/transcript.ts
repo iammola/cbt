@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
+import { sort } from "utils";
 import { connect } from "db";
 import { ResultModel, SettingsModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
@@ -118,7 +119,7 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
         message: ReasonPhrases.OK,
         data: {
           scores,
-          sessions: sessions.map((session) => ({
+          sessions: sort(sessions).map((session) => ({
             ...session,
             termsCount: counts.find((count) => count.session.equals(session._id))?.termsCount,
           })),
