@@ -102,16 +102,6 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
       };
     }, {} as StudentTranscriptGETData["scores"]);
 
-    const counts = Object.values(scores)
-      .flat()
-      .reduce((acc, { session, termsCount }) => {
-        const idx = acc.findIndex((i) => i.session.equals(session));
-        if (idx > 0) acc[idx].termsCount = Math.max(...[acc[idx].termsCount, termsCount]);
-        else acc.push({ session, termsCount });
-
-        return acc;
-      }, [] as TranscriptScore[]);
-
     [success, status, message] = [
       true,
       StatusCodes.OK,
@@ -119,10 +109,7 @@ async function getStudentTranscript(id: any): Promise<ServerResponse<StudentTran
         message: ReasonPhrases.OK,
         data: {
           scores,
-          sessions: sort(sessions).map((session) => ({
-            ...session,
-            termsCount: counts.find((count) => count.session.equals(session._id))?.termsCount,
-          })),
+          sessions: sort(sessions),
           grading: settings.transcriptGrade,
         },
       },

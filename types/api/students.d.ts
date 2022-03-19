@@ -51,7 +51,7 @@ export type StudentResultGETData = Pick<ResultRecord, "comments" | "data">;
 export type StudentTranscriptGETData = {
   grading: ResultGrade[];
   scores: Record<string, TranscriptScore[]>;
-  sessions: (Pick<SessionRecord, "_id" | "name"> & { termsCount?: number })[];
+  sessions: Pick<SessionRecord, "_id" | "name">[];
 };
 
 export type TranscriptScore = {

@@ -78,10 +78,7 @@ const ResultTranscript: NextPage = () => {
                   key={String(session._id)}
                   className="space-y-0.5 border-l border-gray-400 py-2 font-normal"
                 >
-                  <div>{session.name}</div>
-                  <div className="text-xs">
-                    ({session.termsCount} Term{session.termsCount !== 1 && "s"})
-                  </div>
+                  {session.name}
                 </th>
               ))}
             </tr>
