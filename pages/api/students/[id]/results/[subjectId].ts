@@ -52,7 +52,7 @@ async function getStudentSubjectResult({
 async function updateStudentSubjectResult(
   student: any,
   subject: any,
-  { term, ...body }: Omit<ResultRecord["data"], "subject"> & { term: string }
+  { term, ...body }: Omit<ResultRecord["data"][number], "subject"> & { term: string }
 ): Promise<ServerResponse<StudentResultSubjectPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultSubjectPOSTData> = [
@@ -62,13 +62,11 @@ async function updateStudentSubjectResult(
   ];
 
   try {
-    const record = await ResultModel.findOne(
-      {
-        student,
-        "data.subject": subject,
-      },
-      "_id"
-    ).lean();
+    const record = await ResultModel.exists({
+      term,
+      student,
+      "data.subject": subject,
+    });
 
     const args =
       record === null
