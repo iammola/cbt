@@ -1,5 +1,5 @@
 import { ResultGrade } from "types/models";
-import { RecordId, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
+import { RecordId, ClassRecord, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
 export type StudentsGETData = StudentRecord[];
 
@@ -44,6 +44,8 @@ export type StudentCommentGETData = Pick<ResultRecord, "comments"> | null;
 
 export type StudentCommentPOSTData = { ok: boolean };
 
+export type StudentClassGETData = Omit<ClassRecord, "resultTemplate">;
+
 export type StudentSubjectsGETData = Pick<SubjectRecord, "_id" | "name">[];
 
 export type StudentResultGETData = Pick<ResultRecord, "comments" | "data">;
@@ -61,7 +63,7 @@ export type TranscriptScore = {
   session: RecordId["_id"];
 };
 
-type TranscriptTermScore = {
+export type TranscriptTermScore = {
   term: RecordId["_id"];
   subjects: Record<string, number | undefined>;
 };
