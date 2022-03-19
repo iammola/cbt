@@ -9,7 +9,7 @@ import type { ClassResultSettingsGETData, ClassResultSettingsPOSTData } from "ty
 
 async function createResultSetting(
   _id: any,
-  body: Omit<ClassResultTemplate, "term">
+  body: ClassResultTemplate
 ): Promise<ServerResponse<ClassResultSettingsPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<ClassResultSettingsPOSTData> = [
@@ -19,30 +19,22 @@ async function createResultSetting(
   ];
 
   try {
-    const classRecord = await ClassModel.findById(_id, "resultTemplate").lean();
-    if (classRecord === null) throw new Error("Class does not exist");
+    const template = await ClassModel.exists({ _id, "resultTemplate.term": body.term });
+    const args =
+      template === null
+        ? [{ $push: { resultTemplate: body } }, { runValidators: true }]
+        : [
+            {
+              "resultTemplate.$[i].scheme": body.scheme,
+              "resultTemplate.$[i].fields": body.fields,
+            },
+            {
+              runValidators: true,
+              arrayFilters: [{ "i.term": body.term }],
+            },
+          ];
 
-    const currentSession = await SessionModel.findOne({ current: true, "terms.current": true }, "terms._id.$").lean();
-    if (currentSession === null) throw new Error("No session to bind to");
-
-    const data = await ClassModel.updateOne(
-      { _id },
-      {
-        resultTemplate: [
-          {
-            session: currentSession._id,
-            terms: [
-              {
-                fields: body.fields,
-                scheme: body.scheme,
-                term: currentSession.terms[0]._id,
-              },
-            ],
-          },
-        ],
-      },
-      { runValidators: true }
-    );
+    const data = await ClassModel.updateOne({ _id }, ...args);
 
     [success, status, message] = [
       data.acknowledged,

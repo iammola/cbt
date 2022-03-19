@@ -8,8 +8,9 @@ import { BadgeCheckIcon, BanIcon } from "@heroicons/react/outline";
 import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassesGETData, ClassResultSettingsPOSTData } from "types/api/classes";
+import type { AllTermsGetData } from "types/api/sessions";
 import type { ClassResultTemplate, ClientResponse, RouteData } from "types";
+import type { ClassesGETData, ClassResultSettingsPOSTData } from "types/api/classes";
 
 type Fields = Omit<ClassResultTemplate["fields"][number], "_id" | "max"> & {
   max: number | "";
@@ -23,6 +24,10 @@ const CreateScheme: NextPage = () => {
   const [selectedClass, setSelectedClass] = useState({
     name: "Select class",
     _id: "",
+  });
+  const [selectedTerm, setSelectedTerm] = useState({
+    _id: "",
+    name: "Select term",
   });
   const [fields, setFields] = useState<Fields[]>([
     {
@@ -40,6 +45,9 @@ const CreateScheme: NextPage = () => {
   ]);
 
   const { data: classes } = useSWR<RouteData<ClassesGETData>>("/api/classes/?select=name", (url) =>
+    fetch(url).then((res) => res.json())
+  );
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all/", (url) =>
     fetch(url).then((res) => res.json())
   );
 
@@ -97,12 +105,13 @@ const CreateScheme: NextPage = () => {
 
     addNotifications(notifications);
 
-    if (notifications.length === 0) {
+    if (notifications.length === 0 && selectedTerm._id) {
       try {
         const res = await fetch(`/api/classes/${selectedClass._id}/results/setting`, {
           method: "POST",
           body: JSON.stringify({
             fields,
+            term: selectedTerm._id,
             scheme: scheme.sort((a, b) => +a.limit - +b.limit),
           }),
         });
@@ -138,6 +147,12 @@ const CreateScheme: NextPage = () => {
           <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
             <span>Create a</span> <span className="text-stone-500">Result Setting</span>
           </h1>
+          <Select
+            label="Term"
+            options={terms?.data}
+            selected={selectedTerm}
+            handleChange={setSelectedTerm}
+          />
           <Select
             label="Class"
             options={classes?.data}
@@ -177,6 +192,7 @@ const CreateScheme: NextPage = () => {
                 <input
                   required
                   max={100}
+                  step={0.1}
                   type="number"
                   value={s.limit}
                   placeholder="Upper Limit"
@@ -227,6 +243,7 @@ const CreateScheme: NextPage = () => {
                 <input
                   min={0}
                   required
+                  step={0.1}
                   type="number"
                   value={f.max}
                   placeholder="Max"
