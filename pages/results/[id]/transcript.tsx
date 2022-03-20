@@ -7,6 +7,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
+import { usePrinter } from "hooks/use-printer";
 import { LoadingIcon } from "components/Misc/Icons";
 import { Actions, GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
@@ -15,6 +16,7 @@ import type { StudentClassGETData, StudentGETData, StudentTranscriptGETData } fr
 
 const ResultTranscript: NextPage = () => {
   const router = useRouter();
+  const { ref, print } = usePrinter();
   const [errors, setErrors] = useState<string[]>([]);
   const { data, error } = useSWRImmutable<RouteData<StudentTranscriptGETData>>(
     router.isReady && `/api/students/${router.query.id}/results/transcript/`,
@@ -52,7 +54,10 @@ const ResultTranscript: NextPage = () => {
           content="Student • Transcript | GRS CBT"
         />
       </Head>
-      <main className="flex aspect-[1/1.4142] w-[60rem] flex-col items-center justify-start rounded-lg bg-white p-12 shadow-xl shadow-gray-500/30 print:aspect-auto print:min-h-screen print:rounded-none print:px-8 print:py-5 print:shadow-none">
+      <main
+        ref={ref}
+        className="flex aspect-[1/1.4142] w-[60rem] flex-col items-center justify-start rounded-lg bg-white p-12 shadow-xl shadow-gray-500/30 print:aspect-auto print:min-h-screen print:rounded-none print:px-8 print:py-5 print:shadow-none"
+      >
         <Header />
         <Divide
           className="w-full py-7"
@@ -153,7 +158,10 @@ const ResultTranscript: NextPage = () => {
           />
         </div>
       </main>
-      <Actions pickerLink="/results/picker/transcript" />
+      <Actions
+        print={print}
+        pickerLink="/results/picker/transcript"
+      />
       {Object.values({ student, data, class: currentClass }).includes(undefined) && (
         <div className="fixed inset-0 z-[10000] flex h-screen w-screen flex-col items-center justify-center gap-y-10 bg-white text-3xl tracking-wide text-slate-600">
           Loading Transcript Data...
