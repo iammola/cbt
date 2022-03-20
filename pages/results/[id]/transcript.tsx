@@ -139,9 +139,7 @@ const ResultTranscript: NextPage = () => {
             className="w-5/12"
             scheme={data?.data?.grading ?? []}
           />
-          <div className="w-7/12">
-            <TranscriptFooter />
-          </div>
+          <TranscriptFooter className="w-7/12 space-y-3" />
         </div>
       </main>
       <Actions pickerLink="/results/picker/transcript" />

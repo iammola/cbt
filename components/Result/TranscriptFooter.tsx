@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { FunctionComponent } from "react";
 
-const TranscriptFooter: FunctionComponent = () => {
+const TranscriptFooter: FunctionComponent<{ className: string }> = ({ className }) => {
   return (
-    <div className="w-full space-y-3">
+    <div className={className}>
       <div className="flex items-center justify-start gap-x-6">
         <span className="text-sm font-medium tracking-wide text-slate-600">Principal&apos;s Remark:</span>
         <div className="tracking-wide text-slate-600">
