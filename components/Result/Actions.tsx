@@ -12,12 +12,13 @@ const Actions: FunctionComponent<{ pickerLink: string }> = ({ pickerLink }) => {
           </div>
         </a>
       </Link>
-      <div
+      <button
+        type="button"
         onClick={() => print()}
         className="aspect-square h-[4.5rem] w-[4.5rem] cursor-pointer overflow-hidden rounded-full bg-white p-3.5 shadow shadow-slate-800/25 hover:bg-gray-50"
       >
         <PrinterIcon className="h-full w-full fill-slate-500" />
-      </div>
+      </button>
     </div>
   );
 };
