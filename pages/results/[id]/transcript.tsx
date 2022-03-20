@@ -121,8 +121,8 @@ const ResultTranscript: NextPage = () => {
 
                   return (
                     <Fragment key={session.name}>
-                      <td className="w-20 py-4 text-slate-600 print:w-12">{item?.score?.toFixed(1) ?? "-"}</td>
-                      <td className="w-20 py-4 font-bold text-slate-600 print:w-12">{item?.grade ?? "-"}</td>
+                      <td className="w-20 py-4 text-slate-600">{item?.score?.toFixed(1) ?? "-"}</td>
+                      <td className="w-20 py-4 font-bold text-slate-600">{item?.grade ?? "-"}</td>
                     </Fragment>
                   );
                 })}
