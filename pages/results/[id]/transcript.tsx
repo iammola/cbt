@@ -44,7 +44,7 @@ const ResultTranscript: NextPage = () => {
   }, [classError, error, studentError]);
 
   return (
-    <section className="flex min-h-screen w-screen items-center justify-center bg-gray-200 py-16 print:w-full print:bg-white print:p-0 print:items-start print:justify-start">
+    <section className="flex min-h-screen w-screen items-center justify-center bg-gray-200 py-16 print:w-full print:items-start print:justify-start print:bg-white print:p-0">
       <Head>
         <title>{student?.data?.name.full ?? "Loading student's"} Transcript | Grand Regal School</title>
         <meta
@@ -142,14 +142,14 @@ const ResultTranscript: NextPage = () => {
           className="w-full py-10"
           HRclassName="border-t-gray-300"
         />
-        <div className="flex items-center justify-between gap-x-10 w-full">
+        <div className="flex w-full items-center justify-between gap-x-10">
           <GradingScheme
             className="w-5/12"
             scheme={data?.data?.grading ?? []}
           />
           <TranscriptFooter
             remark={overallRemark}
-            className="w-7/12 space-y-3 h-full pt-3"
+            className="h-full w-7/12 space-y-3 pt-3"
           />
         </div>
       </main>
