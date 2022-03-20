@@ -4,7 +4,7 @@ import type { FunctionComponent } from "react";
 const Header: FunctionComponent = () => {
   return (
     <div className="flex w-full items-center justify-center gap-10">
-      <figure className="relative h-24 w-24">
+      <figure className="relative h-24 w-24 print:h-20 print:w-20">
         <Image
           priority
           layout="fill"
@@ -15,7 +15,7 @@ const Header: FunctionComponent = () => {
         />
       </figure>
       <div className="flex flex-col items-center justify-center text-center">
-        <h2 className="min-w-max text-3xl font-extrabold uppercase tracking-wider text-gray-700">
+        <h2 className="min-w-max text-3xl font-extrabold uppercase tracking-wider text-gray-700 print:text-2xl">
           Grand Regal International School
         </h2>
         <p className="pb-2 text-sm text-gray-700">Path to Peak for Excellence</p>

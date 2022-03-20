@@ -7,7 +7,7 @@ import type { ClassResultTemplate } from "types";
 const GradingScheme: FunctionComponent<GradingSchemeProps> = ({ scheme, className }) => {
   return (
     <div className={className}>
-      <table className="w-full border-separate overflow-hidden rounded-lg border border-gray-400 bg-white [border-spacing:0;]">
+      <table className="w-full border-separate overflow-hidden rounded-lg border border-gray-400 bg-white [border-spacing:0]">
         <thead className="divide-y divide-gray-400 font-medium text-gray-700">
           <tr>
             <th
