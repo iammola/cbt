@@ -1,20 +1,18 @@
+import { format } from "date-fns";
 import { FunctionComponent } from "react";
-import { format, formatDuration, intervalToDuration } from "date-fns";
 
 const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({ birthday, gender, name, ...props }) => {
-  const age =
-    birthday !== undefined &&
-    formatDuration(intervalToDuration({ start: new Date(birthday), end: new Date() }), { format: ["years"] }) + " old";
+  const items = [
+    ["Full Name", name],
+    ["Class", props.class],
+    ["Birthday", birthday !== undefined && format(new Date(birthday), "EEEE, do MMMM yyyy")],
+    ["Gender", gender ? (gender === "M" ? "Male" : "Female") : ""],
+    ["Date", format(new Date(), "EEEE, do MMMM yyyy")],
+  ] as const;
 
   return (
     <div className="flex w-full flex-row flex-wrap items-center justify-start gap-x-12 gap-y-4 px-5">
-      {[
-        ["Full Name", name],
-        ["Class", props.class],
-        ["Age", age || ""],
-        ["Gender", gender ? (gender === "M" ? "Male" : "Female") : ""],
-        ["Date", format(new Date(), "EEEE, do MMMM yyyy")],
-      ].map(([key, val]) => (
+      {items.map(([key, val]) => (
         <div
           key={key}
           className="group flex items-center justify-start gap-1.5"
