@@ -5,6 +5,7 @@ type RecordId = { _id: ObjectId };
 type ResultGrade = {
   limit: number;
   grade: string;
+  remark: string;
   description: string;
 };
 
