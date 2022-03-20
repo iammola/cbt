@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { format } from "date-fns";
 import { FunctionComponent } from "react";
 
 const TranscriptFooter: FunctionComponent = () => {
@@ -23,12 +22,6 @@ const TranscriptFooter: FunctionComponent = () => {
             objectPosition="center"
             className="brightness-50"
           />
-        </div>
-      </div>
-      <div className="flex items-center justify-start gap-x-6">
-        <span className="text-sm font-medium tracking-wide text-slate-600">Date:</span>
-        <div className="border-b-2 border-dotted border-slate-500 px-6 py-2 text-xl tracking-wide text-slate-600">
-          {format(new Date(), "dd-MM-yyyy")}
         </div>
       </div>
     </div>
