@@ -142,14 +142,14 @@ const ResultTranscript: NextPage = () => {
           className="w-full py-10"
           HRclassName="border-t-gray-300"
         />
-        <div className="flex items-center justify-between gap-x-10">
+        <div className="flex items-center justify-between gap-x-10 w-full">
           <GradingScheme
             className="w-5/12"
             scheme={data?.data?.grading ?? []}
           />
           <TranscriptFooter
             remark={overallRemark}
-            className="w-7/12 space-y-3"
+            className="w-7/12 space-y-3 h-full pt-3"
           />
         </div>
       </main>
