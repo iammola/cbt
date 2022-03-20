@@ -5,7 +5,6 @@ type RecordId = { _id: ObjectId };
 type ResultGrade = {
   limit: number;
   grade: string;
-  remark: string;
   description: string;
 };
 
@@ -156,5 +155,7 @@ export type TermRecord = RecordId & {
 
 export type SettingsRecord = RecordId & {
   active?: true;
-  transcriptGrade: ResultGrade[];
+  transcriptGrade: (ResultGrade & {
+    remark: string;
+  })[];
 };
