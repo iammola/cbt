@@ -2,7 +2,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import useSWRImmutable from "swr/immutable";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
@@ -28,6 +28,14 @@ const ResultTranscript: NextPage = () => {
     router.isReady && `/api/students/${router.query.id}/class`,
     (url) => fetch(url ?? "").then((res) => res.json())
   );
+
+  const overallRemark = useMemo(() => {
+    const scores = Object.values(data?.data.scores ?? {});
+    const score =
+      scores.reduce((acc, b) => acc + b.reduce((acc, b) => acc + (b?.score ?? 0), 0) / b.length, 0) / scores.length;
+
+    return data?.data.grading.find((scheme) => score < scheme.limit)?.remark;
+  }, [data]);
 
   useEffect(() => {
     if (error) setErrors((errors) => [...new Set([...errors, "data"])]);
@@ -134,14 +142,15 @@ const ResultTranscript: NextPage = () => {
           className="w-full py-10"
           HRclassName="border-t-gray-300"
         />
-        <div className="flex items-center justify-between gap-x-10">
+        <div className="flex items-center justify-between gap-x-10 w-full">
           <GradingScheme
             className="w-5/12"
             scheme={data?.data?.grading ?? []}
           />
-          <div className="w-7/12">
-            <TranscriptFooter />
-          </div>
+          <TranscriptFooter
+            remark={overallRemark}
+            className="w-7/12 space-y-3 h-full pt-3"
+          />
         </div>
       </main>
       <Actions pickerLink="/results/picker/transcript" />

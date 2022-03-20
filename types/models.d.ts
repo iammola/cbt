@@ -155,5 +155,7 @@ export type TermRecord = RecordId & {
 
 export type SettingsRecord = RecordId & {
   active?: true;
-  transcriptGrade: ResultGrade[];
+  transcriptGrade: (ResultGrade & {
+    remark: string;
+  })[];
 };
