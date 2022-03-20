@@ -2,42 +2,29 @@ import { FunctionComponent } from "react";
 import { format, formatDuration, intervalToDuration } from "date-fns";
 
 const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({ birthday, gender, name, ...props }) => {
+  const age =
+    birthday !== undefined &&
+    formatDuration(intervalToDuration({ start: new Date(birthday), end: new Date() }), { format: ["years"] }) + " old";
+
   return (
-    <div className="grid w-full grid-flow-col grid-cols-3 grid-rows-2 gap-y-2.5 gap-x-40 px-5">
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Full Name</span>{" "}
-        <span className="min-w-max text-sm font-bold uppercase tracking-wide text-gray-800">{name}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Class:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{props.class}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Age:</span>{" "}
-        <span className="min-w-max text-sm font-bold tracking-wide text-gray-800">
-          {birthday !== undefined &&
-            formatDuration(
-              intervalToDuration({
-                start: new Date(birthday),
-                end: new Date(),
-              }),
-              { format: ["years"] }
-            )}{" "}
-          old
-        </span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Gender:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {gender && (gender === "M" ? "Male" : "Female")}
-        </span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Printed On:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {format(new Date(), "dd-MM-yyyy")}
-        </span>
-      </div>
+    <div className="flex w-full flex-row flex-wrap items-center justify-start gap-x-12 gap-y-4 px-5">
+      {[
+        ["Full Name", name],
+        ["Class", props.class],
+        ["Age", age || ""],
+        ["Gender", gender ? (gender === "M" ? "Male" : "Female") : ""],
+        ["Date", format(new Date(), "EEEE, do MMMM yyyy")],
+      ].map(([key, val]) => (
+        <div
+          key={key}
+          className="group flex items-center justify-start gap-1.5"
+        >
+          <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">{key}:</span>{" "}
+          <span className="min-w-max text-sm font-bold uppercase tracking-wide text-gray-800 group-last:font-normal group-last:normal-case">
+            {val}
+          </span>
+        </div>
+      ))}
     </div>
   );
 };
