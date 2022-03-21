@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FunctionComponent } from "react";
 import { ChevronLeftIcon, PrinterIcon } from "@heroicons/react/solid";
 
-const Actions: FunctionComponent<{ pickerLink: string }> = ({ pickerLink }) => {
+const Actions: FunctionComponent<{ pickerLink: string; print(): void }> = ({ pickerLink, print }) => {
   return (
     <div className="fixed bottom-10 flex items-center justify-between gap-x-6 rounded-full bg-slate-200 py-4 px-6 shadow print:hidden">
       <Link href={pickerLink}>
