@@ -107,12 +107,12 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
       term = session?.terms[0]._id;
     }
 
-    const record: CBTResultRecord<true> = await CBTResultModel.findOne({ student: id, term }, "results")
+    const record: CBTResultRecord<true> = (await CBTResultModel.findOne({ student: id, term }, "results")
       .populate("results.examId", "subject")
-      .lean();
+      .lean()) ?? { results: [] };
 
-    const subjectIDs = record?.results.map((r) => r.examId.subject) ?? [];
-    const [{ subjects }] = await SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
+    const subjectIDs = record.results.map((r) => r.examId.subject) ?? [];
+    const [{ subjects = [] } = {}] = await SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
       { $match: { "subjects._id": { $in: subjectIDs } } },
       {
         $project: {
@@ -128,7 +128,7 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
 
     [success, status, message] = [
       true,
-      StatusCodes.CREATED,
+      StatusCodes.OK,
       {
         data: record.results.map((r) => ({
           score: r.score,
@@ -137,7 +137,7 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
           time: differenceInMinutes(r.ended, r.started),
           subject: subjects.find((s) => s._id.equals(r.examId.subject))?.name ?? "Subject not found",
         })),
-        message: ReasonPhrases.CREATED,
+        message: ReasonPhrases.OK,
       },
     ];
   } catch (error: any) {
