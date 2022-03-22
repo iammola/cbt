@@ -12,7 +12,7 @@ import type { StudentClassGETData } from "types/api";
 const Home: FunctionComponent = () => {
   const router = useRouter();
   const [{ account }, , removeCookies] = useCookies(["account"]);
-  const { data: classData } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`);
+  const { data: classData, error } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`);
 
   const signOut = () => router.push("/").then(() => removeCookies("account", { path: "/" }));
 
@@ -24,11 +24,13 @@ const Home: FunctionComponent = () => {
           <div className="text-sm tracking-wide">
             <span className="text-slate-500">Logged in as</span>{" "}
             <span className="font-medium text-slate-700">{account.name?.full}</span>
-            {classData?.data && (
+            {(classData?.data || error) && (
               <>
                 {" "}
                 <span className="text-slate-500">•</span>{" "}
-                <span className="font-medium text-slate-700">{classData.data.name}</span>
+                <span className="font-medium text-slate-700">
+                  {classData?.data.name ?? (error !== undefined && "Couldn't load class")}
+                </span>
               </>
             )}
           </div>
