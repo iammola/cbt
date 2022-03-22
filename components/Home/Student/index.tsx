@@ -40,7 +40,7 @@ const Home: FunctionComponent = () => {
           Sign out
         </button>
       </header>
-      <main className="w-full grow divide-y divide-slate-200 bg-slate-50 py-6 px-10">
+      <main className="w-full grow divide-y divide-slate-200 bg-slate-50 py-8 px-10">
         <Exams />
       </main>
     </section>
