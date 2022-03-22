@@ -1,10 +1,11 @@
+import { Types } from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
 import { EventModel, ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
-import type { ServerResponse, SubjectRecord } from "types";
+import type { ServerResponse } from "types";
 import type { StudentExamsGETData } from "types/api";
 
 async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> {
@@ -16,64 +17,64 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
   ];
 
   try {
-    const session = await SessionModel.findOne({ "terms.current": true }, "terms.$").lean();
-    if (session === null) throw new Error("No Current Session");
+    const session = await SessionModel.findOne({ "terms.current": true }, "-_id terms._id.$").lean();
+    if (session === null) throw new Error("Session not found");
 
-    const student = await StudentModel.findOne(
-      {
-        _id,
-        "academic.term": session.terms[0]._id,
-      },
-      "-_id academic.$"
-    ).lean();
+    const term = session.terms[0]._id;
 
-    if (student === null) throw new Error("Student does not exist");
-    if (student.academic.length === 0) throw new Error("Student does not have current session");
+    const [cbtResults, student] = await Promise.all([
+      CBTResultModel.findOne({ student: _id, term }, "results.examId").lean(),
+      StudentModel.findOne({ _id, "academic.term": term }, "academic.subjects.$").lean(),
+    ]);
+
+    if (student === null) throw new Error("Student not found");
 
     const exams = await ExamModel.find(
-      { subjectId: { $in: student.academic[0].subjects } },
-      "_id duration questions subjectId"
-    ).lean();
-    const result = await CBTResultModel.findOne({ student: _id }).lean();
-
-    const subjects = await SubjectsModel.find(
-      { "subjects._id": exams.map((i) => i.subjectId) },
-      "-_id subjects._id subjects.name"
-    ).lean();
-
-    const events = await EventModel.find(
       {
-        exams: { $in: exams.map((i) => i._id) },
+        term: term,
+        subject: { $in: student?.academic[0].subjects },
+        _id: { $nin: cbtResults?.results.map((r) => r.examId) },
       },
-      "-_id"
-    )
-      .sort({ from: 1 })
-      .lean();
+      "duration questions subject"
+    ).lean();
 
-    const data = events
-      .map((event) =>
-        event.exams.map((examId) => {
-          const exam = exams.find(
-            (exam) => examId.equals(exam._id) && result?.results.find((i) => i.examId.equals(examId)) === undefined
-          );
+    const subjectIDs = exams.map((i) => i.subject);
+    const [events, subjects] = await Promise.all([
+      EventModel.find({ exams: { $in: exams.map((i) => i._id) } })
+        .sort({ from: 1 })
+        .lean(),
+      SubjectsModel.aggregate([
+        { $match: { "subjects._id": { $in: subjectIDs } } },
+        {
+          $project: {
+            subjects: {
+              $filter: {
+                input: "$subjects",
+                cond: { $in: ["$$this._id", subjectIDs] },
+              },
+            },
+          },
+        },
+      ]),
+    ]);
 
-          return exam === undefined
-            ? undefined
-            : {
-                _id: examId,
-                date: event.from,
-                duration: exam.duration ?? 0,
-                questions: exam.questions.length ?? 0,
-                subject:
-                  subjects
-                    .map((i) => i.subjects)
-                    .flat()
-                    .find((i) => i._id.equals(exam?.subjectId))?.name ?? "",
-              };
-        })
-      )
-      .flat()
-      .filter(Boolean) as StudentExamsGETData;
+    const data = events.reduce(
+      (acc, item) => [
+        ...acc,
+        ...item.exams.map((_id) => {
+          const { duration, questions, subject } = exams.find((e) => _id.equals(e._id)) ?? {};
+
+          return {
+            _id,
+            date: item.from,
+            duration: duration ?? 0,
+            questions: questions?.length ?? 0,
+            subject: subjects.find((s) => s._id.equals(subject ?? ""))?.name ?? "Subject not found",
+          };
+        }),
+      ],
+      [] as StudentExamsGETData
+    );
 
     [success, status, message] = [
       true,
