@@ -22,11 +22,12 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
   try {
     let score = 0;
     const ended = new Date();
-    const [student, term] = await Promise.all([
+    const [student, session] = await Promise.all([
       StudentModel.exists({ _id }),
       SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean(),
     ]);
 
+    if (!session) throw new Error("Session does not exist");
     if (!student) throw new Error("Student does not exist");
 
     const [exam] = await ExamModel.aggregate<Record<"answers", AnswerRecord[]>>([
@@ -64,7 +65,7 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
     }, [] as Record<"question" | "answer", string>[]);
 
     await CBTResultModel.updateOne(
-      { student: _id, term },
+      { student: _id, term: session.terms[0]._id },
       { $push: { results: { ...result, score, answers, ended } } },
       {
         upsert: true,
