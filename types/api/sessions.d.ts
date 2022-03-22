@@ -1,4 +1,4 @@
-import { RecordId, TermRecord, SessionRecord } from "types";
+import type { RecordId, TermRecord, SessionRecord } from "types";
 
 export type SessionsGETData = SessionRecord[];
 export type SessionsPOSTData = SessionRecord;

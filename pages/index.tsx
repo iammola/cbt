@@ -16,8 +16,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { ClientResponse, RouteData } from "types";
-import type { PingData } from "types/api/ping";
-import type { LoginData } from "types/api/login";
+import type { LoginData, PingData } from "types/api";
 
 const Home: NextPage = () => {
   const router = useRouter();

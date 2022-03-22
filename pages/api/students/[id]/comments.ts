@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ResultModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api/students";
+import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api";
 
 async function getComments(student: any): Promise<ServerResponse<StudentCommentGETData>> {
   await connect();

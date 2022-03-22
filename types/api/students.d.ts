@@ -1,5 +1,5 @@
-import { ResultGrade, SettingsRecord } from "types/models";
-import { RecordId, ClassRecord, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
+import type { ResultGrade, SettingsRecord } from "types/models";
+import type { RecordId, ClassRecord, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
 export type StudentsGETData = StudentRecord[];
 
@@ -12,9 +12,11 @@ export type StudentResultPOSTData = {
 export type StudentGETData = StudentRecord | null;
 
 export type StudentCBTResultsGETData = {
-  started: Date;
+  date: Date;
   score: number;
+  time: number;
   subject: string;
+  attempts: number;
 }[];
 
 export type StudentExamsGETData = (Pick<ExamRecord, "_id" | "duration"> & {
@@ -26,7 +28,7 @@ export type StudentExamsGETData = (Pick<ExamRecord, "_id" | "duration"> & {
 
 export type StudentExamGETData = RecordId & {
   questions: QuestionRecord[];
-  details: Pick<ExamRecord, "duration" | "instructions" | "subjectId"> & {
+  details: Pick<ExamRecord<true>, "duration" | "instructions" | "subject"> & {
     name: {
       class: string;
       subject: string;

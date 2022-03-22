@@ -4,11 +4,11 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel } from "db/models";
 
-import type { ExamsPOSTData } from "types/api/exams";
+import type { ExamsPOSTData } from "types/api";
 import type { ServerResponse, ExamRecord, CreateQuestion } from "types";
 
 async function createExam(
-  { exam: { subjectId, termId, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] },
+  { exam: { subject, term, ...exam }, questions }: { exam: ExamRecord; questions: CreateQuestion[] },
   by: string
 ): Promise<ServerResponse<ExamsPOSTData>> {
   await connect();
@@ -19,12 +19,12 @@ async function createExam(
   ];
 
   try {
-    if (await ExamModel.exists({ subjectId, termId })) throw new Error("Subject Exam already created");
+    if (await ExamModel.exists({ subject, term })) throw new Error("Subject Exam already created");
 
     const { _id } = await ExamModel.create({
       ...exam,
-      subjectId,
-      termId,
+      subject,
+      term,
       questions,
       created: { by, at: new Date() },
     });

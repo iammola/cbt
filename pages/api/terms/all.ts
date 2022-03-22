@@ -6,7 +6,7 @@ import { sort } from "utils";
 import { SessionModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import type { AllTermsGetData } from "types/api/sessions";
+import type { AllTermsGetData } from "types/api";
 
 async function getTerms(): Promise<ServerResponse<AllTermsGetData>> {
   await connect();

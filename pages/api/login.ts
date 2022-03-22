@@ -5,7 +5,7 @@ import { connect } from "db";
 import { StudentModel, TeacherModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import type { LoginData } from "types/api/login";
+import type { LoginData } from "types/api";
 
 import { promiseAny } from "utils";
 

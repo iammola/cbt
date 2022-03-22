@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { useCookies } from "react-cookie";
 
-import type { LoginData } from "types/api/login";
+import type { LoginData } from "types/api";
 
 const StudentHome = dynamic(() => import("components/Home/Student"), {
   ssr: false,

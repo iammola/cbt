@@ -8,7 +8,7 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
 import type { ClientResponse, RouteData, RouteError } from "types";
-import type { ClassesGETData, ClassSubjectPOSTData } from "types/api/classes";
+import type { ClassesGETData, ClassSubjectPOSTData } from "types/api";
 
 const SubjectForm: FunctionComponent = () => {
   const { mutate } = useSWRConfig();
@@ -16,9 +16,7 @@ const SubjectForm: FunctionComponent = () => {
   const [alias, setAlias] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
 
   const [selectedClass, setSelectedClass] = useState({
     _id: "",

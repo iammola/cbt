@@ -10,7 +10,7 @@ import { useNotifications } from "components/Misc/Notification";
 import { Bar, Grid, Loader, Modal, Timer, Question } from "components/Exam/Student";
 
 import type { ClientResponse, RouteData, UserRecord } from "types";
-import type { StudentExamGETData, StudentResultPOSTData } from "types/api/students";
+import type { StudentExamGETData, StudentResultPOSTData } from "types/api";
 
 type PageCookies = {
   exam?: {

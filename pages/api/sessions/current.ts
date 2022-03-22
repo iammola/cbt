@@ -5,7 +5,7 @@ import { connect } from "db";
 import { SessionModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import { SessionCurrentGETData } from "types/api/sessions";
+import type { SessionCurrentGETData } from "types/api";
 
 async function getCurrentSession(): Promise<ServerResponse<SessionCurrentGETData>> {
   await connect();

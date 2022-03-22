@@ -8,11 +8,16 @@ import { Divide, UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { SubjectStudentsGETData } from "types/api/subjects";
 import type { ClientResponse, RouteData, RouteError, StudentRecord } from "types";
-import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
-import type { ClassesGETData, ClassResultSettingsGETData, ClassSubjectGETData } from "types/api/classes";
-import type { AllTermsGetData } from "types/api/sessions";
+import type {
+  ClassResultSettingsGETData,
+  StudentResultSubjectGETData,
+  ClassesGETData,
+  AllTermsGetData,
+  ClassSubjectGETData,
+  SubjectStudentsGETData,
+  StudentResultSubjectPOSTData,
+} from "types/api";
 
 const Results: NextPage = () => {
   const [addNotifications, removeNotifications, Notifications] = useNotifications();
@@ -27,12 +32,8 @@ const Results: NextPage = () => {
   const [students, setStudents] = useState<Pick<StudentRecord, "_id" | "name">[]>([]);
 
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
-  const { data: classes } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
-  const { data: terms } = useSWR<RouteData<AllTermsGetData>, RouteError>("/api/terms/all", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>, RouteError>("/api/terms/all");
 
   const [selectedClass, setSelectedClass] = useState({
     _id: "",

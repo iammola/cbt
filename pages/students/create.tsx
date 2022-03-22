@@ -12,7 +12,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { ClientResponse, RouteData, RouteError } from "types";
-import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
+import type { ClassesGETData, ClassSubjectGETData } from "types/api";
 
 const CreateStudents: NextPage = () => {
   const [addNotification, , Notifications] = useNotifications();
@@ -45,9 +45,7 @@ const CreateStudents: NextPage = () => {
     []
   );
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
 
   const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
 

@@ -5,7 +5,7 @@ import { connect } from "db";
 import { SubjectsModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import { TeacherClassSubjectGETData } from "types/api/teachers";
+import type { TeacherClassSubjectGETData } from "types/api";
 
 async function getTeacherClassSubject(
   id: any,

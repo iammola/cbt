@@ -6,9 +6,7 @@ import { ChevronRightIcon } from "@heroicons/react/solid";
 import type { StudentBarProps } from "types/components";
 
 const Bar: FunctionComponent<StudentBarProps> = ({ exam, onSubmit }) => {
-  const { data: currentSession } = useSWRImmutable("/api/sessions/current/", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: currentSession } = useSWRImmutable("/api/sessions/current/");
 
   return (
     <div className="sticky left-0 top-0 flex w-full items-center justify-end gap-6 rounded-b-lg bg-white py-4 px-8 drop-shadow-sm">

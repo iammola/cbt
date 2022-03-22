@@ -1,124 +1,81 @@
 import useSWR from "swr";
 import Link from "next/link";
+import { format, isPast } from "date-fns";
 import { useCookies } from "react-cookie";
-import { formatRelative, isPast } from "date-fns";
-import { DesktopComputerIcon } from "@heroicons/react/outline";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent } from "react";
+import { LockClosedIcon } from "@heroicons/react/solid";
 
-import { NotificationsHook } from "components/Misc/Notification";
-import { classNames } from "utils";
+import ErrorPage from "./Error";
+import EmptyPage from "./Empty";
+import { Card, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
-import type { StudentExamsGETData } from "types/api/students";
+import type { StudentExamsGETData } from "types/api";
 
-const Exam: FunctionComponent<{
-  addNotification: NotificationsHook[0];
-  show: boolean;
-}> = ({ addNotification, show }) => {
+const Exam: FunctionComponent = () => {
   const [{ account }] = useCookies(["account"]);
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [, setNotification] = useState<number>();
-  const [exams, setExams] = useState<StudentExamsGETData>([]);
-  const { data } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`, (url) =>
-    fetch(url ?? "").then((res) => res.json())
-  );
-
-  useEffect(() => {
-    if (data !== undefined)
-      setExams(
-        data.data.map((exam) => ({
-          ...exam,
-          locked: !isPast(new Date(exam.date)),
-        }))
-      );
-  }, [data]);
-
-  useEffect(() => {
-    if (firstLoad && data === undefined) {
-      setFirstLoad(false);
-      setNotification(
-        addNotification({
-          message: "Loading Exams",
-          timeout: 3e3,
-          Icon: () => <DesktopComputerIcon className="h-6 w-6 stroke-blue-500" />,
-        })[0]
-      );
-      setTimeout(setNotification, 5e3, undefined);
-    }
-  }, [addNotification, data, firstLoad]);
+  const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account._id}/exams/`);
 
   return (
-    <section
-      className={classNames("flex content-start items-start justify-start gap-x-5 gap-y-3", {
-        hidden: !show,
-      })}
-    >
-      <table className="min-w-full overflow-hidden rounded-lg shadow-md">
-        <thead className="bg-gray-200 text-gray-700">
-          <tr>
-            {["Subject", "Status", "Date"].map((i) => (
-              <th
-                key={i}
-                scope="col"
-                className={classNames("py-3", { "w-4": i === "#" })}
-              >
-                <span className="flex items-center justify-start pl-6 pr-3 text-xs font-normal uppercase tracking-wider text-gray-500">
-                  {i}
-                </span>
-              </th>
-            ))}
-            <th
-              scope="col"
-              className="relative px-6 py-3"
-            >
-              <span className="sr-only">Start Exam</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
-          {exams?.map((i) => (
-            <tr key={i._id.toString()}>
-              <td className="whitespace-nowrap px-6 py-4">
-                <div className="flex flex-col items-start justify-center text-sm">
-                  <span className="text-gray-900">{i.subject}</span>
-                  <span className="text-gray-500">
-                    {i.duration} minutes • {i.questions} questions
-                  </span>
-                </div>
-              </td>
-              <td className="whitespace-nowrap px-6 py-4">
-                <span
-                  className={classNames("inline-flex rounded-full px-3 py-0.5 text-sm leading-5", {
-                    "bg-blue-200/25 text-blue-600": i.locked === false,
-                    "bg-slate-200/25 text-slate-600": i.locked !== false,
-                  })}
+    <Section>
+      <Title>Scheduled Exams</Title>
+      <Cards>
+        {data?.map((item, idx) => (
+          <Card
+            key={idx}
+            className="h-56 gap-y-5"
+          >
+            <h5 className="text-2xl font-bold text-gray-700 line-clamp-2">{item.subject}</h5>
+            <ul className="w-full list-inside list-disc space-y-1">
+              {[
+                [item.questions, "questions"],
+                [item.duration, "minutes"],
+                [format(new Date(item.date), "EEEE, dd MMM yyyy")],
+              ].map(([val, key]) => (
+                <li
+                  key={key}
+                  className="text-sm text-slate-700"
                 >
-                  {i.locked !== false ? "Locked" : "Unlocked"}
-                </span>
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm">
-                {(() => {
-                  const date = formatRelative(new Date(i.date), new Date());
-                  return date[0].toUpperCase() + date.slice(1);
-                })()}
-              </td>
-              <td className="whitespace-nowrap px-6 py-4">
-                {i.locked === false && (
-                  <button
-                    type="button"
-                    className="flex items-center justify-center rounded-full bg-gray-500 py-2 px-4 hover:bg-gray-600"
-                  >
-                    <Link href={`/exams/write/${i._id}`}>
-                      <a className="text-xs font-medium tracking-wide text-white">Go to exam</a>
-                    </Link>
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+                  <span className="font-medium">{val}</span> {key}
+                </li>
+              ))}
+            </ul>
+            {isPast(new Date(item.date)) ? (
+              <Link href={`/exams/write/${String(item._id)}`}>
+                <a className="w-full cursor-pointer rounded-full bg-blue-500 py-2 px-8 text-sm text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                  Start Exam
+                </a>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                className="flex w-full cursor-pointer gap-x-4 rounded-full bg-gray-500 py-2 px-8 text-sm text-white"
+              >
+                <LockClosedIcon className="h-5 w-5 fill-white" />
+                Locked
+              </button>
+            )}
+          </Card>
+        ))}
+        {data && !data.length && <EmptyPage message="No exams to write" />}
+        {error && <ErrorPage message="Error loading exams!!! Retrying..." />}
+        {!data?.length && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
+      </Cards>
+    </Section>
+  );
+};
+
+const Skeleton: FunctionComponent = () => {
+  return (
+    <aside className="w-[300px] space-y-5 rounded-xl bg-white px-5 py-4 shadow">
+      <div className="h-4 w-full animate-pulse rounded-full bg-slate-300" />
+      <div className="w-full space-y-2">
+        <div className="h-2 w-2/5 animate-pulse rounded-full bg-slate-300" />
+        <div className="h-2 w-3/5 animate-pulse rounded-full bg-slate-300" />
+        <div className="h-2 w-4/5 animate-pulse rounded-full bg-slate-300" />
+      </div>
+      <div className="w-full animate-pulse rounded-full bg-slate-300 py-2" />
+    </aside>
   );
 };
 

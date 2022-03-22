@@ -17,7 +17,7 @@ import {
 import { classNames } from "utils";
 
 import type { RouteData } from "types";
-import type { EventsRangeGETData } from "types/api/events";
+import type { EventsRangeGETData } from "types/api";
 
 const Calendar: NextPage = () => {
   const activeYear = useMemo(() => 2021, []);

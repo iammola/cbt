@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ClassModel, SessionModel } from "db/models";
 
 import type { ClassResultTemplate, ServerResponse } from "types";
-import type { ClassResultSettingsGETData, ClassResultSettingsPOSTData } from "types/api/classes";
+import type { ClassResultSettingsGETData, ClassResultSettingsPOSTData } from "types/api";
 
 async function createResultSetting(
   _id: any,

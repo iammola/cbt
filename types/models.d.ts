@@ -80,8 +80,8 @@ type DateRecord<P = false> = {
 
 export type ExamRecord<P = false> = RecordId & {
   duration: number;
-  termId: ObjectId;
-  subjectId: P extends true ? SubjectRecord : ObjectId;
+  term: ObjectId;
+  subject: P extends true ? SubjectRecord : ObjectId;
   instructions: string[];
   questions: QuestionRecord[];
   created: DateRecord<P>;
@@ -110,6 +110,7 @@ export type QuestionRecord = RecordId & {
 
 export type CBTResultRecord<P = false> = RecordId & {
   student: P extends true ? StudentRecord : ObjectId;
+  term: ObjectId;
   results: {
     ended: Date;
     started: Date;

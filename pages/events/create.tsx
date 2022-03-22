@@ -9,9 +9,9 @@ import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
-import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
+import type { ClassesGETData, ClassExamGETData } from "types/api";
 import type { ClientResponse, RouteData, RouteError, SelectOption } from "types";
-import { EventsGETData } from "types/api/events";
+import type { EventsGETData } from "types/api";
 
 const CreateEvent: NextPage = () => {
   const [date, setDate] = useState<Date | null>(null);
@@ -25,9 +25,7 @@ const CreateEvent: NextPage = () => {
   });
 
   const [exams, setExams] = useState<SelectOption[]>();
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();

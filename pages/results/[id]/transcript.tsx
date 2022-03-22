@@ -11,7 +11,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { Actions, GradingScheme, Header, TranscriptInfo, TranscriptFooter } from "components/Result";
 
 import type { RouteData } from "types";
-import type { StudentClassGETData, StudentGETData, StudentTranscriptGETData } from "types/api/students";
+import type { StudentClassGETData, StudentGETData, StudentTranscriptGETData } from "types/api";
 
 const ResultTranscript: NextPage = () => {
   const router = useRouter();

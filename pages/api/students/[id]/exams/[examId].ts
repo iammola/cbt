@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ExamModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectsRecord } from "types";
-import type { StudentExamGETData } from "types/api/students";
+import type { StudentExamGETData } from "types/api";
 
 async function getExam(studentId: any, examId: any): Promise<ServerResponse<StudentExamGETData>> {
   await connect();
@@ -33,18 +33,18 @@ async function getExam(studentId: any, examId: any): Promise<ServerResponse<Stud
     const exam = await ExamModel.findOne(
       {
         _id: examId,
-        subjectId: { $in: student.academic[0].subjects },
+        subject: { $in: student.academic[0].subjects },
       },
       "-created -edited"
     ).lean();
 
     if (exam === null) throw new Error("Exam not found / Student not authorized to get exam");
 
-    const { duration, instructions, questions, subjectId } = exam;
+    const { _id, questions, ...rest } = exam;
 
     const subject: SubjectsRecord<true> = await SubjectsModel.findOne(
-      { "subjects._id": subjectId },
-      "class subjects.name.$"
+      { "subjects._id": exam.subject },
+      "class subjects.$"
     )
       .populate("class", "-_id name")
       .lean();
@@ -56,12 +56,11 @@ async function getExam(studentId: any, examId: any): Promise<ServerResponse<Stud
       StatusCodes.OK,
       {
         data: {
-          _id: examId,
+          _id,
           questions,
           details: {
-            duration,
-            subjectId,
-            instructions,
+            ...rest,
+            subject: subject.subjects[0],
             name: {
               class: subject.class.name,
               subject: subject?.subjects[0].name,

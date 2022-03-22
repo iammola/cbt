@@ -1,59 +1,67 @@
 import useSWR from "swr";
-import { useCookies } from "react-cookie";
-import { formatRelative } from "date-fns";
 import { FunctionComponent } from "react";
+import { useCookies } from "react-cookie";
 
-import { classNames } from "utils";
+import EmptyPage from "./Empty";
+import ErrorPage from "./Error";
+import { Card, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
-import type { StudentCBTResultsGETData } from "types/api/students";
+import type { StudentCBTResultsGETData } from "types/api";
+import { format } from "date-fns";
 
-const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
+const Result: FunctionComponent = () => {
   const [{ account }] = useCookies(["account"]);
-  const { data } = useSWR<RouteData<StudentCBTResultsGETData>>(`/api/students/${account?._id}/cbt_results/`, (url) =>
-    fetch(url ?? "").then((res) => res.json())
+  const { data: { data } = {}, error } = useSWR<RouteData<StudentCBTResultsGETData>>(
+    `/api/students/${account._id}/cbt_results/`
   );
 
   return (
-    <section
-      className={classNames("flex content-start items-start justify-start gap-x-5 gap-y-3", {
-        hidden: !show,
-      })}
-    >
-      <table className="min-w-full overflow-hidden rounded-lg shadow-md">
-        <thead className="bg-gray-200 text-gray-700">
-          <tr>
-            {["Subject", "Score", "Date"].map((i) => (
-              <th
-                key={i}
-                scope="col"
-                className={classNames("py-3", { "w-4": i === "#" })}
-              >
-                <span className="flex items-center justify-start pl-6 pr-3 text-xs font-normal uppercase tracking-wider text-gray-500">
-                  {i}
-                </span>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
-          {data?.data.map((e) => (
-            <tr key={e.subject}>
-              <td className="whitespace-nowrap px-6 py-4">
-                <div className="flex flex-col items-start justify-center text-sm text-gray-900">{e.subject}</div>
-              </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm">{e.score}</td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm">
-                {(() => {
-                  const date = formatRelative(new Date(e.started), new Date());
-                  return date[0].toUpperCase() + date.slice(1);
-                })()}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <Section>
+      <Title>Results</Title>
+      <Cards>
+        {data?.map((item, idx) => (
+          <Card
+            key={idx}
+            className="h-48 gap-y-3"
+          >
+            <h5 className="text-4xl font-bold tracking-wide text-gray-700">{item.score}</h5>
+            <h6 className="text-lg font-medium text-gray-600 line-clamp-2">{item.subject}</h6>
+            <ul className="w-full list-inside list-disc space-y-1">
+              {[
+                ["Spent", item.time, "minute"],
+                ["Attempted", item.attempts, "question"],
+                ["Date:", format(new Date(item.date), "EEEE, dd MMM yyyy")],
+              ].map(([k, v, l], idx) => (
+                <li
+                  key={idx}
+                  className="text-sm text-slate-500"
+                >
+                  {k} <span className="font-medium text-slate-700">{v}</span> {l}
+                  {l && v !== 1 && "s"}
+                </li>
+              ))}
+            </ul>
+          </Card>
+        ))}
+        {data && !data.length && <EmptyPage message="No results to see" />}
+        {error && <ErrorPage message="Error loading results!!! Retrying..." />}
+        {!data?.length && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
+      </Cards>
+    </Section>
+  );
+};
+
+const Skeleton: FunctionComponent = () => {
+  return (
+    <aside className="w-[300px] space-y-5 rounded-xl bg-white px-5 py-4 shadow">
+      <div className="h-4 w-full animate-pulse rounded-full bg-slate-300" />
+      <div className="h-3 w-full animate-pulse rounded-full bg-slate-300" />
+      <div className="w-full space-y-2">
+        <div className="h-2 w-2/5 animate-pulse rounded-full bg-slate-300" />
+        <div className="h-2 w-3/5 animate-pulse rounded-full bg-slate-300" />
+      </div>
+    </aside>
   );
 };
 

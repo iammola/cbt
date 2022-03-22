@@ -1,17 +1,17 @@
+import { Types } from "mongoose";
+import { differenceInMinutes } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, CBTResultModel, StudentModel, SubjectsModel } from "db/models";
+import { ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
-import type { CBTResultRecord, ServerResponse } from "types";
-import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api/students";
+import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api";
+import type { AnswerRecord, CBTResultRecord, ServerResponse, SubjectRecord } from "types";
 
-type RequestBody = Omit<CBTResultRecord["results"][number], "score" | "ended" | "answers"> & {
-  answers: { [key: string]: string };
-};
+type RequestBody = { answers: Record<string, string> } & Pick<CBTResultRecord["results"][number], "started" | "examId">;
 
-async function createResult(id: any, result: RequestBody): Promise<ServerResponse<StudentResultPOSTData>> {
+async function createResult(_id: any, result: RequestBody): Promise<ServerResponse<StudentResultPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultPOSTData> = [
     false,
@@ -20,51 +20,54 @@ async function createResult(id: any, result: RequestBody): Promise<ServerRespons
   ];
 
   try {
-    if (!(await StudentModel.exists({ _id: id }))) throw new Error("Student does not exist");
-    const exam = await ExamModel.findById(
-      result.examId,
-      "-_id questions._id questions.answers._id questions.answers.isCorrect"
-    ).lean();
-    if (exam === null) throw new Error("Exam does not exist");
+    let score = 0;
+    const ended = new Date();
+    const [student, session] = await Promise.all([
+      StudentModel.exists({ _id }),
+      SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean(),
+    ]);
 
-    const items = exam.questions
-      .map(({ _id, answers }) => {
-        const answer = result.answers[_id.toString()];
-        return {
-          _id,
-          answer,
-          score: +(answers.find((e) => e.isCorrect)?._id?.equals(answer) ?? 0),
-        };
-      })
-      .filter((i) => i.answer);
+    if (!session) throw new Error("Session does not exist");
+    if (!student) throw new Error("Student does not exist");
 
-    const score = items.reduce((a, b) => a + b.score, 0);
-
-    await CBTResultModel.findOneAndUpdate(
-      { student: id },
+    const [exam] = await ExamModel.aggregate<Record<"answers", AnswerRecord[]>>([
+      { $match: { _id: new Types.ObjectId(String(result.examId)) } },
       {
-        $push: {
-          results: {
-            ...result,
-            score,
-            ended: new Date(),
-            answers: items.reduce(
-              (a: any[], b) => [
-                ...a,
-                {
-                  question: b._id,
-                  answer: b.answer,
+        $project: {
+          answers: {
+            $map: {
+              input: "$questions",
+              in: {
+                $filter: {
+                  input: "$$this.answers",
+                  cond: { $ifNull: ["$$this.isCorrect", false] },
                 },
-              ],
-              []
-            ),
+              },
+            },
           },
         },
       },
       {
-        lean: true,
-        returnDocument: "after",
-        fields: "student",
+        $project: {
+          answers: {
+            $map: {
+              input: "$answers",
+              in: { $first: "$$this" },
+            },
+          },
+        },
+      },
+    ]);
+
+    const answers = Object.entries(result.answers).reduce((acc, [question, answer]) => {
+      score += +!!exam.answers.findIndex((a) => a._id.equals(answer));
+      return [...acc, { question, answer }];
+    }, [] as Record<"question" | "answer", string>[]);
+
+    await CBTResultModel.updateOne(
+      { student: _id, term: session.terms[0]._id },
+      { $push: { results: { ...result, score, answers, ended } } },
+      {
         upsert: true,
         runValidators: true,
       }
@@ -91,7 +94,7 @@ async function createResult(id: any, result: RequestBody): Promise<ServerRespons
   return [success, status, message];
 }
 
-async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETData>> {
+async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTResultsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCBTResultsGETData> = [
     false,
@@ -100,34 +103,42 @@ async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETD
   ];
 
   try {
-    const record = await CBTResultModel.findOne({ student: id }, "results.started results.score results.examId").lean();
+    if (!term) {
+      const session = await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean();
+      term = session?.terms[0]._id;
+    }
 
-    const exams = await ExamModel.find({ _id: record?.results.map((i) => i.examId) ?? [] }, "subjectId").lean();
-    const subjects = (
-      await SubjectsModel.find({ "subjects._id": exams.map((e) => e.subjectId) }, "subjects._id subjects.name").lean()
-    )
-      .map((i) => i.subjects)
-      .flat();
+    const record: CBTResultRecord<true> = (await CBTResultModel.findOne({ student: id, term }, "results")
+      .populate("results.examId", "subject")
+      .lean()) ?? { results: [] };
 
-    const data = exams.map((e) => {
-      const { score, started } = record?.results.find((r) => r.examId.equals(e._id)) ?? {
-        score: 0,
-        started: new Date(),
-      };
-
-      return {
-        score,
-        started,
-        subject: subjects.find((s) => s._id.equals(e.subjectId))?.name ?? "",
-      };
-    });
+    const subjectIDs = record.results.map((r) => r.examId.subject) ?? [];
+    const [{ subjects = [] } = {}] = await SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
+      { $match: { "subjects._id": { $in: subjectIDs } } },
+      {
+        $project: {
+          subjects: {
+            $filter: {
+              input: "$subjects",
+              cond: { $in: ["$$this._id", subjectIDs] },
+            },
+          },
+        },
+      },
+    ]);
 
     [success, status, message] = [
       true,
-      StatusCodes.CREATED,
+      StatusCodes.OK,
       {
-        data,
-        message: ReasonPhrases.CREATED,
+        data: record.results.map((r) => ({
+          score: r.score,
+          date: r.started,
+          attempts: r.answers.length,
+          time: differenceInMinutes(r.ended, r.started),
+          subject: subjects.find((s) => s._id.equals(r.examId.subject))?.name ?? "Subject not found",
+        })),
+        message: ReasonPhrases.OK,
       },
     ];
   } catch (error: any) {
@@ -157,7 +168,7 @@ export default async function handler({ body, query, method }: NextApiRequest, r
   } else
     [success, status, message] = await (method === "POST"
       ? createResult(query.id, JSON.parse(body))
-      : getResults(query.id));
+      : getResults(query));
 
   if (typeof message !== "object") message = { message, error: message };
 

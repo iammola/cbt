@@ -10,7 +10,7 @@ import { Navbar, Sidebar } from "components/Layout";
 import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
 
 import type { RouteData } from "types";
-import type { TeacherExamsGETData } from "types/api/teachers";
+import type { TeacherExamsGETData } from "types/api";
 
 const Exams: NextPage = () => {
   const [{ account }] = useCookies(["account"]);

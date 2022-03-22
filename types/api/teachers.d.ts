@@ -1,4 +1,4 @@
-import { CBTResultRecord, ClassRecord, ExamRecord, RecordId, SubjectRecord, UserRecord } from "types";
+import type { CBTResultRecord, ClassRecord, ExamRecord, RecordId, SubjectRecord, UserRecord } from "types";
 
 export type TeachersPOSTData = Pick<UserRecord, "code">;
 
@@ -9,7 +9,7 @@ export type TeacherClassSubjectGETData = {
 };
 
 export type TeacherExamsGETData = (Pick<ExamRecord<true>, "created"> &
-  Omit<ExamRecord, "created" | "subjectId" | "questions"> & {
+  Omit<ExamRecord, "created" | "subject" | "questions"> & {
     class: string;
     subject: string;
     questions: number;
@@ -17,12 +17,12 @@ export type TeacherExamsGETData = (Pick<ExamRecord<true>, "created"> &
 
 export type TeacherExamGETData = RecordId & {
   questions: QuestionRecord[];
-  details: Pick<ExamRecord, "duration" | "instructions" | "subjectId"> & {
+  details: Pick<ExamRecord<true>, "duration" | "instructions" | "subject"> & {
     name: {
       class: string;
       subject: string;
     };
-    termId: string;
+    term: string;
   };
 };
 

@@ -1,4 +1,4 @@
-import { ExamRecord, QuestionRecord, RecordId } from "types";
+import type { ExamRecord, QuestionRecord, RecordId } from "types";
 
 export type ExamsPOSTData = RecordId;
 

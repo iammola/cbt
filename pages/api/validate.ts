@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 
 import type { ServerResponse } from "types";
-import type { PingData, PingError } from "types/api/ping";
+import type { PingData, PingError } from "types/api";
 import { StudentModel, ResultModel } from "db/models";
 
 export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {

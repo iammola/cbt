@@ -5,7 +5,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { EventModel, SubjectsModel } from "db/models";
 
-import type { EventsRangeGETData } from "types/api/events";
+import type { EventsRangeGETData } from "types/api";
 import type { EventRecord, ServerResponse, SubjectsRecord } from "types";
 
 async function getEventsRange(from: any, to: any): Promise<ServerResponse<EventsRangeGETData>> {
@@ -26,7 +26,7 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
       },
       "from exams"
     )
-      .populate("exams", "subjectId")
+      .populate("exams", "subject")
       .lean();
 
     const data = await Promise.all(
@@ -35,11 +35,9 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
         time: format(new Date(from), "h:mm a"),
         events: (
           await Promise.all(
-            exams.map(async ({ subjectId }) => {
+            exams.map(async ({ subject }) => {
               const record: SubjectsRecord<true> | null = await SubjectsModel.findOne(
-                {
-                  "subjects._id": subjectId,
-                },
+                { "subjects._id": subject },
                 "class subjects.name.$"
               )
                 .populate("class", "alias")

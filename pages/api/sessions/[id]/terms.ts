@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { SessionModel } from "db/models";
 
-import type { TermGETData } from "types/api/sessions";
+import type { TermGETData } from "types/api";
 import type { ServerResponse, TermRecord } from "types";
 
 async function createTerm(id: string, term: TermRecord): Promise<ServerResponse<TermGETData>> {
