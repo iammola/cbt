@@ -5,8 +5,8 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { EventModel, ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
-import type { ServerResponse } from "types";
 import type { StudentExamsGETData } from "types/api";
+import type { ServerResponse, SubjectRecord } from "types";
 
 async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> {
   await connect();
@@ -39,11 +39,11 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
     ).lean();
 
     const subjectIDs = exams.map((i) => i.subject);
-    const [events, subjects] = await Promise.all([
+    const [events, [{ subjects }]] = await Promise.all([
       EventModel.find({ exams: { $in: exams.map((i) => i._id) } })
         .sort({ from: 1 })
         .lean(),
-      SubjectsModel.aggregate([
+      SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
         { $match: { "subjects._id": { $in: subjectIDs } } },
         {
           $project: {

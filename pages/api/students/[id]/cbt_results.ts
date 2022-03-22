@@ -6,8 +6,8 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
-import type { AnswerRecord, CBTResultRecord, ServerResponse } from "types";
 import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api";
+import type { AnswerRecord, CBTResultRecord, ServerResponse, SubjectRecord } from "types";
 
 type RequestBody = { answers: Record<string, string> } & Pick<CBTResultRecord["results"][number], "started" | "examId">;
 
@@ -112,7 +112,7 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
       .lean();
 
     const subjectIDs = record?.results.map((r) => r.examId.subject) ?? [];
-    const subjects = await SubjectsModel.aggregate([
+    const [{ subjects }] = await SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
       { $match: { "subjects._id": { $in: subjectIDs } } },
       {
         $project: {
