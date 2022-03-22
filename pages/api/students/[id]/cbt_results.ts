@@ -30,7 +30,7 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
     if (!session) throw new Error("Session does not exist");
     if (!student) throw new Error("Student does not exist");
 
-    const [exam] = await ExamModel.aggregate<Record<"answers", AnswerRecord[]>>([
+    const [exam] = await ExamModel.aggregate<Record<"answers", [AnswerRecord][]>>([
       { $match: { _id: new Types.ObjectId(String(result.exam)) } },
       {
         $project: {
@@ -47,20 +47,10 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
           },
         },
       },
-      {
-        $project: {
-          answers: {
-            $map: {
-              input: "$answers",
-              in: { $first: "$$this" },
-            },
-          },
-        },
-      },
     ]);
 
     const answers = Object.entries(result.answers).reduce((acc, [question, answer]) => {
-      score += +!!exam.answers.findIndex((a) => a._id.equals(answer));
+      score += +!!exam.answers.findIndex((a) => a[0]._id.equals(answer));
       return [...acc, { question, answer }];
     }, [] as Record<"question" | "answer", string>[]);
 
