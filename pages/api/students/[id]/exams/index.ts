@@ -31,7 +31,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
 
     const exams = await ExamModel.find(
       {
-        term: term,
+        term,
         subject: { $in: student?.academic[0].subjects },
         _id: { $nin: cbtResults?.results.map((r) => r.examId) },
       },

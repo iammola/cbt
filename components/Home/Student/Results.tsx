@@ -7,6 +7,7 @@ import { Card, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
 import type { StudentCBTResultsGETData } from "types/api";
+import { format } from "date-fns";
 
 const Result: FunctionComponent = () => {
   const [{ account }] = useCookies(["account"]);
@@ -26,13 +27,19 @@ const Result: FunctionComponent = () => {
             <h5 className="text-4xl font-bold tracking-wide text-gray-700">{item.score}</h5>
             <h6 className="text-lg font-medium text-gray-600 line-clamp-2">{item.subject}</h6>
             <ul className="w-full list-inside list-disc space-y-1">
-              <li className="text-sm text-slate-500">
-                Spent <span className="font-medium text-slate-700">{item.time}</span> minute{item.time !== 1 && "s"}
-              </li>
-              <li className="text-sm text-slate-500">
-                Attempted <span className="font-medium text-slate-700">{item.attempts}</span> question
-                {item.attempts !== 1 && "s"}
-              </li>
+              {[
+                ["Spent", item.time, "minute"],
+                ["Attempted", item.attempts, "question"],
+                ["Date:", format(new Date(item.date), "EEEE, dd MMM yyyy")],
+              ].map(([k, v, l], idx) => (
+                <li
+                  key={idx}
+                  className="text-sm text-slate-500"
+                >
+                  {k} <span className="font-medium text-slate-700">{v}</span> {l}
+                  {l && v !== 1 && "s"}
+                </li>
+              ))}
             </ul>
           </Card>
         ))}

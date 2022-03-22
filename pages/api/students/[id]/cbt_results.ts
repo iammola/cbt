@@ -132,6 +132,7 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
       {
         data: record.results.map((r) => ({
           score: r.score,
+          date: r.started,
           attempts: r.answers.length,
           time: differenceInMinutes(r.ended, r.started),
           subject: subjects.find((s) => s._id.equals(r.examId.subject))?.name ?? "Subject not found",
