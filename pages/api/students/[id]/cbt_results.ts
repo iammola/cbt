@@ -59,7 +59,7 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
     ]);
 
     const answers = Object.entries(result.answers).reduce((acc, [question, answer]) => {
-      score += +(exam.answers.find((a) => a._id.equals(answer)) ?? 0);
+      score += +!!exam.answers.findIndex((a) => a._id.equals(answer));
       return [...acc, { question, answer }];
     }, [] as Record<"question" | "answer", string>[]);
 
