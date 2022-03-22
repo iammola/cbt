@@ -23,7 +23,7 @@ const Exam: FunctionComponent = () => {
         {data?.map((item, idx) => (
           <Card
             key={idx}
-            className="h-56 gap-y-5"
+            className="h-64 !justify-between gap-y-5"
           >
             <h5 className="text-2xl font-bold text-gray-700 line-clamp-2">{item.subject}</h5>
             <ul className="w-full list-inside list-disc space-y-1">
