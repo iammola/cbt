@@ -1,15 +1,58 @@
+import useSWR from "swr";
+import Link from "next/link";
+import { format, isPast } from "date-fns";
+import { useCookies } from "react-cookie";
 import { FunctionComponent } from "react";
+import { LockClosedIcon } from "@heroicons/react/solid";
 
 import { Card, Cards, Section, Title } from "./Section";
 
+import type { RouteData } from "types";
+import type { StudentExamsGETData } from "types/api";
+
 const Exam: FunctionComponent = () => {
+  const [{ account }] = useCookies(["account"]);
+  const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account._id}/exams/`);
+
   return (
     <Section>
       <Title>Scheduled Exams</Title>
       <Cards>
-        {new Array(4).fill(0).map((_, i) => (
-          <Skeleton key={i} />
+        {data?.map((item, idx) => (
+          <Card key={idx}>
+            <h5 className="text-2xl font-bold text-gray-700 line-clamp-2">{item.subject}</h5>
+            <ul className="w-full list-inside list-disc space-y-1">
+              {[
+                [item.questions, "questions"],
+                [item.duration, "minutes"],
+                [format(new Date(item.date), "EEEE, dd MMM yyyy")],
+              ].map(([val, key]) => (
+                <li
+                  key={key}
+                  className="text-sm text-slate-700"
+                >
+                  <span className="font-medium">{val}</span> {key}
+                </li>
+              ))}
+            </ul>
+            {isPast(new Date(item.date)) ? (
+              <Link href={`/exams/write/${String(item._id)}`}>
+                <a className="w-full cursor-pointer rounded-full bg-blue-500 py-2 px-8 text-sm text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                  Start Exam
+                </a>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                className="flex w-full cursor-pointer gap-x-4 rounded-full bg-gray-500 py-2 px-8 text-sm text-white"
+              >
+                <LockClosedIcon className="h-5 w-5 fill-white" />
+                Locked
+              </button>
+            )}
+          </Card>
         ))}
+        {!data && !error && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
       </Cards>
     </Section>
   );
