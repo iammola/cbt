@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { FunctionComponent } from "react";
 import { useCookies } from "react-cookie";
 
+import EmptyPage from "./Empty";
 import ErrorPage from "./Error";
 import { Card, Cards, Section, Title } from "./Section";
 
@@ -43,8 +44,9 @@ const Result: FunctionComponent = () => {
             </ul>
           </Card>
         ))}
+        {data && !data.length && <EmptyPage message="No results to see" />}
         {error && <ErrorPage message="Error loading results!!! Retrying..." />}
-        {!data && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
+        {!data?.length && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
       </Cards>
     </Section>
   );

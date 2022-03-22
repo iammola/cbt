@@ -6,6 +6,7 @@ import { FunctionComponent } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
 import ErrorPage from "./Error";
+import EmptyPage from "./Empty";
 import { Card, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
@@ -56,8 +57,9 @@ const Exam: FunctionComponent = () => {
             )}
           </Card>
         ))}
+        {data && !data.length && <EmptyPage message="No exams to write" />}
         {error && <ErrorPage message="Error loading exams!!! Retrying..." />}
-        {!data && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
+        {!data?.length && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
       </Cards>
     </Section>
   );
