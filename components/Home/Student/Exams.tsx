@@ -5,7 +5,7 @@ import { Card, Cards, Section, Title } from "./Section";
 const Exam: FunctionComponent = () => {
   return (
     <Section>
-      <Title>Exams</Title>
+      <Title>Scheduled Exams</Title>
       <Cards>
         {new Array(4).fill(0).map((_, i) => (
           <Skeleton key={i} />
