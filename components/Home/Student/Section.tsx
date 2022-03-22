@@ -7,7 +7,7 @@ export const Section: FunctionComponent = ({ children }) => {
 };
 
 export const Title: FunctionComponent = ({ children }) => {
-  return <h4 className="font-serif text-5xl font-bold tracking-wide text-gray-700">{children}</h4>;
+  return <h4 className="font-serif text-4xl font-bold tracking-wide text-gray-700">{children}</h4>;
 };
 
 export const Cards: FunctionComponent = ({ children }) => {
