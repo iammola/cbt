@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -6,7 +5,7 @@ import { connect } from "db";
 import { EventModel, ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { StudentExamsGETData } from "types/api";
-import type { ServerResponse, SubjectRecord } from "types";
+import type { RecordId, ServerResponse, SubjectRecord } from "types";
 
 async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> {
   await connect();
@@ -32,17 +31,29 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
     const exams = await ExamModel.find(
       {
         term,
-        subject: { $in: student?.academic[0].subjects },
-        _id: { $nin: cbtResults?.results.map((r) => r.examId) },
+        subject: { $in: student.academic[0].subjects },
+        _id: { $nin: cbtResults?.results.map((r) => r.examId) ?? [] },
       },
       "duration questions subject"
     ).lean();
 
+    const examIDs = exams.map((i) => i._id);
     const subjectIDs = exams.map((i) => i.subject);
     const [events, [{ subjects }]] = await Promise.all([
-      EventModel.find({ exams: { $in: exams.map((i) => i._id) } })
-        .sort({ from: 1 })
-        .lean(),
+      EventModel.aggregate<{ exams: RecordId["_id"][]; from: Date }>([
+        { $match: { exams: { $in: examIDs } } },
+        {
+          $project: {
+            from: 1,
+            exams: {
+              $filter: {
+                input: "$exams",
+                cond: { $in: ["$$this", examIDs] },
+              },
+            },
+          },
+        },
+      ]),
       SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
         { $match: { "subjects._id": { $in: subjectIDs } } },
         {
@@ -58,10 +69,9 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
       ]),
     ]);
 
-    const data = events.reduce(
-      (acc, item) => [
-        ...acc,
-        ...item.exams.map((_id) => {
+    const data = events
+      .map((item) =>
+        item.exams.map((_id) => {
           const { duration, questions, subject } = exams.find((e) => _id.equals(e._id)) ?? {};
 
           return {
@@ -71,10 +81,9 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
             questions: questions?.length ?? 0,
             subject: subjects.find((s) => s._id.equals(subject ?? ""))?.name ?? "Subject not found",
           };
-        }),
-      ],
-      [] as StudentExamsGETData
-    );
+        })
+      )
+      .flat();
 
     [success, status, message] = [
       true,
