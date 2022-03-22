@@ -1,10 +1,17 @@
+import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FunctionComponent } from "react";
 
+import type { RouteData } from "types";
+import type { StudentClassGETData } from "types/api";
+
 const Home: FunctionComponent = () => {
   const router = useRouter();
   const [{ account }, , removeCookies] = useCookies(["account"]);
+  const { data: classData } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`, (url) =>
+    fetch(url).then((res) => res.json())
+  );
 
   const signOut = () => router.push("/").then(() => removeCookies("account", { path: "/" }));
 
@@ -16,6 +23,13 @@ const Home: FunctionComponent = () => {
           <div className="text-sm tracking-wide">
             <span className="text-slate-500">Logged in as</span>{" "}
             <span className="font-medium text-slate-700">{account.name?.full}</span>
+            {classData?.data && (
+              <>
+                {" "}
+                <span className="text-slate-500">•</span>{" "}
+                <span className="font-medium text-slate-700">{classData.data.name}</span>
+              </>
+            )}
           </div>
         </div>
         <button
