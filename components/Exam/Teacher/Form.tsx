@@ -16,7 +16,7 @@ import { Bar, Modal, Question } from ".";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { CreateQuestion } from "types";
-import type { TeacherExamGETData } from "types/api/teachers";
+import type { TeacherExamGETData } from "types/api";
 
 const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
   const router = useRouter();

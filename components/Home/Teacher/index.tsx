@@ -6,7 +6,7 @@ import Subjects from "./Subjects";
 import { Sidebar, Navbar } from "components/Layout";
 
 import type { RouteData } from "types";
-import type { TeacherSubjectsExtendGETData } from "types/api/teachers";
+import type { TeacherSubjectsExtendGETData } from "types/api";
 
 const Home: FunctionComponent = () => {
   const [{ account }] = useCookies(["account"]);

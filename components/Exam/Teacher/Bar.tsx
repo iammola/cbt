@@ -5,7 +5,7 @@ import { ChevronRightIcon, CheckIcon } from "@heroicons/react/solid";
 import { LoadingIcon } from "components/Misc/Icons";
 
 import type { RouteData, TeacherBarProps } from "types";
-import type { SessionCurrentGETData } from "types/api/sessions";
+import type { SessionCurrentGETData } from "types/api";
 
 const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
   const { data: currentSession } = useSWRImmutable<RouteData<SessionCurrentGETData>>("/api/sessions/current/", (url) =>

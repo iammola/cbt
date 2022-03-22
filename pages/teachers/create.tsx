@@ -10,7 +10,7 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
+import type { ClassesGETData, ClassSubjectGETData } from "types/api";
 import type { ClassRecord, ClientResponse, RouteData, RouteError, SubjectRecord } from "types";
 
 const CreateTeachers: NextPage = () => {

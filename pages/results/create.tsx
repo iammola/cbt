@@ -8,11 +8,16 @@ import { Divide, UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { SubjectStudentsGETData } from "types/api/subjects";
 import type { ClientResponse, RouteData, RouteError, StudentRecord } from "types";
-import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
-import type { ClassesGETData, ClassResultSettingsGETData, ClassSubjectGETData } from "types/api/classes";
-import type { AllTermsGetData } from "types/api/sessions";
+import type {
+  ClassResultSettingsGETData,
+  StudentResultSubjectGETData,
+  ClassesGETData,
+  AllTermsGetData,
+  ClassSubjectGETData,
+  SubjectStudentsGETData,
+  StudentResultSubjectPOSTData,
+} from "types/api";
 
 const Results: NextPage = () => {
   const [addNotifications, removeNotifications, Notifications] = useNotifications();

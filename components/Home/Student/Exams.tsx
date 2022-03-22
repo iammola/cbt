@@ -9,7 +9,7 @@ import { NotificationsHook } from "components/Misc/Notification";
 import { classNames } from "utils";
 
 import type { RouteData } from "types";
-import type { StudentExamsGETData } from "types/api/students";
+import type { StudentExamsGETData } from "types/api";
 
 const Exam: FunctionComponent<{
   addNotification: NotificationsHook[0];

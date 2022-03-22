@@ -1,6 +1,6 @@
 import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
-import type { TeacherExamGETData } from "types/api/teachers";
+import type { TeacherExamGETData } from "types/api";
 import type { CreateQuestion, AnswerRecord, ExamRecord, QuestionRecord } from ".";
 
 export type NotificationProps = {

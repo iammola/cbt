@@ -8,7 +8,7 @@ import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
 import type { ClientResponse, RouteData, RouteError } from "types";
-import type { ClassesGETData, ClassSubjectPOSTData } from "types/api/classes";
+import type { ClassesGETData, ClassSubjectPOSTData } from "types/api";
 
 const SubjectForm: FunctionComponent = () => {
   const { mutate } = useSWRConfig();

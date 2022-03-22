@@ -6,9 +6,8 @@ import { useState, useEffect, FormEvent } from "react";
 import Select from "components/Select";
 import { Sidebar, Navbar } from "components/Layout";
 
-import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api/students";
 import type { ClientResponse, RouteData, StudentRecord } from "types";
-import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
+import type { ClassStudentsGETData, StudentCommentGETData, ClassesGETData, StudentCommentPOSTData } from "types/api";
 
 const Comments: NextPage = () => {
   const [students, setStudents] = useState<ClassStudentsGETData>([]);

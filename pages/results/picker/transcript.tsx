@@ -10,7 +10,7 @@ import { classNames, sort } from "utils";
 import { Sidebar } from "components/Layout";
 
 import type { RouteData } from "types";
-import type { StudentsGETData } from "types/api/students";
+import type { StudentsGETData } from "types/api";
 
 const TranscriptPicker: NextPage = () => {
   const [selectedStudent, setSelectedStudent] = useState({

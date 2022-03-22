@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ResultModel } from "db/models";
 
 import type { ResultRecord, ServerResponse } from "types";
-import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api/students";
+import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api";
 
 async function getStudentSubjectResult({
   subjectId,

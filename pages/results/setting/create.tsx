@@ -8,9 +8,8 @@ import { BadgeCheckIcon, BanIcon } from "@heroicons/react/outline";
 import Select from "components/Select";
 import { useNotifications } from "components/Misc/Notification";
 
-import type { AllTermsGetData } from "types/api/sessions";
 import type { ClassResultTemplate, ClientResponse, RouteData } from "types";
-import type { ClassesGETData, ClassResultSettingsPOSTData } from "types/api/classes";
+import type { ClassesGETData, AllTermsGetData, ClassResultSettingsPOSTData } from "types/api";
 
 type Fields = Omit<ClassResultTemplate["fields"][number], "_id" | "max"> & {
   max: number | "";

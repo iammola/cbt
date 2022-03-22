@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel } from "db/models";
 
-import type { ExamsPOSTData } from "types/api/exams";
+import type { ExamsPOSTData } from "types/api";
 import type { ServerResponse, ExamRecord, CreateQuestion } from "types";
 
 async function createExam(

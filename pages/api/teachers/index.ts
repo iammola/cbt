@@ -7,8 +7,8 @@ import { generateCode } from "utils";
 import { connect } from "db";
 import { SubjectsModel, TeacherModel } from "db/models";
 
+import type { TeachersPOSTData } from "types/api";
 import type { TeacherRecord, ServerResponse } from "types";
-import { TeachersPOSTData } from "types/api/teachers";
 
 async function createTeacher({
   subjects,

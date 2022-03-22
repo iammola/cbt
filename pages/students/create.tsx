@@ -12,7 +12,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { ClientResponse, RouteData, RouteError } from "types";
-import type { ClassesGETData, ClassSubjectGETData } from "types/api/classes";
+import type { ClassesGETData, ClassSubjectGETData } from "types/api";
 
 const CreateStudents: NextPage = () => {
   const [addNotification, , Notifications] = useNotifications();

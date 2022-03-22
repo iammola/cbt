@@ -5,7 +5,7 @@ import { connect } from "db";
 import { SessionModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import type { TermGetData } from "types/api/sessions";
+import type { TermGetData } from "types/api";
 
 async function getTerm(id: any | "current"): Promise<ServerResponse<TermGetData>> {
   await connect();

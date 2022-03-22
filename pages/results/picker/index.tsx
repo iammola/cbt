@@ -10,8 +10,7 @@ import { classNames, sort } from "utils";
 import { Sidebar } from "components/Layout";
 
 import type { ClientResponse, RouteData } from "types";
-import type { AllTermsGetData } from "types/api/sessions";
-import type { ClassesGETData, ClassStudentsGETData } from "types/api/classes";
+import type { ClassStudentsGETData, ClassesGETData, AllTermsGetData } from "types/api";
 
 const ResultsPicker: NextPage = () => {
   const [selectedStudent, setSelectedStudent] = useState({

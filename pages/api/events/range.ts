@@ -5,7 +5,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { EventModel, SubjectsModel } from "db/models";
 
-import type { EventsRangeGETData } from "types/api/events";
+import type { EventsRangeGETData } from "types/api";
 import type { EventRecord, ServerResponse, SubjectsRecord } from "types";
 
 async function getEventsRange(from: any, to: any): Promise<ServerResponse<EventsRangeGETData>> {

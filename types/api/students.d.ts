@@ -1,5 +1,5 @@
-import { ResultGrade, SettingsRecord } from "types/models";
-import { RecordId, ClassRecord, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
+import type { ResultGrade, SettingsRecord } from "types/models";
+import type { RecordId, ClassRecord, ExamRecord, ResultRecord, StudentRecord, SubjectRecord } from "types";
 
 export type StudentsGETData = StudentRecord[];
 

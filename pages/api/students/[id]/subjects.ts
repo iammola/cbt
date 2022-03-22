@@ -5,7 +5,7 @@ import { connect } from "db";
 import { SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
-import type { StudentSubjectsGETData } from "types/api/students";
+import type { StudentSubjectsGETData } from "types/api";
 
 async function getStudentSubjects({ id, term }: any): Promise<ServerResponse<StudentSubjectsGETData>> {
   await connect();

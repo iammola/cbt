@@ -1,4 +1,4 @@
-import { EventRecord, RecordId } from "types";
+import type { EventRecord, RecordId } from "types";
 
 export type EventsPOSTData = RecordId;
 export type EventsGETData = EventRecord[];

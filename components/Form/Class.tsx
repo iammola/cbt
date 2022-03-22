@@ -6,7 +6,7 @@ import { classNames } from "utils";
 import { LoadingIcon } from "components/Misc/Icons";
 
 import type { ClientResponse } from "types";
-import type { ClassesPOSTData } from "types/api/classes";
+import type { ClassesPOSTData } from "types/api";
 
 const ClassForm: FunctionComponent = () => {
   const { mutate } = useSWRConfig();

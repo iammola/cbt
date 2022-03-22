@@ -5,7 +5,7 @@ import { connect } from "db";
 import { CBTResultModel, ExamModel } from "db/models";
 
 import type { CBTResultRecord, ServerResponse } from "types";
-import type { TeacherCBTResultsGETData } from "types/api/teachers";
+import type { TeacherCBTResultsGETData } from "types/api";
 
 async function getCBTResults(id: any, exam: any): Promise<ServerResponse<TeacherCBTResultsGETData>> {
   await connect();

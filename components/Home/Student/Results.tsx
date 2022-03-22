@@ -6,7 +6,7 @@ import { FunctionComponent } from "react";
 import { classNames } from "utils";
 
 import type { RouteData } from "types";
-import type { StudentCBTResultsGETData } from "types/api/students";
+import type { StudentCBTResultsGETData } from "types/api";
 
 const Result: FunctionComponent<{ show: boolean }> = ({ show }) => {
   const [{ account }] = useCookies(["account"]);

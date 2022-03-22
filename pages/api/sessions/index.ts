@@ -5,7 +5,7 @@ import { connect } from "db";
 import { SessionModel } from "db/models";
 
 import type { SessionRecord, ServerResponse } from "types";
-import type { SessionsGETData, SessionsPOSTData } from "types/api/sessions";
+import type { SessionsGETData, SessionsPOSTData } from "types/api";
 
 async function getSessions(select: string): Promise<ServerResponse<SessionsGETData>> {
   await connect();

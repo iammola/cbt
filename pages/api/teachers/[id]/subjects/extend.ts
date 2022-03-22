@@ -5,7 +5,7 @@ import { connect } from "db";
 import { SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectsRecord } from "types";
-import type { TeacherSubjectsExtendGETData } from "types/api/teachers";
+import type { TeacherSubjectsExtendGETData } from "types/api";
 
 async function getExtendedTeacherSubjects(id: any): Promise<ServerResponse<TeacherSubjectsExtendGETData>> {
   await connect();

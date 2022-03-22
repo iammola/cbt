@@ -5,7 +5,7 @@ import { connect } from "db";
 import { EventModel, ExamModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import { EventsGETData, EventsPOSTData } from "types/api/events";
+import type { EventsGETData, EventsPOSTData } from "types/api";
 
 async function createEvent({ date, examId }: { date: Date; examId: string }): Promise<ServerResponse<EventsPOSTData>> {
   await connect();

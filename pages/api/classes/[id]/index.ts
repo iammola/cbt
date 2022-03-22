@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ClassModel } from "db/models";
 
 import type { ServerResponse } from "types";
-import type { ClassGETData } from "types/api/classes";
+import type { ClassGETData } from "types/api";
 
 async function getClass(id: any, select: any): Promise<ServerResponse<ClassGETData>> {
   await connect();

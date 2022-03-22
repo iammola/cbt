@@ -5,7 +5,7 @@ import { connect } from "db";
 import { EventModel, ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse, SubjectRecord } from "types";
-import type { StudentExamsGETData } from "types/api/students";
+import type { StudentExamsGETData } from "types/api";
 
 async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> {
   await connect();

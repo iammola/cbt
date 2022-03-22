@@ -4,8 +4,8 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel } from "db/models";
 
-import type { SubjectsRecord, ServerResponse } from "types";
-import { ExamPUTData } from "types/api/exams";
+import type { ExamPUTData } from "types/api";
+import type { ServerResponse } from "types";
 
 async function updateExam(
   _id: any,

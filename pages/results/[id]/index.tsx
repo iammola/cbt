@@ -8,16 +8,9 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import { Divide } from "components/Misc";
+import { LoadingIcon } from "components/Misc/Icons";
 import { Actions, Header, Info, GradingScheme, ResultFields } from "components/Result";
 
-import type { TermGetData } from "types/api/sessions";
-import type { ClassGETData, ClassResultGETData, ClassResultSettingsGETData } from "types/api/classes";
-import type {
-  StudentClassGETData,
-  StudentGETData,
-  StudentResultGETData,
-  StudentSubjectsGETData,
-} from "types/api/students";
 import type {
   ClassRecord,
   ClientResponse,
@@ -28,7 +21,15 @@ import type {
   SubjectRecord,
   TermRecord,
 } from "types";
-import { LoadingIcon } from "components/Misc/Icons";
+import type {
+  TermGetData,
+  StudentGETData,
+  StudentClassGETData,
+  ClassResultSettingsGETData,
+  StudentSubjectsGETData,
+  StudentResultGETData,
+  ClassResultGETData,
+} from "types/api";
 
 const Result: NextPage = () => {
   const router = useRouter();

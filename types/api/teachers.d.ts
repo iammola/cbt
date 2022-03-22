@@ -1,4 +1,4 @@
-import { CBTResultRecord, ClassRecord, ExamRecord, RecordId, SubjectRecord, UserRecord } from "types";
+import type { CBTResultRecord, ClassRecord, ExamRecord, RecordId, SubjectRecord, UserRecord } from "types";
 
 export type TeachersPOSTData = Pick<UserRecord, "code">;
 

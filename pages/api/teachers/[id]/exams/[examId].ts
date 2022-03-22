@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel, TeacherModel } from "db/models";
 
-import { TeacherExamGETData } from "types/api/teachers";
+import type { TeacherExamGETData } from "types/api";
 import type { ServerResponse, SubjectsRecord } from "types";
 
 async function getExam(teacherId: any, examId: any): Promise<ServerResponse<TeacherExamGETData>> {

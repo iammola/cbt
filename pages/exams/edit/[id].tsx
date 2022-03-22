@@ -8,7 +8,7 @@ import useSWRImmutable from "swr/immutable";
 import { Form, Loader } from "components/Exam/Teacher";
 
 import type { RouteData } from "types";
-import type { TeacherExamGETData } from "types/api/teachers";
+import type { TeacherExamGETData } from "types/api";
 
 const EditExam: NextPage = () => {
   const router = useRouter();

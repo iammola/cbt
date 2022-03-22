@@ -9,9 +9,8 @@ import Select from "components/Select";
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 
-import type { TeacherCBTResultsGETData } from "types/api/teachers";
 import type { SelectOption, RouteData, ClientResponse } from "types";
-import type { ClassesGETData, ClassExamGETData } from "types/api/classes";
+import type { ClassesGETData, TeacherCBTResultsGETData, ClassExamGETData } from "types/api";
 
 const Results: NextPage = () => {
   const [{ account }] = useCookies(["account"]);

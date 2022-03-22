@@ -5,7 +5,7 @@ import { connect } from "db";
 import { ExamModel, CBTResultModel, StudentModel, SubjectsModel } from "db/models";
 
 import type { CBTResultRecord, ServerResponse } from "types";
-import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api/students";
+import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api";
 
 type RequestBody = Omit<CBTResultRecord["results"][number], "score" | "ended" | "answers"> & {
   answers: { [key: string]: string };
