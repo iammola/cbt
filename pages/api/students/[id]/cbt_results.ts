@@ -103,9 +103,9 @@ async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETD
   try {
     const record = await CBTResultModel.findOne({ student: id }, "results.started results.score results.examId").lean();
 
-    const exams = await ExamModel.find({ _id: record?.results.map((i) => i.examId) ?? [] }, "subjectId").lean();
+    const exams = await ExamModel.find({ _id: record?.results.map((i) => i.examId) ?? [] }, "subject").lean();
     const subjects = (
-      await SubjectsModel.find({ "subjects._id": exams.map((e) => e.subjectId) }, "subjects._id subjects.name").lean()
+      await SubjectsModel.find({ "subjects._id": exams.map((e) => e.subject) }, "subjects._id subjects.name").lean()
     )
       .map((i) => i.subjects)
       .flat();
@@ -119,7 +119,7 @@ async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETD
       return {
         score,
         started,
-        subject: subjects.find((s) => s._id.equals(e.subjectId))?.name ?? "",
+        subject: subjects.find((s) => s._id.equals(e.subject))?.name ?? "",
       };
     });
 

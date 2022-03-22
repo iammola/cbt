@@ -26,7 +26,7 @@ export type StudentExamsGETData = (Pick<ExamRecord, "_id" | "duration"> & {
 
 export type StudentExamGETData = RecordId & {
   questions: QuestionRecord[];
-  details: Pick<ExamRecord, "duration" | "instructions" | "subjectId"> & {
+  details: Pick<ExamRecord<true>, "duration" | "instructions" | "subject"> & {
     name: {
       class: string;
       subject: string;

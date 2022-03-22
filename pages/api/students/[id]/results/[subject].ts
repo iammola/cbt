@@ -7,10 +7,7 @@ import { ResultModel } from "db/models";
 import type { ResultRecord, ServerResponse } from "types";
 import type { StudentResultSubjectGETData, StudentResultSubjectPOSTData } from "types/api";
 
-async function getStudentSubjectResult({
-  subjectId,
-  ...query
-}: any): Promise<ServerResponse<StudentResultSubjectGETData>> {
+async function getStudentSubjectResult(query: any): Promise<ServerResponse<StudentResultSubjectGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentResultSubjectGETData> = [
     false,
@@ -23,7 +20,7 @@ async function getStudentSubjectResult({
       {
         term: query.term,
         student: query.id,
-        "data.subject": subjectId,
+        "data.subject": query.subject,
       },
       "data.total data.scores.$"
     ).lean();
@@ -114,7 +111,7 @@ export default async function handler({ body, method, query }: NextApiRequest, r
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
-      ? updateStudentSubjectResult(query.id, query.subjectId, JSON.parse(body))
+      ? updateStudentSubjectResult(query.id, query.subject, JSON.parse(body))
       : getStudentSubjectResult(query));
 
   if (typeof message !== "object") message = { message, error: message };

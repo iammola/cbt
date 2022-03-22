@@ -26,13 +26,13 @@ async function getExams(classId: any): Promise<ServerResponse<ClassExamGETData>>
 
     const examsRecord = await ExamModel.find(
       {
-        termId: currentSession.terms[0]._id,
-        subjectId: data.subjects.map(({ _id }) => _id),
+        term: currentSession.terms[0]._id,
+        subject: data.subjects.map(({ _id }) => _id),
       },
-      "subjectId"
+      "subject"
     ).lean();
-    const exams = examsRecord.map(({ _id, subjectId }) => {
-      const { name = "", alias } = data.subjects.find(({ _id }) => _id.equals(subjectId)) ?? {};
+    const exams = examsRecord.map(({ _id, subject }) => {
+      const { name = "", alias } = data.subjects.find(({ _id }) => _id.equals(subject)) ?? {};
       return { _id, name, alias };
     });
 

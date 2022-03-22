@@ -63,9 +63,9 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
     setFirstLoad(false);
 
     if (savedExams) {
-      const saved = savedExams[exam.subjectId.toString()];
+      const saved = savedExams[exam.subject.toString()];
 
-      if (saved?.exam.termId === exam.termId) {
+      if (saved?.exam.term === exam.term) {
         const decision = confirm(
           `Do you want to restore the questions saved on ${format(
             new Date(saved.lastSaved),
@@ -92,7 +92,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
         JSON.stringify(
           obj ?? {
             ...(savedExams ?? {}),
-            [exam.subjectId.toString()]: {
+            [exam.subject.toString()]: {
               exam,
               questions,
               instructions,
@@ -149,7 +149,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
           });
           if (savedExams !== undefined)
             saveExam(
-              Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.subjectId.toString()))
+              Object.fromEntries(Object.entries(savedExams ?? {}).filter(([key]) => key !== exam.subject.toString()))
             );
         } else throw new Error(error);
       } catch (error: any) {
@@ -286,7 +286,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
 type Cookies = Partial<{ savedExams: Record<string, SavedExam> }>;
 
 type ExamDetails = Omit<TeacherExamGETData["details"], "instructions"> & {
-  termId: string;
+  term: string;
 };
 
 type SavedExam = {

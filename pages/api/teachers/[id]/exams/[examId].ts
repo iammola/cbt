@@ -21,13 +21,13 @@ async function getExam(teacherId: any, examId: any): Promise<ServerResponse<Teac
     const exam = await ExamModel.findById(examId, "-created -edited").lean();
     if (exam === null) throw new Error("Exam ID not found");
 
-    const { duration, instructions, questions, subjectId, termId } = exam;
+    const { _id, questions, term, ...rest } = exam;
 
     const subject: SubjectsRecord<true> = await SubjectsModel.findOne(
       {
         subjects: {
           $elemMatch: {
-            _id: subjectId,
+            _id: exam.subject,
             teachers: teacherId,
           },
         },
@@ -44,13 +44,12 @@ async function getExam(teacherId: any, examId: any): Promise<ServerResponse<Teac
       StatusCodes.OK,
       {
         data: {
-          _id: examId,
+          _id,
           questions,
           details: {
-            termId: termId.toHexString(),
-            duration,
-            subjectId,
-            instructions,
+            ...rest,
+            term: term.toHexString(),
+            subject: subject.subjects[0],
             name: {
               class: subject.class.name,
               subject: subject?.subjects[0].name,

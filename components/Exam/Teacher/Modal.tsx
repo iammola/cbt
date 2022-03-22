@@ -69,8 +69,8 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
           subject: selectedSubject.name,
         },
         duration,
-        subjectId: selectedSubject._id as any,
-        termId: currentSession?.data.terms[0]._id,
+        subject: selectedSubject._id as any,
+        term: currentSession?.data.terms[0]._id,
       });
     }
   }
