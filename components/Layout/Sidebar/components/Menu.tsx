@@ -316,7 +316,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     </Link>
                   </li>
                   <li className="w-full">
-                    <Link href="/events/create">
+                    <Link href="/students/create">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                         <span className="block truncate text-sm">Register a Student</span>
                       </a>
@@ -333,7 +333,7 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     </Link>
                   </li>
                   <li className="w-full">
-                    <Link href="/events/create">
+                    <Link href="/students/create">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                         <span className="block truncate text-sm">Register a Student</span>
                       </a>
