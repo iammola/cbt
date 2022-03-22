@@ -18,7 +18,7 @@ const TermForm: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
 
-  const { data: sessions } = useSWR("/api/sessions/?select=name", (url) => fetch(url).then((res) => res.json()));
+  const { data: sessions } = useSWR("/api/sessions/?select=name");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

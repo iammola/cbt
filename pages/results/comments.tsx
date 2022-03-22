@@ -23,9 +23,7 @@ const Comments: NextPage = () => {
     _id: "",
     name: "Loading classes...",
   });
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>>("/api/classes?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>>("/api/classes?select=name");
 
   useEffect(() => {
     setSelectedClass({

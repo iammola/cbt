@@ -8,9 +8,7 @@ import type { RouteData, TeacherBarProps } from "types";
 import type { SessionCurrentGETData } from "types/api";
 
 const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
-  const { data: currentSession } = useSWRImmutable<RouteData<SessionCurrentGETData>>("/api/sessions/current/", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: currentSession } = useSWRImmutable<RouteData<SessionCurrentGETData>>("/api/sessions/current/");
 
   return (
     <div className="sticky left-0 top-0 flex w-full items-center justify-end gap-6 rounded-b-lg bg-white py-5 px-8 drop-shadow-sm">

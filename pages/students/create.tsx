@@ -45,9 +45,7 @@ const CreateStudents: NextPage = () => {
     []
   );
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
 
   const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
 

@@ -43,12 +43,8 @@ const CreateScheme: NextPage = () => {
     },
   ]);
 
-  const { data: classes } = useSWR<RouteData<ClassesGETData>>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
-  const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all/", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes } = useSWR<RouteData<ClassesGETData>>("/api/classes/?select=name");
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all/");
 
   function verifyFields() {
     const { name, alias } = fields.reduce(

@@ -50,9 +50,7 @@ const CreateTeachers: NextPage = () => {
     []
   );
 
-  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
 
   const [selectedSubjects, setSelectedSubjects] = useState<{
     [key: string]: string[];

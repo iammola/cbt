@@ -11,9 +11,7 @@ import type { StudentClassGETData } from "types/api";
 const Home: FunctionComponent = () => {
   const router = useRouter();
   const [{ account }, , removeCookies] = useCookies(["account"]);
-  const { data: classData } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`, (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: classData } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`);
 
   const signOut = () => router.push("/").then(() => removeCookies("account", { path: "/" }));
 

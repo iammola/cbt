@@ -27,9 +27,7 @@ const ResultsPicker: NextPage = () => {
   const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name alias`, (url) =>
     fetch(url ?? "").then((res) => res.json())
   );
-  const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all", (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
 
   const studentOptions = useMemo(
     () =>
