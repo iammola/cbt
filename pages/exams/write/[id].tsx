@@ -15,7 +15,7 @@ import type { StudentExamGETData, StudentResultPOSTData } from "types/api";
 type PageCookies = {
   exam?: {
     started: Date;
-    examId: string;
+    exam: string;
     answers: { [questionId: string]: string };
   };
   account?: UserRecord;
@@ -68,10 +68,10 @@ const WriteExam: NextPage = () => {
       const obj = {
         answers: {},
         started: new Date(),
-        examId: exam.data._id,
+        exam: exam.data._id,
       };
 
-      if (cookies.exam?.examId === exam.data._id.toString()) {
+      if (cookies.exam?.exam === exam.data._id.toString()) {
         obj.started = cookies.exam.started;
         obj.answers = cookies.exam.answers;
       }
@@ -81,8 +81,8 @@ const WriteExam: NextPage = () => {
   }, [cookies.exam, exam, firstLoad, setCookies, started]);
 
   useEffect(() => {
-    const { answers, examId } = cookies.exam ?? { answers: {} };
-    if (firstLoad && examId === router.query.id && Object.keys(answers).length > 0) {
+    const { answers, exam } = cookies.exam ?? { answers: {} };
+    if (firstLoad && exam === router.query.id && Object.keys(answers).length > 0) {
       setFirstLoad(false);
       setAnswered(answers);
     }

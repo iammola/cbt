@@ -74,7 +74,7 @@ const CreateEvent: NextPage = () => {
           method: "POST",
           body: JSON.stringify({
             date,
-            examId: selectedExam._id,
+            exam: selectedExam._id,
           }),
         });
 

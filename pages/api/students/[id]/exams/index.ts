@@ -22,7 +22,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
     const term = session.terms[0]._id;
 
     const [cbtResults, student] = await Promise.all([
-      CBTResultModel.findOne({ student: _id, term }, "results.examId").lean(),
+      CBTResultModel.findOne({ student: _id, term }, "results.exam").lean(),
       StudentModel.findOne({ _id, "academic.term": term }, "academic.subjects.$").lean(),
     ]);
 
@@ -32,7 +32,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
       {
         term,
         subject: { $in: student.academic[0].subjects },
-        _id: { $nin: cbtResults?.results.map((r) => r.examId) ?? [] },
+        _id: { $nin: cbtResults?.results.map((r) => r.exam) ?? [] },
       },
       "duration questions subject"
     ).lean();

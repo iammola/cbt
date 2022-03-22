@@ -82,12 +82,12 @@ const Exams: NextPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
-                {exams?.data?.map(({ subject, duration, questions, created: { at, by }, ...exam }, examIdx) => (
+                {exams?.data?.map(({ subject, duration, questions, created: { at, by }, ...exam }, idx) => (
                   <tr
-                    key={examIdx}
+                    key={idx}
                     className="text-sm font-medium"
                   >
-                    <td className="whitespace-nowrap px-6 py-4">{examIdx + 1}.</td>
+                    <td className="whitespace-nowrap px-6 py-4">{idx + 1}.</td>
                     <td className="whitespace-nowrap px-6 py-4">{exam.class}</td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex flex-col">

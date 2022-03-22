@@ -17,7 +17,7 @@ async function getCBTResults(id: any, exam: any): Promise<ServerResponse<Teacher
 
   try {
     const data: Pick<CBTResultRecord<true>, "student" | "results">[] = await CBTResultModel.find(
-      { "results.examId": exam },
+      { "results.exam": exam },
       "student results.started.$ results.score"
     )
       .populate("student", "name")
@@ -55,7 +55,7 @@ export default async function handler({ method, query }: NextApiRequest, res: Ne
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else [success, status, message] = await getCBTResults(query.id, query.examId);
+  } else [success, status, message] = await getCBTResults(query.id, query.exam);
 
   if (typeof message !== "object") message = { message, error: message };
 

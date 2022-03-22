@@ -376,11 +376,11 @@ const Results: NextPage = () => {
                                           modified: !modified ? student === _id : modified,
                                           scores: settings.fields
                                             .map((scoreField) => ({
-                                              fieldId: scoreField._id,
+                                              field: scoreField._id,
                                               score:
                                                 scoreField._id === field._id && _id === student
                                                   ? value
-                                                  : ((scores?.find((score) => score.fieldId === scoreField._id)
+                                                  : ((scores?.find((score) => score.field === scoreField._id)
                                                       ?.score ?? "") as any),
                                             }))
                                             .filter((i) => i.score !== ""),
@@ -389,7 +389,7 @@ const Results: NextPage = () => {
 
                                       if (value > field.max || value < 0) e.target.reportValidity();
                                     }}
-                                    value={studentScores?.find((i) => i.fieldId === field._id)?.score ?? ""}
+                                    value={studentScores?.find((i) => i.field === field._id)?.score ?? ""}
                                     onBeforeInput={(
                                       e: FormEvent<HTMLInputElement> & {
                                         data: string;

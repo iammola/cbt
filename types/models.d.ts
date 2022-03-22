@@ -115,7 +115,7 @@ export type CBTResultRecord<P = false> = RecordId & {
     ended: Date;
     started: Date;
     score: number;
-    examId: P extends true ? ExamRecord : ObjectId;
+    exam: P extends true ? ExamRecord : ObjectId;
     answers: {
       answer: ObjectId;
       question: ObjectId;
@@ -132,7 +132,7 @@ export type ResultRecord = RecordId & {
     total?: number;
     scores?: {
       score: number;
-      fieldId: ObjectId;
+      field: ObjectId;
     }[];
   }[];
 };
