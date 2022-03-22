@@ -1,5 +1,7 @@
 import { FunctionComponent } from "react";
 
+import { classNames } from "utils";
+
 export const Section: FunctionComponent = ({ children }) => {
   return <section className="w-full space-y-5">{children}</section>;
 };
@@ -9,12 +11,17 @@ export const Title: FunctionComponent = ({ children }) => {
 };
 
 export const Cards: FunctionComponent = ({ children }) => {
-  return <ul className="flex flex-wrap w-full items-center justify-start gap-x-10 gap-y-6">{children}</ul>;
+  return <ul className="flex w-full flex-wrap items-center justify-start gap-x-10 gap-y-6">{children}</ul>;
 };
 
-export const Card: FunctionComponent = ({ children }) => {
+export const Card: FunctionComponent<{ className: string }> = ({ children, className }) => {
   return (
-    <li className="flex h-64 w-[300px] flex-col items-start justify-between gap-y-5 rounded-xl bg-white px-5 py-4 shadow">
+    <li
+      className={classNames(
+        className,
+        "flex w-[300px] flex-col items-start justify-start rounded-xl bg-white px-5 py-4 shadow"
+      )}
+    >
       {children}
     </li>
   );

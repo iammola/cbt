@@ -19,7 +19,10 @@ const Exam: FunctionComponent = () => {
       <Title>Scheduled Exams</Title>
       <Cards>
         {data?.map((item, idx) => (
-          <Card key={idx}>
+          <Card
+            key={idx}
+            className="h-64 gap-y-5"
+          >
             <h5 className="text-2xl font-bold text-gray-700 line-clamp-2">{item.subject}</h5>
             <ul className="w-full list-inside list-disc space-y-1">
               {[
