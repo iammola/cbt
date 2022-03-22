@@ -253,7 +253,7 @@ const Result: NextPage = () => {
                     >
                       <td className="px-2 py-4 font-normal text-gray-700 print:text-center">{subject.name}</td>
                       {data.template?.fields.map((field) => {
-                        const item = scores?.scores?.find((i) => i.fieldId === field._id);
+                        const item = scores?.scores?.find((i) => i.field === field._id);
 
                         return (
                           <td

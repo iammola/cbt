@@ -1,33 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
+import { CBTResultModel, SessionModel, StudentModel } from "db/models";
 
-import type { ServerResponse } from "types";
-import type { PingData, PingError } from "types/api";
-import { StudentModel, ResultModel } from "db/models";
+import type { CBTResultRecord } from "types";
 
-export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
+export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   await connect();
+  const session = await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean();
   const students = await StudentModel.find({}, "name.full academic").lean();
-  const data = (
-    await Promise.all(
-      students.map(async (student) => {
-        const result = await ResultModel.findOne({ student: student._id }, "data").lean();
-        if (result === null) return;
-        const errors = student.academic[0].subjects
-          .map((subject) => {
-            const subjectResult = result.data.filter((res) => res.subject.equals(subject)).length;
+  await Promise.all(
+    students.map(async (student) => {
+      const cbt_result: CBTResultRecord<true> = await CBTResultModel.findOne(
+        {
+          student: student._id,
+          term: session?.terms[0]._id,
+        },
+        "results"
+      )
+        .populate("results.exam", "subjects questions")
+        .lean();
+      if (!cbt_result) return;
 
-            if (subjectResult > 1) return `Duplicate Subject ${subject}`;
-            if (subjectResult === 0) return `Subject ${subject} non-existent`;
-          })
-          .filter(Boolean);
+      await Promise.all(
+        cbt_result.results.map(async ({ answers, exam }) => {
+          answers.forEach(({ answer, question }) => {
+            exam.questions.find((q) => q._id.equals(question));
+          });
+        })
+      );
+    })
+  );
 
-        return { student: student.name.full, errors };
-      })
-    )
-  ).filter((i) => (i?.errors.length ?? 0) > 0);
-
-  res.json({ data });
+  res.json({});
 }

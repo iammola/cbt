@@ -21,7 +21,7 @@ const ResultSchema = new Schema<ResultRecord>({
           default: undefined,
           type: [
             {
-              fieldId: {
+              field: {
                 type: Schema.Types.ObjectId,
               },
               score: {

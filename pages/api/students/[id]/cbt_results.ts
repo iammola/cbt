@@ -9,7 +9,7 @@ import { ExamModel, CBTResultModel, SessionModel, StudentModel, SubjectsModel } 
 import type { StudentCBTResultsGETData, StudentResultPOSTData } from "types/api";
 import type { AnswerRecord, CBTResultRecord, ServerResponse, SubjectRecord } from "types";
 
-type RequestBody = { answers: Record<string, string> } & Pick<CBTResultRecord["results"][number], "started" | "examId">;
+type RequestBody = { answers: Record<string, string> } & Pick<CBTResultRecord["results"][number], "started" | "exam">;
 
 async function createResult(_id: any, result: RequestBody): Promise<ServerResponse<StudentResultPOSTData>> {
   await connect();
@@ -31,7 +31,7 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
     if (!student) throw new Error("Student does not exist");
 
     const [exam] = await ExamModel.aggregate<Record<"answers", AnswerRecord[]>>([
-      { $match: { _id: new Types.ObjectId(String(result.examId)) } },
+      { $match: { _id: new Types.ObjectId(String(result.exam)) } },
       {
         $project: {
           answers: {
@@ -109,10 +109,10 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
     }
 
     const record: CBTResultRecord<true> = (await CBTResultModel.findOne({ student: id, term }, "results")
-      .populate("results.examId", "subject")
+      .populate("results.exam", "subject")
       .lean()) ?? { results: [] };
 
-    const subjectIDs = record.results.map((r) => r.examId.subject) ?? [];
+    const subjectIDs = record.results.map((r) => r.exam.subject) ?? [];
     const [{ subjects = [] } = {}] = await SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
       { $match: { "subjects._id": { $in: subjectIDs } } },
       {
@@ -136,7 +136,7 @@ async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTR
           date: r.started,
           attempts: r.answers.length,
           time: differenceInMinutes(r.ended, r.started),
-          subject: subjects.find((s) => s._id.equals(r.examId.subject))?.name ?? "Subject not found",
+          subject: subjects.find((s) => s._id.equals(r.exam.subject))?.name ?? "Subject not found",
         })),
         message: ReasonPhrases.OK,
       },

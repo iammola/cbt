@@ -6,7 +6,7 @@ import { formatDuration, intervalToDuration, minutesToMilliseconds } from "date-
 import type { StudentTimerProps } from "types";
 
 type PageCookie = {
-  timeBounds: { left: number; start: number; examId: string };
+  timeBounds: { left: number; start: number; exam: string };
 };
 
 const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout }) => {
@@ -19,10 +19,10 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
     if (started && (timeBounds === undefined || displayTime === "")) {
       const obj = {
         start: Date.now(),
-        examId: router.query.id as string,
+        exam: router.query.id as string,
         left: minutesToMilliseconds(timeout ?? 1 / 12),
       };
-      if (displayTime === "" && timeBounds?.examId === obj.examId) obj.left = timeBounds.left;
+      if (displayTime === "" && timeBounds?.exam === obj.exam) obj.left = timeBounds.left;
 
       if (obj.left > (timeBounds?.left ?? 0)) setTimeLeft(obj.left);
       if (timeBounds === undefined) setCookies("timeBounds", JSON.stringify(obj), { path: "/" });
@@ -60,7 +60,7 @@ const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout 
             JSON.stringify({
               left: timeLeft,
               start: timeBounds.start,
-              examId: timeBounds.examId,
+              exam: timeBounds.exam,
             }),
             { path: "/" }
           );

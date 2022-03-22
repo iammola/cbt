@@ -20,7 +20,7 @@ const CBTResultSchema = new Schema<CBTResultRecord>({
       score: Number,
       started: Date,
       ended: Date,
-      examId: {
+      exam: {
         type: Schema.Types.ObjectId,
         ref: "Exam",
       },

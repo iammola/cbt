@@ -7,7 +7,7 @@ import { EventModel, ExamModel } from "db/models";
 import type { ServerResponse } from "types";
 import type { EventsGETData, EventsPOSTData } from "types/api";
 
-async function createEvent({ date, examId }: { date: Date; examId: string }): Promise<ServerResponse<EventsPOSTData>> {
+async function createEvent({ date, exam }: { date: Date; exam: string }): Promise<ServerResponse<EventsPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<EventsPOSTData> = [
     false,
@@ -16,12 +16,10 @@ async function createEvent({ date, examId }: { date: Date; examId: string }): Pr
   ];
 
   try {
-    if (!(await ExamModel.exists({ _id: examId }))) throw new Error("Invalid Exam ID");
+    if (!(await ExamModel.exists({ _id: exam }))) throw new Error("Invalid Exam ID");
     const data = await EventModel.findOneAndUpdate(
       { from: date },
-      {
-        $addToSet: { exams: examId },
-      },
+      { $addToSet: { exams: exam } },
       {
         returnDocument: "after",
         upsert: true,
