@@ -110,6 +110,7 @@ export type QuestionRecord = RecordId & {
 
 export type CBTResultRecord<P = false> = RecordId & {
   student: P extends true ? StudentRecord : ObjectId;
+  term: ObjectId;
   results: {
     ended: Date;
     started: Date;

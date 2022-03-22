@@ -5,9 +5,14 @@ import type { CBTResultRecord } from "types";
 const CBTResultSchema = new Schema<CBTResultRecord>({
   student: {
     type: Schema.Types.ObjectId,
-    unique: true,
+    immutable: true,
     ref: "Student",
     required: [true, "Student ID required"],
+  },
+  term: {
+    type: Schema.Types.ObjectId,
+    immutable: true,
+    required: [true, "Term required"],
   },
   results: [
     {
