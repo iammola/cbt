@@ -28,14 +28,14 @@ async function getExams(id: any): Promise<ServerResponse<TeacherExamsGETData>> {
       .lean();
 
     const subjects: SubjectsRecord<true>[] = await SubjectsModel.find(
-      { "subjects._id": exam.map(e => e.subject) },
+      { "subjects._id": exam.map((e) => e.subject) },
       "-_id class subjects._id subjects.name"
     )
       .populate("class", "name")
       .lean();
 
     const data = exam.map(({ subject, questions, ...exam }) => {
-      const item = subjects.find(s => s.subjects.find(s => subject.equals(s._id)));
+      const item = subjects.find((s) => s.subjects.find((s) => subject.equals(s._id)));
 
       return {
         ...exam,

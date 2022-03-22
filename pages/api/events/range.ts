@@ -37,7 +37,7 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
           await Promise.all(
             exams.map(async ({ subject }) => {
               const record: SubjectsRecord<true> | null = await SubjectsModel.findOne(
-                { "subjects._id": subject, },
+                { "subjects._id": subject },
                 "class subjects.name.$"
               )
                 .populate("class", "alias")
