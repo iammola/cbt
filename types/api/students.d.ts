@@ -12,9 +12,10 @@ export type StudentResultPOSTData = {
 export type StudentGETData = StudentRecord | null;
 
 export type StudentCBTResultsGETData = {
-  started: Date;
   score: number;
+  time: number;
   subject: string;
+  attempts: number;
 }[];
 
 export type StudentExamsGETData = (Pick<ExamRecord, "_id" | "duration"> & {

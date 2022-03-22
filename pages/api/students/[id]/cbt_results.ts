@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { differenceInMinutes } from "date-fns";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -92,7 +93,7 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
   return [success, status, message];
 }
 
-async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETData>> {
+async function getResults({ id, term }: any): Promise<ServerResponse<StudentCBTResultsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCBTResultsGETData> = [
     false,
@@ -101,33 +102,40 @@ async function getResults(id: any): Promise<ServerResponse<StudentCBTResultsGETD
   ];
 
   try {
-    const record = await CBTResultModel.findOne({ student: id }, "results.started results.score results.examId").lean();
+    if (!term) {
+      const session = await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean();
+      term = session?.terms[0]._id;
+    }
 
-    const exams = await ExamModel.find({ _id: record?.results.map((i) => i.examId) ?? [] }, "subject").lean();
-    const subjects = (
-      await SubjectsModel.find({ "subjects._id": exams.map((e) => e.subject) }, "subjects._id subjects.name").lean()
-    )
-      .map((i) => i.subjects)
-      .flat();
+    const record: CBTResultRecord<true> = await CBTResultModel.findOne({ student: id, term }, "results")
+      .populate("results.examId", "subject")
+      .lean();
 
-    const data = exams.map((e) => {
-      const { score, started } = record?.results.find((r) => r.examId.equals(e._id)) ?? {
-        score: 0,
-        started: new Date(),
-      };
-
-      return {
-        score,
-        started,
-        subject: subjects.find((s) => s._id.equals(e.subject))?.name ?? "",
-      };
-    });
+    const subjectIDs = record?.results.map((r) => r.examId.subject) ?? [];
+    const subjects = await SubjectsModel.aggregate([
+      { $match: { "subjects._id": { $in: subjectIDs } } },
+      {
+        $project: {
+          subjects: {
+            $filter: {
+              input: "$subjects",
+              cond: { $in: ["$$this._id", subjectIDs] },
+            },
+          },
+        },
+      },
+    ]);
 
     [success, status, message] = [
       true,
       StatusCodes.CREATED,
       {
-        data,
+        data: record.results.map((r) => ({
+          score: r.score,
+          attempts: r.answers.length,
+          time: differenceInMinutes(r.ended, r.started),
+          subject: subjects.find((s) => s._id.equals(r.examId.subject))?.name ?? "Subject not found",
+        })),
         message: ReasonPhrases.CREATED,
       },
     ];
@@ -158,7 +166,7 @@ export default async function handler({ body, query, method }: NextApiRequest, r
   } else
     [success, status, message] = await (method === "POST"
       ? createResult(query.id, JSON.parse(body))
-      : getResults(query.id));
+      : getResults(query));
 
   if (typeof message !== "object") message = { message, error: message };
 
