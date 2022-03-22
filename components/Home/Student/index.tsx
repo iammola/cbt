@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import { FunctionComponent } from "react";
 
 import Exams from "./Exams";
+import Results from "./Results";
 
 import type { RouteData } from "types";
 import type { StudentClassGETData } from "types/api";
@@ -40,8 +41,9 @@ const Home: FunctionComponent = () => {
           Sign out
         </button>
       </header>
-      <main className="w-full grow divide-y divide-slate-200 bg-slate-50 py-8 px-10">
+      <main className="w-full grow space-y-10 bg-slate-50 py-8 px-10">
         <Exams />
+        <Results />
       </main>
     </section>
   );
