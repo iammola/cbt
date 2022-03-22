@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { FunctionComponent } from "react";
 
+import Exams from "./Exams";
+
 import type { RouteData } from "types";
 import type { StudentClassGETData } from "types/api";
 
@@ -40,6 +42,9 @@ const Home: FunctionComponent = () => {
           Sign out
         </button>
       </header>
+      <main className="w-full grow divide-y divide-slate-200 bg-slate-50 py-6 px-10">
+        <Exams />
+      </main>
     </section>
   );
 };
