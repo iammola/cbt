@@ -11,7 +11,7 @@ export const Title: FunctionComponent = ({ children }) => {
 };
 
 export const Cards: FunctionComponent = ({ children }) => {
-  return <ul className="flex w-full flex-wrap items-center justify-start gap-x-10 gap-y-6">{children}</ul>;
+  return <ul className="relative flex w-full flex-wrap items-center justify-start gap-x-10 gap-y-6">{children}</ul>;
 };
 
 export const Card: FunctionComponent<{ className: string }> = ({ children, className }) => {

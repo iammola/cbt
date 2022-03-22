@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { FunctionComponent } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
+import ErrorPage from "./Error";
 import { Card, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
@@ -55,7 +56,8 @@ const Exam: FunctionComponent = () => {
             )}
           </Card>
         ))}
-        {!data && !error && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
+        {error && <ErrorPage message="Error loading exams!!! Retrying..." />}
+        {!data && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
       </Cards>
     </Section>
   );

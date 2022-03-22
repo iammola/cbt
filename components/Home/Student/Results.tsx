@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { FunctionComponent } from "react";
 import { useCookies } from "react-cookie";
 
+import ErrorPage from "./Error";
 import { Card, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
@@ -35,7 +36,8 @@ const Result: FunctionComponent = () => {
             </ul>
           </Card>
         ))}
-        {!data && !error && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
+        {error && <ErrorPage message="Error loading results!!! Retrying..." />}
+        {!data && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
       </Cards>
     </Section>
   );
