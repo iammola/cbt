@@ -2,8 +2,8 @@ import useSWR from "swr";
 import Link from "next/link";
 import { format, isPast } from "date-fns";
 import { useCookies } from "react-cookie";
-import { FunctionComponent } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import ErrorPage from "./Error";
 import EmptyPage from "./Empty";
@@ -13,8 +13,16 @@ import type { RouteData } from "types";
 import type { StudentExamsGETData } from "types/api";
 
 const Exam: FunctionComponent = () => {
+  const [, triggerRender] = useState(0);
   const [{ account }] = useCookies(["account"]);
   const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account._id}/exams/`);
+
+  useEffect(() => {
+    const timer = setInterval(() => triggerRender((r) => r + 1), 1e3);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <Section>
