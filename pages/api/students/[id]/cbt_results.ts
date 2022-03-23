@@ -30,37 +30,35 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
     if (!session) throw new Error("Session does not exist");
     if (!student) throw new Error("Student does not exist");
 
-    const [exam] = await ExamModel.aggregate<Record<"answers", AnswerRecord[]>>([
-      { $match: { _id: new Types.ObjectId(String(result.exam)) } },
-      {
-        $project: {
-          answers: {
-            $map: {
-              input: "$questions",
-              in: {
-                $filter: {
-                  input: "$$this.answers",
-                  cond: { $ifNull: ["$$this.isCorrect", false] },
+    const [alreadyAnswered, [exam]] = await Promise.all([
+      CBTResultModel.exists({
+        student: _id,
+        term: session.terms[0]._id,
+        "results.exam": result.exam,
+      }),
+      ExamModel.aggregate<Record<"answers", [AnswerRecord][]>>([
+        { $match: { _id: new Types.ObjectId(String(result.exam)) } },
+        {
+          $project: {
+            answers: {
+              $map: {
+                input: "$questions",
+                in: {
+                  $filter: {
+                    input: "$$this.answers",
+                    cond: { $ifNull: ["$$this.isCorrect", false] },
+                  },
                 },
               },
             },
           },
         },
-      },
-      {
-        $project: {
-          answers: {
-            $map: {
-              input: "$answers",
-              in: { $first: "$$this" },
-            },
-          },
-        },
-      },
+      ]),
     ]);
 
+    if (alreadyAnswered) throw new Error("Exam already answered");
     const answers = Object.entries(result.answers).reduce((acc, [question, answer]) => {
-      score += +!!exam.answers.findIndex((a) => a._id.equals(answer));
+      score += +!!exam.answers.find((a) => a[0]._id.equals(answer));
       return [...acc, { question, answer }];
     }, [] as Record<"question" | "answer", string>[]);
 
