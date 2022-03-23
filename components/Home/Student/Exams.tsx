@@ -42,14 +42,14 @@ const Exam: FunctionComponent = () => {
             </ul>
             {isPast(new Date(item.date)) ? (
               <Link href={`/exams/write/${String(item._id)}`}>
-                <a className="w-full cursor-pointer rounded-full bg-blue-500 py-2 px-8 text-sm text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                <a className="flex w-full cursor-pointer select-none items-center justify-center rounded-full bg-blue-500 py-2 px-8 text-sm font-medium tracking-wide text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
                   Start Exam
                 </a>
               </Link>
             ) : (
               <button
                 type="button"
-                className="flex w-full cursor-pointer gap-x-4 rounded-full bg-gray-500 py-2 px-8 text-sm text-white"
+                className="flex w-full cursor-pointer select-none items-center justify-center gap-x-1 rounded-full bg-gray-500 py-2 px-8 text-sm font-medium tracking-wide text-white"
               >
                 <LockClosedIcon className="h-5 w-5 fill-white" />
                 Locked
