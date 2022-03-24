@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Link from "next/link";
-import { format, isPast } from "date-fns";
 import { useCookies } from "react-cookie";
+import { format, isFuture, isPast } from "date-fns";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { FunctionComponent, useEffect, useState } from "react";
 
@@ -18,11 +18,17 @@ const Exam: FunctionComponent = () => {
   const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account._id}/exams/`);
 
   useEffect(() => {
-    const timer = setInterval(() => triggerRender((r) => r + 1), 1e3);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+    if (!data) return;
+    const dates = data
+      .map((item) => new Date(item.date))
+      .filter(isFuture)
+      .map((date) => date.getTime() - Date.now());
+
+    const timeouts = [...new Set(dates)];
+    timeouts.forEach((timeout) => setInterval(() => triggerRender((r) => r + 1), timeout));
+
+    return () => timeouts.forEach(clearInterval);
+  }, [data]);
 
   return (
     <Section>
