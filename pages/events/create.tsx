@@ -48,7 +48,7 @@ const CreateEvent: NextPage = () => {
     async function getExams() {
       setSelectedExam({ _id: "", name: "Loading exams..." });
       try {
-        const res = await fetch(`/api/classes/${_id}/exams`);
+        const res = await fetch(`/api/classes/${_id}/exams/?filter=unscheduled`);
         const result = (await res.json()) as ClientResponse<ClassExamGETData>;
 
         if (result.success) {
