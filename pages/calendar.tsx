@@ -56,13 +56,9 @@ const Calendar: NextPage = () => {
   );
 
   const [selectedMonth, setSelectedMonth] = useState(new Date(activeYear, new Date().getMonth()).getMonth());
-  const [datesObj, setDatesObj] = useState<{
-    dates: number[];
-    range: number[];
-    today: number;
-    start: number;
-    end: number;
-  }>();
+  const [datesObj, setDatesObj] = useState<
+    Record<"today" | "start" | "end", number> & Record<"dates" | "range", number[]>
+  >();
 
   const { data: events } = useSWR<RouteData<EventsRangeGETData>>(
     datesObj !== undefined ? `/api/events/range/?from=${datesObj.range[0]}&to=${datesObj.range[1]}` : null
