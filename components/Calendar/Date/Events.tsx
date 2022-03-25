@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 import { classNames } from "utils";
 
-export const Events: FunctionComponent<EventProps> = ({ children, className, data }) => {
+export const Events: FunctionComponent<EventProps> = ({ children, className, eventClassName, timeClassName, data }) => {
   const colors = [
     "bg-amber-400",
     "bg-indigo-400",
@@ -27,8 +27,8 @@ export const Events: FunctionComponent<EventProps> = ({ children, className, dat
               aria-hidden="true"
               className={classNames("h-1.5 w-1.5 shrink-0 rounded-full", colors[idx % colors.length])}
             />
-            <span className="block grow truncate text-xs tracking-wide text-gray-50">{event}</span>
-            <span className="shrink-0 text-[0.625rem] tracking-wider text-gray-200">{time}</span>
+            <span className={eventClassName}>{event}</span>
+            <span className={timeClassName}>{time}</span>
           </div>
         ))
       )}
@@ -39,6 +39,8 @@ export const Events: FunctionComponent<EventProps> = ({ children, className, dat
 
 interface EventProps {
   className: string;
+  timeClassName: string;
+  eventClassName: string;
   data: {
     time: string;
     events: string[];
