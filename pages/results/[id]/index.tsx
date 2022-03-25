@@ -43,16 +43,13 @@ const Result: NextPage = () => {
   });
 
   const { data: selectedTerm, error: termError } = useSWRImmutable<RouteData<TermGetData>>(
-    `/api/terms/${router.query.term ?? "current"}/`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    `/api/terms/${router.query.term ?? "current"}/`
   );
   const { data: student, error: studentError } = useSWRImmutable<RouteData<StudentGETData>>(
-    router.query.id !== undefined ? `/api/students/${router.query.id}/` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    router.query.id !== undefined ? `/api/students/${router.query.id}/` : null
   );
   const { data: currentClass, error: classError } = useSWRImmutable<RouteData<StudentClassGETData>>(
-    router.isReady && `/api/students/${router.query.id}/class`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    router.isReady && `/api/students/${router.query.id}/class`
   );
 
   useEffect(() => {

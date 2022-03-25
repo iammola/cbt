@@ -8,7 +8,7 @@ import "styles/globals.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <CookiesProvider>
-      <SWRConfig value={{ fetcher: (url) => fetch(url).then((res) => res.json()) }}>
+      <SWRConfig value={{ fetcher: (url) => url && fetch(url).then((res) => res.json()) }}>
         <Head>
           <link
             rel="icon"

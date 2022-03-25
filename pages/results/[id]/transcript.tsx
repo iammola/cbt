@@ -17,16 +17,13 @@ const ResultTranscript: NextPage = () => {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const { data, error } = useSWRImmutable<RouteData<StudentTranscriptGETData>>(
-    router.isReady && `/api/students/${router.query.id}/results/transcript/`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    router.isReady && `/api/students/${router.query.id}/results/transcript/`
   );
   const { data: student, error: studentError } = useSWRImmutable<RouteData<StudentGETData>>(
-    router.isReady && `/api/students/${router.query.id}/?select=gender birthday name.full`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    router.isReady && `/api/students/${router.query.id}/?select=gender birthday name.full`
   );
   const { data: currentClass, error: classError } = useSWRImmutable<RouteData<StudentClassGETData>>(
-    router.isReady && `/api/students/${router.query.id}/class`,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    router.isReady && `/api/students/${router.query.id}/class`
   );
 
   const overallRemark = useMemo(() => {

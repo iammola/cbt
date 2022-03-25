@@ -65,8 +65,7 @@ const Calendar: NextPage = () => {
   }>();
 
   const { data: events } = useSWR<RouteData<EventsRangeGETData>>(
-    datesObj !== undefined ? `/api/events/range/?from=${datesObj.range[0]}&to=${datesObj.range[1]}` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    datesObj !== undefined ? `/api/events/range/?from=${datesObj.range[0]}&to=${datesObj.range[1]}` : null
   );
 
   const generateDates = useCallback(() => {

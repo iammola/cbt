@@ -14,8 +14,7 @@ const EditExam: NextPage = () => {
   const router = useRouter();
   const [{ account }] = useCookies(["account"]);
   const { data: exam } = useSWRImmutable<RouteData<TeacherExamGETData>>(
-    router.query.id !== undefined ? `/api/teachers/${account?._id}/exams/${router.query.id}/` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    router.query.id !== undefined ? `/api/teachers/${account?._id}/exams/${router.query.id}/` : null
   );
 
   useEffect(() => {

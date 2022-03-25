@@ -380,8 +380,8 @@ const Results: NextPage = () => {
                                               score:
                                                 scoreField._id === field._id && _id === student
                                                   ? value
-                                                  : ((scores?.find((score) => score.field === scoreField._id)
-                                                      ?.score ?? "") as any),
+                                                  : ((scores?.find((score) => score.field === scoreField._id)?.score ??
+                                                      "") as any),
                                             }))
                                             .filter((i) => i.score !== ""),
                                         }))

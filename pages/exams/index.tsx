@@ -15,8 +15,7 @@ import type { TeacherExamsGETData } from "types/api";
 const Exams: NextPage = () => {
   const [{ account }] = useCookies(["account"]);
   const { data: exams } = useSWR<RouteData<TeacherExamsGETData>>(
-    account !== undefined ? `/api/teachers/${account._id}/exams` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    account !== undefined ? `/api/teachers/${account._id}/exams` : null
   );
 
   return (

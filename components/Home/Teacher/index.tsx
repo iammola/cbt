@@ -11,8 +11,7 @@ import type { TeacherSubjectsExtendGETData } from "types/api";
 const Home: FunctionComponent = () => {
   const [{ account }] = useCookies(["account"]);
   const { data: subjectsItems } = useSWR<RouteData<TeacherSubjectsExtendGETData>>(
-    account !== undefined ? `/api/teachers/${account._id}/subjects/extend` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    account !== undefined ? `/api/teachers/${account._id}/subjects/extend` : null
   );
 
   return (

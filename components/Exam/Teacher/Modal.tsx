@@ -12,8 +12,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
   const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
   const { data: currentSession } = useSWRImmutable("/api/sessions/current/");
   const { data: classes, error } = useSWRImmutable(
-    account !== undefined ? `/api/teachers/${account._id}/classes` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    account !== undefined ? `/api/teachers/${account._id}/classes` : null
   );
 
   const [duration, setDuration] = useState(0);

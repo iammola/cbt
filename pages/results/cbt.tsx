@@ -16,8 +16,7 @@ const Results: NextPage = () => {
   const [{ account }] = useCookies(["account"]);
   const [exams, setExams] = useState<SelectOption[]>();
   const { data: classes, error } = useSWR<RouteData<ClassesGETData>>(
-    account !== undefined ? `/api/teachers/${account._id}/classes` : null,
-    (url) => fetch(url ?? "").then((res) => res.json())
+    account !== undefined ? `/api/teachers/${account._id}/classes` : null
   );
 
   const [results, setResults] = useState<TeacherCBTResultsGETData>();
