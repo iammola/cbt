@@ -20,7 +20,7 @@ import type { RouteData } from "types";
 import type { EventsRangeGETData } from "types/api";
 
 const Calendar: NextPage = () => {
-  const activeYear = useMemo(() => 2021, []);
+  const activeYear = useMemo(() => new Date().getFullYear(), []);
   const selectedColors = useMemo<{ [key: string]: string }>(() => ({}), []);
   const days = useMemo(() => ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], []);
   const colors = useMemo(
