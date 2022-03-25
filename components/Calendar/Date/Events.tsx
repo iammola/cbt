@@ -21,7 +21,7 @@ export const Events: FunctionComponent<EventProps> = ({ children, className, eve
         events.map((event, idx) => (
           <div
             key={event}
-            className="flex w-full items-center justify-start gap-1.5"
+            className="flex w-full items-center justify-start gap-x-1.5"
           >
             <span
               aria-hidden="true"
