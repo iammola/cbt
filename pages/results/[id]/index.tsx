@@ -273,7 +273,7 @@ const Result: NextPage = () => {
           className="w-full py-10"
           HRclassName="border-t-gray-300"
         />
-        <div className="grid w-full grid-cols-2 items-center justify-between gap-x-20 [grid-template-rows:max-content_1fr]">
+        <div className="grid w-full grid-cols-2 items-center justify-between gap-x-20 [grid-template-rows:max-content_minmax(0,_1fr)]">
           <GradingScheme
             scheme={data.template?.scheme ?? []}
             className="col-start-2 col-end-3 row-start-1 row-end-2"
