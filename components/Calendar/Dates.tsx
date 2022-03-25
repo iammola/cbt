@@ -1,9 +1,8 @@
 import useSWR from "swr";
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent } from "react";
 import { isEqual, isToday, isSameMonth, endOfWeek, isWeekend, isSameDay } from "date-fns";
 
 import { DateItem } from "./Date";
-import { classNames } from "utils";
 
 import type { RouteData } from "types";
 import type { EventsRangeGETData } from "types/api";
