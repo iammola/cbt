@@ -55,7 +55,7 @@ export const DateItem: FunctionComponent<DateProps> = ({ date, events, ...is }) 
           onClick={() => setShowAll(true)}
           className="w-full cursor-pointer pl-3 pb-1 bg-neutral-800 text-xs font-semibold text-gray-400 hover:text-gray-300"
         >
-          {count - 5} more...
+          {count - 4}+ more...
         </span>
       )}
       {!!events.length && (
