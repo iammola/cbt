@@ -28,20 +28,8 @@ const CreateScheme: NextPage = () => {
     _id: "",
     name: "Select term",
   });
-  const [fields, setFields] = useState<Fields[]>([
-    {
-      name: "",
-      alias: "",
-      max: 0,
-    },
-  ]);
-  const [scheme, setScheme] = useState<Scheme[]>([
-    {
-      grade: "A",
-      limit: 100,
-      description: "Distinction",
-    },
-  ]);
+  const [fields, setFields] = useState<Fields[]>([{ max: 0, name: "", alias: "" }]);
+  const [scheme, setScheme] = useState<Scheme[]>([{ limit: 100, grade: "A", description: "Distinction" }]);
 
   const { data: classes } = useSWR<RouteData<ClassesGETData>>("/api/classes/?select=name");
   const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all/");
