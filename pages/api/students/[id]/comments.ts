@@ -2,12 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ResultModel } from "db/models";
+import { ResultModel, SessionModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { StudentCommentGETData, StudentCommentPOSTData } from "types/api";
 
-async function getComments(student: any): Promise<ServerResponse<StudentCommentGETData>> {
+async function getComments({ id, term }: any): Promise<ServerResponse<StudentCommentGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCommentGETData> = [
     false,
@@ -16,7 +16,12 @@ async function getComments(student: any): Promise<ServerResponse<StudentCommentG
   ];
 
   try {
-    const data = await ResultModel.findOne({ student }, "-_id comments").lean();
+    if (!term) {
+      const session = await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean();
+      term = session?.terms[0]._id;
+    }
+
+    const data = await ResultModel.findOne({ student: id, term }, "-_id comments").lean();
 
     [success, status, message] = [
       true,
@@ -91,7 +96,7 @@ export default async function handler({ body, method, query }: NextApiRequest, r
   } else
     [success, status, message] = await (method === "POST"
       ? updateComments(query.id, JSON.parse(body).comment)
-      : getComments(query.id));
+      : getComments(query));
 
   if (typeof message !== "object") message = { message, error: message };
 

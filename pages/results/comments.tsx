@@ -84,11 +84,11 @@ const Comments: NextPage = () => {
   }
 
   async function getComments() {
-    if (selectedStudent._id !== "") {
+    if (selectedStudent._id !== "" && selectedTerm._id) {
       setComment(undefined);
 
       try {
-        const res = await fetch(`/api/students/${selectedStudent._id}/comments`);
+        const res = await fetch(`/api/students/${selectedStudent._id}/comments/?term=${selectedTerm._id}`);
         const result = (await res.json()) as ClientResponse<StudentCommentGETData>;
 
         if (result.success) {
