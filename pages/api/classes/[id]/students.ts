@@ -16,13 +16,16 @@ async function getClassStudents({ id, term }: any): Promise<ServerResponse<Class
   ];
 
   try {
-    const record = await SubjectsModel.findOne({ class: id }, "-_id subjects._id").lean();
+    const [record, session] = await Promise.all([
+      await SubjectsModel.findOne({ class: id }, "-_id subjects._id").lean(),
+      term ? { terms: [] } : await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean(),
+    ]);
 
     const data = await StudentModel.find(
       {
         academic: {
           $elemMatch: {
-            term,
+            term: term || session?.terms[0]._id,
             subjects: { $in: record?.subjects.map((sub) => sub._id) },
           },
         },
