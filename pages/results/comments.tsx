@@ -6,8 +6,14 @@ import { useState, useEffect, FormEvent } from "react";
 import Select from "components/Select";
 import { Sidebar, Navbar } from "components/Layout";
 
-import type { ClientResponse, RouteData, StudentRecord } from "types";
-import type { ClassStudentsGETData, StudentCommentGETData, ClassesGETData, StudentCommentPOSTData } from "types/api";
+import type { ClientResponse, RouteData } from "types";
+import type {
+  ClassStudentsGETData,
+  StudentCommentGETData,
+  ClassesGETData,
+  StudentCommentPOSTData,
+  AllTermsGetData,
+} from "types/api";
 
 const Comments: NextPage = () => {
   const [students, setStudents] = useState<ClassStudentsGETData>([]);
@@ -23,7 +29,26 @@ const Comments: NextPage = () => {
     _id: "",
     name: "Loading classes...",
   });
+  const [selectedTerm, setSelectedTerm] = useState({
+    _id: "",
+    name: "Loading...",
+  });
+
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
   const { data: classes, error } = useSWR<RouteData<ClassesGETData>>("/api/classes?select=name");
+
+  useEffect(() => {
+    if (!selectedTerm._id && terms?.data !== undefined) {
+      const term = terms.data.find((i) => i.current) as unknown as typeof selectedTerm;
+
+      setSelectedTerm(
+        term ?? {
+          _id: "",
+          name: "Select term",
+        }
+      );
+    }
+  }, [selectedTerm, terms]);
 
   useEffect(() => {
     setSelectedClass({
@@ -44,7 +69,7 @@ const Comments: NextPage = () => {
     if (selectedClass._id !== "") {
       setSelectedStudent({ _id: "", name: "Loading students..." });
       try {
-        const res = await fetch(`/api/classes/${selectedClass._id}/students`);
+        const res = await fetch(`/api/classes/${selectedClass._id}/students?term=${selectedTerm._id}`);
         const result = (await res.json()) as ClientResponse<ClassStudentsGETData>;
 
         if (result.success) {
@@ -108,6 +133,19 @@ const Comments: NextPage = () => {
           <Navbar />
           <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
             <div className="flex w-full items-end justify-center gap-4">
+              <Select
+                label="Terms"
+                options={terms?.data}
+                selected={selectedTerm}
+                colorPallette={{
+                  activeCheckIconColor: "stroke-indigo-600",
+                  inactiveCheckIconColor: "stroke-indigo-800",
+                  activeOptionColor: "text-indigo-900 bg-indigo-100",
+                  buttonBorderColor: "focus-visible:border-indigo-500",
+                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+                }}
+                handleChange={setSelectedTerm}
+              />
               <Select
                 label="Class"
                 options={classes?.data}
