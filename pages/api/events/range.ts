@@ -46,7 +46,9 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
               return record === null ? "" : `${record.class.alias} ${record.subjects[0].name}`;
             })
           )
-        ).filter(Boolean),
+        )
+          .filter(Boolean)
+          .sort(),
       }))
     );
 
