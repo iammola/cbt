@@ -39,7 +39,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
 
     const examIDs = exams.map((i) => i._id);
     const subjectIDs = exams.map((i) => i.subject);
-    const [events, [{ subjects }]] = await Promise.all([
+    const [events, [subjects]] = await Promise.all([
       EventModel.aggregate<{ exams: RecordId["_id"][]; from: Date }>([
         { $match: { exams: { $in: examIDs } } },
         {
@@ -79,7 +79,7 @@ async function getExams(_id: any): Promise<ServerResponse<StudentExamsGETData>> 
             date: item.from,
             duration: duration ?? 0,
             questions: questions?.length ?? 0,
-            subject: subjects.find((s) => s._id.equals(subject ?? ""))?.name ?? "Subject not found",
+            subject: subjects?.subjects.find((s) => s._id.equals(subject ?? ""))?.name ?? "Subject not found",
           };
         })
       )
