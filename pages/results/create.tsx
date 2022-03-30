@@ -55,6 +55,21 @@ const Results: NextPage = () => {
     return termID !== selectedTerm._id || classID !== selectedClass._id || subjectID !== selectedSubject._id;
   }, [selectedClass, selectedSubject, selectedTerm, selectedValues]);
 
+  const inputProps = useMemo(
+    () => ({
+      min: 0,
+      step: 0.1,
+      pattern: "d+",
+      type: "number",
+      inputMode: "numeric" as const,
+      className: "h-full w-full min-w-[3rem] py-3 text-center text-sm",
+      onBeforeInput(e: FormEvent<HTMLInputElement> & { data: string }) {
+        return !/\d|\./.test(e.data) && e.preventDefault();
+      },
+    }),
+    []
+  );
+
   useEffect(() => {
     if (!selectedTerm._id && terms?.data !== undefined) {
       const term = terms.data.find((i) => i.current) as unknown as typeof selectedTerm;
@@ -379,13 +394,8 @@ const Results: NextPage = () => {
                               >
                                 {!forceTotal && (
                                   <input
-                                    min={0}
-                                    step={0.1}
-                                    pattern="\d+"
-                                    type="number"
+                                    {...inputProps}
                                     max={field.max}
-                                    inputMode="numeric"
-                                    className="h-full w-full min-w-[3rem] py-3 text-center text-sm"
                                     onChange={(e) => {
                                       const value = e.target.value === "" ? "" : +e.target.value;
 
@@ -410,11 +420,6 @@ const Results: NextPage = () => {
                                       if (+value > field.max || +value < 0) e.target.reportValidity();
                                     }}
                                     value={studentScores?.find((i) => i.field === field._id)?.score ?? ""}
-                                    onBeforeInput={(
-                                      e: FormEvent<HTMLInputElement> & {
-                                        data: string;
-                                      }
-                                    ) => !/\d|\./.test(e.data) && e.preventDefault()}
                                   />
                                 )}
                               </td>
@@ -443,14 +448,9 @@ const Results: NextPage = () => {
                                 })()
                               ) : (
                                 <input
-                                  min={0}
-                                  step={0.1}
-                                  pattern="\d+"
-                                  type="number"
-                                  inputMode="numeric"
+                                  {...inputProps}
                                   value={studentTotal ?? ""}
                                   max={settings.fields.reduce((a, b) => a + b.max, 0)}
-                                  className="h-full w-full min-w-[3rem] py-3 text-center text-sm"
                                   onChange={(e) =>
                                     setScores(
                                       scores.map(({ modified, student, scores, total }) => ({
@@ -461,11 +461,6 @@ const Results: NextPage = () => {
                                       }))
                                     )
                                   }
-                                  onBeforeInput={(
-                                    e: FormEvent<HTMLInputElement> & {
-                                      data: string;
-                                    }
-                                  ) => !/\d|\./.test(e.data) && e.preventDefault()}
                                 />
                               )}
                             </td>
