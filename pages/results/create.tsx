@@ -358,7 +358,7 @@ const Results: NextPage = () => {
                                 key={field.alias}
                                 className="whitespace-nowrap p-2"
                               >
-                                {!forceTotal ? (
+                                {!forceTotal && (
                                   <input
                                     min={0}
                                     step={0.1}
@@ -396,8 +396,6 @@ const Results: NextPage = () => {
                                       }
                                     ) => !/\d|\./.test(e.data) && e.preventDefault()}
                                   />
-                                ) : (
-                                  ""
                                 )}
                               </td>
                             ))}
