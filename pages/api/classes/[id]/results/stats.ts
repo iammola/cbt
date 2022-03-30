@@ -27,6 +27,7 @@ async function getClassResultStats({ id, term }: any): Promise<ServerResponse<Cl
     ).lean();
 
     const results = await ResultModel.find({
+      term,
       student: { $in: students.map((i) => i._id) },
     }).lean();
 
