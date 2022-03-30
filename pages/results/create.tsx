@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import Select from "components/Select";
 import { Divide, UserImage } from "components/Misc";
@@ -47,6 +47,13 @@ const Results: NextPage = () => {
     _id: "",
     name: "Loading...",
   });
+
+  const [selectedValues, setSelectedValues] = useState<[string, string, string]>(["", "", ""]);
+
+  const reload = useMemo(() => {
+    const [termID, classID, subjectID] = selectedValues;
+    return termID !== selectedTerm._id || classID !== selectedClass._id || subjectID !== selectedSubject._id;
+  }, [selectedClass, selectedSubject, selectedTerm, selectedValues]);
 
   useEffect(() => {
     if (!selectedTerm._id && terms?.data !== undefined) {
@@ -96,6 +103,9 @@ const Results: NextPage = () => {
       setSettings(undefined);
 
       try {
+        const termID = selectedTerm._id;
+        const classID = selectedClass._id;
+        const subjectID = selectedSubject._id;
         let notifications = addNotifications([
           {
             Icon: () => <></>,
@@ -115,12 +125,12 @@ const Results: NextPage = () => {
             data: { students },
           },
         ] = await Promise.all([
-          fetch(`/api/classes/${selectedClass._id}/results/setting/?term=${selectedTerm._id}`).then((res) =>
-            res.json()
-          ) as Promise<RouteData<ClassResultSettingsGETData>>,
-          fetch(`/api/subjects/${selectedSubject._id}/students/?term=${selectedTerm._id}`).then((res) =>
-            res.json()
-          ) as Promise<RouteData<SubjectStudentsGETData>>,
+          fetch(`/api/classes/${classID}/results/setting/?term=${termID}`).then((res) => res.json()) as Promise<
+            RouteData<ClassResultSettingsGETData>
+          >,
+          fetch(`/api/subjects/${subjectID}/students/?term=${termID}`).then((res) => res.json()) as Promise<
+            RouteData<SubjectStudentsGETData>
+          >,
         ]);
         setStudents(students);
         setSettings(settings);
@@ -134,7 +144,7 @@ const Results: NextPage = () => {
 
         const scores = await Promise.all(
           students.map(async (j) => {
-            const res = await fetch(`/api/students/${j._id}/results/${selectedSubject._id}/?term=${selectedTerm._id}`);
+            const res = await fetch(`/api/students/${j._id}/results/${subjectID}/?term=${termID}`);
             const {
               data: { scores, total },
             } = (await res.json()) as RouteData<StudentResultSubjectGETData>;
@@ -149,6 +159,7 @@ const Results: NextPage = () => {
         );
 
         setScores(scores);
+        setSelectedValues([termID, classID, subjectID]);
         setHardTotal(scores.filter((i) => i.total !== undefined).map((i) => i.student));
         removeNotifications(notifications[0]);
       } catch (error: any) {
@@ -289,8 +300,16 @@ const Results: NextPage = () => {
                 <Divide className="w-full px-2 py-7 text-gray-200" />
                 <form
                   onSubmit={submitData}
-                  className="flex w-full grow flex-col items-center justify-start gap-7 py-10 px-3"
+                  className="relative flex w-full grow flex-col items-center justify-start gap-7 px-3 pt-3 pb-10"
                 >
+                  {reload && (
+                    <div className="mb-2 flex h-full w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 text-gray-800">
+                      <div>You have made changes to the selected term, class or subject.</div>
+                      <div className="text-lg font-medium">
+                        Click the Load Results button to refresh the list to reflect those changes
+                      </div>
+                    </div>
+                  )}
                   <table className="min-w-full overflow-hidden rounded-lg shadow-md">
                     <thead className="bg-gray-300 text-gray-700">
                       <tr className="divide-x divide-gray-200">
