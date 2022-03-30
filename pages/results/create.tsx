@@ -368,7 +368,8 @@ const Results: NextPage = () => {
                                     inputMode="numeric"
                                     className="h-full w-full min-w-[3rem] py-3 text-center text-sm"
                                     onChange={(e) => {
-                                      const value = +e.target.value;
+                                      const value = e.target.value === "" ? "" : +e.target.value;
+
                                       setScores(
                                         scores.map(({ modified, student, scores, total }) => ({
                                           student,
@@ -387,7 +388,7 @@ const Results: NextPage = () => {
                                         }))
                                       );
 
-                                      if (value > field.max || value < 0) e.target.reportValidity();
+                                      if (+value > field.max || +value < 0) e.target.reportValidity();
                                     }}
                                     value={studentScores?.find((i) => i.field === field._id)?.score ?? ""}
                                     onBeforeInput={(
