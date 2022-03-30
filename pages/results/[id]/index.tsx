@@ -233,40 +233,36 @@ const Result: NextPage = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-400 bg-white text-gray-600">
-            {data.subjects
-              ?.filter((subject) => data.scores?.find((item) => item.subject === subject._id) !== undefined)
-              .map((subject, index) => {
-                const scores = data.scores?.find((item) => item.subject === subject._id);
-                const subjectTotal = total?.find((g) => g.subject === subject._id)?.total ?? 0;
-                const scheme = data.template?.scheme.find((i) => subjectTotal <= i.limit);
+            {data.subjects?.map((subject, index) => {
+              const item = data.scores?.find((item) => item.subject === subject._id);
+              const subjectTotal = total?.find((g) => g.subject === subject._id)?.total ?? 0;
+              const scheme = data.template?.scheme.find((i) => subjectTotal <= i.limit);
 
-                return (
-                  scores !== undefined && (
-                    <tr
-                      key={subject.name}
-                      className={classNames("divide-x divide-gray-400 text-center text-xs font-medium text-gray-800", {
-                        "bg-gray-100": index % 2 === 1,
-                      })}
-                    >
-                      <td className="px-2 py-4 font-normal text-gray-700 print:text-center">{subject.name}</td>
-                      {data.template?.fields.map((field) => {
-                        const item = scores?.scores?.find((i) => i.field === field._id);
+              return (
+                <tr
+                  key={subject.name}
+                  className={classNames("divide-x divide-gray-400 text-center text-xs font-medium text-gray-800", {
+                    "bg-gray-100": index % 2 === 1,
+                  })}
+                >
+                  <td className="px-2 py-4 font-normal text-gray-700 print:text-center">{subject.name}</td>
+                  {data.template?.fields.map((field) => {
+                    const { score } = item?.scores?.find((i) => i.field === field._id) ?? {};
 
-                        return (
-                          <td
-                            key={field._id.toString()}
-                            className="w-16 py-4 print:w-12"
-                          >
-                            {scores?.total === undefined ? item?.score : "-"}
-                          </td>
-                        );
-                      })}
-                      <td className="py-4 px-1">{subjectTotal.toFixed(1)}</td>
-                      <td className="py-4 px-1 font-medium">{scheme?.grade}</td>
-                    </tr>
-                  )
-                );
-              })}
+                    return (
+                      <td
+                        key={field._id.toString()}
+                        className="w-16 py-4 print:w-12"
+                      >
+                        {item?.total === undefined ? score ?? "-" : "-"}
+                      </td>
+                    );
+                  })}
+                  <td className="py-4 px-1">{subjectTotal.toFixed(1)}</td>
+                  <td className="py-4 px-1 font-medium">{scheme?.grade}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <Divide
