@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ResultModel } from "db/models";
+import { ResultModel, SessionModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { StudentResultGETData } from "types/api";
@@ -16,6 +16,11 @@ async function getStudentResult({ id, term }: any): Promise<ServerResponse<Stude
   ];
 
   try {
+    if (!term) {
+      const session = await SessionModel.findOne({ "terms.current": true }, { "terms._id.$": true }).lean();
+      term = session?.terms[0]._id;
+    }
+
     const data = await ResultModel.findOne({ student: id, term }, "-_id -student").lean();
     if (data === null) throw new Error("Student has no result record");
 

@@ -16,6 +16,11 @@ async function getClassResultStats({ id, term }: any): Promise<ServerResponse<Cl
   ];
 
   try {
+    if (!term) {
+      const session = await SessionModel.findOne({ "terms.current": true }, { "terms._id.$": true }).lean();
+      term = session?.terms[0]._id;
+    }
+
     const students = await StudentModel.find(
       { academic: { $elemMatch: { class: id, term } } },
       "_id academic.$"
