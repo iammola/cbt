@@ -27,28 +27,26 @@ async function getStudentSubjects({ id, term }: any): Promise<ServerResponse<Stu
     if (data === null) throw new Error("Invalid Student");
 
     const subjectIDs = data.academic[0].subjects;
-    const subjects = await SubjectsModel.aggregate([
+    const [subjects] = await SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
       { $match: { "subjects._id": { $in: subjectIDs } } },
       {
         $project: {
           subjects: {
             $filter: {
               input: "$subjects",
-              cond: {
-                $in: ["$$this._id", subjectIDs],
-              },
+              cond: { $in: ["$$this._id", subjectIDs] },
             },
           },
         },
       },
-    ]).then((doc) => doc.map((item) => item.subjects.map(({ _id, name }: SubjectRecord) => ({ _id, name }))));
+    ]);
 
     [success, status, message] = [
       true,
       StatusCodes.OK,
       {
-        data: subjects,
         message: ReasonPhrases.OK,
+        data: subjects?.subjects.map(({ _id, name }) => ({ _id, name })),
       },
     ];
   } catch (error: any) {
