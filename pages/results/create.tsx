@@ -28,7 +28,7 @@ const Results: NextPage = () => {
       student: StudentRecord["_id"];
       modified: boolean;
     })[]
-  >([]);
+  >();
   const [students, setStudents] = useState<Pick<StudentRecord, "_id" | "name">[]>([]);
 
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
@@ -185,6 +185,7 @@ const Results: NextPage = () => {
 
   async function submitData(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!scores) return;
 
     try {
       addNotifications({
@@ -216,7 +217,7 @@ const Results: NextPage = () => {
                 message: `Saved ${name}`,
               });
               setScores((scores) =>
-                scores.map((score) =>
+                scores?.map((score) =>
                   score.student === student
                     ? {
                         ...score,
@@ -310,7 +311,7 @@ const Results: NextPage = () => {
                 Load Results
               </button>
             </div>
-            {settings !== undefined && students !== undefined && (
+            {settings !== undefined && students !== undefined && scores !== undefined && (
               <>
                 <Divide className="w-full px-2 py-7 text-gray-200" />
                 <form
