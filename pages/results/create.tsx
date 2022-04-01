@@ -251,7 +251,7 @@ const Results: NextPage = () => {
   }
 
   return (
-    <>
+    <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Head>
         <title>Results | Portal | Grand Regal School</title>
         <meta
@@ -259,231 +259,229 @@ const Results: NextPage = () => {
           content="Results | GRS Portal"
         />
       </Head>
-      <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
-        <Sidebar />
-        <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
-          <Navbar />
-          <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
-            <div className="flex w-full items-end justify-center gap-4">
-              <Select
-                label="Terms"
-                options={terms?.data}
-                selected={selectedTerm}
-                colorPallette={{
-                  activeCheckIconColor: "stroke-indigo-600",
-                  inactiveCheckIconColor: "stroke-indigo-800",
-                  activeOptionColor: "text-indigo-900 bg-indigo-100",
-                  buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-                }}
-                handleChange={setSelectedTerm}
-              />
-              <Select
-                label="Class"
-                options={classes?.data}
-                selected={selectedClass}
-                colorPallette={{
-                  activeCheckIconColor: "stroke-indigo-600",
-                  inactiveCheckIconColor: "stroke-indigo-800",
-                  activeOptionColor: "text-indigo-900 bg-indigo-100",
-                  buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-                }}
-                handleChange={setSelectedClass}
-              />
-              <Select
-                label="Subject"
-                options={subjects}
-                selected={selectedSubject}
-                colorPallette={{
-                  activeCheckIconColor: "stroke-indigo-600",
-                  inactiveCheckIconColor: "stroke-indigo-800",
-                  activeOptionColor: "text-indigo-900 bg-indigo-100",
-                  buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-                }}
-                handleChange={setSelectedSubject}
-              />
-              <button
-                onClick={getData}
-                className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+      <Sidebar />
+      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
+        <Navbar />
+        <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+          <div className="flex w-full items-end justify-center gap-4">
+            <Select
+              label="Terms"
+              options={terms?.data}
+              selected={selectedTerm}
+              colorPallette={{
+                activeCheckIconColor: "stroke-indigo-600",
+                inactiveCheckIconColor: "stroke-indigo-800",
+                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                buttonBorderColor: "focus-visible:border-indigo-500",
+                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+              }}
+              handleChange={setSelectedTerm}
+            />
+            <Select
+              label="Class"
+              options={classes?.data}
+              selected={selectedClass}
+              colorPallette={{
+                activeCheckIconColor: "stroke-indigo-600",
+                inactiveCheckIconColor: "stroke-indigo-800",
+                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                buttonBorderColor: "focus-visible:border-indigo-500",
+                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+              }}
+              handleChange={setSelectedClass}
+            />
+            <Select
+              label="Subject"
+              options={subjects}
+              selected={selectedSubject}
+              colorPallette={{
+                activeCheckIconColor: "stroke-indigo-600",
+                inactiveCheckIconColor: "stroke-indigo-800",
+                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                buttonBorderColor: "focus-visible:border-indigo-500",
+                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+              }}
+              handleChange={setSelectedSubject}
+            />
+            <button
+              onClick={getData}
+              className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+            >
+              Load Results
+            </button>
+          </div>
+          {settings !== undefined && students !== undefined && scores !== undefined && (
+            <>
+              <Divide className="w-full px-2 py-7 text-gray-200" />
+              <form
+                onSubmit={submitData}
+                className="relative flex w-full grow flex-col items-center justify-start gap-7 px-3 pt-3 pb-10"
               >
-                Load Results
-              </button>
-            </div>
-            {settings !== undefined && students !== undefined && scores !== undefined && (
-              <>
-                <Divide className="w-full px-2 py-7 text-gray-200" />
-                <form
-                  onSubmit={submitData}
-                  className="relative flex w-full grow flex-col items-center justify-start gap-7 px-3 pt-3 pb-10"
-                >
-                  {reload && (
-                    <div className="mb-2 py-3 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 text-gray-800">
-                      <div>You have made changes to the selected term, class or subject.</div>
-                      <div className="text-lg font-medium">
-                        Click the Load Results button to refresh the list to reflect those changes
-                      </div>
+                {reload && (
+                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-gray-800">
+                    <div>You have made changes to the selected term, class or subject.</div>
+                    <div className="text-lg font-medium">
+                      Click the Load Results button to refresh the list to reflect those changes
                     </div>
-                  )}
-                  <table className="min-w-full overflow-hidden rounded-lg shadow-md">
-                    <thead className="bg-gray-300 text-gray-700">
-                      <tr className="divide-x divide-gray-200">
+                  </div>
+                )}
+                <table className="min-w-full overflow-hidden rounded-lg shadow-md">
+                  <thead className="bg-gray-300 text-gray-700">
+                    <tr className="divide-x divide-gray-200">
+                      <th
+                        scope="col"
+                        className="relative px-6 py-3"
+                      >
+                        <span className="sr-only">Students</span>
+                      </th>
+                      {settings.fields.map((i) => (
                         <th
-                          scope="col"
-                          className="relative px-6 py-3"
-                        >
-                          <span className="sr-only">Students</span>
-                        </th>
-                        {settings.fields.map((i) => (
-                          <th
-                            key={i.alias}
-                            scope="col"
-                            className="py-5"
-                          >
-                            <abbr
-                              title={`${i.name} - Max score ${i.max}`}
-                              className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500"
-                            >
-                              {i.alias} ({i.max})
-                            </abbr>
-                          </th>
-                        ))}
-                        <th
+                          key={i.alias}
                           scope="col"
                           className="py-5"
                         >
-                          <span className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Total - Grade
-                          </span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
-                      {students.map(({ _id, name }) => {
-                        const forceTotal = hardTotal.includes(_id);
-                        const { scores: studentScores, total: studentTotal } =
-                          scores.find((i) => i.student === _id) ?? {};
-
-                        return (
-                          <tr
-                            key={_id.toString()}
-                            className="divide-x divide-gray-200"
+                          <abbr
+                            title={`${i.name} - Max score ${i.max}`}
+                            className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500"
                           >
-                            <td className="whitespace-nowrap px-6 py-4">
-                              <div className="flex items-center gap-4 text-sm">
-                                <div className="relative h-10 w-10 shrink-0">
-                                  <UserImage
-                                    src=""
-                                    layout="fill"
-                                    objectFit="cover"
-                                    objectPosition="center"
-                                    className="rounded-full"
-                                    initials={{
-                                      text: name.initials,
-                                      className: "rounded-full bg-indigo-300",
-                                    }}
-                                  />
-                                </div>
-                                <span>{name.full}</span>
+                            {i.alias} ({i.max})
+                          </abbr>
+                        </th>
+                      ))}
+                      <th
+                        scope="col"
+                        className="py-5"
+                      >
+                        <span className="flex items-center justify-center px-3 text-xs font-medium uppercase tracking-wider text-gray-500">
+                          Total - Grade
+                        </span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
+                    {students.map(({ _id, name }) => {
+                      const forceTotal = hardTotal.includes(_id);
+                      const { scores: studentScores, total: studentTotal } =
+                        scores.find((i) => i.student === _id) ?? {};
+
+                      return (
+                        <tr
+                          key={_id.toString()}
+                          className="divide-x divide-gray-200"
+                        >
+                          <td className="whitespace-nowrap px-6 py-4">
+                            <div className="flex items-center gap-4 text-sm">
+                              <div className="relative h-10 w-10 shrink-0">
+                                <UserImage
+                                  src=""
+                                  layout="fill"
+                                  objectFit="cover"
+                                  objectPosition="center"
+                                  className="rounded-full"
+                                  initials={{
+                                    text: name.initials,
+                                    className: "rounded-full bg-indigo-300",
+                                  }}
+                                />
                               </div>
-                            </td>
-                            {settings.fields.map((field) => (
-                              <td
-                                key={field.alias}
-                                className="whitespace-nowrap p-2"
-                              >
-                                {!forceTotal && (
-                                  <input
-                                    {...inputProps}
-                                    max={field.max}
-                                    onChange={(e) => {
-                                      const value = e.target.value === "" ? "" : +e.target.value;
-
-                                      setScores(
-                                        scores.map(({ modified, student, scores, total }) => ({
-                                          student,
-                                          total: _id === student ? undefined : total,
-                                          modified: !modified ? student === _id : modified,
-                                          scores: settings.fields
-                                            .map((scoreField) => ({
-                                              field: scoreField._id,
-                                              score:
-                                                scoreField._id === field._id && _id === student
-                                                  ? value
-                                                  : ((scores?.find((score) => score.field === scoreField._id)?.score ??
-                                                      "") as any),
-                                            }))
-                                            .filter((i) => i.score !== ""),
-                                        }))
-                                      );
-
-                                      if (+value > field.max || +value < 0) e.target.reportValidity();
-                                    }}
-                                    value={studentScores?.find((i) => i.field === field._id)?.score ?? ""}
-                                  />
-                                )}
-                              </td>
-                            ))}
+                              <span>{name.full}</span>
+                            </div>
+                          </td>
+                          {settings.fields.map((field) => (
                             <td
-                              onDoubleClick={() =>
-                                setHardTotal(forceTotal ? hardTotal.filter((i) => i !== _id) : [...hardTotal, _id])
-                              }
-                              className="whitespace-nowrap px-6 py-4 text-center text-sm"
+                              key={field.alias}
+                              className="whitespace-nowrap p-2"
                             >
-                              {!forceTotal ? (
-                                (() => {
-                                  const total = studentScores?.reduce((a, b) => a + b.score, 0) ?? 0;
-                                  const scheme = settings.scheme.find((i) => total <= i.limit);
-
-                                  return (studentScores?.length ?? 0) > 0 ? (
-                                    <abbr
-                                      title={scheme?.description}
-                                      className="text-center text-sm"
-                                    >
-                                      {total.toFixed(1)} - {scheme?.grade}
-                                    </abbr>
-                                  ) : (
-                                    ""
-                                  );
-                                })()
-                              ) : (
+                              {!forceTotal && (
                                 <input
                                   {...inputProps}
-                                  value={studentTotal ?? ""}
-                                  max={settings.fields.reduce((a, b) => a + b.max, 0)}
-                                  onChange={(e) =>
+                                  max={field.max}
+                                  onChange={(e) => {
+                                    const value = e.target.value === "" ? "" : +e.target.value;
+
                                     setScores(
                                       scores.map(({ modified, student, scores, total }) => ({
                                         student,
-                                        scores: student === _id ? undefined : scores,
-                                        total: student === _id ? +e.target.value : total,
+                                        total: _id === student ? undefined : total,
                                         modified: !modified ? student === _id : modified,
+                                        scores: settings.fields
+                                          .map((scoreField) => ({
+                                            field: scoreField._id,
+                                            score:
+                                              scoreField._id === field._id && _id === student
+                                                ? value
+                                                : ((scores?.find((score) => score.field === scoreField._id)?.score ??
+                                                    "") as any),
+                                          }))
+                                          .filter((i) => i.score !== ""),
                                       }))
-                                    )
-                                  }
+                                    );
+
+                                    if (+value > field.max || +value < 0) e.target.reportValidity();
+                                  }}
+                                  value={studentScores?.find((i) => i.field === field._id)?.score ?? ""}
                                 />
                               )}
                             </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                  <button
-                    type="submit"
-                    className="mt-3 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
-                  >
-                    Save Changes
-                  </button>
-                </form>
-              </>
-            )}
-          </section>
-        </main>
-        {Notifications}
-      </section>
-    </>
+                          ))}
+                          <td
+                            onDoubleClick={() =>
+                              setHardTotal(forceTotal ? hardTotal.filter((i) => i !== _id) : [...hardTotal, _id])
+                            }
+                            className="whitespace-nowrap px-6 py-4 text-center text-sm"
+                          >
+                            {!forceTotal ? (
+                              (() => {
+                                const total = studentScores?.reduce((a, b) => a + b.score, 0) ?? 0;
+                                const scheme = settings.scheme.find((i) => total <= i.limit);
+
+                                return (studentScores?.length ?? 0) > 0 ? (
+                                  <abbr
+                                    title={scheme?.description}
+                                    className="text-center text-sm"
+                                  >
+                                    {total.toFixed(1)} - {scheme?.grade}
+                                  </abbr>
+                                ) : (
+                                  ""
+                                );
+                              })()
+                            ) : (
+                              <input
+                                {...inputProps}
+                                value={studentTotal ?? ""}
+                                max={settings.fields.reduce((a, b) => a + b.max, 0)}
+                                onChange={(e) =>
+                                  setScores(
+                                    scores.map(({ modified, student, scores, total }) => ({
+                                      student,
+                                      scores: student === _id ? undefined : scores,
+                                      total: student === _id ? +e.target.value : total,
+                                      modified: !modified ? student === _id : modified,
+                                    }))
+                                  )
+                                }
+                              />
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <button
+                  type="submit"
+                  className="mt-3 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
+                >
+                  Save Changes
+                </button>
+              </form>
+            </>
+          )}
+        </section>
+      </main>
+      {Notifications}
+    </section>
   );
 };
 
