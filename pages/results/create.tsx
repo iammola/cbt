@@ -268,7 +268,7 @@ const Results: NextPage = () => {
           <Navbar />
         </div>
         <section className="flex w-full min-w-0 flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
-          <div className="flex w-full flex-col items-center justify-start gap-x-4 sm:flex-row sm:items-end sm:justify-center">
+          <div className="flex w-full flex-col items-center justify-start gap-y-3 sm:flex-row sm:items-end sm:justify-center sm:gap-x-4">
             <Select
               label="Terms"
               options={terms?.data}
