@@ -260,9 +260,14 @@ const Results: NextPage = () => {
         />
       </Head>
       <Sidebar />
-      <main className="h-full grow divide-x-[1.5px] divide-gray-200 overflow-x-auto">
-        <Navbar />
-        <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+      <main
+        style={{ gridTemplateRows: "max-content minmax(0, 1fr)" }}
+        className="grid h-full grow divide-x-[1.5px] divide-gray-200 overflow-x-auto"
+      >
+        <div className="w-full min-w-0">
+          <Navbar />
+        </div>
+        <section className="flex w-full min-w-0 flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
           <div className="flex w-full flex-col items-center justify-start gap-x-4 sm:flex-row sm:items-end sm:justify-center">
             <Select
               label="Terms"
