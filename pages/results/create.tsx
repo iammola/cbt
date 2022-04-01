@@ -310,7 +310,7 @@ const Results: NextPage = () => {
               Load Results
             </button>
           </div>
-          {settings !== undefined && students !== undefined && scores !== undefined && (
+          {settings && students && scores && (
             <>
               <Divide className="w-full px-2 py-7 text-gray-200" />
               <form
