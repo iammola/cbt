@@ -23,7 +23,12 @@ const Select: FunctionComponent<SelectProps> = ({
   };
 
   return (
-    <div className={classNames("relative flex w-full flex-col lg:min-w-[20rem]", className)}>
+    <div
+      className={classNames(
+        "relative flex w-full flex-col sm:min-w-[11.5rem] md:min-w-[15rem] lg:min-w-[20rem]",
+        className
+      )}
+    >
       <Listbox
         value={selected}
         onChange={handleChange}
@@ -60,7 +65,7 @@ const Select: FunctionComponent<SelectProps> = ({
                     value={option}
                     key={option._id}
                     className={({ active }) =>
-                      classNames("relative cursor-default select-none py-2 pl-10 pr-4", {
+                      classNames("relative cursor-default select-none py-2 pr-4 pl-4 md:pl-7 lg:pl-10", {
                         [pallette.activeOptionColor]: active,
                         "text-gray-900": !active,
                       })
