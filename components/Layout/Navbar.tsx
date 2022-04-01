@@ -32,7 +32,7 @@ const Navbar: FunctionComponent = () => {
           className="relative h-10 w-10 cursor-pointer overflow-hidden rounded-full"
         >
           <UserImage
-            src={account?.image ?? "https://source.unsplash.com/featured/?random"}
+            src={account?.image}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
