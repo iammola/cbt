@@ -260,7 +260,7 @@ const Results: NextPage = () => {
         />
       </Head>
       <Sidebar />
-      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
+      <main className="h-full grow divide-x-[1.5px] divide-gray-200 overflow-x-auto">
         <Navbar />
         <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
           <div className="flex w-full items-end justify-center gap-4">
