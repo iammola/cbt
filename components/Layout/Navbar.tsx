@@ -10,6 +10,10 @@ const Navbar: FunctionComponent = () => {
   const router = useRouter();
   const [show, setShow] = useState(false);
   const [{ account }, , removeCookies] = useCookies(["account", "exam", "timeBounds"]);
+  const [color] = useState(() => {
+    const colors = ["bg-amber-300", "bg-red-300", "bg-slate-500", "bg-blue-300", "bg-emerald-400", "bg-indigo-300"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  });
 
   function logout() {
     removeCookies("exam", { path: "/" });
@@ -39,7 +43,7 @@ const Navbar: FunctionComponent = () => {
             className="rounded-full"
             initials={{
               text: account?.name.initials ?? "",
-              className: "rounded-full bg-amber-300",
+              className: `rounded-full ${color}`,
             }}
           />
         </div>
