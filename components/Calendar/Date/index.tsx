@@ -42,7 +42,7 @@ export const DateItem: FunctionComponent<DateProps> = ({ date, events, ...is }) 
           </span>
         </div>
       ) : (
-        <span className="-mt-1 pr-1 flex h-8 items-center justify-end">{date}</span>
+        <span className="-mt-1 flex h-8 items-center justify-end pr-1">{date}</span>
       )}
       <Events
         data={first5}
@@ -53,7 +53,7 @@ export const DateItem: FunctionComponent<DateProps> = ({ date, events, ...is }) 
       {count > 5 && (
         <span
           onClick={() => setShowAll(true)}
-          className="w-full cursor-pointer pl-3 pb-1 bg-neutral-800 text-xs font-semibold text-gray-400 hover:text-gray-300"
+          className="w-full cursor-pointer bg-neutral-800 pl-3 pb-1 text-xs font-semibold text-gray-400 hover:text-gray-300"
         >
           {count - 4}+ more...
         </span>
