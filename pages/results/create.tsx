@@ -480,7 +480,7 @@ const Results: NextPage = () => {
               <button
                 type="button"
                 onClick={submitData}
-                className="mx-8 mx-auto flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
+                className="mx-auto mt-8 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
               >
                 Save Changes
               </button>
