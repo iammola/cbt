@@ -183,8 +183,7 @@ const Results: NextPage = () => {
     }
   }
 
-  async function submitData(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function submitData() {
     if (!scores) return;
 
     try {
@@ -267,8 +266,8 @@ const Results: NextPage = () => {
         <div className="w-full min-w-0">
           <Navbar />
         </div>
-        <section className="w-full min-w-0 space-y-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
-          <div className="flex w-full flex-col items-center justify-start gap-y-3 sm:flex-row sm:items-end sm:justify-center sm:gap-x-4">
+        <section className="w-full min-w-0 overflow-y-auto bg-gray-50/80">
+          <div className="flex w-full flex-col items-center justify-start gap-y-3 px-6 pt-10 sm:flex-row sm:items-end sm:justify-center sm:gap-x-4">
             <Select
               label="Terms"
               options={terms?.data}
@@ -319,8 +318,11 @@ const Results: NextPage = () => {
             <>
               <Divide className="w-full px-2 py-7 text-gray-200" />
               <form
-                onSubmit={submitData}
-                className="relative w-full grow space-y-10 px-3 pt-3 pb-10"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submitData();
+                }}
+                className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6"
               >
                 {reload && (
                   <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-gray-800">
@@ -474,13 +476,14 @@ const Results: NextPage = () => {
                     })}
                   </tbody>
                 </table>
-                <button
-                  type="submit"
-                  className="flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
-                >
-                  Save Changes
-                </button>
               </form>
+              <button
+                type="button"
+                onClick={submitData}
+                className="mx-8 mx-auto flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
+              >
+                Save Changes
+              </button>
             </>
           )}
         </section>
