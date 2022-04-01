@@ -34,7 +34,7 @@ const Select: FunctionComponent<SelectProps> = ({
           )}
           <Listbox.Button
             className={classNames(
-              "relative mt-2 w-full cursor-pointer rounded-lg border bg-white py-3.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm",
+              "relative mt-2 w-full cursor-pointer rounded-lg border bg-white py-3.5 pl-3 pr-10 text-left text-xs shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm",
               pallette.buttonOffsetFocusColor,
               pallette.buttonBorderColor
             )}
@@ -54,7 +54,7 @@ const Select: FunctionComponent<SelectProps> = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     value={option}
