@@ -64,10 +64,12 @@ const Select: FunctionComponent<SelectProps> = ({
                   <Listbox.Option
                     value={option}
                     key={option._id}
-                    className={({ active }) =>
-                      classNames("relative cursor-default select-none py-2 pr-4 pl-4 md:pl-7 lg:pl-10", {
+                    className={({ active, selected }) =>
+                      classNames("relative cursor-default select-none py-2 pr-4", {
                         [pallette.activeOptionColor]: active,
                         "text-gray-900": !active,
+                        "pl-4 md:pl-7 lg:pl-10": !selected,
+                        "pl-7 lg:pl-10": selected,
                       })
                     }
                   >
