@@ -267,7 +267,7 @@ const Results: NextPage = () => {
         <div className="w-full min-w-0">
           <Navbar />
         </div>
-        <section className="flex w-full min-w-0 flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+        <section className="w-full min-w-0 space-y-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
           <div className="flex w-full flex-col items-center justify-start gap-y-3 sm:flex-row sm:items-end sm:justify-center sm:gap-x-4">
             <Select
               label="Terms"
@@ -320,7 +320,7 @@ const Results: NextPage = () => {
               <Divide className="w-full px-2 py-7 text-gray-200" />
               <form
                 onSubmit={submitData}
-                className="relative flex w-full grow flex-col items-center justify-start gap-7 px-3 pt-3 pb-10"
+                className="relative w-full grow space-y-10 px-3 pt-3 pb-10"
               >
                 {reload && (
                   <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-gray-800">
@@ -476,7 +476,7 @@ const Results: NextPage = () => {
                 </table>
                 <button
                   type="submit"
-                  className="mt-3 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
+                  className="flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
                 >
                   Save Changes
                 </button>
