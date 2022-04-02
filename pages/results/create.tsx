@@ -266,7 +266,7 @@ const Results: NextPage = () => {
         <div className="w-full min-w-0">
           <Navbar />
         </div>
-        <section className="w-full min-w-0 overflow-y-auto bg-gray-50/80">
+        <section className="w-full min-w-0 overflow-y-auto bg-gray-50/80 px-4">
           <div className="flex w-full flex-col items-center justify-start gap-y-3 px-6 pt-10 sm:flex-row sm:items-end sm:gap-x-4">
             <Select
               label="Terms"
