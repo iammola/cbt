@@ -267,7 +267,7 @@ const Results: NextPage = () => {
           <Navbar />
         </div>
         <section className="w-full min-w-0 overflow-y-auto bg-gray-50/80 px-4">
-          <div className="grid w-full grid-cols-1 grid-rows-3 flex-col gap-x-3 gap-y-0 px-6 pt-10 sm:grid-cols-3 sm:grid-rows-1 sm:gap-x-0 sm:gap-y-4">
+          <div className="grid w-full grid-cols-1 grid-rows-3 gap-y-3 gap-x-0 px-6 pt-10 sm:grid-cols-3 sm:grid-rows-1 sm:gap-y-0 sm:gap-x-4">
             <Select
               label="Terms"
               options={terms?.data}
