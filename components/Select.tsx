@@ -25,7 +25,7 @@ const Select: FunctionComponent<SelectProps> = ({
   return (
     <div
       className={classNames(
-        "relative flex w-full min-w-0 flex-col sm:min-w-[11.5rem] md:min-w-[15rem] lg:min-w-[20rem]",
+        "relative flex w-full min-w-0 flex-col sm:min-w-[13rem] lg:min-w-[20rem]",
         className
       )}
     >
