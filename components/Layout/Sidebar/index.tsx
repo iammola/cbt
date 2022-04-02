@@ -11,7 +11,7 @@ const Sidebar: FunctionComponent = () => {
   return (
     <aside
       className={classNames(
-        "z-50 flex h-screen max-w-full flex-col items-center justify-start gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-white py-5 px-3 shadow-sm ",
+        "z-50 flex h-screen max-w-full shrink-0 flex-col items-center justify-start gap-5 overflow-y-auto overflow-x-hidden rounded-xl bg-white py-5 px-3 shadow-sm ",
         {
           "fixed inset-0 w-screen sm:relative sm:w-[20rem]": open,
           "relative w-20 sm:w-[6.5rem]": !open,
