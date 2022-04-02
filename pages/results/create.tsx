@@ -112,9 +112,9 @@ const Results: NextPage = () => {
 
   async function getData() {
     if (selectedClass._id && selectedSubject._id && selectedTerm._id) {
-      setScores([]);
       setStudents([]);
       setHardTotal([]);
+      setScores(undefined);
       setSettings(undefined);
 
       try {
