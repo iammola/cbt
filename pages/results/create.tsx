@@ -267,7 +267,7 @@ const Results: NextPage = () => {
           <Navbar />
         </div>
         <section className="w-full min-w-0 overflow-y-auto bg-gray-50/80 px-4">
-          <div className="flex w-full flex-col items-center justify-start gap-y-3 px-6 pt-10 sm:flex-row sm:items-end sm:gap-x-4">
+          <div className="flex w-full flex-col items-center justify-start gap-y-3 px-6 pt-10 sm:flex-row sm:gap-x-4">
             <Select
               label="Terms"
               options={terms?.data}
@@ -307,13 +307,13 @@ const Results: NextPage = () => {
               }}
               handleChange={setSelectedSubject}
             />
-            <button
-              onClick={getData}
-              className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
-            >
-              Load Results
-            </button>
           </div>
+          <button
+            onClick={getData}
+            className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+          >
+            Load Results
+          </button>
           {settings && students && scores && (
             <>
               <Divide className="w-full px-2 py-7 text-gray-200" />
