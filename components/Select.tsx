@@ -69,7 +69,7 @@ const Select: FunctionComponent<SelectProps> = ({
                         [pallette.activeOptionColor]: active,
                         "text-gray-900": !active,
                         "pl-4 md:pl-7 lg:pl-10": !selected,
-                        "pl-7 lg:pl-10": selected,
+                        "pl-10": selected,
                       })
                     }
                   >
