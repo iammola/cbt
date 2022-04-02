@@ -112,9 +112,9 @@ const Results: NextPage = () => {
 
   async function getData() {
     if (selectedClass._id && selectedSubject._id && selectedTerm._id) {
-      setScores([]);
       setStudents([]);
       setHardTotal([]);
+      setScores(undefined);
       setSettings(undefined);
 
       try {
@@ -183,8 +183,7 @@ const Results: NextPage = () => {
     }
   }
 
-  async function submitData(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function submitData() {
     if (!scores) return;
 
     try {
@@ -260,10 +259,15 @@ const Results: NextPage = () => {
         />
       </Head>
       <Sidebar />
-      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
-        <Navbar />
-        <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
-          <div className="flex w-full items-end justify-center gap-4">
+      <main
+        style={{ gridTemplateRows: "max-content minmax(0, 1fr)" }}
+        className="grid h-full grow divide-x-[1.5px] divide-gray-200 overflow-x-auto"
+      >
+        <div className="w-full min-w-0">
+          <Navbar />
+        </div>
+        <section className="w-full min-w-0 overflow-y-auto bg-gray-50/80 px-4">
+          <div className="grid w-full grid-cols-1 grid-rows-3 gap-y-3 gap-x-0 px-6 pt-10 sm:grid-cols-3 sm:grid-rows-1 sm:gap-y-0 sm:gap-x-4">
             <Select
               label="Terms"
               options={terms?.data}
@@ -303,9 +307,11 @@ const Results: NextPage = () => {
               }}
               handleChange={setSelectedSubject}
             />
+          </div>
+          <div className="flex items-start justify-center px-6">
             <button
               onClick={getData}
-              className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+              className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
             >
               Load Results
             </button>
@@ -313,18 +319,24 @@ const Results: NextPage = () => {
           {settings && students && scores && (
             <>
               <Divide className="w-full px-2 py-7 text-gray-200" />
-              <form
-                onSubmit={submitData}
-                className="relative flex w-full grow flex-col items-center justify-start gap-7 px-3 pt-3 pb-10"
-              >
-                {reload && (
-                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-gray-800">
+              {reload && (
+                <div className="w-full px-6">
+                  <div className="flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 px-4 py-3 text-center text-xs text-gray-800 lg:text-base">
                     <div>You have made changes to the selected term, class or subject.</div>
-                    <div className="text-lg font-medium">
+                    <div className="text-sm lg:text-lg lg:font-medium">
                       Click the Load Results button to refresh the list to reflect those changes
                     </div>
                   </div>
-                )}
+                  <Divide className="w-full px-2 py-7 text-gray-200" />
+                </div>
+              )}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submitData();
+                }}
+                className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6 sm:overflow-x-visible"
+              >
                 <table className="min-w-full overflow-hidden rounded-lg shadow-md">
                   <thead className="bg-gray-300 text-gray-700">
                     <tr className="divide-x divide-gray-200">
@@ -369,8 +381,8 @@ const Results: NextPage = () => {
                           key={_id.toString()}
                           className="divide-x divide-gray-200"
                         >
-                          <td className="whitespace-nowrap px-6 py-4">
-                            <div className="flex items-center gap-4 text-sm">
+                          <td className="whitespace-nowrap px-4 py-2.5 lg:px-6 lg:py-4">
+                            <div className="flex items-center gap-4 text-xs lg:text-sm">
                               <div className="relative h-10 w-10 shrink-0">
                                 <UserImage
                                   src=""
@@ -469,13 +481,14 @@ const Results: NextPage = () => {
                     })}
                   </tbody>
                 </table>
-                <button
-                  type="submit"
-                  className="mt-3 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
-                >
-                  Save Changes
-                </button>
               </form>
+              <button
+                type="button"
+                onClick={submitData}
+                className="mx-auto my-6 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2 px-5 text-sm font-medium tracking-wide text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
+              >
+                Save Changes
+              </button>
             </>
           )}
         </section>
