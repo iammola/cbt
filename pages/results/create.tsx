@@ -327,9 +327,9 @@ const Results: NextPage = () => {
                 className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6 sm:overflow-x-visible"
               >
                 {reload && (
-                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-xs text-gray-800 lg:text-base">
+                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 px-4 py-3 text-center text-xs text-gray-800 lg:text-base">
                     <div>You have made changes to the selected term, class or subject.</div>
-                    <div className="text-sm font-medium lg:text-lg">
+                    <div className="text-sm lg:font-medium lg:text-lg">
                       Click the Load Results button to refresh the list to reflect those changes
                     </div>
                   </div>
