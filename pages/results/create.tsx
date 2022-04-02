@@ -319,6 +319,17 @@ const Results: NextPage = () => {
           {settings && students && scores && (
             <>
               <Divide className="w-full px-2 py-7 text-gray-200" />
+              {reload && (
+                <div className="w-full px-6">
+                  <div className="flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 px-4 py-3 text-center text-xs text-gray-800 lg:text-base">
+                    <div>You have made changes to the selected term, class or subject.</div>
+                    <div className="text-sm lg:text-lg lg:font-medium">
+                      Click the Load Results button to refresh the list to reflect those changes
+                    </div>
+                  </div>
+                  <Divide className="w-full px-2 py-7 text-gray-200" />
+                </div>
+              )}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -326,14 +337,6 @@ const Results: NextPage = () => {
                 }}
                 className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6 sm:overflow-x-visible"
               >
-                {reload && (
-                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 px-4 py-3 text-center text-xs text-gray-800 lg:text-base">
-                    <div>You have made changes to the selected term, class or subject.</div>
-                    <div className="text-sm lg:font-medium lg:text-lg">
-                      Click the Load Results button to refresh the list to reflect those changes
-                    </div>
-                  </div>
-                )}
                 <table className="min-w-full overflow-hidden rounded-lg shadow-md">
                   <thead className="bg-gray-300 text-gray-700">
                     <tr className="divide-x divide-gray-200">
