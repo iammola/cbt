@@ -322,7 +322,7 @@ const Results: NextPage = () => {
                   e.preventDefault();
                   submitData();
                 }}
-                className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6"
+                className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6 sm:overflow-x-visible"
               >
                 {reload && (
                   <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-gray-800">
