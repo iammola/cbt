@@ -325,9 +325,9 @@ const Results: NextPage = () => {
                 className="relative w-full grow space-y-10 overflow-x-auto px-6 pb-6 sm:overflow-x-visible"
               >
                 {reload && (
-                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-gray-800">
+                  <div className="mb-2 flex w-full flex-col items-center justify-center gap-y-2 rounded-xl bg-gray-200 py-3 text-xs text-gray-800 lg:text-base">
                     <div>You have made changes to the selected term, class or subject.</div>
-                    <div className="text-lg font-medium">
+                    <div className="text-sm font-medium lg:text-lg">
                       Click the Load Results button to refresh the list to reflect those changes
                     </div>
                   </div>
@@ -376,8 +376,8 @@ const Results: NextPage = () => {
                           key={_id.toString()}
                           className="divide-x divide-gray-200"
                         >
-                          <td className="whitespace-nowrap px-6 py-4">
-                            <div className="flex items-center gap-4 text-sm">
+                          <td className="whitespace-nowrap px-4 py-2.5 lg:px-6 lg:py-4">
+                            <div className="flex items-center gap-4 text-xs lg:text-sm">
                               <div className="relative h-10 w-10 shrink-0">
                                 <UserImage
                                   src=""
@@ -480,7 +480,7 @@ const Results: NextPage = () => {
               <button
                 type="button"
                 onClick={submitData}
-                className="mx-auto mt-8 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2.5 px-7 text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
+                className="mx-auto my-6 flex items-center justify-center gap-4 rounded-md bg-gray-500 py-2 px-5 text-sm font-medium tracking-wide text-white shadow-md transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white"
               >
                 Save Changes
               </button>
