@@ -308,12 +308,14 @@ const Results: NextPage = () => {
               handleChange={setSelectedSubject}
             />
           </div>
-          <button
-            onClick={getData}
-            className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
-          >
-            Load Results
-          </button>
+          <div className="flex items-start justify-center px-6">
+            <button
+              onClick={getData}
+              className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+            >
+              Load Results
+            </button>
+          </div>
           {settings && students && scores && (
             <>
               <Divide className="w-full px-2 py-7 text-gray-200" />
