@@ -59,8 +59,13 @@ const CheckTypeIncompleteResults: NextPage = () => {
       const res = await fetch(`/api/students?select=name.full&term=${selectedTerm._id}`);
       const data = (await res.json()) as ClientResponse<StudentsGETData>;
 
-      if (data.success) setStudents(data.data.map((s) => ({ _id: s._id, name: s.name.full })).sort());
-      else console.error(data.error);
+      if (data.success) {
+        setStudents(data.data.map((s) => ({ _id: s._id, name: s.name.full })).sort());
+        setSelectedStudent({
+          _id: "",
+          name: "Select student",
+        });
+      } else console.error(data.error);
     }
 
     if (selectedTerm._id) getStudents();
