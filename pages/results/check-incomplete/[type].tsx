@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CheckIcon, ChevronRightIcon, ExclamationCircleIcon } from "@heroicons/react/solid";
 
+import { capitalize } from "utils";
 import Select from "components/Select";
 import { Divide } from "components/Misc";
 import { Sidebar } from "components/Layout";
@@ -94,15 +95,15 @@ const CheckTypeIncompleteResults: NextPage = () => {
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
       <Head>
-        <title>Check {router.query.type} Incomplete Results | CBT | Grand Regal School</title>
+        <title>Check {capitalize(router.query.type as string)} Incomplete Results | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content={`${router.query.type} Incomplete Results | GRS CBT`}
+          content={`${capitalize(router.query.type as string)} Incomplete Results | GRS CBT`}
         />
       </Head>
       <section className="flex h-screen w-screen grow flex-col items-center justify-start gap-7">
         <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
-          <span className="block">Check {router.query.type} results</span>
+          <span className="block">Check {capitalize(router.query.type as string)} Results</span>
         </h3>
         <div className="flex items-center justify-center gap-x-10">
           <Select

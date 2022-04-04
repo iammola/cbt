@@ -5,7 +5,7 @@ export function capitalizeFirst(str: string) {
 
 export function capitalize(str: string) {
   return str
-    .split(" ")
+    ?.split(" ")
     .map((s) => s[0].toUpperCase() + s.slice(1))
     .join(" ");
 }
