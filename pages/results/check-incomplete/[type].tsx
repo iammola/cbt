@@ -3,7 +3,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { CheckIcon, ChevronRightIcon, ExclamationCircleIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 
 import { capitalize } from "utils";
 import Select from "components/Select";
@@ -101,7 +101,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
           content={`${capitalize(router.query.type as string)} Incomplete Results | GRS CBT`}
         />
       </Head>
-      <section className="flex h-screen w-screen grow flex-col items-center justify-start gap-7">
+      <section className="flex h-screen w-screen grow flex-col items-center justify-start gap-7 pt-8 pb-4">
         <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
           <span className="block">Check {capitalize(router.query.type as string)} Results</span>
         </h3>
@@ -136,37 +136,31 @@ const CheckTypeIncompleteResults: NextPage = () => {
           </button>
         </div>
         <Divide
-          className="w-full px-10"
+          className="w-full px-20"
           HRclassName="border-t-gray-300"
         />
-        <div className="grid w-full grid-flow-row grid-cols-1 space-y-4 lg:grid-cols-2">
+        <div className="grid w-full grid-flow-row grid-cols-1 gap-x-6 gap-y-4 px-5 lg:grid-cols-2">
           {data.map((d) => (
             <details
               key={String(d._id)}
-              className="w-full min-w-0 p-3"
+              className="group w-full min-w-0"
             >
-              <summary className="flex w-full items-center justify-start gap-x-3 truncate text-3xl">
+              <summary className="flex w-full cursor-pointer items-center justify-start gap-x-2 truncate rounded-md py-2.5 px-3 ring-1 ring-transparent ring-slate-300 group-open:ring-2">
                 <ChevronRightIcon className="h-5 w-5 fill-slate-600" />
-                <div className="grow">
-                  <div className="text-xl font-medium tracking-wide text-slate-700">
-                    {d.name}
-                    <span className="text-sm">{d.report.filter((r) => !r.state).length} errors</span>
-                  </div>
-                  <div className="text-sm text-slate-500">{d.class}</div>
-                </div>
+                <span className="tracking-wide text-slate-700">{d.name}</span>
+                &middot;
+                <span className="text-xs text-slate-500">{d.class}</span>
+                &middot;
+                <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
               </summary>
-              <ul className="w-full space-y-2">
+              <ul className="w-full">
                 {d.report.map((r) => (
                   <li
                     key={r.message}
-                    className="flex w-full items-center justify-start gap-x-3 p-2 text-sm text-slate-600"
+                    className="flex w-full items-center justify-start gap-x-3 p-2"
                   >
-                    {r.state ? (
-                      <CheckIcon className="h-5 w-5 fill-green-500" />
-                    ) : (
-                      <ExclamationCircleIcon className="h-5 w-5 fill-red-500" />
-                    )}
-                    {r.message}
+                    <span>{r.state ? "👌" : "❗️"}</span>
+                    <span className="text-sm text-gray-600">{r.message}</span>
                   </li>
                 ))}
               </ul>
