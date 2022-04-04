@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import { useCookies } from "react-cookie";
 import { formatRelative } from "date-fns";
 
+import { capitalizeFirst } from "utils";
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
 import { MeditatingIllustration, SittingWithLaptopIllustration } from "components/Misc/Illustrations";
@@ -97,10 +98,7 @@ const Exams: NextPage = () => {
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      {(() => {
-                        const date = formatRelative(new Date(at), new Date());
-                        return date[0].toUpperCase() + date.slice(1);
-                      })()}
+                      {capitalizeFirst(formatRelative(new Date(at), new Date()))}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex items-center gap-4">
