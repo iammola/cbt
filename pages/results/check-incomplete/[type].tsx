@@ -22,6 +22,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
     router.query.type === "class" && `/api/classes/?select=name`
   );
 
+  const [onlyErrors, setOnlyErrors] = useState(false);
   const [students, setStudents] = useState<SelectOption[]>();
   const [selectedTerm, setSelectedTerm] = useState({
     _id: "",
@@ -129,13 +130,23 @@ const CheckTypeIncompleteResults: NextPage = () => {
             />
           )}
         </div>
-        <div className="flex items-start justify-center px-6">
+        <div className="flex items-center justify-center gap-x-5 px-6">
           <button
             onClick={checkData}
             className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
           >
             Start Check
           </button>
+          <label className="flex items-center justify-start gap-x-2 text-sm">
+            <input
+              type="checkbox"
+              id="showOnlyErrors"
+              checked={onlyErrors}
+              className="accent-gray-600"
+              onChange={(e) => setOnlyErrors(e.target.checked)}
+            />
+            Show only errors
+          </label>
         </div>
         <Divide
           className="w-full px-20"
@@ -152,19 +163,25 @@ const CheckTypeIncompleteResults: NextPage = () => {
                 <span className="tracking-wide text-slate-700">{d.name}</span>
                 &middot;
                 <span className="text-xs text-slate-500">{d.class}</span>
-                &middot;
-                <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
+                {!onlyErrors && (
+                  <>
+                    &middot;
+                    <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
+                  </>
+                )}
               </summary>
               <ul className="w-full">
-                {d.report.map((r) => (
-                  <li
-                    key={r.message}
-                    className="flex w-full items-center justify-start gap-x-3 p-2"
-                  >
-                    <span>{r.state ? "👌" : "❗️"}</span>
-                    <span className="text-sm text-gray-600">{r.message}</span>
-                  </li>
-                ))}
+                {d.report
+                  .filter((r) => (onlyErrors ? !r.state : true))
+                  .map((r) => (
+                    <li
+                      key={r.message}
+                      className="flex w-full items-center justify-start gap-x-3 p-2"
+                    >
+                      <span>{r.state ? "👌" : "❗️"}</span>
+                      <span className="text-sm text-gray-600">{r.message}</span>
+                    </li>
+                  ))}
               </ul>
             </details>
           ))}
