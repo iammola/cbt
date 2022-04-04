@@ -8,17 +8,24 @@ import Select from "components/Select";
 import { Sidebar } from "components/Layout";
 
 import type { ClientResponse, RouteData, SelectOption } from "types";
-import type { AllTermsGetData, StudentsGETData } from "types/api";
+import type { AllTermsGetData, ClassesGETData, StudentsGETData } from "types/api";
 
 const CheckTypeIncompleteResults: NextPage = () => {
   const router = useRouter();
 
   const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
+  const { data: classes } = useSWR<RouteData<ClassesGETData>>(
+    router.query.type === "class" && `/api/classes/?select=name`
+  );
 
   const [students, setStudents] = useState<SelectOption[]>();
   const [selectedTerm, setSelectedTerm] = useState({
     _id: "",
     name: "Loading terms...",
+  });
+  const [selectedClass, setSelectedClass] = useState({
+    _id: "",
+    name: "Select class",
   });
   const [selectedStudent, setSelectedStudent] = useState({
     _id: "",
@@ -89,6 +96,13 @@ const CheckTypeIncompleteResults: NextPage = () => {
               selected={selectedStudent}
               handleChange={setSelectedStudent}
               options={students}
+            />
+          )}
+          {router.query.type === "classes" && (
+            <Select
+              selected={selectedClass}
+              handleChange={setSelectedClass}
+              options={classes?.data}
             />
           )}
         </div>
