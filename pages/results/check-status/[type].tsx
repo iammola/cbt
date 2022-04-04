@@ -70,8 +70,8 @@ const CheckTypeIncompleteResults: NextPage = () => {
       } else console.error(data.error);
     }
 
-    if (selectedTerm._id) getStudents();
-  }, [selectedTerm]);
+    if (selectedTerm._id && router.query.type === "student") getStudents();
+  }, [router.query.type, selectedTerm]);
 
   useEffect(() => {
     if (!router.isReady) return;
