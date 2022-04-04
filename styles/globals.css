@@ -39,4 +39,12 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+
+  details > summary {
+    @apply block;
+  }
+
+  details > summary::-webkit-details-marker {
+    @apply hidden;
+  }
 }
