@@ -9,7 +9,7 @@ import { SessionModel, StudentModel } from "db/models";
 import type { StudentRecord, ServerResponse } from "types";
 import type { StudentsGETData, StudentsPOSTData } from "types/api";
 
-async function getStudents(select: string): Promise<ServerResponse<StudentsGETData>> {
+async function getStudents({ select, term }: any): Promise<ServerResponse<StudentsGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentsGETData> = [
     false,
@@ -22,7 +22,7 @@ async function getStudents(select: string): Promise<ServerResponse<StudentsGETDa
       true,
       StatusCodes.CREATED,
       {
-        data: await StudentModel.find({}, select).lean(),
+        data: await StudentModel.find(Object.assign({}, term && { "academic.term": term }), select).lean(),
         message: ReasonPhrases.CREATED,
       },
     ];
@@ -98,10 +98,7 @@ export default async function handler({ method, body, query }: NextApiRequest, r
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else
-    [success, status, message] = await (method === "POST"
-      ? createStudent(JSON.parse(body))
-      : getStudents(query.select as string));
+  } else [success, status, message] = await (method === "POST" ? createStudent(JSON.parse(body)) : getStudents(query));
 
   if (typeof message !== "object") message = { message, error: message };
 
