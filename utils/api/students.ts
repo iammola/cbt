@@ -50,12 +50,12 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
   ]);
 
   const data = students.map((s) => {
+    const session = s.academic[0];
     const check = {
       _id: s._id,
       name: s.name.full,
       class: classes.find((c) => c._id.equals(session.class))?.name ?? "Class not found",
     };
-    const session = s.academic[0];
     const result = results.find((r) => r.student.equals(s._id));
 
     if (!result)
