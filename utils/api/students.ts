@@ -26,7 +26,7 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
   );
 
   const subjectObjectIDs = subjectIDs.map((s) => new Types.ObjectId(s));
-  const [classes, [subjects], results] = await Promise.all([
+  const [classes, subjectsAggregate, results] = await Promise.all([
     ClassModel.find({ _id: classIDs }, "name").lean(),
     SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
       { $match: { "subjects._id": { $in: subjectObjectIDs } } },
@@ -43,6 +43,8 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
     ]),
     ResultModel.find({ student: studentIDs, term }, "student comment data.subject").lean(),
   ]);
+
+  const subjects = subjectsAggregate.map((sa) => sa.subjects).flat();
 
   const data = students.map((s) => {
     const session = s.academic[0];
@@ -75,7 +77,7 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
     report.push(
       ...session.subjects.map((s) => {
         const state = !!data.find((d) => d.subject.equals(s));
-        const subject = subjects.subjects.find((sub) => sub._id.equals(s))?.name ?? "Subject not found";
+        const subject = subjects.find((sub) => sub._id.equals(s))?.name ?? "Subject not found";
 
         return {
           state,
