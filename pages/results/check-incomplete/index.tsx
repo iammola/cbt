@@ -21,7 +21,7 @@ const CheckIncompleteResults: NextPage = () => {
           <span className="block">Check incomplete results</span>
         </h3>
         <div className="flex w-full items-center justify-center gap-x-6">
-          <Link href="/results/check-incomplete/">
+          <Link href="/results/check-incomplete/all">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -31,7 +31,7 @@ const CheckIncompleteResults: NextPage = () => {
               <ExternalLinkIcon className="h-5 w-5 fill-white" />
             </a>
           </Link>
-          <Link href="/results/check-incomplete/">
+          <Link href="/results/check-incomplete/class">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -41,7 +41,7 @@ const CheckIncompleteResults: NextPage = () => {
               <ExternalLinkIcon className="h-5 w-5 fill-white" />
             </a>
           </Link>
-          <Link href="/results/check-incomplete/">
+          <Link href="/results/check-incomplete/student">
             <a
               target="_blank"
               rel="noopener noreferrer"
