@@ -94,9 +94,9 @@ const CheckTypeIncompleteResults: NextPage = () => {
     if (!selectedTerm._id) return;
 
     setLoading(true);
-    if (router.query.type === "all") checkType(`api/students/results/status?term=${selectedTerm._id}`);
+    if (router.query.type === "all") checkType(`/api/students/results/status?term=${selectedTerm._id}`);
     if (router.query.type === "class" && selectedClass._id)
-      checkType(`api/classes/${selectedClass._id}/results/status?term=${selectedTerm._id}`);
+      checkType(`/api/classes/${selectedClass._id}/results/status?term=${selectedTerm._id}`);
     if (router.query.type === "student" && selectedStudent._id)
       checkType(`/api/students/${selectedStudent._id}/results/status?term=${selectedTerm._id}`);
   }
