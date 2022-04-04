@@ -5,10 +5,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Select from "components/Select";
+import { Divide } from "components/Misc";
 import { Sidebar } from "components/Layout";
 
 import type { ClientResponse, RouteData, SelectOption } from "types";
-import type { AllTermsGetData, ClassesGETData, StudentsGETData } from "types/api";
+import type { AllTermsGetData, ClassesGETData, StudentsGETData, StudentResultStatusData } from "types/api";
 
 const CheckTypeIncompleteResults: NextPage = () => {
   const router = useRouter();
@@ -70,6 +71,23 @@ const CheckTypeIncompleteResults: NextPage = () => {
       });
   }, [router]);
 
+  async function checkType(url: string) {
+    const res = await fetch(url);
+    const data = (await res.json()) as ClientResponse<StudentResultStatusData | StudentResultStatusData[]>;
+
+    if (data.success) setData([data.data].flat());
+  }
+
+  async function checkData() {
+    if (!selectedTerm._id) return;
+
+    if (router.query.type === "all") checkType(`api/students/results/status?term=${selectedTerm._id}`);
+    if (router.query.type === "class" && selectedClass._id)
+      checkType(`api/classes/${selectedClass._id}/results/status?term=${selectedTerm._id}`);
+    if (router.query.type === "student" && selectedStudent._id)
+      checkType(`/api/students/${selectedStudent._id}/results/status?term=${selectedTerm._id}`);
+  }
+
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
@@ -106,6 +124,18 @@ const CheckTypeIncompleteResults: NextPage = () => {
             />
           )}
         </div>
+        <div className="flex items-start justify-center px-6">
+          <button
+            onClick={checkData}
+            className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+          >
+            Start Check
+          </button>
+        </div>
+        <Divide
+          className="w-full px-10"
+          HRclassName="border-t-gray-300"
+        />
       </section>
     </section>
   );
