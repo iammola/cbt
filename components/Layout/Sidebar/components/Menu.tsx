@@ -200,6 +200,13 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                       </a>
                     </Link>
                   </li>
+                  <li className="w-full">
+                    <Link href="/results/check-status">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">Check Results Status</span>
+                      </a>
+                    </Link>
+                  </li>
                 </MenuItem.List>
               ) : (
                 <MenuItem.Panel expand={expand}>
@@ -235,6 +242,13 @@ const Menu: FunctionComponent<MenuProps> = ({ open }) => {
                     <Link href="/results/picker/transcript">
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                         <span className="block truncate text-sm">View Transcript</span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="w-full">
+                    <Link href="/results/check-status">
+                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                        <span className="block truncate text-sm">Check Results Status</span>
                       </a>
                     </Link>
                   </li>

@@ -18,9 +18,7 @@ const TranscriptPicker: NextPage = () => {
     name: "Loading students...",
   });
 
-  const { data: students } = useSWR<RouteData<StudentsGETData>>(`/api/students/?select=name.full`, (url) =>
-    fetch(url ?? "").then((res) => res.json())
-  );
+  const { data: students } = useSWR<RouteData<StudentsGETData>>(`/api/students/?select=name.full`);
 
   const studentOptions = useMemo(
     () => sort(students?.data?.map((item) => ({ ...item, name: `${item.name.full}` })) ?? []),
@@ -39,10 +37,10 @@ const TranscriptPicker: NextPage = () => {
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
       <Head>
-        <title>Transcript Picker | Portal | Grand Regal School</title>
+        <title>Transcript Picker | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content="Transcript | GRS Portal"
+          content="Transcript | GRS CBT"
         />
       </Head>
       <section className="flex h-screen w-screen flex-col items-center justify-center gap-7">

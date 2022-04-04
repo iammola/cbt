@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { formatRelative } from "date-fns";
 import { useEffect, useState } from "react";
 
+import { capitalizeFirst } from "utils";
 import Select from "components/Select";
 import { UserImage } from "components/Misc";
 import { Navbar, Sidebar } from "components/Layout";
@@ -170,10 +171,7 @@ const Results: NextPage = () => {
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">{results[0].score}</td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        {(() => {
-                          const date = formatRelative(new Date(results[0].started), new Date());
-                          return date[0].toUpperCase() + date.slice(1);
-                        })()}
+                        {capitalizeFirst(formatRelative(new Date(results[0].started), new Date()))}
                       </td>
                     </tr>
                   ))}

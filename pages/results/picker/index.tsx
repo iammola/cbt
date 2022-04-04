@@ -24,9 +24,7 @@ const ResultsPicker: NextPage = () => {
 
   const [students, setStudents] = useState<{ class: any; students: ClassStudentsGETData }[]>([]);
 
-  const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name alias`, (url) =>
-    fetch(url ?? "").then((res) => res.json())
-  );
+  const { data: classes } = useSWR<RouteData<ClassesGETData>>(`/api/classes/?select=name alias`);
   const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
 
   const studentOptions = useMemo(
@@ -92,10 +90,10 @@ const ResultsPicker: NextPage = () => {
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
       <Head>
-        <title>Results Picker | Portal | Grand Regal School</title>
+        <title>Results Picker | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content="Results | GRS Portal"
+          content="Results | GRS CBT"
         />
       </Head>
       <section className="flex h-screen w-screen grow flex-col items-center justify-center gap-7">
