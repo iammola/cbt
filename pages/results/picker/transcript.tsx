@@ -18,9 +18,7 @@ const TranscriptPicker: NextPage = () => {
     name: "Loading students...",
   });
 
-  const { data: students } = useSWR<RouteData<StudentsGETData>>(`/api/students/?select=name.full`, (url) =>
-    fetch(url ?? "").then((res) => res.json())
-  );
+  const { data: students } = useSWR<RouteData<StudentsGETData>>(`/api/students/?select=name.full`);
 
   const studentOptions = useMemo(
     () => sort(students?.data?.map((item) => ({ ...item, name: `${item.name.full}` })) ?? []),
