@@ -69,3 +69,12 @@ export type TranscriptTermScore = {
   term: RecordId["_id"];
   subjects: Record<string, number | undefined>;
 };
+
+export type StudentResultStatusData = RecordId & {
+  name: string;
+  class: string;
+  report: {
+    state: boolean;
+    message: string;
+  }[];
+};
