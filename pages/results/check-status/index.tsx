@@ -10,18 +10,18 @@ const CheckIncompleteResults: NextPage = () => {
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
       <Head>
-        <title>Check Incomplete Results | CBT | Grand Regal School</title>
+        <title>Check Results Status | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content="Incomplete Results | GRS CBT"
+          content="Results Status | GRS CBT"
         />
       </Head>
       <section className="flex h-screen w-screen grow flex-col items-center justify-center gap-7">
         <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
-          <span className="block">Check incomplete results</span>
+          <span className="block">Check results status</span>
         </h3>
         <div className="flex w-full items-center justify-center gap-x-6">
-          <Link href="/results/check-incomplete/all">
+          <Link href="/results/check-status/all">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -31,7 +31,7 @@ const CheckIncompleteResults: NextPage = () => {
               <ExternalLinkIcon className="h-5 w-5 fill-white" />
             </a>
           </Link>
-          <Link href="/results/check-incomplete/class">
+          <Link href="/results/check-status/class">
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -41,7 +41,7 @@ const CheckIncompleteResults: NextPage = () => {
               <ExternalLinkIcon className="h-5 w-5 fill-white" />
             </a>
           </Link>
-          <Link href="/results/check-incomplete/student">
+          <Link href="/results/check-status/student">
             <a
               target="_blank"
               rel="noopener noreferrer"

@@ -96,15 +96,15 @@ const CheckTypeIncompleteResults: NextPage = () => {
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
       <Head>
-        <title>Check {capitalize(router.query.type as string)} Incomplete Results | CBT | Grand Regal School</title>
+        <title>Check Results Status | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content={`${capitalize(router.query.type as string)} Incomplete Results | GRS CBT`}
+          content={`Results Status | GRS CBT`}
         />
       </Head>
       <section className="flex h-screen w-screen grow flex-col items-center justify-start gap-7 pt-8 pb-4">
         <h3 className="text-center text-5xl font-bold tracking-wider text-gray-600">
-          <span className="block">Check {capitalize(router.query.type as string)} Results</span>
+          Check Results Status <span className="text-lg">({capitalize(router.query.type as string)})</span>
         </h3>
         <div className="flex items-center justify-center gap-x-10">
           <Select
