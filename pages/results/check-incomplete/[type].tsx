@@ -3,6 +3,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { CheckIcon, ChevronRightIcon, ExclamationCircleIcon } from "@heroicons/react/solid";
 
 import Select from "components/Select";
 import { Divide } from "components/Misc";
@@ -13,6 +14,7 @@ import type { AllTermsGetData, ClassesGETData, StudentsGETData, StudentResultSta
 
 const CheckTypeIncompleteResults: NextPage = () => {
   const router = useRouter();
+  const [data, setData] = useState<StudentResultStatusData[]>([]);
 
   const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
   const { data: classes } = useSWR<RouteData<ClassesGETData>>(
@@ -136,6 +138,40 @@ const CheckTypeIncompleteResults: NextPage = () => {
           className="w-full px-10"
           HRclassName="border-t-gray-300"
         />
+        <div className="grid w-full grid-flow-row grid-cols-1 space-y-4 lg:grid-cols-2">
+          {data.map((d) => (
+            <details
+              key={String(d._id)}
+              className="w-full min-w-0 p-3"
+            >
+              <summary className="flex w-full items-center justify-start gap-x-3 truncate text-3xl">
+                <ChevronRightIcon className="h-5 w-5 fill-slate-600" />
+                <div className="grow">
+                  <div className="text-xl font-medium tracking-wide text-slate-700">
+                    {d.name}
+                    <span className="text-sm">{d.report.filter((r) => !r.state).length} errors</span>
+                  </div>
+                  <div className="text-sm text-slate-500">{d.class}</div>
+                </div>
+              </summary>
+              <ul className="w-full space-y-2">
+                {d.report.map((r) => (
+                  <li
+                    key={r.message}
+                    className="flex w-full items-center justify-start gap-x-3 p-2 text-sm text-slate-600"
+                  >
+                    {r.state ? (
+                      <CheckIcon className="h-5 w-5 fill-green-500" />
+                    ) : (
+                      <ExclamationCircleIcon className="h-5 w-5 fill-red-500" />
+                    )}
+                    {r.message}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
       </section>
     </section>
   );
