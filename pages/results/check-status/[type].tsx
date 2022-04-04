@@ -9,12 +9,14 @@ import { capitalize } from "utils";
 import Select from "components/Select";
 import { Divide } from "components/Misc";
 import { Sidebar } from "components/Layout";
+import { LoadingIcon } from "components/Misc/Icons";
 
 import type { ClientResponse, RouteData, SelectOption } from "types";
 import type { AllTermsGetData, ClassesGETData, StudentsGETData, StudentResultStatusData } from "types/api";
 
 const CheckTypeIncompleteResults: NextPage = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState<StudentResultStatusData[]>([]);
 
   const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
@@ -85,11 +87,13 @@ const CheckTypeIncompleteResults: NextPage = () => {
     const data = (await res.json()) as ClientResponse<StudentResultStatusData | StudentResultStatusData[]>;
 
     if (data.success) setData([data.data].flat());
+    setLoading(false);
   }
 
   async function checkData() {
     if (!selectedTerm._id) return;
 
+    setLoading(true);
     if (router.query.type === "all") checkType(`api/students/results/status?term=${selectedTerm._id}`);
     if (router.query.type === "class" && selectedClass._id)
       checkType(`api/classes/${selectedClass._id}/results/status?term=${selectedTerm._id}`);
@@ -138,8 +142,9 @@ const CheckTypeIncompleteResults: NextPage = () => {
         <div className="flex items-center justify-center gap-x-5 px-6">
           <button
             onClick={checkData}
-            className="mx-auto my-4 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+            className="inline-flex min-w-max justify-center gap-x-3 rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
           >
+            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
             Start Check
           </button>
           <label className="flex items-center justify-start gap-x-2 text-sm">
