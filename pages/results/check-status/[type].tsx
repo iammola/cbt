@@ -178,7 +178,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
                 className="group w-full min-w-0"
               >
                 <summary className="flex w-full cursor-pointer items-center justify-start gap-x-2 truncate rounded-md py-2.5 px-3 ring-1 ring-transparent ring-slate-300 group-open:ring-2">
-                  <ChevronRightIcon className="h-5 w-5 fill-slate-600" />
+                  <ChevronRightIcon className="h-5 w-5 fill-slate-600 group-open:rotate-90" />
                   <span className="tracking-wide text-slate-700">{d.name}</span>
                   &middot;
                   <span className="text-xs text-slate-500">{d.class}</span>
