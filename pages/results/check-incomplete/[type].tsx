@@ -120,7 +120,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
               options={students}
             />
           )}
-          {router.query.type === "classes" && (
+          {router.query.type === "class" && (
             <Select
               label="Class"
               selected={selectedClass}
