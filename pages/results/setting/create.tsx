@@ -116,10 +116,10 @@ const CreateScheme: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create Scheme | Portal | Grand Regal School</title>
+        <title>Create Scheme | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content="Create Scheme | GRS Portal"
+          content="Create Scheme | GRS CBT"
         />
       </Head>
       <section className="flex min-h-screen w-screen items-center justify-center bg-gray-300 p-10">

@@ -252,10 +252,10 @@ const Results: NextPage = () => {
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Head>
-        <title>Results | Portal | Grand Regal School</title>
+        <title>Results | CBT | Grand Regal School</title>
         <meta
           name="description"
-          content="Results | GRS Portal"
+          content="Results | GRS CBT"
         />
       </Head>
       <Sidebar />
