@@ -170,38 +170,40 @@ const CheckTypeIncompleteResults: NextPage = () => {
           </div>
         )}
         <div className="grid w-full grid-flow-row grid-cols-1 gap-x-6 gap-y-4 px-5 lg:grid-cols-2">
-          {data.map((d) => (
-            <details
-              key={String(d._id)}
-              className="group w-full min-w-0"
-            >
-              <summary className="flex w-full cursor-pointer items-center justify-start gap-x-2 truncate rounded-md py-2.5 px-3 ring-1 ring-transparent ring-slate-300 group-open:ring-2">
-                <ChevronRightIcon className="h-5 w-5 fill-slate-600" />
-                <span className="tracking-wide text-slate-700">{d.name}</span>
-                &middot;
-                <span className="text-xs text-slate-500">{d.class}</span>
-                {!onlyErrors && (
-                  <>
-                    &middot;
-                    <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
-                  </>
-                )}
-              </summary>
-              <ul className="w-full">
-                {d.report
-                  .filter((r) => (onlyErrors ? !r.state : true))
-                  .map((r) => (
-                    <li
-                      key={r.message}
-                      className="flex w-full items-center justify-start gap-x-3 p-2"
-                    >
-                      <span>{r.state ? "👌" : "❗️"}</span>
-                      <span className="text-sm text-gray-600">{r.message}</span>
-                    </li>
-                  ))}
-              </ul>
-            </details>
-          ))}
+          {data
+            .filter((d) => (onlyErrors ? d.report.find((r) => !r.state) : true))
+            .map((d) => (
+              <details
+                key={String(d._id)}
+                className="group w-full min-w-0"
+              >
+                <summary className="flex w-full cursor-pointer items-center justify-start gap-x-2 truncate rounded-md py-2.5 px-3 ring-1 ring-transparent ring-slate-300 group-open:ring-2">
+                  <ChevronRightIcon className="h-5 w-5 fill-slate-600" />
+                  <span className="tracking-wide text-slate-700">{d.name}</span>
+                  &middot;
+                  <span className="text-xs text-slate-500">{d.class}</span>
+                  {!onlyErrors && (
+                    <>
+                      &middot;
+                      <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
+                    </>
+                  )}
+                </summary>
+                <ul className="w-full">
+                  {d.report
+                    .filter((r) => (onlyErrors ? !r.state : true))
+                    .map((r) => (
+                      <li
+                        key={r.message}
+                        className="flex w-full items-center justify-start gap-x-3 p-2"
+                      >
+                        <span>{r.state ? "👌" : "❗️"}</span>
+                        <span className="text-sm text-gray-600">{r.message}</span>
+                      </li>
+                    ))}
+                </ul>
+              </details>
+            ))}
         </div>
       </section>
     </section>
