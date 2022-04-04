@@ -25,22 +25,17 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
     } as Record<"classIDs" | "subjectIDs", string[]> & { studentIDs: unknown[] }
   );
 
+  const subjectObjectIDs = subjectIDs.map((s) => new Types.ObjectId(s));
   const [classes, [subjects], results] = await Promise.all([
     ClassModel.find({ _id: classIDs }, "name").lean(),
     SubjectsModel.aggregate<Record<"subjects", SubjectRecord[]>>([
-      {
-        $match: {
-          "subjects._id": {
-            $in: subjectIDs.map((s) => new Types.ObjectId(s)),
-          },
-        },
-      },
+      { $match: { "subjects._id": { $in: subjectObjectIDs } } },
       {
         $project: {
           subjects: {
             $filter: {
               input: "$subjects",
-              cond: { $in: ["$$this._id", subjectIDs] },
+              cond: { $in: ["$$this._id", subjectObjectIDs] },
             },
           },
         },
