@@ -23,12 +23,7 @@ const Select: FunctionComponent<SelectProps> = ({
   };
 
   return (
-    <div
-      className={classNames(
-        "relative flex w-full min-w-0 flex-col sm:min-w-[13rem] lg:min-w-[20rem]",
-        className
-      )}
-    >
+    <div className={classNames("relative flex w-full min-w-0 flex-col sm:min-w-[13rem] lg:min-w-[20rem]", className)}>
       <Listbox
         value={selected}
         onChange={handleChange}
