@@ -169,7 +169,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
             </span>
           </div>
         )}
-        <div className="grid w-full grid-flow-row grid-cols-1 gap-x-6 gap-y-4 px-5 lg:grid-cols-2">
+        <div className="grid w-full grow grid-flow-row grid-cols-1 gap-x-6 gap-y-4 overflow-y-auto px-5 py-2 lg:grid-cols-2">
           {data
             .filter((d) => (onlyErrors ? d.report.find((r) => !r.state) : true))
             .map((d) => (
