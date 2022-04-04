@@ -182,12 +182,8 @@ const CheckTypeIncompleteResults: NextPage = () => {
                   <span className="tracking-wide text-slate-700">{d.name}</span>
                   &middot;
                   <span className="text-xs text-slate-500">{d.class}</span>
-                  {!onlyErrors && (
-                    <>
-                      &middot;
-                      <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
-                    </>
-                  )}
+                  &middot;
+                  <span className="text-xs text-slate-500">{d.report.filter((r) => !r.state).length} error(s)</span>
                 </summary>
                 <ul className="w-full">
                   {d.report
