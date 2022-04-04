@@ -114,6 +114,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
           />
           {router.query.type === "student" && (
             <Select
+              label="Student"
               selected={selectedStudent}
               handleChange={setSelectedStudent}
               options={students}
@@ -121,6 +122,7 @@ const CheckTypeIncompleteResults: NextPage = () => {
           )}
           {router.query.type === "classes" && (
             <Select
+              label="Class"
               selected={selectedClass}
               handleChange={setSelectedClass}
               options={classes?.data}
