@@ -7,17 +7,22 @@ import { useEffect, useState } from "react";
 import Select from "components/Select";
 import { Sidebar } from "components/Layout";
 
-import type { RouteData } from "types";
-import type { AllTermsGetData } from "types/api";
+import type { ClientResponse, RouteData, SelectOption } from "types";
+import type { AllTermsGetData, StudentsGETData } from "types/api";
 
 const CheckTypeIncompleteResults: NextPage = () => {
   const router = useRouter();
 
   const { data: terms } = useSWR<RouteData<AllTermsGetData>>("/api/terms/all");
 
+  const [students, setStudents] = useState<SelectOption[]>();
   const [selectedTerm, setSelectedTerm] = useState({
     _id: "",
     name: "Loading terms...",
+  });
+  const [selectedStudent, setSelectedStudent] = useState({
+    _id: "",
+    name: "Select term",
   });
 
   useEffect(() => {
@@ -32,6 +37,22 @@ const CheckTypeIncompleteResults: NextPage = () => {
       );
     }
   }, [selectedTerm, terms]);
+
+  useEffect(() => {
+    async function getStudents() {
+      setSelectedStudent({
+        _id: "",
+        name: "Loading students...",
+      });
+      const res = await fetch(`/api/students?select=name.full&term=${selectedTerm._id}`);
+      const data = (await res.json()) as ClientResponse<StudentsGETData>;
+
+      if (data.success) setStudents(data.data.map((s) => ({ _id: s._id, name: s.name.full })).sort());
+      else console.error(data.error);
+    }
+
+    if (selectedTerm._id) getStudents();
+  }, [selectedTerm]);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -63,6 +84,13 @@ const CheckTypeIncompleteResults: NextPage = () => {
             selected={selectedTerm}
             handleChange={setSelectedTerm}
           />
+          {router.query.type === "student" && (
+            <Select
+              selected={selectedStudent}
+              handleChange={setSelectedStudent}
+              options={students}
+            />
+          )}
         </div>
       </section>
     </section>
