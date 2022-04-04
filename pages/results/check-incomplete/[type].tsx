@@ -33,6 +33,15 @@ const CheckTypeIncompleteResults: NextPage = () => {
     }
   }, [selectedTerm, terms]);
 
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!["all", "class", "student"].includes(router.query.type as string))
+      router.replace({
+        pathname: router.pathname,
+        query: { ...router.query, type: "all" },
+      });
+  }, [router]);
+
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
