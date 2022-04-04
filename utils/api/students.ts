@@ -46,7 +46,7 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
         },
       },
     ]),
-    ResultModel.find({ student: studentIDs, term }, "comment data.subject").lean(),
+    ResultModel.find({ student: studentIDs, term }, "student comment data.subject").lean(),
   ]);
 
   const data = students.map((s) => {
