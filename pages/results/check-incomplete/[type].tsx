@@ -148,10 +148,17 @@ const CheckTypeIncompleteResults: NextPage = () => {
             Show only errors
           </label>
         </div>
-        <Divide
-          className="w-full px-20"
-          HRclassName="border-t-gray-300"
-        />
+        {data.length > 0 && (
+          <div className="relative w-full">
+            <Divide
+              className="w-full px-20"
+              HRclassName="border-t-gray-300"
+            />
+            <span className="absolute left-1/2 -top-5 min-w-max -translate-x-1/2 text-xs text-gray-600">
+              (Click a name to view the details)
+            </span>
+          </div>
+        )}
         <div className="grid w-full grid-flow-row grid-cols-1 gap-x-6 gap-y-4 px-5 lg:grid-cols-2">
           {data.map((d) => (
             <details
