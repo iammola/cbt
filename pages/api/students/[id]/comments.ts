@@ -44,7 +44,7 @@ async function getComments({ id, term }: any): Promise<ServerResponse<StudentCom
   return [success, status, message];
 }
 
-async function updateComments(student: any, comments: string): Promise<ServerResponse<StudentCommentPOSTData>> {
+async function updateComments({ id, term }: any, comments: string): Promise<ServerResponse<StudentCommentPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentCommentPOSTData> = [
     false,
@@ -53,13 +53,7 @@ async function updateComments(student: any, comments: string): Promise<ServerRes
   ];
 
   try {
-    const { acknowledged: ok } = await ResultModel.updateOne(
-      { student },
-      {
-        $set: { comments },
-      },
-      { upsert: true }
-    );
+    const { acknowledged: ok } = await ResultModel.updateOne({ student: id, term }, { comments }, { upsert: true });
 
     [success, status, message] = [
       true,
@@ -95,7 +89,7 @@ export default async function handler({ body, method, query }: NextApiRequest, r
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
   } else
     [success, status, message] = await (method === "POST"
-      ? updateComments(query.id, JSON.parse(body).comment)
+      ? updateComments(query, JSON.parse(body).comment)
       : getComments(query));
 
   if (typeof message !== "object") message = { message, error: message };

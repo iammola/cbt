@@ -103,9 +103,11 @@ const Comments: NextPage = () => {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    
+    if (!selectedTerm._id) return;
 
     try {
-      const res = await fetch(`/api/students/${selectedStudent._id}/comments`, {
+      const res = await fetch(`/api/students/${selectedStudent._id}/comments/?term=${selectedTerm._id}`, {
         method: "POST",
         body: JSON.stringify({ comment }),
       });
