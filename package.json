@@ -14,7 +14,7 @@
     "@heroicons/react": "^1.0.6",
     "date-fns": "^2.28.0",
     "http-status-codes": "^2.2.0",
-    "mongoose": "^6.2.9",
+    "mongoose": "^6.2.10",
     "next": "latest",
     "react": "18.0.0",
     "react-cookie": "^4.1.1",
