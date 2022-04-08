@@ -41,7 +41,7 @@ export async function formatIncompleteResultReport(term: any, students: StudentR
         },
       },
     ]),
-    ResultModel.find({ student: studentIDs, term }, "student comment data.subject").lean(),
+    ResultModel.find({ student: studentIDs, term }, "student comments data.subject").lean(),
   ]);
 
   const subjects = subjectsAggregate.map((sa) => sa.subjects).flat();
