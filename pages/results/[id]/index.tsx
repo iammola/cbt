@@ -188,7 +188,7 @@ const Result: NextPage = () => {
           content="Student • Results | GRS CBT"
         />
       </Head>
-      <main className="flex aspect-[1/1.4142] w-[60rem] flex-col items-center justify-start rounded-lg bg-white p-12 shadow-xl shadow-gray-500/30 print:rounded-none print:px-8 print:py-5 print:shadow-none">
+      <main className="flex aspect-[1/1.4142] w-[60rem] flex-col items-center justify-start rounded-lg bg-white p-12 shadow-xl shadow-gray-500/30 print:w-full print:rounded-none print:px-8 print:py-5 print:shadow-none">
         <Header />
         <Divide
           className="w-full py-7"
