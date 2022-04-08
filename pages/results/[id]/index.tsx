@@ -254,7 +254,7 @@ const Result: NextPage = () => {
                     return (
                       <td
                         key={field._id.toString()}
-                        className="w-16 py-4 print:w-12"
+                        className="w-16 py-4"
                       >
                         {item?.total === undefined ? score ?? "-" : "-"}
                       </td>
