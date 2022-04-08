@@ -136,10 +136,12 @@ const Result: NextPage = () => {
           const { data: scores, comments = "" } = result.data;
           setData((data) => ({ ...data, scores, comments }));
           setTotal(
-            scores.map((score) => ({
-              subject: score.subject,
-              total: score.total ?? score.scores?.reduce((a, b) => a + b.score, 0) ?? 0,
-            }))
+            scores
+              .filter((s) => s.total !== undefined || (s.scores?.length ?? 0) > 0)
+              .map((score) => ({
+                subject: score.subject,
+                total: score.total ?? score.scores?.reduce((a, b) => a + b.score, 0) ?? 0,
+              }))
           );
         } else throw new Error(result.error);
       } catch (error) {
@@ -235,8 +237,8 @@ const Result: NextPage = () => {
           <tbody className="divide-y divide-gray-400 bg-white text-gray-600">
             {data.subjects?.map((subject, index) => {
               const item = data.scores?.find((item) => item.subject === subject._id);
-              const subjectTotal = total?.find((g) => g.subject === subject._id)?.total ?? 0;
-              const scheme = data.template?.scheme.find((i) => subjectTotal <= i.limit);
+              const subjectTotal = total?.find((g) => g.subject === subject._id)?.total;
+              const scheme = data.template?.scheme.find((i) => (subjectTotal ?? 0) <= i.limit);
 
               return (
                 <tr
@@ -258,8 +260,8 @@ const Result: NextPage = () => {
                       </td>
                     );
                   })}
-                  <td className="py-4 px-1">{subjectTotal.toFixed(1)}</td>
-                  <td className="py-4 px-1 font-medium">{scheme?.grade}</td>
+                  <td className="py-4 px-1">{subjectTotal === undefined ? "-" : subjectTotal.toFixed(1)}</td>
+                  <td className="py-4 px-1 font-medium">{subjectTotal === undefined ? "-" : scheme?.grade}</td>
                 </tr>
               );
             })}
