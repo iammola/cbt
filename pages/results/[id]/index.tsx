@@ -180,8 +180,8 @@ const Result: NextPage = () => {
     <section className="flex min-h-screen w-screen items-center justify-center bg-gray-200 py-16 print:block print:bg-white print:p-0">
       <Head>
         <title>
-          {data.student?.name.full ?? "Loading student"} Result | {data.term?.name} Term | {data.session?.name} Session
-          | Grand Regal School
+          {data.student?.name.full ?? "Loading student"}&apos;s Result | {data.term?.name} Term | {data.session?.name}{" "}
+          Session | Grand Regal School
         </title>
         <meta
           name="description"
