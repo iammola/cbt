@@ -4,7 +4,7 @@ import { FunctionComponent } from "react";
 const Info: FunctionComponent<DeepPartial<InfoProps>> = (props) => {
   const items = [
     ["Full Name", props.name],
-    ["Birthday", props.birthday !== undefined && format(new Date(props.birthday), "EEEE, do MMMM yyyy")],
+    ["Birthday", props.birthday && format(new Date(props.birthday), "do MMMM yyyy")],
     ["Gender", props.gender ? (props.gender === "M" ? "Male" : "Female") : ""],
     ["Session", props.session],
     ["Term", props.term],
