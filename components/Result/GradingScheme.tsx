@@ -41,7 +41,7 @@ const GradingScheme: FunctionComponent<GradingSchemeProps> = ({ scheme, classNam
                 })}
               >
                 <td className="p-4">
-                  {item.limit} - {(arr[index + 1]?.limit ?? -1) + 1}
+                  {(arr[index + 1]?.limit ?? -1) + 1} - {item.limit}
                 </td>
                 <td className="p-4">{item.grade}</td>
                 <td className="p-4">{item.description}</td>
