@@ -1,86 +1,36 @@
+import { format } from "date-fns";
 import { FunctionComponent } from "react";
-import { formatDuration, intervalToDuration } from "date-fns";
 
-const Info: FunctionComponent<DeepPartial<InfoProps>> = ({
-  average,
-  birthday,
-  gender,
-  name,
-  scores,
-  session,
-  term,
-  ...props
-}) => {
+const Info: FunctionComponent<DeepPartial<InfoProps>> = (props) => {
+  const items = [
+    ["Full Name", props.name],
+    ["Birthday", props.birthday && format(new Date(props.birthday), "do MMMM yyyy")],
+    ["Gender", props.gender ? (props.gender === "M" ? "Male" : "Female") : ""],
+    ["Session", props.session],
+    ["Term", props.term],
+    ["Final Grade", props.scores?.grade],
+    ["Class", props.class],
+    ["Highest Class Average", props.average?.highest?.toFixed(1)],
+    ["Lowest Class Average", props.average?.lowest?.toFixed(1)],
+    ["Class Average", props.average?.class?.toFixed(1)],
+    ["Expected Score", props.scores?.expected],
+    ["Total Score", props.scores?.total?.toFixed(1)],
+    ["Personal Average", props.average?.average?.toFixed(1)],
+  ] as const;
+
   return (
-    <div className="grid w-full grid-flow-col grid-cols-3 grid-rows-5 gap-y-2.5 gap-x-40 px-5">
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Full Name:</span>{" "}
-        <span className="min-w-max text-sm font-bold uppercase tracking-wide text-gray-800">{name}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Age:</span>{" "}
-        <span className="min-w-max text-sm font-bold tracking-wide text-gray-800">
-          {birthday !== undefined &&
-            formatDuration(
-              intervalToDuration({
-                start: new Date(birthday),
-                end: new Date(),
-              }),
-              { format: ["years"] }
-            )}{" "}
-          old
-        </span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Gender:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {gender && (gender === "M" ? "Male" : "Female")}
-        </span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Session:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{session}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Term:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{term}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Final Grade:</span>{" "}
-        <span className="min-w-max text-sm font-bold tracking-wide text-gray-800">{scores?.grade}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Class:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{props.class}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Highest Class Average:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {average?.highest?.toFixed(1)}
-        </span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Lowest Class Average:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{average?.lowest?.toFixed(1)}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Class Average:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{average?.class?.toFixed(1)}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Expected Score:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{scores?.expected}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Total Score:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">{scores?.total?.toFixed(1)}</span>
-      </div>
-      <div className="flex items-center justify-start gap-1.5">
-        <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">Average:</span>{" "}
-        <span className="min-w-max text-sm font-medium tracking-wide text-gray-800">
-          {average?.average?.toFixed(1)}
-        </span>
-      </div>
+    <div className="grid w-full grid-flow-col grid-cols-[repeat(3,_minmax(max-content,_1fr))] grid-rows-5 gap-y-3 gap-x-8 px-5">
+      {items.map(([key, val]) => (
+        <div
+          key={key}
+          className="group flex min-w-0 items-center justify-start gap-1.5"
+        >
+          <span className="min-w-max text-xs font-semibold tracking-wide text-gray-700">{key}:</span>{" "}
+          <span className="min-w-max text-sm font-medium tracking-wide text-gray-800 group-first:font-bold group-first:uppercase">
+            {val}
+          </span>
+        </div>
+      ))}
     </div>
   );
 };
