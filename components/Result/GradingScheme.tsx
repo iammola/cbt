@@ -33,14 +33,16 @@ const GradingScheme: FunctionComponent<GradingSchemeProps> = ({ scheme, classNam
         <tbody className="divide-y divide-gray-400 bg-white text-gray-600">
           {[...scheme]
             .sort((a, b) => b.limit - a.limit)
-            .map((item, index) => (
+            .map((item, index, arr) => (
               <tr
                 key={item.grade}
                 className={classNames("divide-x divide-gray-400 text-center text-xs font-medium text-gray-800", {
                   "bg-gray-100": index % 2 === 1,
                 })}
               >
-                <td className="p-4">{item.limit}</td>
+                <td className="p-4">
+                  {item.limit} - {(arr[index + 1]?.limit ?? -1) + 1}
+                </td>
                 <td className="p-4">{item.grade}</td>
                 <td className="p-4">{item.description}</td>
               </tr>
