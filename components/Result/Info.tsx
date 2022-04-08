@@ -4,18 +4,18 @@ import { FunctionComponent } from "react";
 const Info: FunctionComponent<DeepPartial<InfoProps>> = (props) => {
   const items = [
     ["Full Name", props.name],
-    ["Final Grade", props.scores?.grade],
-    ["Expected Score", props.scores?.expected],
     ["Birthday", props.birthday !== undefined && format(new Date(props.birthday), "EEEE, do MMMM yyyy")],
-    ["Class", props.class],
-    ["Total Score", props.scores?.total?.toFixed(1)],
     ["Gender", props.gender ? (props.gender === "M" ? "Male" : "Female") : ""],
-    ["Highest Class Average", props.average?.highest?.toFixed(1)],
-    ["Personal Average", props.average?.average?.toFixed(1)],
     ["Session", props.session],
     ["Term", props.term],
+    ["Final Grade", props.scores?.grade],
+    ["Class", props.class],
+    ["Highest Class Average", props.average?.highest?.toFixed(1)],
     ["Lowest Class Average", props.average?.lowest?.toFixed(1)],
     ["Class Average", props.average?.class?.toFixed(1)],
+    ["Expected Score", props.scores?.expected],
+    ["Total Score", props.scores?.total?.toFixed(1)],
+    ["Personal Average", props.average?.average?.toFixed(1)],
   ] as const;
 
   return (
