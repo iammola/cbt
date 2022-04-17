@@ -57,7 +57,7 @@ async function deleteStudentAcademicData({ id, term }: any): Promise<ServerRespo
   ];
 
   try {
-    const updateQuery = await StudentModel.updateOne({ _id: id }, { $pull: { "academic.term": term } });
+    const updateQuery = await StudentModel.updateOne({ _id: id }, { $pull: { academic: { term } } });
 
     [success, status, message] = [
       true,
