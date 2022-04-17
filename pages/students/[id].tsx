@@ -44,8 +44,10 @@ const Student: NextPage = () => {
       });
       const result = await res.json();
 
-      if (result.success) mutate();
-      else throw new Error(result.error);
+      if (result.success) {
+        mutate();
+        alert("Success");
+      } else throw new Error(result.error);
     } catch (error) {
       alert("Error Updating Data");
       console.log({ error });
