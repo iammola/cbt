@@ -73,28 +73,23 @@ const Student: NextPage = () => {
                 <span>{data.gender === "F" ? "Female" : "Male"}</span>
               </p>
             </div>
-            <Divide className="w-[85%] py-2" />
-            <div className="w-full space-y-5 py-3">
-              <h3 className="text-lg font-medium tracking-wide text-slate-700">Basic Details</h3>
-              <EditData
-                {...data}
-                onSubmit={updateStudent}
-              />
-            </div>
-            <Divide className="w-[85%] py-2" />
-            <div className="flex w-full max-w-2xl items-center justify-center py-3">
-              <h3 className="text-lg font-medium tracking-wide text-slate-700">Academics</h3>
-              {!editAcademic ? (
-                <button
-                  type="button"
-                  onClick={() => setEditAcademic(true)}
-                >
-                  Load
-                </button>
-              ) : (
-                <EditAcademicData id={data._id.toString()} />
-              )}
-            </div>
+            <Divide className="mb-3 w-[85%] py-2" />
+            <EditData
+              {...data}
+              onSubmit={updateStudent}
+            />
+            <Divide className="mt-3 mb-3 w-[85%] py-2" />
+            {!editAcademic ? (
+              <button
+                type="button"
+                onClick={() => setEditAcademic(true)}
+                className="rounded-md bg-gray-600 px-3 py-2 text-sm tracking-wide text-white"
+              >
+                Load Academic Data
+              </button>
+            ) : (
+              <EditAcademicData id={data._id.toString()} />
+            )}
           </section>
         )}
       </main>

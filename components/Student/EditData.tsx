@@ -120,7 +120,7 @@ export const EditData: FunctionComponent<Props> = ({ onSubmit, ...props }) => {
           selected={genders.find((g) => g._id === data.gender) ?? genders[0]}
         />
       </div>
-      <div className="flex w-full max-w-[20rem] flex-col gap-2.5">
+      <div className="flex w-full max-w-[12.5rem] flex-col gap-2.5">
         <label
           htmlFor="birthday"
           className="text-sm font-semibold text-gray-600"

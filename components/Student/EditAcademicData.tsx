@@ -108,7 +108,7 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
   }, [selectedClass]);
 
   return (
-    <div>
+    <div className="w-full max-w-3xl">
       <div className="mb-4 flex w-full items-center justify-start gap-x-6 border-b border-slate-300 py-3">
         <Select
           label="Term"
