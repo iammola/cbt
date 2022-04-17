@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
 
+import { Divide } from "components/Misc";
 import { Sidebar, Navbar } from "components/Layout";
 import { EditData, EditAcademicData } from "components/Student";
 
@@ -59,33 +60,39 @@ const Student: NextPage = () => {
         {data != undefined && (
           <section className="w-full grow space-y-5 overflow-y-auto bg-gray-50 py-7 px-6">
             <div className="w-full">
-              <h2 className="md:text-xl lg:text-3xl">{data.name.full}</h2>
-              <p className="flex w-full items-center justify-start gap-x-4 text-sm text-gray-600">
+              <h2 className="text-center font-bold tracking-wider text-slate-700 md:text-xl lg:text-3xl">
+                {data.name.full}
+              </h2>
+              <p className="w-full text-center text-sm text-gray-600">
                 <a href={`mailto:${data.email}`}>
                   <a className="text-inherit">{data.email}</a>
-                </a>
-                &middot;
-                <span>Born on {format(new Date(data.birthday), "do 'of' MMMM yyyy")}</span>
-                &middot;
+                </a>{" "}
+                &middot; <span>Born on {format(new Date(data.birthday), "do 'of' MMMM yyyy")}</span> &middot;{" "}
                 <span>{data.gender === "F" ? "Female" : "Male"}</span>
               </p>
             </div>
-            <h3>Edit {data.name.first}&apos;s Basic Details</h3>
-            <EditData
-              {...data}
-              onSubmit={updateStudent}
-            />
-            <h3>Edit {data.name.first}&apos;s Academic Details</h3>
-            {!editAcademic ? (
-              <button
-                type="button"
-                onClick={() => setEditAcademic(true)}
-              >
-                Load
-              </button>
-            ) : (
-              <EditAcademicData id={data._id.toString()} />
-            )}
+            <Divide className="w-[85%] py-2" />
+            <div className="flex w-full items-center justify-center py-3">
+              <h3 className="text-lg font-medium tracking-wide">Basic Details</h3>
+              <EditData
+                {...data}
+                onSubmit={updateStudent}
+              />
+            </div>
+            <Divide className="w-[85%] py-2" />
+            <div className="flex w-full max-w-2xl items-center justify-center py-3">
+              <h3 className="text-lg font-medium tracking-wide">Academics</h3>
+              {!editAcademic ? (
+                <button
+                  type="button"
+                  onClick={() => setEditAcademic(true)}
+                >
+                  Load
+                </button>
+              ) : (
+                <EditAcademicData id={data._id.toString()} />
+              )}
+            </div>
           </section>
         )}
       </main>

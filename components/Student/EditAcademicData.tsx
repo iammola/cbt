@@ -126,7 +126,7 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
         <button
           type="button"
           onClick={getAcademicData}
-          className="bg-gray-600 px-5 py-3 text-sm tracking-wide text-white"
+          className="min-w-max shrink-0 rounded-md bg-gray-600 px-5 py-2 text-sm tracking-wide text-white"
         >
           Load Data
         </button>
