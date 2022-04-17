@@ -309,7 +309,7 @@ const CreateStudents: NextPage = () => {
           selected={selectedClass}
           handleChange={setSelectedClass}
         />
-        <div className="5 flex w-full min-w-[20rem] flex-col gap-2">
+        <div className="flex w-full min-w-[20rem] flex-col gap-2">
           <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
             Subjects
             {subjects.length > 0 && (
