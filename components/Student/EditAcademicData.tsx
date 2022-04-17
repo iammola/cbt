@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { FunctionComponent, useEffect, useState } from "react";
 
 import Select from "components/Select";
+import { Divide } from "components/Misc";
 
 import type { RouteData, RouteError, StudentRecord } from "types";
 import type { AllTermsGetData, ClassesGETData, ClassSubjectGETData } from "types/api";
@@ -108,8 +109,8 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
   }, [selectedClass]);
 
   return (
-    <div className="w-full max-w-3xl">
-      <div className="mb-4 flex w-full items-center justify-start gap-x-6 border-b border-slate-300 py-3">
+    <div className="w-full max-w-xl">
+      <div className="mb-4 flex w-full items-center justify-start gap-x-6 py-3">
         <Select
           label="Term"
           colorPallette={{
@@ -131,6 +132,7 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
           Load Data
         </button>
       </div>
+      <Divide className="mt-3 mb-3 w-[85%] py-3" />
       <Select
         label="Class"
         colorPallette={{
@@ -144,7 +146,7 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
         selected={selectedClass}
         handleChange={setSelectedClass}
       />
-      <div className="mt-2 flex w-full min-w-[20rem] flex-col gap-2">
+      <div className="my-5 flex w-full min-w-[20rem] flex-col gap-2">
         <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
           Subjects
           {subjects.length > 0 && (
