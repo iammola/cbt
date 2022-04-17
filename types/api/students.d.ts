@@ -46,6 +46,8 @@ export type StudentCommentGETData = Pick<ResultRecord, "comments"> | null;
 
 export type StudentCommentPOSTData = { ok: boolean };
 
+export type StudentAcademicGETData = StudentRecord["academic"];
+
 export type StudentClassGETData = Omit<ClassRecord, "resultTemplate">;
 
 export type StudentSubjectsGETData = Pick<SubjectRecord, "_id" | "name">[];
