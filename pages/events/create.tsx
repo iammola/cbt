@@ -97,7 +97,7 @@ const CreateEvent: NextPage = () => {
   }
 
   return (
-    <>
+    <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 p-10">
       <Head>
         <title>Create Event | CBT | Grand Regal School</title>
         <meta
@@ -105,76 +105,74 @@ const CreateEvent: NextPage = () => {
           content="Event Registration | GRS CBT"
         />
       </Head>
-      <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-purple-500 p-10">
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
-        >
-          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create an</span> <span className="text-violet-500">Event</span>
-          </h1>
-          <Select
-            label="Classes"
-            colorPallette={{
-              activeCheckIconColor: "stroke-violet-600",
-              inactiveCheckIconColor: "stroke-violet-800",
-              activeOptionColor: "text-violet-900 bg-violet-100",
-              buttonBorderColor: "focus-visible:border-purple-500",
-              buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500",
-            }}
-            options={classes?.data}
-            selected={selectedClass}
-            handleChange={setSelectedClass}
-          />
-          <Select
-            label="Exams"
-            colorPallette={{
-              activeCheckIconColor: "stroke-violet-600",
-              inactiveCheckIconColor: "stroke-violet-800",
-              activeOptionColor: "text-violet-900 bg-violet-100",
-              buttonBorderColor: "focus-visible:border-purple-500",
-              buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500",
-            }}
-            options={exams}
-            selected={selectedExam}
-            handleChange={setSelectedExam}
-          />
-          <div className="flex w-full flex-col gap-2.5">
-            <label
-              htmlFor="date"
-              className="text-sm font-semibold text-gray-600"
-            >
-              Event Date
-            </label>
-            <input
-              required
-              id="date"
-              type="datetime-local"
-              onChange={(e) => setDate(new Date(e.target.value))}
-              min={format(addHours(new Date(), 1), "yyyy-MM-dd'T'HH:mm")}
-              value={date === null ? "" : format(date, "yyyy-MM-dd'T'HH:mm")}
-              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-violet-400"
-            />
-          </div>
-          <button
-            type="submit"
-            className={classNames(
-              "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
-              {
-                "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500": success === undefined,
-                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
-                "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
-              }
-            )}
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
+      >
+        <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
+          <span>Create an</span> <span className="text-violet-500">Event</span>
+        </h1>
+        <Select
+          label="Classes"
+          colorPallette={{
+            activeCheckIconColor: "stroke-violet-600",
+            inactiveCheckIconColor: "stroke-violet-800",
+            activeOptionColor: "text-violet-900 bg-violet-100",
+            buttonBorderColor: "focus-visible:border-purple-500",
+            buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500",
+          }}
+          options={classes?.data}
+          selected={selectedClass}
+          handleChange={setSelectedClass}
+        />
+        <Select
+          label="Exams"
+          colorPallette={{
+            activeCheckIconColor: "stroke-violet-600",
+            inactiveCheckIconColor: "stroke-violet-800",
+            activeOptionColor: "text-violet-900 bg-violet-100",
+            buttonBorderColor: "focus-visible:border-purple-500",
+            buttonOffsetFocusColor: "focus-visible:ring-offset-purple-500",
+          }}
+          options={exams}
+          selected={selectedExam}
+          handleChange={setSelectedExam}
+        />
+        <div className="flex w-full flex-col gap-2.5">
+          <label
+            htmlFor="date"
+            className="text-sm font-semibold text-gray-600"
           >
-            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
-            {success && <CheckIcon className="h-5 w-5 fill-white" />}
-            {success === false && <XIcon className="h-5 w-5 fill-white" />}
-            Create Event
-          </button>
-        </form>
-      </section>
-    </>
+            Event Date
+          </label>
+          <input
+            required
+            id="date"
+            type="datetime-local"
+            onChange={(e) => setDate(new Date(e.target.value))}
+            min={format(addHours(new Date(), 1), "yyyy-MM-dd'T'HH:mm")}
+            value={date === null ? "" : format(date, "yyyy-MM-dd'T'HH:mm")}
+            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-violet-400"
+          />
+        </div>
+        <button
+          type="submit"
+          className={classNames(
+            "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
+            {
+              "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500": success === undefined,
+              "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+              "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
+            }
+          )}
+        >
+          {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
+          {success && <CheckIcon className="h-5 w-5 fill-white" />}
+          {success === false && <XIcon className="h-5 w-5 fill-white" />}
+          Create Event
+        </button>
+      </form>
+    </section>
   );
 };
 

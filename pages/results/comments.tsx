@@ -103,7 +103,7 @@ const Comments: NextPage = () => {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
+
     if (!selectedTerm._id) return;
 
     try {
@@ -121,7 +121,7 @@ const Comments: NextPage = () => {
   }
 
   return (
-    <>
+    <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Head>
         <title>Comments | CBT | Grand Regal School</title>
         <meta
@@ -129,87 +129,85 @@ const Comments: NextPage = () => {
           content="Comments | GRS CBT"
         />
       </Head>
-      <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
-        <Sidebar />
-        <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
-          <Navbar />
-          <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
-            <div className="flex w-full items-end justify-center gap-4">
-              <Select
-                label="Terms"
-                options={terms?.data}
-                selected={selectedTerm}
-                colorPallette={{
-                  activeCheckIconColor: "stroke-indigo-600",
-                  inactiveCheckIconColor: "stroke-indigo-800",
-                  activeOptionColor: "text-indigo-900 bg-indigo-100",
-                  buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-                }}
-                handleChange={setSelectedTerm}
-              />
-              <Select
-                label="Class"
-                options={classes?.data}
-                selected={selectedClass}
-                colorPallette={{
-                  activeCheckIconColor: "stroke-indigo-600",
-                  inactiveCheckIconColor: "stroke-indigo-800",
-                  activeOptionColor: "text-indigo-900 bg-indigo-100",
-                  buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-                }}
-                handleChange={getStudents}
-              />
-              <Select
-                label="Student"
-                options={students.map(({ _id, name: { full } }) => ({
-                  _id,
-                  name: full,
-                }))}
-                selected={selectedStudent}
-                colorPallette={{
-                  activeCheckIconColor: "stroke-indigo-600",
-                  inactiveCheckIconColor: "stroke-indigo-800",
-                  activeOptionColor: "text-indigo-900 bg-indigo-100",
-                  buttonBorderColor: "focus-visible:border-indigo-500",
-                  buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-                }}
-                handleChange={setSelectedStudent}
-              />
+      <Sidebar />
+      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
+        <Navbar />
+        <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+          <div className="flex w-full items-end justify-center gap-4">
+            <Select
+              label="Terms"
+              options={terms?.data}
+              selected={selectedTerm}
+              colorPallette={{
+                activeCheckIconColor: "stroke-indigo-600",
+                inactiveCheckIconColor: "stroke-indigo-800",
+                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                buttonBorderColor: "focus-visible:border-indigo-500",
+                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+              }}
+              handleChange={setSelectedTerm}
+            />
+            <Select
+              label="Class"
+              options={classes?.data}
+              selected={selectedClass}
+              colorPallette={{
+                activeCheckIconColor: "stroke-indigo-600",
+                inactiveCheckIconColor: "stroke-indigo-800",
+                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                buttonBorderColor: "focus-visible:border-indigo-500",
+                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+              }}
+              handleChange={getStudents}
+            />
+            <Select
+              label="Student"
+              options={students.map(({ _id, name: { full } }) => ({
+                _id,
+                name: full,
+              }))}
+              selected={selectedStudent}
+              colorPallette={{
+                activeCheckIconColor: "stroke-indigo-600",
+                inactiveCheckIconColor: "stroke-indigo-800",
+                activeOptionColor: "text-indigo-900 bg-indigo-100",
+                buttonBorderColor: "focus-visible:border-indigo-500",
+                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+              }}
+              handleChange={setSelectedStudent}
+            />
+            <button
+              onClick={getComments}
+              className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+            >
+              Load Comments
+            </button>
+          </div>
+          {comment !== undefined && loadedStudent !== "" && (
+            <form
+              onSubmit={handleSubmit}
+              className="flex w-full grow flex-col items-center justify-start gap-7 py-10 px-3"
+            >
+              <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">{loadedStudent}</h4>
+              <div className="flex w-full flex-col items-start justify-center gap-3">
+                <h5 className="font-medium tracking-wide text-gray-700">Comment</h5>
+                <textarea
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className="w-full rounded-lg border-2 border-gray-600 p-3"
+                />
+              </div>
               <button
-                onClick={getComments}
-                className="mb-3 min-w-max rounded-md bg-gray-500 px-4 py-3 text-xs text-white shadow-md hover:bg-gray-600"
+                type="submit"
+                className="rounded-md bg-gray-500 px-12 py-2 text-white shadow-md hover:bg-gray-600"
               >
-                Load Comments
+                Save
               </button>
-            </div>
-            {comment !== undefined && loadedStudent !== "" && (
-              <form
-                onSubmit={handleSubmit}
-                className="flex w-full grow flex-col items-center justify-start gap-7 py-10 px-3"
-              >
-                <h4 className="text-2xl font-extrabold uppercase tracking-wider text-gray-800">{loadedStudent}</h4>
-                <div className="flex w-full flex-col items-start justify-center gap-3">
-                  <h5 className="font-medium tracking-wide text-gray-700">Comment</h5>
-                  <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    className="w-full rounded-lg border-2 border-gray-600 p-3"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="rounded-md bg-gray-500 px-12 py-2 text-white shadow-md hover:bg-gray-600"
-                >
-                  Save
-                </button>
-              </form>
-            )}
-          </section>
-        </main>
-      </section>
-    </>
+            </form>
+          )}
+        </section>
+      </main>
+    </section>
   );
 };
 

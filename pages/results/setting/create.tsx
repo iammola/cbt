@@ -114,7 +114,7 @@ const CreateScheme: NextPage = () => {
   }
 
   return (
-    <>
+    <section className="flex min-h-screen w-screen items-center justify-center bg-gray-300 p-10">
       <Head>
         <title>Create Scheme | CBT | Grand Regal School</title>
         <meta
@@ -122,145 +122,143 @@ const CreateScheme: NextPage = () => {
           content="Create Scheme | GRS CBT"
         />
       </Head>
-      <section className="flex min-h-screen w-screen items-center justify-center bg-gray-300 p-10">
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-2 rounded-3xl bg-white p-8 shadow-lg"
-        >
-          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create a</span> <span className="text-stone-500">Result Setting</span>
-          </h1>
-          <Select
-            label="Term"
-            options={terms?.data}
-            selected={selectedTerm}
-            handleChange={setSelectedTerm}
-          />
-          <Select
-            label="Class"
-            options={classes?.data}
-            selected={selectedClass}
-            colorPallette={{
-              activeCheckIconColor: "stroke-indigo-600",
-              inactiveCheckIconColor: "stroke-indigo-800",
-              activeOptionColor: "text-indigo-900 bg-indigo-100",
-              buttonBorderColor: "focus-visible:border-indigo-500",
-              buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-            }}
-            handleChange={setSelectedClass}
-          />
-          <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
-            <span className="text-sm font-semibold text-gray-600">Marking Scheme</span>
-            {scheme.map((s, p, a) => (
-              <div
-                key={s.limit}
-                className="flex w-full items-center justify-start gap-2"
-              >
-                <input
-                  required
-                  type="text"
-                  value={s.grade}
-                  placeholder="Grade"
-                  onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, grade: e.target.value } : s)))}
-                  className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
-                />
-                <input
-                  required
-                  type="text"
-                  value={s.description}
-                  placeholder="Description"
-                  onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, description: e.target.value } : s)))}
-                  className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
-                />
-                <input
-                  required
-                  max={100}
-                  step={0.1}
-                  type="number"
-                  value={s.limit}
-                  placeholder="Upper Limit"
-                  onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, limit: +e.target.value } : s)))}
-                  className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
-                />
-                {a.length > 1 && (
-                  <span
-                    onClick={() => setScheme(a.filter((_, i) => i !== p))}
-                    className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-100"
-                  >
-                    <XIcon className="h-5 w-5 fill-gray-600" />
-                  </span>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => setScheme([...scheme, { grade: "", description: "", limit: "" }])}
-              className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-2 rounded-3xl bg-white p-8 shadow-lg"
+      >
+        <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
+          <span>Create a</span> <span className="text-stone-500">Result Setting</span>
+        </h1>
+        <Select
+          label="Term"
+          options={terms?.data}
+          selected={selectedTerm}
+          handleChange={setSelectedTerm}
+        />
+        <Select
+          label="Class"
+          options={classes?.data}
+          selected={selectedClass}
+          colorPallette={{
+            activeCheckIconColor: "stroke-indigo-600",
+            inactiveCheckIconColor: "stroke-indigo-800",
+            activeOptionColor: "text-indigo-900 bg-indigo-100",
+            buttonBorderColor: "focus-visible:border-indigo-500",
+            buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+          }}
+          handleChange={setSelectedClass}
+        />
+        <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
+          <span className="text-sm font-semibold text-gray-600">Marking Scheme</span>
+          {scheme.map((s, p, a) => (
+            <div
+              key={s.limit}
+              className="flex w-full items-center justify-start gap-2"
             >
-              Add Scheme
-            </button>
-          </div>
-          <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
-            <span className="text-sm font-semibold text-gray-600">Result Fields</span>
-            {fields.map((f, b, a) => (
-              <div
-                key={b}
-                className="flex w-full items-center justify-start gap-2"
-              >
-                <input
-                  required
-                  type="text"
-                  value={f.name}
-                  placeholder="Name"
-                  onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, name: e.target.value } : s)))}
-                  className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
-                />
-                <input
-                  required
-                  type="text"
-                  value={f.alias}
-                  placeholder="Alias"
-                  onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, alias: e.target.value } : s)))}
-                  className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
-                />
-                <input
-                  min={0}
-                  required
-                  step={0.1}
-                  type="number"
-                  value={f.max}
-                  placeholder="Max"
-                  onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, max: +e.target.value } : s)))}
-                  className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
-                />
-                {a.length > 1 && (
-                  <span
-                    onClick={() => setFields(a.filter((_, i) => i !== b))}
-                    className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-100"
-                  >
-                    <XIcon className="h-5 w-5 fill-gray-600" />
-                  </span>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => setFields([...fields, { name: "", alias: "", max: "" }])}
-              className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
-            >
-              Add Field
-            </button>
-          </div>
+              <input
+                required
+                type="text"
+                value={s.grade}
+                placeholder="Grade"
+                onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, grade: e.target.value } : s)))}
+                className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
+              />
+              <input
+                required
+                type="text"
+                value={s.description}
+                placeholder="Description"
+                onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, description: e.target.value } : s)))}
+                className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
+              />
+              <input
+                required
+                max={100}
+                step={0.1}
+                type="number"
+                value={s.limit}
+                placeholder="Upper Limit"
+                onChange={(e) => setScheme(a.map((s, j) => (j === p ? { ...s, limit: +e.target.value } : s)))}
+                className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
+              />
+              {a.length > 1 && (
+                <span
+                  onClick={() => setScheme(a.filter((_, i) => i !== p))}
+                  className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-100"
+                >
+                  <XIcon className="h-5 w-5 fill-gray-600" />
+                </span>
+              )}
+            </div>
+          ))}
           <button
-            type="submit"
-            className="mt-3 flex items-center justify-center gap-4 rounded-md bg-stone-400 py-2.5 px-3 text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
+            type="button"
+            onClick={() => setScheme([...scheme, { grade: "", description: "", limit: "" }])}
+            className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
           >
-            Create Result Setting
+            Add Scheme
           </button>
-        </form>
-        {Notifications}
-      </section>
-    </>
+        </div>
+        <div className="flex w-full flex-col items-start justify-start gap-3 py-2">
+          <span className="text-sm font-semibold text-gray-600">Result Fields</span>
+          {fields.map((f, b, a) => (
+            <div
+              key={b}
+              className="flex w-full items-center justify-start gap-2"
+            >
+              <input
+                required
+                type="text"
+                value={f.name}
+                placeholder="Name"
+                onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, name: e.target.value } : s)))}
+                className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
+              />
+              <input
+                required
+                type="text"
+                value={f.alias}
+                placeholder="Alias"
+                onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, alias: e.target.value } : s)))}
+                className="grow rounded-md border border-gray-200 p-2 text-sm text-gray-700 focus:border-none"
+              />
+              <input
+                min={0}
+                required
+                step={0.1}
+                type="number"
+                value={f.max}
+                placeholder="Max"
+                onChange={(e) => setFields(a.map((s, j) => (j === b ? { ...s, max: +e.target.value } : s)))}
+                className="w-14 rounded-md border border-gray-200 p-2 text-center text-xs font-bold text-gray-700 focus:border-none"
+              />
+              {a.length > 1 && (
+                <span
+                  onClick={() => setFields(a.filter((_, i) => i !== b))}
+                  className="flex cursor-pointer items-center justify-center rounded-full p-2 hover:bg-gray-100"
+                >
+                  <XIcon className="h-5 w-5 fill-gray-600" />
+                </span>
+              )}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => setFields([...fields, { name: "", alias: "", max: "" }])}
+            className="mt-2 flex items-center justify-center gap-4 rounded-full bg-stone-400 py-1.5 px-5 text-sm text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
+          >
+            Add Field
+          </button>
+        </div>
+        <button
+          type="submit"
+          className="mt-3 flex items-center justify-center gap-4 rounded-md bg-stone-400 py-2.5 px-3 text-white shadow-md transition-colors hover:bg-stone-500 focus:outline-none  focus:ring-2 focus:ring-stone-500 focus:ring-offset-2 focus:ring-offset-white"
+        >
+          Create Result Setting
+        </button>
+      </form>
+      {Notifications}
+    </section>
   );
 };
 

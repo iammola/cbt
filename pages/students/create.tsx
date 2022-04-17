@@ -151,7 +151,7 @@ const CreateStudents: NextPage = () => {
   }, [selectedTerm, terms]);
 
   return (
-    <>
+    <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10">
       <Head>
         <title>Create Student Profile | CBT | Grand Regal School</title>
         <meta
@@ -159,233 +159,231 @@ const CreateStudents: NextPage = () => {
           content="Student Registration | GRS CBT"
         />
       </Head>
-      <section className="flex min-h-screen w-screen items-center justify-center bg-gradient-to-tr from-blue-400 to-indigo-500 p-10">
-        <form
-          onSubmit={handleSubmit}
-          className="flex max-w-2xl flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
-        >
-          <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
-            <span>Create a</span> <span className="text-indigo-500">Student Profile</span>
-          </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex max-w-2xl flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
+      >
+        <h1 className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
+          <span>Create a</span> <span className="text-indigo-500">Student Profile</span>
+        </h1>
+        <div className="flex w-full flex-col gap-2.5">
+          <label
+            htmlFor="fullName"
+            className="min-w-[20rem] text-sm font-semibold text-gray-600"
+          >
+            Full Name
+          </label>
+          <input
+            required
+            type="text"
+            id="fullName"
+            value={name.full ?? ""}
+            onChange={(e) => setName({ ...name, full: e.target.value })}
+            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+        <div className="flex w-full items-center justify-between gap-4">
           <div className="flex w-full flex-col gap-2.5">
             <label
-              htmlFor="fullName"
-              className="min-w-[20rem] text-sm font-semibold text-gray-600"
+              htmlFor="initials"
+              className="text-sm font-semibold text-gray-600"
             >
-              Full Name
+              Initials
             </label>
             <input
               required
               type="text"
-              id="fullName"
-              value={name.full ?? ""}
-              onChange={(e) => setName({ ...name, full: e.target.value })}
+              minLength={2}
+              maxLength={3}
+              id="initials"
+              value={name.initials ?? ""}
+              onChange={(e) => setName({ ...name, initials: e.target.value })}
               className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
           </div>
-          <div className="flex w-full items-center justify-between gap-4">
-            <div className="flex w-full flex-col gap-2.5">
-              <label
-                htmlFor="initials"
-                className="text-sm font-semibold text-gray-600"
-              >
-                Initials
-              </label>
-              <input
-                required
-                type="text"
-                minLength={2}
-                maxLength={3}
-                id="initials"
-                value={name.initials ?? ""}
-                onChange={(e) => setName({ ...name, initials: e.target.value })}
-                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-            </div>
-            <div className="flex w-full flex-col gap-2.5">
-              <label
-                htmlFor="email"
-                className="text-sm font-semibold text-gray-600"
-              >
-                E-mail
-              </label>
-              <input
-                required
-                id="email"
-                type="email"
-                value={email}
-                onChange={({ target: { value } }) => setEmail(value)}
-                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-            </div>
-          </div>
-          <div className="flex w-full items-center justify-between gap-4">
-            <div className="flex w-full flex-col gap-2.5">
-              <label
-                htmlFor="firstName"
-                className="text-sm font-semibold text-gray-600"
-              >
-                First Name
-              </label>
-              <input
-                required
-                type="text"
-                id="firstName"
-                value={name.first ?? ""}
-                onChange={(e) => setName({ ...name, first: e.target.value })}
-                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-            </div>
-            <div className="flex w-full flex-col gap-2.5">
-              <label
-                htmlFor="lastName"
-                className="text-sm font-semibold text-gray-600"
-              >
-                Last Name
-              </label>
-              <input
-                required
-                type="text"
-                id="lastName"
-                value={name.last ?? ""}
-                onChange={(e) => setName({ ...name, last: e.target.value })}
-                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-            </div>
-          </div>
-          <div className="flex w-full items-center justify-between gap-4">
-            <Select
-              label="Gender"
-              colorPallette={{
-                activeCheckIconColor: "stroke-indigo-600",
-                inactiveCheckIconColor: "stroke-indigo-800",
-                activeOptionColor: "text-indigo-900 bg-indigo-100",
-                buttonBorderColor: "focus-visible:border-indigo-500",
-                buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-              }}
-              options={genders}
-              selected={selectedGender}
-              handleChange={setSelectedGender}
+          <div className="flex w-full flex-col gap-2.5">
+            <label
+              htmlFor="email"
+              className="text-sm font-semibold text-gray-600"
+            >
+              E-mail
+            </label>
+            <input
+              required
+              id="email"
+              type="email"
+              value={email}
+              onChange={({ target: { value } }) => setEmail(value)}
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
-            <div className="flex w-full flex-col gap-2.5">
+          </div>
+        </div>
+        <div className="flex w-full items-center justify-between gap-4">
+          <div className="flex w-full flex-col gap-2.5">
+            <label
+              htmlFor="firstName"
+              className="text-sm font-semibold text-gray-600"
+            >
+              First Name
+            </label>
+            <input
+              required
+              type="text"
+              id="firstName"
+              value={name.first ?? ""}
+              onChange={(e) => setName({ ...name, first: e.target.value })}
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+          </div>
+          <div className="flex w-full flex-col gap-2.5">
+            <label
+              htmlFor="lastName"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Last Name
+            </label>
+            <input
+              required
+              type="text"
+              id="lastName"
+              value={name.last ?? ""}
+              onChange={(e) => setName({ ...name, last: e.target.value })}
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+          </div>
+        </div>
+        <div className="flex w-full items-center justify-between gap-4">
+          <Select
+            label="Gender"
+            colorPallette={{
+              activeCheckIconColor: "stroke-indigo-600",
+              inactiveCheckIconColor: "stroke-indigo-800",
+              activeOptionColor: "text-indigo-900 bg-indigo-100",
+              buttonBorderColor: "focus-visible:border-indigo-500",
+              buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+            }}
+            options={genders}
+            selected={selectedGender}
+            handleChange={setSelectedGender}
+          />
+          <div className="flex w-full flex-col gap-2.5">
+            <label
+              htmlFor="birthday"
+              className="text-sm font-semibold text-gray-600"
+            >
+              Birthday
+            </label>
+            <input
+              required
+              type="date"
+              id="birthday"
+              onChange={(e) => setBirthday(e.target.valueAsDate ?? undefined)}
+              value={birthday !== undefined ? format(birthday, "yyyy-MM-dd") : ""}
+              className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+          </div>
+        </div>
+        <Select
+          label="First Term"
+          colorPallette={{
+            activeCheckIconColor: "stroke-indigo-600",
+            inactiveCheckIconColor: "stroke-indigo-800",
+            activeOptionColor: "text-indigo-900 bg-indigo-100",
+            buttonBorderColor: "focus-visible:border-indigo-500",
+            buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+          }}
+          options={terms?.data}
+          selected={selectedTerm}
+          handleChange={setSelectedTerm}
+        />
+        <Select
+          label="Class"
+          colorPallette={{
+            activeCheckIconColor: "stroke-indigo-600",
+            inactiveCheckIconColor: "stroke-indigo-800",
+            activeOptionColor: "text-indigo-900 bg-indigo-100",
+            buttonBorderColor: "focus-visible:border-indigo-500",
+            buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+          }}
+          options={classes?.data}
+          selected={selectedClass}
+          handleChange={setSelectedClass}
+        />
+        <div className="5 flex w-full min-w-[20rem] flex-col gap-2">
+          <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
+            Subjects
+            {subjects.length > 0 && (
               <label
-                htmlFor="birthday"
-                className="text-sm font-semibold text-gray-600"
+                htmlFor="selectAll"
+                className="flex items-center justify-start gap-2 text-gray-500"
               >
-                Birthday
-              </label>
-              <input
-                required
-                type="date"
-                id="birthday"
-                onChange={(e) => setBirthday(e.target.valueAsDate ?? undefined)}
-                value={birthday !== undefined ? format(birthday, "yyyy-MM-dd") : ""}
-                className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-            </div>
-          </div>
-          <Select
-            label="First Term"
-            colorPallette={{
-              activeCheckIconColor: "stroke-indigo-600",
-              inactiveCheckIconColor: "stroke-indigo-800",
-              activeOptionColor: "text-indigo-900 bg-indigo-100",
-              buttonBorderColor: "focus-visible:border-indigo-500",
-              buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-            }}
-            options={terms?.data}
-            selected={selectedTerm}
-            handleChange={setSelectedTerm}
-          />
-          <Select
-            label="Class"
-            colorPallette={{
-              activeCheckIconColor: "stroke-indigo-600",
-              inactiveCheckIconColor: "stroke-indigo-800",
-              activeOptionColor: "text-indigo-900 bg-indigo-100",
-              buttonBorderColor: "focus-visible:border-indigo-500",
-              buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-            }}
-            options={classes?.data}
-            selected={selectedClass}
-            handleChange={setSelectedClass}
-          />
-          <div className="5 flex w-full min-w-[20rem] flex-col gap-2">
-            <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
-              Subjects
-              {subjects.length > 0 && (
-                <label
-                  htmlFor="selectAll"
-                  className="flex items-center justify-start gap-2 text-gray-500"
-                >
-                  <input
-                    type="checkbox"
-                    id="selectAll"
-                    className="accent-indigo-500"
-                    ref={(e) => {
-                      if (e !== null) {
-                        e.checked = selectedSubjects.length === subjects.length;
-                        e.indeterminate = selectedSubjects.length > 0 && selectedSubjects.length < subjects.length;
-                      }
-                    }}
-                    onChange={(e) => setSelectedSubjects(e.target.checked ? subjects.map(({ _id }) => _id) : [])}
-                  />
-                  Select All
-                </label>
-              )}
-            </span>
-            <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
-              {subjects.map(({ _id, name }) => (
-                <label
-                  key={_id}
-                  htmlFor={_id}
-                  className="flex gap-3 p-2"
-                >
-                  <input
-                    id={_id}
-                    type="checkbox"
-                    className="accent-indigo-500"
-                    checked={selectedSubjects.includes(_id)}
-                    onChange={({ target: { checked } }) =>
-                      checked
-                        ? setSelectedSubjects([...selectedSubjects, _id])
-                        : setSelectedSubjects(selectedSubjects.filter((selected) => selected !== _id))
+                <input
+                  type="checkbox"
+                  id="selectAll"
+                  className="accent-indigo-500"
+                  ref={(e) => {
+                    if (e !== null) {
+                      e.checked = selectedSubjects.length === subjects.length;
+                      e.indeterminate = selectedSubjects.length > 0 && selectedSubjects.length < subjects.length;
                     }
-                  />
-                  {name}
-                </label>
-              ))}
-              <div className="w-full pt-2 text-center empty:hidden">
-                {subjectsLoadingState === undefined &&
-                  subjects.length === 0 &&
-                  (selectedClass._id !== ""
-                    ? "No subjects linked to this class"
-                    : classes !== undefined && "Select a class ⬆️")}
-                {subjectsLoadingState === false && "Error loading subjects. Change selected class to retry"}
-                {subjectsLoadingState && `Loading ${selectedClass.name}'s subjects...`}
-              </div>
+                  }}
+                  onChange={(e) => setSelectedSubjects(e.target.checked ? subjects.map(({ _id }) => _id) : [])}
+                />
+                Select All
+              </label>
+            )}
+          </span>
+          <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
+            {subjects.map(({ _id, name }) => (
+              <label
+                key={_id}
+                htmlFor={_id}
+                className="flex gap-3 p-2"
+              >
+                <input
+                  id={_id}
+                  type="checkbox"
+                  className="accent-indigo-500"
+                  checked={selectedSubjects.includes(_id)}
+                  onChange={({ target: { checked } }) =>
+                    checked
+                      ? setSelectedSubjects([...selectedSubjects, _id])
+                      : setSelectedSubjects(selectedSubjects.filter((selected) => selected !== _id))
+                  }
+                />
+                {name}
+              </label>
+            ))}
+            <div className="w-full pt-2 text-center empty:hidden">
+              {subjectsLoadingState === undefined &&
+                subjects.length === 0 &&
+                (selectedClass._id !== ""
+                  ? "No subjects linked to this class"
+                  : classes !== undefined && "Select a class ⬆️")}
+              {subjectsLoadingState === false && "Error loading subjects. Change selected class to retry"}
+              {subjectsLoadingState && `Loading ${selectedClass.name}'s subjects...`}
             </div>
           </div>
-          <button
-            type="submit"
-            className={classNames(
-              "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
-              {
-                "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
-                "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
-                "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
-              }
-            )}
-          >
-            {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
-            {success && <CheckIcon className="h-5 w-5 fill-white" />}
-            {success === false && <XIcon className="h-5 w-5 fill-white" />}
-            Create Profile
-          </button>
-        </form>
-        {Notifications}
-      </section>
-    </>
+        </div>
+        <button
+          type="submit"
+          className={classNames(
+            "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
+            {
+              "bg-indigo-400 hover:bg-indigo-500 focus:ring-indigo-500": success === undefined,
+              "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
+              "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
+            }
+          )}
+        >
+          {loading && <LoadingIcon className="h-5 w-5 animate-spin stroke-white" />}
+          {success && <CheckIcon className="h-5 w-5 fill-white" />}
+          {success === false && <XIcon className="h-5 w-5 fill-white" />}
+          Create Profile
+        </button>
+      </form>
+      {Notifications}
+    </section>
   );
 };
 
