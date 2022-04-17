@@ -5,7 +5,7 @@ import { connect } from "db";
 import { StudentModel } from "db/models";
 
 import type { ServerResponse, StudentRecord } from "types";
-import type { StudentAcademicGETData, StudentAcademicPUTData } from "types/api";
+import type { StudentAcademicDELETEData, StudentAcademicGETData, StudentAcademicPUTData } from "types/api";
 
 async function updateStudentAcademicData(
   { id }: any,
@@ -48,6 +48,28 @@ async function updateStudentAcademicData(
   return [success, status, message];
 }
 
+async function deleteStudentAcademicData({ id, term }: any): Promise<ServerResponse<StudentAcademicDELETEData>> {
+  await connect();
+  let [success, status, message]: ServerResponse<StudentAcademicDELETEData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
+
+  const updateQuery = await StudentModel.updateOne({ _id: id }, { $pull: { "academic.term": term } });
+
+  [success, status, message] = [
+    true,
+    StatusCodes.OK,
+    {
+      data: { ok: updateQuery.acknowledged },
+      message: ReasonPhrases.OK,
+    },
+  ];
+
+  return [success, status, message];
+}
+
 async function getStudentAcademicData({ id, term }: any): Promise<ServerResponse<StudentAcademicGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentAcademicGETData> = [
@@ -85,12 +107,10 @@ async function getStudentAcademicData({ id, term }: any): Promise<ServerResponse
 }
 
 export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
-  let [success, status, message]: ServerResponse<StudentAcademicGETData | StudentAcademicPUTData> = [
-    false,
-    StatusCodes.INTERNAL_SERVER_ERROR,
-    ReasonPhrases.INTERNAL_SERVER_ERROR,
-  ];
-  const allowedMethods = ["GET", "PUT"];
+  let [success, status, message]: ServerResponse<
+    StudentAcademicGETData | StudentAcademicDELETEData | StudentAcademicPUTData
+  > = [false, StatusCodes.INTERNAL_SERVER_ERROR, ReasonPhrases.INTERNAL_SERVER_ERROR];
+  const allowedMethods = ["DELETE", "GET", "PUT"];
 
   if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
@@ -98,7 +118,9 @@ export default async function handler({ body, method, query }: NextApiRequest, r
   } else
     [success, status, message] = await (method === "GET"
       ? getStudentAcademicData(query)
-      : updateStudentAcademicData(query, JSON.parse(body)));
+      : method === "PUT"
+      ? updateStudentAcademicData(query, JSON.parse(body))
+      : deleteStudentAcademicData(query));
 
   if (typeof message !== "object") message = { message, error: message };
 
