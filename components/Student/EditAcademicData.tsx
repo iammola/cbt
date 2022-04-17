@@ -22,6 +22,14 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
   async function getAcademicData() {
     if (!selectedTerm._id || selectedTerm._id === data?.term.toString()) return;
 
+    setSubjects([]);
+    setData(undefined);
+    setUpdate(undefined);
+    setSelectedClass({
+      _id: "",
+      name: "Select class",
+    });
+
     try {
       const res = await fetch(`/api/students/${id}/academic?term=${selectedTerm._id}`);
       const result = await res.json();
