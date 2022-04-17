@@ -56,16 +56,26 @@ async function deleteStudentAcademicData({ id, term }: any): Promise<ServerRespo
     ReasonPhrases.INTERNAL_SERVER_ERROR,
   ];
 
-  const updateQuery = await StudentModel.updateOne({ _id: id }, { $pull: { "academic.term": term } });
+  try {
+    const updateQuery = await StudentModel.updateOne({ _id: id }, { $pull: { "academic.term": term } });
 
-  [success, status, message] = [
-    true,
-    StatusCodes.OK,
-    {
-      data: { ok: updateQuery.acknowledged },
-      message: ReasonPhrases.OK,
-    },
-  ];
+    [success, status, message] = [
+      true,
+      StatusCodes.OK,
+      {
+        data: { ok: updateQuery.acknowledged },
+        message: ReasonPhrases.OK,
+      },
+    ];
+  } catch (error: any) {
+    [status, message] = [
+      StatusCodes.BAD_REQUEST,
+      {
+        error: error.message,
+        message: ReasonPhrases.BAD_REQUEST,
+      },
+    ];
+  }
 
   return [success, status, message];
 }
