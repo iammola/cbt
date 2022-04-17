@@ -12,7 +12,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
 import type { ClientResponse, RouteData, RouteError } from "types";
-import type { ClassesGETData, ClassSubjectGETData } from "types/api";
+import type { AllTermsGetData, ClassesGETData, ClassSubjectGETData } from "types/api";
 
 const CreateStudents: NextPage = () => {
   const [addNotification, , Notifications] = useNotifications();
@@ -28,6 +28,10 @@ const CreateStudents: NextPage = () => {
   const [selectedClass, setSelectedClass] = useState({
     _id: "",
     name: "Select class",
+  });
+  const [selectedTerm, setSelectedTerm] = useState({
+    _id: "",
+    name: "Select term",
   });
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
@@ -45,6 +49,7 @@ const CreateStudents: NextPage = () => {
     []
   );
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
+  const { data: terms } = useSWR<RouteData<AllTermsGetData>, RouteError>("/api/terms/all");
   const { data: classes, error } = useSWR<RouteData<ClassesGETData>, RouteError>("/api/classes/?select=name");
 
   const [subjectsLoadingState, setSubjectsLoadingState] = useState<boolean | undefined>();
@@ -65,6 +70,7 @@ const CreateStudents: NextPage = () => {
           birthday,
           gender: selectedGender._id,
           academic: {
+            term: selectedTerm._id,
             class: selectedClass._id,
             subjects: selectedSubjects,
           },
@@ -130,6 +136,19 @@ const CreateStudents: NextPage = () => {
     }
     if (selectedClass._id !== "") fetchSubjects();
   }, [selectedClass]);
+
+  useEffect(() => {
+    if (!selectedTerm._id && terms?.data !== undefined) {
+      const term = terms.data.find((i) => i.current) as unknown as typeof selectedTerm;
+
+      setSelectedTerm(
+        term ?? {
+          _id: "",
+          name: "Select term",
+        }
+      );
+    }
+  }, [selectedTerm, terms]);
 
   return (
     <>
@@ -265,6 +284,19 @@ const CreateStudents: NextPage = () => {
               />
             </div>
           </div>
+          <Select
+            label="First Term"
+            colorPallette={{
+              activeCheckIconColor: "stroke-indigo-600",
+              inactiveCheckIconColor: "stroke-indigo-800",
+              activeOptionColor: "text-indigo-900 bg-indigo-100",
+              buttonBorderColor: "focus-visible:border-indigo-500",
+              buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+            }}
+            options={terms?.data}
+            selected={selectedTerm}
+            handleChange={setSelectedTerm}
+          />
           <Select
             label="Class"
             colorPallette={{
