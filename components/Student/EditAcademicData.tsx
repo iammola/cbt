@@ -62,7 +62,9 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
   }
 
   useEffect(() => {
-    if (!data) return;
+    if (data === undefined || update !== undefined) return;
+    if (data === null) return setUpdate({ term: selectedTerm._id } as unknown as StudentAcademic);
+
     const activeClass = classes?.data.find((d) => d._id === data.class);
 
     setUpdate(data);
@@ -70,7 +72,7 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
       _id: activeClass?._id.toString() ?? "",
       name: activeClass?.name ?? "Class not found",
     });
-  }, [classes?.data, data]);
+  }, [classes?.data, data, selectedTerm._id, update]);
 
   useEffect(() => {
     async function fetchSubjects() {
