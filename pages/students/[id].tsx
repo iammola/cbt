@@ -1,14 +1,40 @@
+import useSWR from "swr";
+import { useRouter } from "next/router";
+import { format } from "date-fns";
+
 import { Sidebar, Navbar } from "components/Layout";
 
 import type { NextPage } from "next";
+import type { RouteData } from "types";
+import type { StudentGETData } from "types/api";
 
 const Student: NextPage = () => {
+  const router = useRouter();
+  const { data: { data } = {} } = useSWR<RouteData<StudentGETData>>(
+    router.isReady && `/api/students/${router.query.id}?select=-academic`
+  );
+
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
       <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
         <Navbar />
-        <section className="flex w-full grow flex-col items-start justify-start gap-7 overflow-y-auto bg-gray-50 py-7 px-6"></section>
+        {data != undefined && (
+          <section className="w-full grow space-y-5 overflow-y-auto bg-gray-50 py-7 px-6">
+            <div className="w-full">
+              <h2 className="md:text-xl lg:text-3xl">{data.name.full}</h2>
+              <p className="flex w-full items-center justify-start gap-x-4 text-sm text-gray-600">
+                <a href={`mailto:${data.email}`}>
+                  <a className="text-inherit">{data.email}</a>
+                </a>
+                &middot;
+                <span>Born on {format(data.birthday, "do 'of' MMMM yyyy")}</span>
+                &middot;
+                <span>{data.gender === "F" ? "Female" : "Male"}</span>
+              </p>
+            </div>
+          </section>
+        )}
       </main>
     </section>
   );
