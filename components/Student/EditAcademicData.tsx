@@ -1,6 +1,8 @@
 import useSWR from "swr";
 import { FunctionComponent, useEffect, useState } from "react";
 
+import Select from "components/Select";
+
 import type { RouteData, RouteError, StudentRecord } from "types";
 import type { AllTermsGetData, ClassesGETData, ClassSubjectGETData } from "types/api";
 
@@ -70,7 +72,103 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
     if (selectedClass._id) fetchSubjects();
   }, [selectedClass]);
 
-  return <></>;
+  return (
+    <div>
+      <div className="mb-4 flex w-full items-center justify-start gap-x-6 border-b border-slate-300 py-3">
+        <Select
+          label="Term"
+          colorPallette={{
+            activeCheckIconColor: "stroke-indigo-600",
+            inactiveCheckIconColor: "stroke-indigo-800",
+            activeOptionColor: "text-indigo-900 bg-indigo-100",
+            buttonBorderColor: "focus-visible:border-indigo-500",
+            buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+          }}
+          options={terms?.data}
+          selected={selectedTerm}
+          handleChange={setSelectedTerm}
+        />
+        <button
+          type="button"
+          onClick={getAcademicData}
+          className="bg-gray-600 px-5 py-3 text-sm tracking-wide text-white"
+        >
+          Load Data
+        </button>
+      </div>
+      <Select
+        label="Class"
+        colorPallette={{
+          activeCheckIconColor: "stroke-indigo-600",
+          inactiveCheckIconColor: "stroke-indigo-800",
+          activeOptionColor: "text-indigo-900 bg-indigo-100",
+          buttonBorderColor: "focus-visible:border-indigo-500",
+          buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+        }}
+        options={classes?.data}
+        selected={selectedClass}
+        handleChange={setSelectedClass}
+      />
+      <div className="mt-2 flex w-full min-w-[20rem] flex-col gap-2">
+        <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
+          Subjects
+          {subjects.length > 0 && (
+            <label
+              htmlFor="selectAll"
+              className="flex items-center justify-start gap-2 text-gray-500"
+            >
+              <input
+                type="checkbox"
+                id="selectAll"
+                className="accent-indigo-500"
+                ref={(e) => {
+                  if (e !== null) {
+                    const length = update?.subjects.length ?? 0;
+                    e.checked = length === subjects.length;
+                    e.indeterminate = length > 0 && length < subjects.length;
+                  }
+                }}
+                onChange={(e) =>
+                  update &&
+                  setUpdate({
+                    ...update,
+                    subjects: e.target.checked ? subjects.map(({ _id }) => _id) : [],
+                  })
+                }
+              />
+              Select All
+            </label>
+          )}
+        </span>
+        <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
+          {subjects.map(({ _id, name }) => (
+            <label
+              key={_id}
+              htmlFor={_id}
+              className="flex gap-3 p-2"
+            >
+              <input
+                id={_id}
+                type="checkbox"
+                className="accent-indigo-500"
+                checked={update?.subjects.includes(_id)}
+                onChange={({ target: { checked } }) =>
+                  update &&
+                  setUpdate({
+                    ...update,
+                    subjects: checked
+                      ? [...update.subjects, _id]
+                      : update.subjects.filter((selected) => selected !== _id),
+                  })
+                }
+              />
+              {name}
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 type Props = Record<"id", string>;
