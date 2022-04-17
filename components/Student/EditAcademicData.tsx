@@ -33,6 +33,8 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
       name: "Select class",
     });
 
+    alert("Loading data");
+
     try {
       const res = await fetch(`/api/students/${id}/academic?term=${selectedTerm._id}`);
       const result = await res.json();
@@ -46,6 +48,8 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
 
   async function updateAcademicDate() {
     if (!update?.class) return;
+
+    alert("Updating");
 
     try {
       const res = await fetch(`/api/students/${id}/academic/`, {
@@ -64,6 +68,8 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
 
   async function deleteAcademicData() {
     if (!selectedTerm._id) return;
+
+    alert("Deleting");
 
     try {
       const res = await fetch(`/api/students/${id}/academic/?term=${selectedTerm._id}`, { method: "DELETE" });
@@ -93,6 +99,7 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
   useEffect(() => {
     async function fetchSubjects() {
       setSubjects([]);
+      alert("Loading subjects");
 
       try {
         const res = await fetch(`/api/classes/${selectedClass._id}/subjects`);
