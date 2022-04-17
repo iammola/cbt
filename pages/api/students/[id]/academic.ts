@@ -79,17 +79,21 @@ async function getStudentAcademicData({ id, term }: any): Promise<ServerResponse
   ];
 
   try {
-    const student = await StudentModel.findOne(
-      Object.assign({ _id: id }, term && { "academic.term": term }),
-      `academic${term ? ".$" : ""}`
-    ).lean();
+    const [student, data] = await Promise.all([
+      StudentModel.exists({ _id: id }),
+      StudentModel.findOne(
+        Object.assign({ _id: id }, term && { "academic.term": term }),
+        `academic${term ? ".$" : ""}`
+      ).lean(),
+    ]);
+
     if (student === null) throw new Error("Student not found");
 
     [success, status, message] = [
       true,
       StatusCodes.OK,
       {
-        data: student.academic,
+        data: data?.academic ?? [],
         message: ReasonPhrases.OK,
       },
     ];
