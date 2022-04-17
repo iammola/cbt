@@ -61,6 +61,21 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
     }
   }
 
+  async function deleteAcademicData() {
+    if (!selectedTerm._id) return;
+
+    try {
+      const res = await fetch(`/api/students/${id}/academic/?term=${selectedTerm._id}`, { method: "DELETE" });
+      const result = await res.json();
+
+      if (result.success && result.data.ok) alert("Success");
+      else throw new Error(result.error);
+    } catch (error) {
+      console.log({ error });
+      alert("Error deleting data");
+    }
+  }
+
   useEffect(() => {
     if (data === undefined || update !== undefined) return;
     if (data === null) return setUpdate({ term: selectedTerm._id } as unknown as StudentAcademic);
@@ -187,13 +202,22 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
           ))}
         </div>
       </div>
-      <button
-        type="button"
-        onClick={updateAcademicDate}
-        className="rounded-md bg-gray-500 px-4 py-3 tracking-wide text-white"
-      >
-        Save Changes
-      </button>
+      <div className="flex items-center justify-start gap-x-4 py-2">
+        <button
+          type="button"
+          onClick={updateAcademicDate}
+          className="rounded-md bg-gray-500 px-4 py-3 tracking-wide text-white"
+        >
+          Save Changes
+        </button>
+        <button
+          type="button"
+          onClick={deleteAcademicData}
+          className="rounded-md bg-red-700 px-4 py-3 tracking-wide text-white"
+        >
+          Delete Term
+        </button>
+      </div>
     </div>
   );
 };
