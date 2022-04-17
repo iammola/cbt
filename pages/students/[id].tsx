@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
 
+import { EditData } from "components/Student";
 import { Sidebar, Navbar } from "components/Layout";
 
 import type { NextPage } from "next";
@@ -10,9 +11,43 @@ import type { StudentGETData } from "types/api";
 
 const Student: NextPage = () => {
   const router = useRouter();
-  const { data: { data } = {} } = useSWR<RouteData<StudentGETData>>(
+  const { data: { data } = {}, mutate } = useSWR<RouteData<StudentGETData>>(
     router.isReady && `/api/students/${router.query.id}?select=-academic`
   );
+
+  async function updateStudent(update: Omit<NonNullable<StudentGETData>, "_id" | "academic">) {
+    if (data == undefined) return;
+
+    function isEqual<T extends unknown>(test: T, compare: T): boolean {
+      if (["number", "string"].includes(typeof test)) return compare === test;
+
+      if (test instanceof Date) return test.getTime() === (compare as Date).getTime();
+
+      if (test instanceof Object)
+        return Object.entries(test).every(([key, val]) => isEqual(val, (compare as Record<string, string>)[key]));
+
+      return false;
+    }
+
+    const body = Object.entries(update).reduce(
+      (acc, [key, value]) => Object.assign(acc, !isEqual(data[key as keyof typeof data], value) && { [key]: value }),
+      {} as typeof data
+    );
+
+    try {
+      const res = await fetch(`/api/students/${router.query.id}/`, {
+        method: "PUT",
+        body: JSON.stringify(body),
+      });
+      const result = await res.json();
+
+      if (result.success) mutate();
+      else throw new Error(result.error);
+    } catch (error) {
+      alert("Error Updating Data");
+      console.log({ error });
+    }
+  }
 
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
@@ -33,6 +68,11 @@ const Student: NextPage = () => {
                 <span>{data.gender === "F" ? "Female" : "Male"}</span>
               </p>
             </div>
+            <h3>Edit {data.name.first}&apos;s Basic Details</h3>
+            <EditData
+              {...data}
+              onSubmit={updateStudent}
+            />
           </section>
         )}
       </main>
