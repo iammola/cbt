@@ -134,8 +134,8 @@ export const EditData: FunctionComponent<Props> = ({ onSubmit, ...props }) => {
             required
             type="date"
             id="birthday"
-            value={format(data.birthday, "yyyy-MM-dd")}
-            onChange={(e) => updateData("birthday", e.target.valueAsDate ?? data.birthday)}
+            value={format(new Date(data.birthday), "yyyy-MM-dd")}
+            onChange={(e) => updateData("birthday", e.target.valueAsDate ?? new Date(data.birthday))}
             className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>

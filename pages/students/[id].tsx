@@ -65,7 +65,7 @@ const Student: NextPage = () => {
                   <a className="text-inherit">{data.email}</a>
                 </a>
                 &middot;
-                <span>Born on {format(data.birthday, "do 'of' MMMM yyyy")}</span>
+                <span>Born on {format(new Date(data.birthday), "do 'of' MMMM yyyy")}</span>
                 &middot;
                 <span>{data.gender === "F" ? "Female" : "Male"}</span>
               </p>
