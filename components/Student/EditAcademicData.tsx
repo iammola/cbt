@@ -132,94 +132,98 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
           Load Data
         </button>
       </div>
-      <Divide className="mt-3 mb-3 w-[85%] py-3" />
-      <Select
-        label="Class"
-        colorPallette={{
-          activeCheckIconColor: "stroke-indigo-600",
-          inactiveCheckIconColor: "stroke-indigo-800",
-          activeOptionColor: "text-indigo-900 bg-indigo-100",
-          buttonBorderColor: "focus-visible:border-indigo-500",
-          buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-        }}
-        options={classes?.data}
-        selected={selectedClass}
-        handleChange={setSelectedClass}
-      />
-      <div className="my-5 flex w-full min-w-[20rem] flex-col gap-2">
-        <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
-          Subjects
-          {subjects.length > 0 && (
-            <label
-              htmlFor="selectAll"
-              className="flex items-center justify-start gap-2 text-gray-500"
+      {data !== undefined && (
+        <>
+          <Divide className="mt-3 mb-3 w-[85%] py-3" />
+          <Select
+            label="Class"
+            colorPallette={{
+              activeCheckIconColor: "stroke-indigo-600",
+              inactiveCheckIconColor: "stroke-indigo-800",
+              activeOptionColor: "text-indigo-900 bg-indigo-100",
+              buttonBorderColor: "focus-visible:border-indigo-500",
+              buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+            }}
+            options={classes?.data}
+            selected={selectedClass}
+            handleChange={setSelectedClass}
+          />
+          <div className="my-5 flex w-full min-w-[20rem] flex-col gap-2">
+            <span className="flex items-center justify-start gap-3 text-sm font-semibold text-gray-600">
+              Subjects
+              {subjects.length > 0 && (
+                <label
+                  htmlFor="selectAll"
+                  className="flex items-center justify-start gap-2 text-gray-500"
+                >
+                  <input
+                    type="checkbox"
+                    id="selectAll"
+                    className="accent-indigo-500"
+                    ref={(e) => {
+                      if (e !== null) {
+                        const length = update?.subjects.length ?? 0;
+                        e.checked = length === subjects.length;
+                        e.indeterminate = length > 0 && length < subjects.length;
+                      }
+                    }}
+                    onChange={(e) =>
+                      update &&
+                      setUpdate({
+                        ...update,
+                        subjects: e.target.checked ? subjects.map(({ _id }) => _id) : [],
+                      })
+                    }
+                  />
+                  Select All
+                </label>
+              )}
+            </span>
+            <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
+              {subjects.map(({ _id, name }) => (
+                <label
+                  key={_id}
+                  htmlFor={_id}
+                  className="flex gap-3 p-2"
+                >
+                  <input
+                    id={_id}
+                    type="checkbox"
+                    className="accent-indigo-500"
+                    checked={update?.subjects.includes(_id)}
+                    onChange={({ target: { checked } }) =>
+                      update &&
+                      setUpdate({
+                        ...update,
+                        subjects: checked
+                          ? [...update.subjects, _id]
+                          : update.subjects.filter((selected) => selected !== _id),
+                      })
+                    }
+                  />
+                  {name}
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center justify-start gap-x-4 py-2">
+            <button
+              type="button"
+              onClick={updateAcademicDate}
+              className="rounded-md bg-gray-500 px-4 py-3 tracking-wide text-white"
             >
-              <input
-                type="checkbox"
-                id="selectAll"
-                className="accent-indigo-500"
-                ref={(e) => {
-                  if (e !== null) {
-                    const length = update?.subjects.length ?? 0;
-                    e.checked = length === subjects.length;
-                    e.indeterminate = length > 0 && length < subjects.length;
-                  }
-                }}
-                onChange={(e) =>
-                  update &&
-                  setUpdate({
-                    ...update,
-                    subjects: e.target.checked ? subjects.map(({ _id }) => _id) : [],
-                  })
-                }
-              />
-              Select All
-            </label>
-          )}
-        </span>
-        <div className="flex w-full flex-wrap gap-x-4 gap-y-3 text-sm">
-          {subjects.map(({ _id, name }) => (
-            <label
-              key={_id}
-              htmlFor={_id}
-              className="flex gap-3 p-2"
+              Save Changes
+            </button>
+            <button
+              type="button"
+              onClick={deleteAcademicData}
+              className="rounded-md bg-red-700 px-4 py-3 tracking-wide text-white"
             >
-              <input
-                id={_id}
-                type="checkbox"
-                className="accent-indigo-500"
-                checked={update?.subjects.includes(_id)}
-                onChange={({ target: { checked } }) =>
-                  update &&
-                  setUpdate({
-                    ...update,
-                    subjects: checked
-                      ? [...update.subjects, _id]
-                      : update.subjects.filter((selected) => selected !== _id),
-                  })
-                }
-              />
-              {name}
-            </label>
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center justify-start gap-x-4 py-2">
-        <button
-          type="button"
-          onClick={updateAcademicDate}
-          className="rounded-md bg-gray-500 px-4 py-3 tracking-wide text-white"
-        >
-          Save Changes
-        </button>
-        <button
-          type="button"
-          onClick={deleteAcademicData}
-          className="rounded-md bg-red-700 px-4 py-3 tracking-wide text-white"
-        >
-          Delete Term
-        </button>
-      </div>
+              Delete Term
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
