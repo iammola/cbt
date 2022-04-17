@@ -1,0 +1,1 @@
+export { EditData } from "./EditData";
