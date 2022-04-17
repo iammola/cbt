@@ -4,8 +4,49 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { StudentModel } from "db/models";
 
-import type { ServerResponse } from "types";
-import type { StudentAcademicGETData } from "types/api";
+import type { ServerResponse, StudentRecord } from "types";
+import type { StudentAcademicGETData, StudentAcademicPUTData } from "types/api";
+
+async function updateStudentAcademicData(
+  { id }: any,
+  body: StudentRecord["academic"][number]
+): Promise<ServerResponse<StudentAcademicPUTData>> {
+  await connect();
+  let [success, status, message]: ServerResponse<StudentAcademicPUTData> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
+
+  try {
+    const academicTermExists = await StudentModel.exists({ _id: id, "academic.term": body.term });
+    const query = academicTermExists ? { "academic.$[i]": body } : { $push: { academic: body } };
+
+    const updateQuery = await StudentModel.updateOne({ _id: id }, query, {
+      runValidators: true,
+      arrayFilters: [{ "i.term": body.term }],
+    });
+
+    [success, status, message] = [
+      true,
+      StatusCodes.OK,
+      {
+        data: { ok: updateQuery.acknowledged },
+        message: ReasonPhrases.OK,
+      },
+    ];
+  } catch (error: any) {
+    [status, message] = [
+      StatusCodes.BAD_REQUEST,
+      {
+        error: error.message,
+        message: ReasonPhrases.BAD_REQUEST,
+      },
+    ];
+  }
+
+  return [success, status, message];
+}
 
 async function getStudentAcademicData({ id, term }: any): Promise<ServerResponse<StudentAcademicGETData>> {
   await connect();
@@ -43,20 +84,25 @@ async function getStudentAcademicData({ id, term }: any): Promise<ServerResponse
   return [success, status, message];
 }
 
-export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
-  let [success, status, message]: ServerResponse<StudentAcademicGETData> = [
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<StudentAcademicGETData | StudentAcademicPUTData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
   ];
-  const allowedMethods = "GET";
+  const allowedMethods = ["GET", "PUT"];
 
-  if (allowedMethods !== method) {
+  if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else [success, status, message] = await getStudentAcademicData(query);
+  } else
+    [success, status, message] = await (method === "GET"
+      ? getStudentAcademicData(query)
+      : updateStudentAcademicData(query, JSON.parse(body)));
 
   if (typeof message !== "object") message = { message, error: message };
 
   res.status(status).json({ success, ...message });
 }
+
+type Update = Record<"success", boolean>;
