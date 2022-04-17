@@ -1,9 +1,10 @@
 import useSWR from "swr";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
 
-import { EditData } from "components/Student";
 import { Sidebar, Navbar } from "components/Layout";
+import { EditData, EditAcademicData } from "components/Student";
 
 import type { NextPage } from "next";
 import type { RouteData } from "types";
@@ -11,6 +12,7 @@ import type { StudentGETData } from "types/api";
 
 const Student: NextPage = () => {
   const router = useRouter();
+  const [editAcademic, setEditAcademic] = useState(false);
   const { data: { data } = {}, mutate } = useSWR<RouteData<StudentGETData>>(
     router.isReady && `/api/students/${router.query.id}?select=-academic`
   );
@@ -73,6 +75,17 @@ const Student: NextPage = () => {
               {...data}
               onSubmit={updateStudent}
             />
+            <h3>Edit {data.name.first}&apos;s Academic Details</h3>
+            {!editAcademic ? (
+              <button
+                type="button"
+                onClick={() => setEditAcademic(true)}
+              >
+                Load
+              </button>
+            ) : (
+              <EditAcademicData id={data._id.toString()} />
+            )}
           </section>
         )}
       </main>
