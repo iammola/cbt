@@ -43,6 +43,24 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
     }
   }
 
+  async function updateAcademicDate() {
+    if (!update?.class) return;
+
+    try {
+      const res = await fetch(`/api/students/${id}/academic/`, {
+        method: "PUT",
+        body: JSON.stringify(update),
+      });
+      const result = await res.json();
+
+      if (result.success && result.data.ok) alert("Success");
+      else throw new Error(result.error);
+    } catch (error) {
+      console.log({ error });
+      alert("Error updating data");
+    }
+  }
+
   useEffect(() => {
     if (!data) return;
     const activeClass = classes?.data.find((d) => d._id === data.class);
@@ -167,6 +185,13 @@ export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
           ))}
         </div>
       </div>
+      <button
+        type="button"
+        onClick={updateAcademicDate}
+        className="rounded-md bg-gray-500 px-4 py-3 tracking-wide text-white"
+      >
+        Save Changes
+      </button>
     </div>
   );
 };
