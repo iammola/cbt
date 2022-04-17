@@ -72,8 +72,8 @@ const Student: NextPage = () => {
               </p>
             </div>
             <Divide className="w-[85%] py-2" />
-            <div className="flex w-full items-center justify-center py-3">
-              <h3 className="text-lg font-medium tracking-wide">Basic Details</h3>
+            <div className="w-full space-y-5 py-3">
+              <h3 className="text-lg font-medium tracking-wide text-slate-700">Basic Details</h3>
               <EditData
                 {...data}
                 onSubmit={updateStudent}
@@ -81,7 +81,7 @@ const Student: NextPage = () => {
             </div>
             <Divide className="w-[85%] py-2" />
             <div className="flex w-full max-w-2xl items-center justify-center py-3">
-              <h3 className="text-lg font-medium tracking-wide">Academics</h3>
+              <h3 className="text-lg font-medium tracking-wide text-slate-700">Academics</h3>
               {!editAcademic ? (
                 <button
                   type="button"

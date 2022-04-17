@@ -21,7 +21,7 @@ export const EditData: FunctionComponent<Props> = ({ onSubmit, ...props }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex max-w-2xl flex-col gap-7 rounded-3xl bg-white p-8 shadow-lg"
+      className="flex flex-wrap gap-x-5 gap-y-4"
     >
       <div className="flex w-full flex-col gap-2.5">
         <label
@@ -39,106 +39,100 @@ export const EditData: FunctionComponent<Props> = ({ onSubmit, ...props }) => {
           className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
         />
       </div>
-      <div className="flex w-full items-center justify-between gap-4">
-        <div className="flex w-full flex-col gap-2.5">
-          <label
-            htmlFor="initials"
-            className="text-sm font-semibold text-gray-600"
-          >
-            Initials
-          </label>
-          <input
-            required
-            type="text"
-            minLength={2}
-            maxLength={3}
-            id="initials"
-            value={data.name.initials ?? ""}
-            onChange={(e) => updateData("name", { ...data.name, initials: e.target.value })}
-            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-        <div className="flex w-full flex-col gap-2.5">
-          <label
-            htmlFor="email"
-            className="text-sm font-semibold text-gray-600"
-          >
-            E-mail
-          </label>
-          <input
-            required
-            id="email"
-            type="email"
-            value={data.email}
-            onChange={({ target: { value } }) => updateData("email", value)}
-            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-      </div>
-      <div className="flex w-full items-center justify-between gap-4">
-        <div className="flex w-full flex-col gap-2.5">
-          <label
-            htmlFor="firstName"
-            className="text-sm font-semibold text-gray-600"
-          >
-            First Name
-          </label>
-          <input
-            required
-            type="text"
-            id="firstName"
-            value={data.name.first ?? ""}
-            onChange={(e) => updateData("name", { ...data.name, first: e.target.value })}
-            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-        <div className="flex w-full flex-col gap-2.5">
-          <label
-            htmlFor="lastName"
-            className="text-sm font-semibold text-gray-600"
-          >
-            Last Name
-          </label>
-          <input
-            required
-            type="text"
-            id="lastName"
-            value={data.name.last ?? ""}
-            onChange={(e) => updateData("name", { ...data.name, last: e.target.value })}
-            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-      </div>
-      <div className="flex w-full items-center justify-between gap-4">
-        <Select
-          label="Gender"
-          colorPallette={{
-            activeCheckIconColor: "stroke-indigo-600",
-            inactiveCheckIconColor: "stroke-indigo-800",
-            activeOptionColor: "text-indigo-900 bg-indigo-100",
-            buttonBorderColor: "focus-visible:border-indigo-500",
-            buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
-          }}
-          options={genders}
-          handleChange={(e) => updateData("gender", e._id as "M" | "F")}
-          selected={genders.find((g) => g._id === data.gender) ?? genders[0]}
+      <div className="flex w-full flex-col gap-2.5">
+        <label
+          htmlFor="initials"
+          className="text-sm font-semibold text-gray-600"
+        >
+          Initials
+        </label>
+        <input
+          required
+          type="text"
+          minLength={2}
+          maxLength={3}
+          id="initials"
+          value={data.name.initials ?? ""}
+          onChange={(e) => updateData("name", { ...data.name, initials: e.target.value })}
+          className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
         />
-        <div className="flex w-full flex-col gap-2.5">
-          <label
-            htmlFor="birthday"
-            className="text-sm font-semibold text-gray-600"
-          >
-            Birthday
-          </label>
-          <input
-            required
-            type="date"
-            id="birthday"
-            value={format(new Date(data.birthday), "yyyy-MM-dd")}
-            onChange={(e) => updateData("birthday", e.target.valueAsDate ?? new Date(data.birthday))}
-            className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
+      </div>
+      <div className="flex w-full flex-col gap-2.5">
+        <label
+          htmlFor="email"
+          className="text-sm font-semibold text-gray-600"
+        >
+          E-mail
+        </label>
+        <input
+          required
+          id="email"
+          type="email"
+          value={data.email}
+          onChange={({ target: { value } }) => updateData("email", value)}
+          className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+      </div>
+      <div className="flex w-full flex-col gap-2.5">
+        <label
+          htmlFor="firstName"
+          className="text-sm font-semibold text-gray-600"
+        >
+          First Name
+        </label>
+        <input
+          required
+          type="text"
+          id="firstName"
+          value={data.name.first ?? ""}
+          onChange={(e) => updateData("name", { ...data.name, first: e.target.value })}
+          className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+      </div>
+      <div className="flex w-full flex-col gap-2.5">
+        <label
+          htmlFor="lastName"
+          className="text-sm font-semibold text-gray-600"
+        >
+          Last Name
+        </label>
+        <input
+          required
+          type="text"
+          id="lastName"
+          value={data.name.last ?? ""}
+          onChange={(e) => updateData("name", { ...data.name, last: e.target.value })}
+          className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+      </div>
+      <Select
+        label="Gender"
+        colorPallette={{
+          activeCheckIconColor: "stroke-indigo-600",
+          inactiveCheckIconColor: "stroke-indigo-800",
+          activeOptionColor: "text-indigo-900 bg-indigo-100",
+          buttonBorderColor: "focus-visible:border-indigo-500",
+          buttonOffsetFocusColor: "focus-visible:ring-offset-indigo-500",
+        }}
+        options={genders}
+        handleChange={(e) => updateData("gender", e._id as "M" | "F")}
+        selected={genders.find((g) => g._id === data.gender) ?? genders[0]}
+      />
+      <div className="flex w-full flex-col gap-2.5">
+        <label
+          htmlFor="birthday"
+          className="text-sm font-semibold text-gray-600"
+        >
+          Birthday
+        </label>
+        <input
+          required
+          type="date"
+          id="birthday"
+          value={format(new Date(data.birthday), "yyyy-MM-dd")}
+          onChange={(e) => updateData("birthday", e.target.valueAsDate ?? new Date(data.birthday))}
+          className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
       </div>
       <button
         type="submit"
