@@ -1,3 +1,4 @@
+import type { Model } from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -9,7 +10,7 @@ import type { LoginData } from "types/api";
 
 import { promiseAny } from "utils";
 
-async function findUser(model: typeof TeacherModel | typeof StudentModel, access: "Teacher" | "Student", code: number) {
+async function findUser<M extends Model<any>>(model: M, access: "Teacher" | "Student", code: number) {
   const data = await model.findOne({ code }).select("name email").lean();
   if (data === null) throw new Error("User does not exist");
 
