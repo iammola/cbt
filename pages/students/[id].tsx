@@ -61,7 +61,7 @@ const Student: NextPage = () => {
       <Head>
         <title>{data?.name.full}&apos; Profile | GRS CBT</title>
       </Head>
-      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
+      <main className="flex h-full grow flex-col items-start justify-start divide-x-[1.5px] divide-gray-200">
         <Navbar />
         {data != undefined && (
           <section className="w-full grow space-y-5 overflow-y-auto bg-gray-50 py-7 px-6">
