@@ -1,7 +1,8 @@
 import useSWR from "swr";
+import Head from "next/head";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
 
 import { Divide } from "components/Misc";
 import { Sidebar, Navbar } from "components/Layout";
@@ -57,6 +58,9 @@ const Student: NextPage = () => {
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
       <Sidebar />
+      <Head>
+        <title>{data?.name.full}&apos; Profile | GRS CBT</title>
+      </Head>
       <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
         <Navbar />
         {data != undefined && (
