@@ -1,14 +1,12 @@
 import useSWR from "swr";
 import { useCookies } from "react-cookie";
-import { FunctionComponent } from "react";
-
 import Subjects from "./Subjects";
 import { Sidebar, Navbar } from "components/Layout";
 
 import type { RouteData } from "types";
 import type { TeacherSubjectsExtendGETData } from "types/api";
 
-const Home: FunctionComponent = () => {
+const Home: React.FC = () => {
   const [{ account }] = useCookies(["account"]);
   const { data: subjectsItems } = useSWR<RouteData<TeacherSubjectsExtendGETData>>(
     account !== undefined ? `/api/teachers/${account._id}/subjects/extend` : null

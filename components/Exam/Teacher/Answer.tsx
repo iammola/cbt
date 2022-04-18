@@ -1,18 +1,10 @@
-import { FunctionComponent } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
 import type { TeacherAnswerProps } from "types";
 
-const Answer: FunctionComponent<TeacherAnswerProps> = ({
-  id,
-  number,
-  answer,
-  isCorrect,
-  deleteAnswer,
-  handleChange,
-}) => {
+const Answer: React.FC<TeacherAnswerProps> = ({ id, number, answer, isCorrect, deleteAnswer, handleChange }) => {
   return (
     <>
       <input

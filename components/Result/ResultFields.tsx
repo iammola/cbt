@@ -1,10 +1,8 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 
 import type { ClassResultTemplate } from "types";
 
-const ResultFields: FunctionComponent<ResultFieldsProps> = ({ fields, className }) => {
+const ResultFields: React.FC<ResultFieldsProps> = ({ fields, className }) => {
   return (
     <div className={className}>
       <table className="w-full border-separate overflow-hidden rounded-lg border border-gray-400 bg-white [border-spacing:0;]">

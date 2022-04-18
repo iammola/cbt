@@ -1,13 +1,13 @@
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
 import { Dialog, Transition } from "@headlessui/react";
-import { FormEvent, Fragment, FunctionComponent, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import Select from "components/Select";
 
 import type { TeacherExamModalProps, SelectOption } from "types";
 
-const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) => {
+const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) => {
   const [{ account }] = useCookies(["account"]);
   const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
   const { data: currentSession } = useSWRImmutable("/api/sessions/current/");
@@ -58,7 +58,7 @@ const ExamModal: FunctionComponent<TeacherExamModalProps> = ({ isEdit, open, onS
     if (_id !== "") fetchSubjects();
   }, [account?._id, selectedClass]);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (selectedClass._id !== "" && selectedSubject._id !== "" && currentSession?.data) {

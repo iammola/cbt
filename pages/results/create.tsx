@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Select from "components/Select";
 import { Divide, UserImage } from "components/Misc";
@@ -63,7 +63,7 @@ const Results: NextPage = () => {
       type: "number",
       inputMode: "numeric" as const,
       className: "h-full w-full min-w-[3rem] py-3 text-center text-sm",
-      onBeforeInput(e: FormEvent<HTMLInputElement> & { data: string }) {
+      onBeforeInput(e: React.FormEvent<HTMLInputElement> & { data: string }) {
         return !/\d|\./.test(e.data) && e.preventDefault();
       },
     }),

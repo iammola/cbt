@@ -1,7 +1,5 @@
 import { format } from "date-fns";
-import { FunctionComponent } from "react";
-
-const TranscriptInfo: FunctionComponent<TranscriptInfoProps> = ({ birthday, gender, name, ...props }) => {
+const TranscriptInfo: React.FC<TranscriptInfoProps> = ({ birthday, gender, name, ...props }) => {
   const items = [
     ["Full Name", name],
     ["Class", props.class],

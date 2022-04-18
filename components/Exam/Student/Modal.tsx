@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent } from "react";
+import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
@@ -6,7 +6,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 
 import type { StudentModalProps } from "types";
 
-const Modal: FunctionComponent<StudentModalProps> = ({ forced, show, success, close, confirm }) => {
+const Modal: React.FC<StudentModalProps> = ({ forced, show, success, close, confirm }) => {
   return (
     <Transition
       appear

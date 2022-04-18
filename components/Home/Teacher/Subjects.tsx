@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 import { MeditatingIllustration, StandingWithPencilIllustration } from "components/Misc/Illustrations";
 
@@ -62,8 +60,8 @@ type SubjectItem = {
   subjects: { name: string }[];
 };
 
-interface Subjects extends FunctionComponent<{ items?: SubjectItem[] }> {
-  Item: FunctionComponent<SubjectItem>;
+interface Subjects extends React.FC<{ items?: SubjectItem[] }> {
+  Item: React.FC<SubjectItem>;
 }
 
 export default Subjects;

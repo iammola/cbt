@@ -1,11 +1,11 @@
 import { format } from "date-fns";
-import { FormEvent, FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import Select from "components/Select";
 
 import type { StudentGETData } from "types/api";
 
-export const EditData: FunctionComponent<Props> = ({ onSubmit, ...props }) => {
+export const EditData: React.FC<Props> = ({ onSubmit, ...props }) => {
   const [data, setData] = useState(props);
   const [genders] = useState([
     { _id: "F", name: "Female" },
@@ -13,7 +13,7 @@ export const EditData: FunctionComponent<Props> = ({ onSubmit, ...props }) => {
   ]);
   const updateData = <T extends keyof Props>(key: T, value: Props[T]) => setData((old) => ({ ...old, [key]: value }));
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     onSubmit(data);
   }

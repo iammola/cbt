@@ -1,8 +1,6 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 
-const Schedule: FunctionComponent<ScheduleProps> = ({ title, schedules }) => {
+const Schedule: React.FC<ScheduleProps> = ({ title, schedules }) => {
   const colors = [
     "bg-blue-400",
     "bg-red-400",

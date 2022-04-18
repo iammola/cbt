@@ -1,9 +1,9 @@
-import { Fragment, FunctionComponent } from "react";
+import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
 import type { StudentLoaderProps } from "types";
 
-const Loader: FunctionComponent<StudentLoaderProps> = ({ show, start, exam }) => {
+const Loader: React.FC<StudentLoaderProps> = ({ show, start, exam }) => {
   return (
     <Transition
       appear

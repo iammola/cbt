@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, ReactNode, useState } from "react";
+import { Fragment, useState } from "react";
 import { DesktopComputerIcon, DocumentTextIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
@@ -9,7 +9,7 @@ import { CalendarIcon, HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
 import type { MenuProps } from "types";
 
-const Menu: FunctionComponent<MenuProps> = ({ open }) => {
+const Menu: React.FC<MenuProps> = ({ open }) => {
   return (
     <nav
       className={classNames("w-full grow", {
@@ -418,15 +418,15 @@ MenuItem.Panel = function Panel({ expand, children }) {
   );
 };
 
-type RenderChildren = (o: { expand: boolean; toggleExpand(): void }) => ReactNode;
+type RenderChildren = (o: { expand: boolean; toggleExpand(): void }) => React.ReactNode;
 
 interface MenuItem
-  extends FunctionComponent<{
+  extends React.FC<{
     children: RenderChildren | ReturnType<RenderChildren>;
   }> {
-  List: FunctionComponent<Pick<Parameters<RenderChildren>[0], "expand">>;
-  Panel: FunctionComponent<Pick<Parameters<RenderChildren>[0], "expand">>;
-  Main: FunctionComponent;
+  List: React.FC<CP<Pick<Parameters<RenderChildren>[0], "expand">>>;
+  Panel: React.FC<CP<Pick<Parameters<RenderChildren>[0], "expand">>>;
+  Main: React.FC<CP>;
 }
 
 export default Menu;

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MoonIcon as MoonSolidIcon, SunIcon as SunSolidIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
@@ -6,7 +6,7 @@ import { MoonIcon as MoonOutlineIcon, SunIcon as SunOutlineIcon } from "componen
 
 import type { ThemeProps } from "types";
 
-const Theme: FunctionComponent<ThemeProps> = ({ open }) => {
+const Theme: React.FC<ThemeProps> = ({ open }) => {
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(active);
   const themes = [

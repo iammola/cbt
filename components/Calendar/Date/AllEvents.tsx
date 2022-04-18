@@ -1,10 +1,10 @@
 import { format } from "date-fns";
-import { Fragment, FunctionComponent } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { Events } from "./Events";
 
-export const AllEvents: FunctionComponent<AllEventsProps> = ({ data, date, onClose, show }) => {
+export const AllEvents: React.FC<AllEventsProps> = ({ data, date, onClose, show }) => {
   return (
     <Transition
       show={show}

@@ -1,15 +1,13 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { FunctionComponent } from "react";
-
 import Exams from "./Exams";
 import Results from "./Results";
 
 import type { RouteData } from "types";
 import type { StudentClassGETData } from "types/api";
 
-const Home: FunctionComponent = () => {
+const Home: React.FC = () => {
   const router = useRouter();
   const [{ account }, , removeCookies] = useCookies(["account"]);
   const { data: classData, error } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`);

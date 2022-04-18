@@ -1,8 +1,7 @@
 import { format } from "date-fns";
-import { FunctionComponent } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
-export const Header: FunctionComponent<HeaderProps> = ({ date, monthPrev, monthNext }) => {
+export const Header: React.FC<HeaderProps> = ({ date, monthPrev, monthNext }) => {
   return (
     <header className="flex w-full items-center justify-between">
       <h2 className="text-5xl">

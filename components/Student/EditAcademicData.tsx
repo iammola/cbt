@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Select from "components/Select";
 import { Divide } from "components/Misc";
@@ -7,7 +7,7 @@ import { Divide } from "components/Misc";
 import type { RouteData, RouteError, StudentRecord } from "types";
 import type { AllTermsGetData, ClassesGETData, ClassSubjectGETData } from "types/api";
 
-export const EditAcademicData: FunctionComponent<Props> = ({ id }) => {
+export const EditAcademicData: React.FC<Props> = ({ id }) => {
   const [subjects, setSubjects] = useState<{ _id: any; name: string }[]>([]);
   const [selectedTerm, setSelectedTerm] = useState({
     _id: "",

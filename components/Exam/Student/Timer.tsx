@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDuration, intervalToDuration, minutesToMilliseconds } from "date-fns";
 
 import type { StudentTimerProps } from "types";
@@ -9,7 +9,7 @@ type PageCookie = {
   timeBounds: { left: number; start: number; exam: string };
 };
 
-const Timer: FunctionComponent<StudentTimerProps> = ({ started, submit, timeout }) => {
+const Timer: React.FC<StudentTimerProps> = ({ started, submit, timeout }) => {
   const router = useRouter();
   const [displayTime, setDisplay] = useState("");
   const [{ timeBounds }, setCookies] = useCookies<"timeBounds", Partial<PageCookie>>(["timeBounds"]);

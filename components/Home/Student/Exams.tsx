@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { format, isFuture, isPast } from "date-fns";
 import { LockClosedIcon } from "@heroicons/react/solid";
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ErrorPage from "./Error";
 import EmptyPage from "./Empty";
@@ -12,7 +12,7 @@ import { Card, Cards, Section, Title } from "./Section";
 import type { RouteData } from "types";
 import type { StudentExamsGETData } from "types/api";
 
-const Exam: FunctionComponent = () => {
+const Exam: React.FC = () => {
   const [, triggerRender] = useState(0);
   const [{ account }] = useCookies(["account"]);
   const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account._id}/exams/`);
@@ -79,7 +79,7 @@ const Exam: FunctionComponent = () => {
   );
 };
 
-const Skeleton: FunctionComponent = () => {
+const Skeleton: React.FC = () => {
   return (
     <aside className="w-[300px] space-y-5 rounded-xl bg-white px-5 py-4 shadow">
       <div className="h-4 w-full animate-pulse rounded-full bg-slate-300" />

@@ -1,8 +1,6 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 
-export const Days: FunctionComponent = () => {
+export const Days: React.FC = () => {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (

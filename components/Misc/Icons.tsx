@@ -1,6 +1,4 @@
-import { FunctionComponent, ComponentProps } from "react";
-
-export const LoadingIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const LoadingIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -25,7 +23,7 @@ export const LoadingIcon: FunctionComponent<ComponentProps<"svg">> = (props) => 
   );
 };
 
-export const MoonIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const MoonIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -41,7 +39,7 @@ export const MoonIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const SunIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const SunIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -57,7 +55,7 @@ export const SunIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const HomeIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const HomeIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -73,7 +71,7 @@ export const HomeIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const FileTextIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const FileTextIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -89,7 +87,7 @@ export const FileTextIcon: FunctionComponent<ComponentProps<"svg">> = (props) =>
   );
 };
 
-export const CommentTextIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const CommentTextIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -105,7 +103,7 @@ export const CommentTextIcon: FunctionComponent<ComponentProps<"svg">> = (props)
   );
 };
 
-export const BellIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const BellIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -121,7 +119,7 @@ export const BellIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const UsersIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const UsersIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -137,7 +135,7 @@ export const UsersIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
   );
 };
 
-export const CalendarIcon: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const CalendarIcon: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}

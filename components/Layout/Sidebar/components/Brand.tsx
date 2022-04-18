@@ -1,11 +1,9 @@
 import Image from "next/image";
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 
 import type { BrandProps } from "types";
 
-const Brand: FunctionComponent<BrandProps> = ({ open }) => {
+const Brand: React.FC<BrandProps> = ({ open }) => {
   return (
     <div
       className={classNames("flex w-full items-center gap-3", {

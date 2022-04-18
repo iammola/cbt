@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import { FunctionComponent, FormEvent, useState } from "react";
+import { useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
 import { LoadingIcon } from "components/Misc/Icons";
 
-const TermForm: FunctionComponent = () => {
+const TermForm: React.FC = () => {
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
   const [current, setCurrent] = useState(false);
@@ -20,7 +20,7 @@ const TermForm: FunctionComponent = () => {
 
   const { data: sessions } = useSWR("/api/sessions/?select=name");
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 

@@ -1,6 +1,4 @@
-import { ComponentProps, FunctionComponent } from "react";
-
-export const CalendarIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const CalendarIllustration: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -36,7 +34,7 @@ export const CalendarIllustration: FunctionComponent<ComponentProps<"svg">> = (p
   );
 };
 
-export const MeditatingIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const MeditatingIllustration: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -72,7 +70,7 @@ export const MeditatingIllustration: FunctionComponent<ComponentProps<"svg">> = 
   );
 };
 
-export const StandingChatIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const StandingChatIllustration: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -108,7 +106,7 @@ export const StandingChatIllustration: FunctionComponent<ComponentProps<"svg">> 
   );
 };
 
-export const StandingWithPencilIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const StandingWithPencilIllustration: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}
@@ -144,7 +142,7 @@ export const StandingWithPencilIllustration: FunctionComponent<ComponentProps<"s
   );
 };
 
-export const SittingWithLaptopIllustration: FunctionComponent<ComponentProps<"svg">> = (props) => {
+export const SittingWithLaptopIllustration: React.FC<React.ComponentProps<"svg">> = (props) => {
   return (
     <svg
       {...props}

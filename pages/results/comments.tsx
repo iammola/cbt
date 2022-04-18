@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect } from "react";
 
 import Select from "components/Select";
 import { Sidebar, Navbar } from "components/Layout";
@@ -101,7 +101,7 @@ const Comments: NextPage = () => {
     }
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!selectedTerm._id) return;

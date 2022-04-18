@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { format, formatDistance } from "date-fns";
-import { FormEvent, FunctionComponent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CogIcon,
   CheckCircleIcon,
@@ -18,7 +18,7 @@ import { useNotifications } from "components/Misc/Notification";
 import type { CreateQuestion } from "types";
 import type { TeacherExamGETData } from "types/api";
 
-const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
+const Form: React.FC<{ data?: TeacherExamGETData }> = ({ data }) => {
   const router = useRouter();
   const [firstLoad, setFirstLoad] = useState(true);
   const [addNotification, , Notifications] = useNotifications();
@@ -116,7 +116,7 @@ const Form: FunctionComponent<{ data?: TeacherExamGETData }> = ({ data }) => {
     }
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (exam !== undefined) {

@@ -1,8 +1,6 @@
-import { FunctionComponent } from "react";
-
 import type { DivideProps } from "types";
 
-const Divide: FunctionComponent<DivideProps> = ({ className, HRclassName }) => {
+const Divide: React.FC<DivideProps> = ({ className, HRclassName }) => {
   return (
     <div
       aria-hidden="true"

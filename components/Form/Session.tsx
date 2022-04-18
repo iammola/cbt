@@ -1,10 +1,10 @@
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import { FormEvent, FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import { classNames } from "utils";
 import { LoadingIcon } from "components/Misc/Icons";
 
-const SessionForm: FunctionComponent = () => {
+const SessionForm: React.FC = () => {
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
   const [current, setCurrent] = useState(false);
@@ -12,7 +12,7 @@ const SessionForm: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 

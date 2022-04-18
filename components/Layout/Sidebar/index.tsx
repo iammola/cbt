@@ -1,11 +1,11 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import { classNames } from "utils";
 
 import { Divide } from "components/Misc";
 import { Brand, Menu, Theme, Toggle } from "./components";
 
-const Sidebar: FunctionComponent = () => {
+const Sidebar: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (

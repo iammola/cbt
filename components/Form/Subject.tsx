@@ -1,6 +1,6 @@
 import useSWR, { useSWRConfig } from "swr";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import { FormEvent, FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classNames } from "utils";
 
@@ -10,7 +10,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import type { ClientResponse, RouteData, RouteError } from "types";
 import type { ClassesGETData, ClassSubjectPOSTData } from "types/api";
 
-const SubjectForm: FunctionComponent = () => {
+const SubjectForm: React.FC = () => {
   const { mutate } = useSWRConfig();
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
@@ -35,7 +35,7 @@ const SubjectForm: FunctionComponent = () => {
     });
   }, [classes, error]);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 

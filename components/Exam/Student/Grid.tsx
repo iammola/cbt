@@ -1,9 +1,7 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 import type { StudentGridProps } from "types";
 
-const Grid: FunctionComponent<StudentGridProps> = ({ questions }) => {
+const Grid: React.FC<StudentGridProps> = ({ questions }) => {
   return (
     <div className="sticky top-36 w-full rounded-xl bg-white py-8 px-5 shadow-sm ring-1 ring-gray-200">
       <ul className="grid w-full grid-cols-5 items-start justify-center gap-4">

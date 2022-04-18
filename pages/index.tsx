@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { BadgeCheckIcon, BanIcon, StatusOfflineIcon, StatusOnlineIcon } from "@heroicons/react/outline";
-import { ClipboardEvent, FormEvent, FunctionComponent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { classNames } from "utils";
 import Background from "/public/BG.jpg";
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
 
   const focusNext = (index: number) => setActive(++index < code.length ? index : 0);
 
-  function handlePaste(e: ClipboardEvent<HTMLInputElement>) {
+  function handlePaste(e: React.ClipboardEvent<HTMLInputElement>) {
     e.preventDefault();
     const pasted = e.clipboardData.getData("text");
 
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
     }
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
@@ -213,14 +213,7 @@ const Home: NextPage = () => {
   );
 };
 
-const Input: FunctionComponent<InputProps> = ({
-  focus,
-  value,
-  focusNext,
-  focusPrevious,
-  handlePaste,
-  handleChange,
-}) => {
+const Input: React.FC<InputProps> = ({ focus, value, focusNext, focusPrevious, handlePaste, handleChange }) => {
   const ref = useRef<HTMLInputElement>(null);
 
   function onChange(v: string) {
@@ -236,7 +229,7 @@ const Input: FunctionComponent<InputProps> = ({
     if (focus) ref.current?.focus();
   }, [focus]);
 
-  function validateCharacter(e: FormEvent<HTMLInputElement> & { data: string }) {
+  function validateCharacter(e: React.FormEvent<HTMLInputElement> & { data: string }) {
     if (!/\d/.test(e.data)) e.preventDefault();
   }
 
@@ -266,7 +259,7 @@ type InputProps = {
   focusNext(): void;
   focusPrevious(): void;
   handleChange(e: string): void;
-  handlePaste(e: ClipboardEvent<HTMLInputElement>): void;
+  handlePaste(e: React.ClipboardEvent<HTMLInputElement>): void;
 };
 
 export default Home;

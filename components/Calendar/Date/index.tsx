@@ -1,10 +1,10 @@
-import { FunctionComponent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Events } from "./Events";
 import { classNames } from "utils";
 import { AllEvents } from "./AllEvents";
 
-export const DateItem: FunctionComponent<DateProps> = ({ date, events, ...is }) => {
+export const DateItem: React.FC<DateProps> = ({ date, events, ...is }) => {
   const [showAll, setShowAll] = useState(false);
   const count = useMemo(() => events.reduce((acc, d) => acc + d.events.length, 0), [events]);
   const first5 = useMemo(
