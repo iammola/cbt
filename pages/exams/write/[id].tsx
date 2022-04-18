@@ -141,10 +141,7 @@ const WriteExam: NextPage = () => {
           name="description"
           content="Subject Exam | GRS CBT"
         />
-        <style>{`
-                    #main,
-                    body { overflow: unset !important; }
-                `}</style>
+        <style dangerouslySetInnerHTML={{ __html: "#main, body { overflow: unset !important; }" }} />
       </Head>
       <form className="flex min-h-screen w-screen flex-col items-center justify-start">
         <Bar

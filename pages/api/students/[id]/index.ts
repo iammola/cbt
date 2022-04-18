@@ -4,8 +4,42 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { StudentModel } from "db/models";
 
-import type { ServerResponse } from "types";
+import type { ServerResponse, StudentRecord } from "types";
 import type { StudentGETData } from "types/api";
+
+type UpdateResult = Record<"success", boolean>;
+
+async function updateStudent(_id: any, update: Partial<StudentRecord>): Promise<ServerResponse<UpdateResult>> {
+  await connect();
+  let [success, status, message]: ServerResponse<UpdateResult> = [
+    false,
+    StatusCodes.INTERNAL_SERVER_ERROR,
+    ReasonPhrases.INTERNAL_SERVER_ERROR,
+  ];
+
+  try {
+    const res = await StudentModel.updateOne({ _id }, update);
+
+    [success, status, message] = [
+      true,
+      StatusCodes.OK,
+      {
+        message: ReasonPhrases.OK,
+        data: { success: res.acknowledged },
+      },
+    ];
+  } catch (error: any) {
+    [status, message] = [
+      StatusCodes.BAD_REQUEST,
+      {
+        error: error.message,
+        message: ReasonPhrases.BAD_REQUEST,
+      },
+    ];
+  }
+
+  return [success, status, message];
+}
 
 async function getStudent(_id: any, select: any): Promise<ServerResponse<StudentGETData>> {
   await connect();
@@ -39,18 +73,21 @@ async function getStudent(_id: any, select: any): Promise<ServerResponse<Student
   return [success, status, message];
 }
 
-export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
-  let [success, status, message]: ServerResponse<StudentGETData> = [
+export default async function handler({ body, method, query }: NextApiRequest, res: NextApiResponse) {
+  let [success, status, message]: ServerResponse<StudentGETData | UpdateResult> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
     ReasonPhrases.INTERNAL_SERVER_ERROR,
   ];
-  const allowedMethods = "GET";
+  const allowedMethods = ["GET", "PUT"];
 
-  if (allowedMethods !== method) {
+  if (!allowedMethods.includes(method ?? "")) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else [success, status, message] = await getStudent(query.id, query.select);
+  } else
+    [success, status, message] = await (method === "GET"
+      ? getStudent(query.id, query.select)
+      : updateStudent(query.id, JSON.parse(body)));
 
   if (typeof message !== "object") message = { message, error: message };
 

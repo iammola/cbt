@@ -4,7 +4,7 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { generateCode } from "utils";
 
 import { connect } from "db";
-import { SessionModel, StudentModel } from "db/models";
+import { StudentModel } from "db/models";
 
 import type { StudentRecord, ServerResponse } from "types";
 import type { StudentsGETData, StudentsPOSTData } from "types/api";
@@ -39,12 +39,7 @@ async function getStudents({ select, term }: any): Promise<ServerResponse<Studen
   return [success, status, message];
 }
 
-async function createStudent({
-  academic,
-  ...student
-}: Pick<StudentRecord, "email" | "name"> & {
-  academic: { class: string; subject: string };
-}): Promise<ServerResponse<StudentsPOSTData>> {
+async function createStudent({ academic, ...student }: CreateBody): Promise<ServerResponse<StudentsPOSTData>> {
   await connect();
   let [success, status, message]: ServerResponse<StudentsPOSTData> = [
     false,
@@ -54,17 +49,11 @@ async function createStudent({
 
   try {
     const code = generateCode();
-    const currentSession = await SessionModel.findOne({ "terms.current": true }, "terms._id.$").lean();
 
     await StudentModel.create({
       ...student,
       code,
-      academic: [
-        {
-          ...academic,
-          term: currentSession?.terms[0]._id,
-        },
-      ],
+      academic: [academic],
     });
     [success, status, message] = [
       true,
@@ -86,6 +75,10 @@ async function createStudent({
 
   return [success, status, message];
 }
+
+type CreateBody = Pick<StudentRecord, "email" | "name"> & {
+  academic: StudentRecord["academic"][number];
+};
 
 export default async function handler({ method, body, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<StudentsGETData | StudentsPOSTData> = [
