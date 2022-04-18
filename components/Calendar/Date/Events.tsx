@@ -1,6 +1,6 @@
 import { classNames } from "utils";
 
-export const Events: React.FC<EventProps> = ({ children, className, eventClassName, timeClassName, data }) => {
+export const Events: React.FC<CP<EventProps>> = ({ children, ...props }) => {
   const colors = [
     "bg-amber-400",
     "bg-indigo-400",
@@ -14,8 +14,8 @@ export const Events: React.FC<EventProps> = ({ children, className, eventClassNa
   ];
 
   return (
-    <div className={className}>
-      {data.map(({ time, events }) =>
+    <div className={props.className}>
+      {props.data.map(({ time, events }) =>
         events.map((event, idx) => (
           <div
             key={event}
@@ -25,8 +25,8 @@ export const Events: React.FC<EventProps> = ({ children, className, eventClassNa
               aria-hidden="true"
               className={classNames("h-1.5 w-1.5 shrink-0 rounded-full", colors[idx % colors.length])}
             />
-            <span className={eventClassName}>{event}</span>
-            <span className={timeClassName}>{time}</span>
+            <span className={props.eventClassName}>{event}</span>
+            <span className={props.timeClassName}>{time}</span>
           </div>
         ))
       )}

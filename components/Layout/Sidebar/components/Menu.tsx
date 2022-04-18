@@ -424,9 +424,9 @@ interface MenuItem
   extends React.FC<{
     children: RenderChildren | ReturnType<RenderChildren>;
   }> {
-  List: React.FC<Pick<Parameters<RenderChildren>[0], "expand">>;
-  Panel: React.FC<Pick<Parameters<RenderChildren>[0], "expand">>;
-  Main: React.FC;
+  List: React.FC<CP<Pick<Parameters<RenderChildren>[0], "expand">>>;
+  Panel: React.FC<CP<Pick<Parameters<RenderChildren>[0], "expand">>>;
+  Main: React.FC<CP>;
 }
 
 export default Menu;
