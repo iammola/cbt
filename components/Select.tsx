@@ -1,4 +1,4 @@
-import { FunctionComponent, Fragment } from "react";
+import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { SelectorIcon, CheckIcon } from "@heroicons/react/outline";
 
@@ -6,14 +6,7 @@ import { classNames } from "utils";
 
 import type { SelectProps } from "types";
 
-const Select: FunctionComponent<SelectProps> = ({
-  label,
-  colorPallette,
-  options,
-  selected,
-  className,
-  handleChange,
-}) => {
+const Select: React.FC<SelectProps> = ({ label, colorPallette, options, selected, className, handleChange }) => {
   const pallette = colorPallette ?? {
     activeCheckIconColor: "stroke-amber-600",
     inactiveCheckIconColor: "stroke-amber-800",

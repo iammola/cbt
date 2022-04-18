@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { FunctionComponent } from "react";
 import { isEqual, isToday, isSameMonth, endOfWeek, isWeekend, isSameDay } from "date-fns";
 
 import { DateItem } from "./Date";
@@ -7,7 +6,7 @@ import { DateItem } from "./Date";
 import type { RouteData } from "types";
 import type { EventsRangeGETData } from "types/api";
 
-export const Dates: FunctionComponent<DatesProps> = ({ date, dates }) => {
+export const Dates: React.FC<DatesProps> = ({ date, dates }) => {
   const { data: { data: events } = { data: [] } } = useSWR<RouteData<EventsRangeGETData>>(
     dates.length > 1 && `/api/events/range/?from=${dates[0]?.date.getTime()}&to=${dates.at(-1)?.date.getTime()}`
   );

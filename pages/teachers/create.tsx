@@ -3,7 +3,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { BriefcaseIcon } from "@heroicons/react/solid";
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { classNames } from "utils";
 import Select from "components/Select";
@@ -94,7 +94,7 @@ const CreateTeachers: NextPage = () => {
     if (classes !== undefined) fetchSubjects();
   }, [classes]);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 

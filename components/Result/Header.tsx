@@ -1,7 +1,5 @@
 import Image from "next/image";
-import type { FunctionComponent } from "react";
-
-const Header: FunctionComponent = () => {
+const Header: React.FC = () => {
   return (
     <div className="flex w-full items-center justify-center gap-10">
       <figure className="relative h-24 w-24 print:h-20 print:w-20">

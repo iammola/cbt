@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 
 const Badges: Badges = ({ className, text }) => {
@@ -35,10 +33,10 @@ Badges.New = function New() {
   );
 };
 
-interface Badges extends FunctionComponent<{ className: string; text: string }> {
-  Beta: FunctionComponent;
-  Soon: FunctionComponent;
-  New: FunctionComponent;
+interface Badges extends React.FC<{ className: string; text: string }> {
+  Beta: React.FC;
+  Soon: React.FC;
+  New: React.FC;
 }
 
 export default Badges;

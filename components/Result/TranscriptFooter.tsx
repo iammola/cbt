@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { FunctionComponent } from "react";
-
-const TranscriptFooter: FunctionComponent<{ remark?: string; className: string }> = ({ className, remark }) => {
+const TranscriptFooter: React.FC<{ remark?: string; className: string }> = ({ className, remark }) => {
   return (
     <div className={className}>
       <div className="flex items-center justify-start gap-x-6">

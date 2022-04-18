@@ -2,7 +2,7 @@ import useSWR from "swr";
 import Head from "next/head";
 import type { NextPage } from "next";
 import { addHours, format } from "date-fns";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
@@ -63,7 +63,7 @@ const CreateEvent: NextPage = () => {
     if (_id !== "") getExams();
   }, [selectedClass]);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (selectedClass._id !== "" && selectedExam._id !== "") {

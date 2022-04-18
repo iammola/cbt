@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
-import { Fragment, FunctionComponent, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 
 import { generateCode } from "utils";
 
@@ -42,7 +42,7 @@ export function useNotifications(): NotificationsHook {
   return [addNotification, (idx) => removeNotification(idx, true), Notifications];
 }
 
-const Notification: FunctionComponent<Omit<NotificationProps, "id">> = ({ out, timeout, message, remove, Icon }) => {
+const Notification: React.FC<Omit<NotificationProps, "id">> = ({ out, timeout, message, remove, Icon }) => {
   const [show, setShow] = useState(true);
 
   const closeNotification = useCallback(() => setShow(false), []);

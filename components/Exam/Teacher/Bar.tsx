@@ -1,5 +1,4 @@
 import useSWRImmutable from "swr/immutable";
-import { FunctionComponent } from "react";
 import { ChevronRightIcon, CheckIcon } from "@heroicons/react/solid";
 
 import { LoadingIcon } from "components/Misc/Icons";
@@ -7,7 +6,7 @@ import { LoadingIcon } from "components/Misc/Icons";
 import type { RouteData, TeacherBarProps } from "types";
 import type { SessionCurrentGETData } from "types/api";
 
-const Bar: FunctionComponent<TeacherBarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
+const Bar: React.FC<TeacherBarProps> = ({ exam, save, modified, saved, uploading, uploaded }) => {
   const { data: currentSession } = useSWRImmutable<RouteData<SessionCurrentGETData>>("/api/sessions/current/");
 
   return (

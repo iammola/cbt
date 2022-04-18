@@ -1,11 +1,10 @@
-import { FunctionComponent } from "react";
 import { ChevronRightIcon, XIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
 
 import type { ToggleProps } from "types";
 
-const Toggle: FunctionComponent<ToggleProps> = ({ open, toggleOpen }) => {
+const Toggle: React.FC<ToggleProps> = ({ open, toggleOpen }) => {
   return (
     <div
       onClick={toggleOpen}

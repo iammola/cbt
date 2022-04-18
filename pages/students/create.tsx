@@ -2,7 +2,7 @@ import useSWR from "swr";
 import Head from "next/head";
 import { format } from "date-fns";
 import type { NextPage } from "next";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BriefcaseIcon } from "@heroicons/react/outline";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
@@ -57,7 +57,7 @@ const CreateStudents: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 

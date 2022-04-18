@@ -1,6 +1,6 @@
-import { FunctionComponent, useMemo } from "react";
+import { useMemo } from "react";
 
-const EmptyPage: FunctionComponent<{ message: string }> = ({ message }) => {
+const EmptyPage: React.FC<{ message: string }> = ({ message }) => {
   const emoji = useMemo(() => ["🫙", "🪫", "👌", "🗑"][Math.floor(Math.random() * 4)], []);
 
   return (

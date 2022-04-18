@@ -1,6 +1,6 @@
 import { useSWRConfig } from "swr";
 import { CheckIcon, XIcon } from "@heroicons/react/solid";
-import { FormEvent, FunctionComponent, useState } from "react";
+import { useState } from "react";
 
 import { classNames } from "utils";
 import { LoadingIcon } from "components/Misc/Icons";
@@ -8,14 +8,14 @@ import { LoadingIcon } from "components/Misc/Icons";
 import type { ClientResponse } from "types";
 import type { ClassesPOSTData } from "types/api";
 
-const ClassForm: FunctionComponent = () => {
+const ClassForm: React.FC = () => {
   const { mutate } = useSWRConfig();
   const [name, setName] = useState("");
   const [alias, setAlias] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | undefined>();
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 

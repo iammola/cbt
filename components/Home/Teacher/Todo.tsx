@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import { compareAsc, formatDistance, isFuture } from "date-fns";
 
 import { classNames } from "utils";
@@ -64,8 +63,8 @@ type TodoItem = {
   date: Date;
 };
 
-interface Todo extends FunctionComponent<{ items?: TodoItem[] }> {
-  Item: FunctionComponent<TodoItem>;
+interface Todo extends React.FC<{ items?: TodoItem[] }> {
+  Item: React.FC<TodoItem>;
 }
 
 export default Todo;

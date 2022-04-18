@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Head from "next/head";
 import { NextPage } from "next";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
 import { BadgeCheckIcon, BanIcon } from "@heroicons/react/outline";
 
@@ -71,7 +71,7 @@ const CreateScheme: NextPage = () => {
       : undefined;
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const notifications = [
       {

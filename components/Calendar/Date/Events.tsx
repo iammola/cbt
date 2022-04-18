@@ -1,8 +1,6 @@
-import { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 
-export const Events: FunctionComponent<EventProps> = ({ children, className, eventClassName, timeClassName, data }) => {
+export const Events: React.FC<EventProps> = ({ children, className, eventClassName, timeClassName, data }) => {
   const colors = [
     "bg-amber-400",
     "bg-indigo-400",

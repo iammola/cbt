@@ -1,9 +1,7 @@
-import type { FunctionComponent } from "react";
-
 import { classNames } from "utils";
 import type { StudentAnswerProps } from "types";
 
-const Answer: FunctionComponent<StudentAnswerProps> = ({ _id, answer, selected, handleSelect }) => {
+const Answer: React.FC<StudentAnswerProps> = ({ _id, answer, selected, handleSelect }) => {
   return (
     <>
       <input

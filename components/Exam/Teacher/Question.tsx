@@ -1,11 +1,10 @@
-import { FunctionComponent } from "react";
 import { SortAscendingIcon, SortDescendingIcon, TrashIcon } from "@heroicons/react/outline";
 
 import { Answer } from ".";
 
 import type { TeacherQuestionProps } from "types";
 
-const Question: FunctionComponent<TeacherQuestionProps> = ({
+const Question: React.FC<TeacherQuestionProps> = ({
   record,
   number,
   onChange,

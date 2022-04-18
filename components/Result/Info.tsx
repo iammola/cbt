@@ -1,7 +1,5 @@
 import { format } from "date-fns";
-import { FunctionComponent } from "react";
-
-const Info: FunctionComponent<DeepPartial<InfoProps>> = (props) => {
+const Info: React.FC<DeepPartial<InfoProps>> = (props) => {
   const items = [
     ["Full Name", props.name],
     ["Date of Birth", props.birthday && format(new Date(props.birthday), "do MMMM yyyy")],

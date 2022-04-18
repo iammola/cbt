@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { FunctionComponent } from "react";
 import { useCookies } from "react-cookie";
 
 import EmptyPage from "./Empty";
@@ -10,7 +9,7 @@ import type { RouteData } from "types";
 import type { StudentCBTResultsGETData } from "types/api";
 import { format } from "date-fns";
 
-const Result: FunctionComponent = () => {
+const Result: React.FC = () => {
   const [{ account }] = useCookies(["account"]);
   const { data: { data } = {}, error } = useSWR<RouteData<StudentCBTResultsGETData>>(
     `/api/students/${account._id}/cbt_results/`
@@ -52,7 +51,7 @@ const Result: FunctionComponent = () => {
   );
 };
 
-const Skeleton: FunctionComponent = () => {
+const Skeleton: React.FC = () => {
   return (
     <aside className="w-[300px] space-y-5 rounded-xl bg-white px-5 py-4 shadow">
       <div className="h-4 w-full animate-pulse rounded-full bg-slate-300" />

@@ -1,7 +1,7 @@
-import { FunctionComponent, Fragment } from "react";
+import { Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
-const Loader: FunctionComponent<{ show: boolean }> = ({ show }) => {
+const Loader: React.FC<{ show: boolean }> = ({ show }) => {
   return (
     <Transition
       appear

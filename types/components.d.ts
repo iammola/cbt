@@ -1,4 +1,3 @@
-import type { ComponentProps } from "react";
 import type { ImageProps } from "next/image";
 import type { TeacherExamGETData } from "types/api";
 import type { CreateQuestion, AnswerRecord, ExamRecord, QuestionRecord } from ".";
@@ -8,7 +7,7 @@ export type NotificationProps = {
   timeout: number;
   remove(): void;
   out?: boolean;
-  Icon(props: ComponentProps<"svg">): JSX.Element;
+  Icon(props: React.ComponentProps<"svg">): JSX.Element;
 };
 
 export type SelectOption = {
