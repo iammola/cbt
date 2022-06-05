@@ -1,4 +1,7 @@
-import type { ObjectId } from "bson";
+import type { Schema } from "mongoose";
+import type { ObjectId as BsonId } from "bson";
+
+type ObjectId = BsonId & Schema.Types.ObjectId;
 
 type RecordId = { _id: ObjectId };
 
