@@ -1,6 +1,8 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-unused-expressions": ["warn", { "allowShortCircuit": true, "allowTernary": true, "enforceForJSX": true }],
     "@next/next/no-server-import-in-page": "off"
   }
 }
