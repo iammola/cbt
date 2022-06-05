@@ -33,7 +33,7 @@ const ClassForm: React.FC = () => {
         mutate("/api/classes?select=name");
       } else throw new Error(result.error);
     } catch (error: any) {
-      console.log({ error });
+      console.error({ error });
     }
 
     setLoading(false);

@@ -51,7 +51,7 @@ const Student: NextPage = () => {
       } else throw new Error(result.error);
     } catch (error) {
       alert("Error Updating Data");
-      console.log({ error });
+      console.error({ error });
     }
   }
 

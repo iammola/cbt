@@ -103,7 +103,7 @@ const Results: NextPage = () => {
           });
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
 
@@ -178,7 +178,7 @@ const Results: NextPage = () => {
         setHardTotal(scores.filter((i) => i.total !== undefined).map((i) => i.student));
         removeNotifications(notifications[0]);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
   }
@@ -245,7 +245,7 @@ const Results: NextPage = () => {
           })
       );
     } catch (error: any) {
-      console.log({ error });
+      console.error({ error });
     }
   }
 

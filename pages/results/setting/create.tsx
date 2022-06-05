@@ -108,7 +108,7 @@ const CreateScheme: NextPage = () => {
           });
         else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
   }

@@ -58,7 +58,7 @@ const Results: NextPage = () => {
           setSelectedExam({ _id: "", name: "Select exam" });
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
 
@@ -75,7 +75,7 @@ const Results: NextPage = () => {
           setResults(result.data);
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
   }

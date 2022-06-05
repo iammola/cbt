@@ -31,7 +31,7 @@ const SessionForm: React.FC = () => {
         setCurrent(false);
       } else throw new Error(error);
     } catch (error: any) {
-      console.log({ error });
+      console.error({ error });
     }
 
     setLoading(false);

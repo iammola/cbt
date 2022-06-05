@@ -51,7 +51,7 @@ const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) 
           setSelectedSubject({ _id: "", name: "Select subject" });
         } else throw new Error(error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
 

@@ -67,7 +67,6 @@ const ResultsPicker: NextPage = () => {
           });
         })
       );
-      console.log("Loaded Students");
     }
 
     if (classes?.data && selectedTerm._id) getStudents(classes.data);

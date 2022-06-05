@@ -95,7 +95,7 @@ const CreateStudents: NextPage = () => {
         });
       } else throw new Error(error);
     } catch (error: any) {
-      console.log({ error });
+      console.error({ error });
     }
 
     setLoading(false);
@@ -130,7 +130,7 @@ const CreateStudents: NextPage = () => {
           setSubjectsLoadingState(undefined);
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
         setSubjectsLoadingState(false);
       }
     }

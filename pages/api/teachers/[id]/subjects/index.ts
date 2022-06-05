@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SubjectsModel, TeacherModel } from "db/models";
+import { SubjectsModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { TeacherSubjectsGETData } from "types/api";

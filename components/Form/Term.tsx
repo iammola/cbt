@@ -39,7 +39,7 @@ const TermForm: React.FC = () => {
         setCurrent(false);
       } else throw new Error(error);
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
     }
 
     setLoading(false);

@@ -56,7 +56,7 @@ const CreateEvent: NextPage = () => {
           setSelectedExam({ _id: "", name: "Select exam" });
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
 
@@ -88,7 +88,7 @@ const CreateEvent: NextPage = () => {
           setSelectedExam({ _id: "", name: "Select exam" });
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
 
       setLoading(false);

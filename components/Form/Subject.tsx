@@ -60,7 +60,7 @@ const SubjectForm: React.FC = () => {
           mutate(`/api/classes/${selectedClass._id}/subjects`);
         } else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
 

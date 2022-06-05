@@ -42,7 +42,7 @@ export const EditAcademicData: React.FC<Props> = ({ id }) => {
       if (result.success) setData(result.data[0] ?? null);
       else throw new Error(result.error);
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
     }
   }
 
@@ -61,7 +61,7 @@ export const EditAcademicData: React.FC<Props> = ({ id }) => {
       if (result.success && result.data.ok) alert("Success");
       else throw new Error(result.error);
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
       alert("Error updating data");
     }
   }
@@ -78,7 +78,7 @@ export const EditAcademicData: React.FC<Props> = ({ id }) => {
       if (result.success && result.data.ok) alert("Success");
       else throw new Error(result.error);
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
       alert("Error deleting data");
     }
   }
@@ -108,7 +108,7 @@ export const EditAcademicData: React.FC<Props> = ({ id }) => {
         if (result.success) setSubjects((result.data as ClassSubjectGETData)?.subjects ?? []);
         else throw new Error(result.error);
       } catch (error: any) {
-        console.log({ error });
+        console.error({ error });
       }
     }
 

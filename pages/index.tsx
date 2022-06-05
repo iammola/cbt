@@ -85,7 +85,7 @@ const Home: NextPage = () => {
         timeout: 5e3,
         Icon: () => <BanIcon className="h-6 w-6 stroke-red-600" />,
       });
-      console.log({ error });
+      console.error({ error });
     }
 
     setLoading(false);
