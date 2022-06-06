@@ -1,4 +1,3 @@
-import type { Model } from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -7,15 +6,6 @@ import { StudentModel, TeacherModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { LoginData } from "types/api";
-
-import { promiseAny } from "utils";
-
-async function findUser<M extends Model<any>>(model: M, access: "Teacher" | "Student", code: number) {
-  const data = await model.findOne({ code }).select("name email").lean();
-  if (data === null) throw new Error("User does not exist");
-
-  return { ...data, access };
-}
 
 export default async function handler({ body, method }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<LoginData> = [
@@ -33,14 +23,22 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
 
     try {
       await connect();
-      const promises = [findUser(TeacherModel, "Teacher", code), findUser(StudentModel, "Student", code)];
-      const data = await (Promise.any?.(promises) ?? promiseAny(promises));
+      const result = await Promise.all([
+        TeacherModel.findOne({ code }, "name email").lean(),
+        StudentModel.findOne({ code }, "name email").lean(),
+      ]);
+
+      const user = result.find((q) => q != null);
+      if (user == undefined) throw new Error("User does not exist");
 
       [success, status, message] = [
         true,
         StatusCodes.OK,
         {
-          data,
+          data: {
+            ...user,
+            access: (result.indexOf(user) === 0 ? "Teacher" : "Student") as LoginData["access"],
+          },
           message: ReasonPhrases.OK,
         },
       ];
