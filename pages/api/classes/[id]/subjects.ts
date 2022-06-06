@@ -21,7 +21,7 @@ async function getSubjects(id: any, select: string): Promise<ServerResponse<Clas
       true,
       StatusCodes.OK,
       {
-        data,
+        data: data as ClassSubjectGETData,
         message: ReasonPhrases.OK,
       },
     ];

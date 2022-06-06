@@ -19,7 +19,7 @@ async function getTeacherSubjects(id: string): Promise<ServerResponse<TeacherSub
     const subjects = await SubjectsModel.find({ "subjects.teacher": id }, "-class").lean();
     const data = subjects
       .map(({ subjects }) =>
-        subjects.filter(({ teachers }) => teachers.find((teacher) => teacher.equals(id))).map(({ _id }) => _id)
+        subjects.filter(({ teachers }) => teachers.find((teacher) => String(teacher) === id)).map(({ _id }) => _id)
       )
       .flat();
 

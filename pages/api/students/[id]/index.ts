@@ -56,7 +56,7 @@ async function getStudent(_id: any, select: any): Promise<ServerResponse<Student
       true,
       StatusCodes.OK,
       {
-        data,
+        data: data as StudentGETData,
         message: ReasonPhrases.OK,
       },
     ];
