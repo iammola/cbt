@@ -103,7 +103,7 @@ async function getStudentAcademicData({ id, term }: any): Promise<ServerResponse
       true,
       StatusCodes.OK,
       {
-        data: (data?.academic ?? []) as StudentAcademicGETData,
+        data: data?.academic ?? [],
         message: ReasonPhrases.OK,
       },
     ];

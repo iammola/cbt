@@ -26,7 +26,7 @@ async function getStudentsResultStatus({ id, term }: any): Promise<ServerRespons
       true,
       StatusCodes.OK,
       {
-        data: await formatIncompleteResultReport(term, students as []),
+        data: await formatIncompleteResultReport(term, students),
         message: ReasonPhrases.OK,
       },
     ];

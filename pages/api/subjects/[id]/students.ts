@@ -25,7 +25,7 @@ async function getStudents({ id, term }: any): Promise<ServerResponse<SubjectStu
       true,
       StatusCodes.OK,
       {
-        data: { students } as SubjectStudentsGETData,
+        data: { students },
         message: ReasonPhrases.OK,
       },
     ];

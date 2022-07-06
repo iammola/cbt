@@ -74,7 +74,7 @@ async function getEvents({
       true,
       StatusCodes.OK,
       {
-        data: data as EventsGETData,
+        data,
         message: ReasonPhrases.OK,
       },
     ];
