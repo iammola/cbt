@@ -38,7 +38,6 @@ const SessionSchema = new Schema({
         },
       }),
     ],
-    default: undefined,
   },
 });
 

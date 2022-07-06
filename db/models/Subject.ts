@@ -16,6 +16,7 @@ const SubjectSchema = new Schema({
   teachers: {
     type: [Schema.Types.ObjectId],
     ref: "Teacher",
+    default: undefined,
   },
 });
 

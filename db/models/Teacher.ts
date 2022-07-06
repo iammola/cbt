@@ -44,6 +44,7 @@ const TeacherSchema = new Schema({
     type: String,
     trim: true,
     lowercase: true,
+    required: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/, "Please fill a valid email address"],
   },
   code: {

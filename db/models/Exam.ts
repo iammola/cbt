@@ -93,12 +93,10 @@ const ExamSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: [true, "Exam subject required"],
   },
-  instructions: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
+  instructions: {
+    type: [String],
+    trim: true,
+  },
   created: DateSchema,
   edited: {
     type: [DateSchema],
