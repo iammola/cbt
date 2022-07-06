@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ClassModel, SessionModel } from "db/models";
+import { ClassModel } from "db/models";
 
 import type { ClassResultTemplate, ServerResponse } from "types";
 import type { ClassResultSettingsGETData, ClassResultSettingsPOSTData } from "types/api";
