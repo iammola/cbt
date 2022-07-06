@@ -10,32 +10,40 @@ const ResultSchema = new Schema<ResultRecord>({
     required: [true, "Student ID required"],
   },
   data: {
-    _id: false,
     type: [
-      {
-        subject: {
-          type: Schema.Types.ObjectId,
+      new Schema(
+        {
+          subject: {
+            type: Schema.Types.ObjectId,
+            required: true,
+          },
+          scores: {
+            _id: false,
+            default: undefined,
+            type: [
+              new Schema(
+                {
+                  field: {
+                    type: Schema.Types.ObjectId,
+                    required: true,
+                  },
+                  score: {
+                    min: 0,
+                    required: true,
+                    type: Number,
+                  },
+                },
+                { _id: false }
+              ),
+            ],
+          },
+          total: {
+            type: Number,
+            default: undefined,
+          },
         },
-        scores: {
-          _id: false,
-          default: undefined,
-          type: [
-            {
-              field: {
-                type: Schema.Types.ObjectId,
-              },
-              score: {
-                min: 0,
-                type: Number,
-              },
-            },
-          ],
-        },
-        total: {
-          type: Number,
-          default: undefined,
-        },
-      },
+        { _id: false }
+      ),
     ],
   },
   comments: {

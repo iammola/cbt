@@ -15,12 +15,10 @@ const SubjectSchema = new Schema<SubjectRecord>({
     unique: true,
     trim: true,
   },
-  teachers: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Teacher",
-    },
-  ],
+  teachers: {
+    type: [Schema.Types.ObjectId],
+    ref: "Teacher",
+  },
 });
 
 const SubjectsSchema = new Schema<SubjectsRecord>({
@@ -30,7 +28,7 @@ const SubjectsSchema = new Schema<SubjectsRecord>({
     unique: true,
     ref: "Class",
   },
-  subjects: [SubjectSchema],
+  subjects: { type: [SubjectSchema], required: true },
 });
 
 export const SubjectsModel = (models.Subjects as Model<SubjectsRecord>) ?? model("Subjects", SubjectsSchema);

@@ -7,6 +7,7 @@ const EventSchema = new Schema<EventRecord>({
   from: {
     type: Date,
     unique: true,
+    required: true,
     validate: [(v: Date) => isFuture(v), "New events must be after the current date"],
   },
   exams: [

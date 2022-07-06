@@ -15,26 +15,30 @@ const CBTResultSchema = new Schema<CBTResultRecord>({
     required: [true, "Term required"],
   },
   results: [
-    {
-      _id: false,
-      score: Number,
-      started: Date,
-      ended: Date,
-      exam: {
-        type: Schema.Types.ObjectId,
-        ref: "Exam",
-      },
-      answers: [
-        {
-          default: undefined,
-          type: {
-            _id: false,
-            answer: Schema.Types.ObjectId,
-            question: Schema.Types.ObjectId,
-          },
+    new Schema(
+      {
+        score: { type: Number, required: true },
+        started: { type: Date, required: true },
+        ended: { type: Date, required: true },
+        exam: {
+          type: Schema.Types.ObjectId,
+          ref: "Exam",
         },
-      ],
-    },
+        answers: {
+          default: undefined,
+          type: [
+            new Schema(
+              {
+                answer: { type: Schema.Types.ObjectId, required: true },
+                question: { type: Schema.Types.ObjectId, required: true },
+              },
+              { _id: false }
+            ),
+          ],
+        },
+      },
+      { _id: false }
+    ),
   ],
 });
 

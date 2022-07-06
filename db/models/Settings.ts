@@ -7,9 +7,8 @@ const SettingsSchema = new Schema<SettingsRecord>({
     type: Boolean,
     default: undefined,
   },
-  transcriptGrade: {
-    _id: false,
-    type: [
+  transcriptGrade: [
+    new Schema(
       {
         limit: {
           type: Number,
@@ -26,8 +25,9 @@ const SettingsSchema = new Schema<SettingsRecord>({
           required: [true, "Scheme description required"],
         },
       },
-    ],
-  },
+      { _id: false }
+    ),
+  ],
 });
 
 export const SettingsModel = (models.Settings as Model<SettingsRecord>) ?? model("Settings", SettingsSchema);

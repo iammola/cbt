@@ -36,25 +36,23 @@ const QuestionSchema = new Schema<QuestionRecord>({
     trim: true,
     required: [true, "Question required"],
   },
-  answers: [
-    {
-      type: AnswerSchema,
-      required: [
-        function (this: QuestionRecord) {
-          return ["Multiple choice", "Checkboxes"].includes(this.type);
-        },
-        "Multiple choice and Checkboxes questions require answers",
-      ],
-      validate: [
-        function (this: QuestionRecord) {
-          return ["Multiple choice", "Checkboxes"].includes(this.type)
-            ? (this.answers ?? []).length > 1
-            : this.answers === undefined;
-        },
-        "Invalid answer value",
-      ],
-    },
-  ],
+  answers: {
+    type: [AnswerSchema],
+    required: [
+      function (this: QuestionRecord) {
+        return ["Multiple choice", "Checkboxes"].includes(this.type);
+      },
+      "Multiple choice and Checkboxes questions require answers",
+    ],
+    validate: [
+      function (this: QuestionRecord) {
+        return ["Multiple choice", "Checkboxes"].includes(this.type)
+          ? (this.answers ?? []).length > 1
+          : this.answers === undefined;
+      },
+      "Invalid answer value",
+    ],
+  },
   minLength: {
     type: Number,
     required: [

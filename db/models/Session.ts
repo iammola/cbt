@@ -20,26 +20,28 @@ const SessionSchema = new Schema<SessionRecord>({
     default: undefined,
     set: (e?: boolean) => (e === false ? undefined : true),
   },
-  terms: [
-    {
-      type: {
+  terms: {
+    type: [
+      new Schema({
         name: {
           type: String,
           trim: true,
+          required: true,
         },
         alias: {
           type: String,
           trim: true,
+          required: true,
         },
         current: {
           type: Boolean,
           default: undefined,
           set: (e?: boolean) => (!e ? undefined : true),
         },
-      },
-      default: undefined,
-    },
-  ],
+      }),
+    ],
+    default: undefined,
+  },
 });
 
 export const SessionModel = (models.Session as Model<SessionRecord>) ?? model("Session", SessionSchema);
