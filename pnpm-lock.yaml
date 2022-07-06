@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  mongoose@6.4.3:
+    hash: jsee3jdygtq7v4wdlxu6zssgdm
+    path: patches/mongoose@6.4.3.patch
+
 specifiers:
   '@headlessui/react': ^1.6.5
   '@heroicons/react': ^1.0.6
@@ -30,7 +35,7 @@ dependencies:
   '@heroicons/react': 1.0.6_react@18.2.0
   date-fns: 2.28.0
   http-status-codes: 2.2.0
-  mongoose: 6.4.3
+  mongoose: 6.4.3_jsee3jdygtq7v4wdlxu6zssgdm
   next: 12.2.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-cookie: 4.1.1_react@18.2.0
@@ -1684,7 +1689,7 @@ packages:
       saslprep: 1.0.3
     dev: false
 
-  /mongoose/6.4.3:
+  /mongoose/6.4.3_jsee3jdygtq7v4wdlxu6zssgdm:
     resolution: {integrity: sha512-JuEdgpDxYIqG+V85LzNn7LKIr73ixnKVbmEhJNSf3vF1+QmIfar5S0wfL/s3CSM3qs/p6J2vWirOle1INW5VCA==}
     engines: {node: '>=12.0.0'}
     dependencies:
@@ -1698,6 +1703,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+    patched: true
 
   /mpath/0.9.0:
     resolution: {integrity: sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==}

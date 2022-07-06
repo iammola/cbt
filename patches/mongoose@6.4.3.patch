@@ -1,0 +1,87 @@
+diff --git a/types/index.d.ts b/types/index.d.ts
+index 00252c43dd2559eb518a779115da7cb20af25439..d57d21fdb8acddcfc8563a065750297e13c0917d 100644
+--- a/types/index.d.ts
++++ b/types/index.d.ts
+@@ -161,12 +161,13 @@ declare module 'mongoose' {
+   export class Schema<EnforcedDocType = any, M = Model<EnforcedDocType, any, any, any>, TInstanceMethods = {}, TQueryHelpers = {}, TVirtuals = any,
+     TStaticMethods = {},
+     TPathTypeKey extends TypeKeyBaseType = DefaultTypeKey,
++    SchemaID = true,
+     DocType extends ObtainDocumentType<DocType, EnforcedDocType, TPathTypeKey> = ObtainDocumentType<any, EnforcedDocType, TPathTypeKey>>
+     extends events.EventEmitter {
+     /**
+      * Create a new schema
+      */
+-    constructor(definition?: SchemaDefinition<SchemaDefinitionType<EnforcedDocType>> | DocType, options?: SchemaOptions<TPathTypeKey, FlatRecord<DocType>, TInstanceMethods, TQueryHelpers, TStaticMethods>);
++    constructor(definition?: SchemaDefinition<SchemaDefinitionType<EnforcedDocType>> | DocType, options?: SchemaOptions<TPathTypeKey, FlatRecord<DocType>, TInstanceMethods, TQueryHelpers, TStaticMethods, {}, SchemaID>);
+ 
+     /** Adds key path / schema type pairs to this schema. */
+     add(obj: SchemaDefinition<SchemaDefinitionType<EnforcedDocType>> | Schema, prefix?: string): this;
+diff --git a/types/inferschematype.d.ts b/types/inferschematype.d.ts
+index ce94e6221c0c1ed27e4f30d4fc89014cbe5db334..9d60659f64f7f938635037accdf95c2ea75672a1 100644
+--- a/types/inferschematype.d.ts
++++ b/types/inferschematype.d.ts
+@@ -1,4 +1,4 @@
+-import { Schema, InferSchemaType, SchemaType, SchemaTypeOptions, TypeKeyBaseType, Types, NumberSchemaDefinition, StringSchemaDefinition, BooleanSchemaDefinition, DateSchemaDefinition } from 'mongoose';
++import { Schema, InferSchemaType, Require_id, SchemaType, SchemaTypeOptions, TypeKeyBaseType, Types, NumberSchemaDefinition, StringSchemaDefinition, BooleanSchemaDefinition, DateSchemaDefinition } from 'mongoose';
+ 
+ declare module 'mongoose' {
+   /**
+@@ -23,15 +23,15 @@ declare module 'mongoose' {
+    * // result
+    * type UserType = {userName?: string}
+    */
+-  type InferSchemaType<SchemaType> = ObtainSchemaGeneric<SchemaType, 'DocType'> ;
++  type InferSchemaType<SchemaType, I = ObtainSchemaGeneric<SchemaType, 'SchemaID'>, T = ObtainSchemaGeneric<SchemaType, 'DocType'>> = I extends true ? (T extends { _id: any } ? T : Require_id<T>) : T;
+ 
+   /**
+    * @summary Obtains schema Generic type by using generic alias.
+    * @param {TSchema} TSchema A generic of schema type instance.
+    * @param {alias} alias Targeted generic alias.
+    */
+-  type ObtainSchemaGeneric<TSchema, alias extends 'EnforcedDocType' | 'M' | 'TInstanceMethods' | 'TQueryHelpers' | 'TVirtuals' | 'TStaticMethods' | 'TPathTypeKey' | 'DocType'> =
+-    TSchema extends Schema<infer EnforcedDocType, infer M, infer TInstanceMethods, infer TQueryHelpers, infer TVirtuals, infer TStaticMethods, infer TPathTypeKey, infer DocType>
++  type ObtainSchemaGeneric<TSchema, alias extends 'EnforcedDocType' | 'M' | 'TInstanceMethods' | 'TQueryHelpers' | 'TVirtuals' | 'TStaticMethods' | 'TPathTypeKey' | 'SchemaID' | 'DocType'> =
++    TSchema extends Schema<infer EnforcedDocType, infer M, infer TInstanceMethods, infer TQueryHelpers, infer TVirtuals, infer TStaticMethods, infer TPathTypeKey, infer SchemaID, infer DocType>
+       ? {
+         EnforcedDocType: EnforcedDocType;
+         M: M;
+@@ -40,6 +40,7 @@ declare module 'mongoose' {
+         TVirtuals: TVirtuals;
+         TStaticMethods: TStaticMethods;
+         TPathTypeKey: TPathTypeKey;
++        SchemaID: SchemaID;
+         DocType: DocType;
+       }[alias]
+       : unknown;
+@@ -135,7 +136,7 @@ type OptionalPaths<T, TypeKey extends TypeKeyBaseType> = {
+  * @param {TypeKey} TypeKey A generic refers to document definition.
+  */
+ type ObtainDocumentPathType<PathValueType, TypeKey extends TypeKeyBaseType> = PathValueType extends Schema<any>
+-  ? InferSchemaType<PathValueType>
++  ? InferSchemaType<PathValueType, false>
+   : ResolvePathType<
+   PathValueType extends PathWithTypePropertyBaseType<TypeKey> ? PathValueType[TypeKey] : PathValueType,
+   PathValueType extends PathWithTypePropertyBaseType<TypeKey> ? Omit<PathValueType, TypeKey> : {}
+diff --git a/types/schemaoptions.d.ts b/types/schemaoptions.d.ts
+index 8e978bcac2d54fe2ddbd4dfd7960bb311716d2a1..6130dd39500ef26749b371edf5dd3880148b0b19 100644
+--- a/types/schemaoptions.d.ts
++++ b/types/schemaoptions.d.ts
+@@ -10,7 +10,7 @@ declare module 'mongoose' {
+   type TypeKeyBaseType = string;
+ 
+   type DefaultTypeKey = 'type';
+-  interface SchemaOptions<PathTypeKey extends TypeKeyBaseType = DefaultTypeKey, DocType = unknown, InstanceMethods = {}, QueryHelpers = {}, StaticMethods = {}, virtuals = {}> {
++  interface SchemaOptions<PathTypeKey extends TypeKeyBaseType = DefaultTypeKey, DocType = unknown, InstanceMethods = {}, QueryHelpers = {}, StaticMethods = {}, virtuals = {}, SchemaID = true> {
+     /**
+      * By default, Mongoose's init() function creates all the indexes defined in your model's schema by
+      * calling Model.createIndexes() after you successfully connect to MongoDB. If you want to disable
+@@ -83,7 +83,7 @@ declare module 'mongoose' {
+      * constructor. The type assigned is an ObjectId to coincide with MongoDB's default behavior. If you
+      * don't want an _id added to your schema at all, you may disable it using this option.
+      */
+-    _id?: boolean;
++    _id?: SchemaID;
+     /**
+      * Mongoose will, by default, "minimize" schemas by removing empty objects. This behavior can be
+      * overridden by setting minimize option to false. It will then store empty objects.
