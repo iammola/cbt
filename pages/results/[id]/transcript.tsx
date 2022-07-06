@@ -31,7 +31,7 @@ const ResultTranscript: NextPage = () => {
     const score =
       scores.reduce((acc, b) => acc + b.reduce((acc, b) => acc + (b?.score ?? 0), 0) / b.length, 0) / scores.length;
 
-    return data?.data.grading.find((scheme) => score < scheme.limit)?.remark;
+    return data?.data.grading.find((scheme) => score < scheme.limit)?.description;
   }, [data]);
 
   useEffect(() => {

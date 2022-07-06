@@ -62,7 +62,8 @@ export default async function handler({ body, cookies, query, method }: NextApiR
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else [success, status, message] = await updateExam(query.id, JSON.parse(cookies.account)._id, JSON.parse(body));
+  } else
+    [success, status, message] = await updateExam(query.id, JSON.parse(cookies.account ?? "")._id, JSON.parse(body));
 
   if (typeof message !== "object") message = { message, error: message };
 

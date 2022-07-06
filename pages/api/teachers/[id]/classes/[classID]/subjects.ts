@@ -31,7 +31,7 @@ async function getTeacherClassSubject(
     )
       .map(({ subjects }) =>
         subjects
-          .filter(({ teachers }) => teachers.find((teacher) => teacher.toString() === id))
+          .filter(({ teachers }) => teachers?.find((teacher) => teacher.toString() === id) ?? [])
           .map(({ teachers, ...item }) => item)
       )
       .flat();

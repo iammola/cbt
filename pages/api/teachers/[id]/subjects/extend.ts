@@ -27,7 +27,7 @@ async function getExtendedTeacherSubjects(id: any): Promise<ServerResponse<Teach
         data: subjects.map((cur) => ({
           name: cur.class.name,
           subjects: cur.subjects
-            .filter(({ teachers }) => teachers.find((teacher) => teacher.equals(id)))
+            .filter(({ teachers }) => teachers?.find((teacher) => teacher.equals(id)) ?? [])
             .map(({ teachers, ...item }) => item),
         })),
         message: ReasonPhrases.OK,

@@ -33,7 +33,7 @@ export type ClassResultTemplate = {
 export type SubjectRecord = RecordId & {
   name: string;
   alias: string;
-  teachers: ObjectId[];
+  teachers?: ObjectId[];
 };
 
 export type SubjectsRecord<P = false> = RecordId & {
@@ -127,7 +127,7 @@ export type CBTResultRecord<P = false> = RecordId & {
 export type ResultRecord = RecordId & {
   term: ObjectId;
   student: ObjectId;
-  comments: string;
+  comments?: string;
   data: {
     subject: ObjectId;
     total?: number;
@@ -157,7 +157,5 @@ export type TermRecord = RecordId & {
 
 export type SettingsRecord = RecordId & {
   active?: true;
-  transcriptGrade: (ResultGrade & {
-    remark: string;
-  })[];
+  transcriptGrade: ResultGrade[];
 };

@@ -38,7 +38,7 @@ export default async function handler({ body, method }: NextApiRequest, res: Nex
           data: {
             ...user,
             access: (result.indexOf(user) === 0 ? "Teacher" : "Student") as LoginData["access"],
-          },
+          } as LoginData,
           message: ReasonPhrases.OK,
         },
       ];
