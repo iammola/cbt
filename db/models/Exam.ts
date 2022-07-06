@@ -1,8 +1,8 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { AnswerRecord, ExamRecord, QuestionRecord } from "types";
+import type { QuestionRecord } from "types";
 
-const DateSchema = new Schema<ExamRecord["created"]>(
+const DateSchema = new Schema(
   {
     at: {
       type: Date,
@@ -17,7 +17,7 @@ const DateSchema = new Schema<ExamRecord["created"]>(
   { _id: false }
 );
 
-const AnswerSchema = new Schema<AnswerRecord>({
+const AnswerSchema = new Schema({
   isCorrect: {
     type: Boolean,
     default: undefined,
@@ -30,7 +30,7 @@ const AnswerSchema = new Schema<AnswerRecord>({
   },
 });
 
-const QuestionSchema = new Schema<QuestionRecord>({
+const QuestionSchema = new Schema({
   question: {
     type: String,
     trim: true,
@@ -80,7 +80,7 @@ const QuestionSchema = new Schema<QuestionRecord>({
     */
 });
 
-const ExamSchema = new Schema<ExamRecord>({
+const ExamSchema = new Schema({
   duration: {
     type: Number,
     required: [true, "Exam duration required"],
@@ -107,4 +107,4 @@ const ExamSchema = new Schema<ExamRecord>({
   questions: [QuestionSchema],
 });
 
-export const ExamModel = (models.Exam as Model<ExamRecord>) ?? model("Exam", ExamSchema);
+export const ExamModel = (models.Exam as Model<InferSchemaType<typeof ExamSchema>>) ?? model("Exam", ExamSchema);

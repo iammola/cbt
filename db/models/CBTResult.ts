@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { CBTResultRecord } from "types";
-
-const CBTResultSchema = new Schema<CBTResultRecord>({
+const CBTResultSchema = new Schema({
   student: {
     type: Schema.Types.ObjectId,
     immutable: true,
@@ -42,4 +40,5 @@ const CBTResultSchema = new Schema<CBTResultRecord>({
   ],
 });
 
-export const CBTResultModel = (models.CBTResult as Model<CBTResultRecord>) ?? model("CBTResult", CBTResultSchema);
+export const CBTResultModel =
+  (models.CBTResult as Model<InferSchemaType<typeof CBTResultSchema>>) ?? model("CBTResult", CBTResultSchema);

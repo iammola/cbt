@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { ClassRecord } from "types";
-
-const ClassSchema = new Schema<ClassRecord>({
+const ClassSchema = new Schema({
   name: {
     type: String,
     required: [true, "Class name is required"],
@@ -67,4 +65,4 @@ const ClassSchema = new Schema<ClassRecord>({
   ),
 });
 
-export const ClassModel = (models.Class as Model<ClassRecord>) ?? model("Class", ClassSchema);
+export const ClassModel = (models.Class as Model<InferSchemaType<typeof ClassSchema>>) ?? model("Class", ClassSchema);

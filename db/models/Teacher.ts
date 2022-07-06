@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { TeacherRecord } from "types";
-
-const TeacherSchema = new Schema<TeacherRecord>({
+const TeacherSchema = new Schema({
   name: {
     required: true,
     type: new Schema(
@@ -60,4 +58,5 @@ const TeacherSchema = new Schema<TeacherRecord>({
   },
 });
 
-export const TeacherModel = (models.Teacher as Model<TeacherRecord>) ?? model("Teacher", TeacherSchema);
+export const TeacherModel =
+  (models.Teacher as Model<InferSchemaType<typeof TeacherSchema>>) ?? model("Teacher", TeacherSchema);

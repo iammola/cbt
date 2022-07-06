@@ -1,9 +1,7 @@
 import { isFuture } from "date-fns";
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { EventRecord } from "types";
-
-const EventSchema = new Schema<EventRecord>({
+const EventSchema = new Schema({
   from: {
     type: Date,
     unique: true,
@@ -19,4 +17,4 @@ const EventSchema = new Schema<EventRecord>({
   ],
 });
 
-export const EventModel = (models.Event as Model<EventRecord>) ?? model("Event", EventSchema);
+export const EventModel = (models.Event as Model<InferSchemaType<typeof EventSchema>>) ?? model("Event", EventSchema);

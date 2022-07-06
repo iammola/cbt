@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { ResultRecord } from "types";
-
-const ResultSchema = new Schema<ResultRecord>({
+const ResultSchema = new Schema({
   student: {
     type: Schema.Types.ObjectId,
     immutable: true,
@@ -57,4 +55,5 @@ const ResultSchema = new Schema<ResultRecord>({
   },
 });
 
-export const ResultModel = (models.Result as Model<ResultRecord>) ?? model("Result", ResultSchema);
+export const ResultModel =
+  (models.Result as Model<InferSchemaType<typeof ResultSchema>>) ?? model("Result", ResultSchema);

@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { SessionRecord } from "types";
-
-const SessionSchema = new Schema<SessionRecord>({
+const SessionSchema = new Schema({
   name: {
     type: String,
     required: [true, "Session name is required"],
@@ -44,4 +42,5 @@ const SessionSchema = new Schema<SessionRecord>({
   },
 });
 
-export const SessionModel = (models.Session as Model<SessionRecord>) ?? model("Session", SessionSchema);
+export const SessionModel =
+  (models.Session as Model<InferSchemaType<typeof SessionSchema>>) ?? model("Session", SessionSchema);

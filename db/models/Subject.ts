@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { SubjectRecord, SubjectsRecord } from "types";
-
-const SubjectSchema = new Schema<SubjectRecord>({
+const SubjectSchema = new Schema({
   name: {
     type: String,
     required: [true, "Subject name required"],
@@ -21,7 +19,7 @@ const SubjectSchema = new Schema<SubjectRecord>({
   },
 });
 
-const SubjectsSchema = new Schema<SubjectsRecord>({
+const SubjectsSchema = new Schema({
   class: {
     type: Schema.Types.ObjectId,
     required: [true, "Class needed"],
@@ -31,4 +29,5 @@ const SubjectsSchema = new Schema<SubjectsRecord>({
   subjects: { type: [SubjectSchema], required: true },
 });
 
-export const SubjectsModel = (models.Subjects as Model<SubjectsRecord>) ?? model("Subjects", SubjectsSchema);
+export const SubjectsModel =
+  (models.Subjects as Model<InferSchemaType<typeof SubjectsSchema>>) ?? model("Subjects", SubjectsSchema);

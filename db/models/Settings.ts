@@ -1,8 +1,6 @@
-import { Schema, Model, model, models } from "mongoose";
+import { InferSchemaType, Schema, Model, model, models } from "mongoose";
 
-import type { SettingsRecord } from "types";
-
-const SettingsSchema = new Schema<SettingsRecord>({
+const SettingsSchema = new Schema({
   active: {
     type: Boolean,
     default: undefined,
@@ -30,4 +28,5 @@ const SettingsSchema = new Schema<SettingsRecord>({
   ],
 });
 
-export const SettingsModel = (models.Settings as Model<SettingsRecord>) ?? model("Settings", SettingsSchema);
+export const SettingsModel =
+  (models.Settings as Model<InferSchemaType<typeof SettingsSchema>>) ?? model("Settings", SettingsSchema);
