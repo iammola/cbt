@@ -43,20 +43,19 @@ export type SubjectsRecord<P = false> = RecordId & {
 
 /* Student and Teacher */
 
-type UserRecord<T = never> = RecordId & {
-  name: {
-    title: T;
+type UserRecord<T = unknown> = RecordId & {
+  name: T & {
     initials: string;
     full: string;
     first: string;
     last: string;
   };
-  image: string;
+  image?: string;
   email: string;
   code: number;
 };
 
-export type TeacherRecord = UserRecord<"Mr." | "Mrs." | "Ms." | "Dr." | "Master">;
+export type TeacherRecord = UserRecord<{ title: "Mr." | "Mrs." | "Ms." | "Dr." }>;
 
 export type StudentRecord = UserRecord & {
   birthday: Date;
