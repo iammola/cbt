@@ -64,6 +64,7 @@ async function createResult(_id: any, result: RequestBody): Promise<ServerRespon
 
     await CBTResultModel.updateOne(
       { student: _id, term: session.terms[0]._id },
+        // @ts-ignore
       { $push: { results: { ...result, score, answers, ended } } },
       {
         upsert: true,

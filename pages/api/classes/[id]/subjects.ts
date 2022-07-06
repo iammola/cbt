@@ -50,6 +50,7 @@ async function createSubject(id: any, { name, alias }: SubjectRecord): Promise<S
     const data = await SubjectsModel.findOneAndUpdate(
       { class: id },
       {
+        // @ts-ignore
         $push: { subjects: { name, alias } },
       },
       {
