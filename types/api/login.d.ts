@@ -1,5 +1,13 @@
 import type { ServerResponse, StudentRecord, TeacherRecord } from "types";
 
-export type LoginData =
-  | ({ access: "Student" } & Pick<StudentRecord, "name" | "email">)
-  | ({ access: "Teacher" } & Pick<TeacherRecord, "name" | "email">);
+export type LoginData = {
+  access: "Student" | "Teacher" | "GroupedUser";
+  email: string;
+  name: {
+    full: string;
+    initials: string;
+    title?: string;
+    first?: string;
+    last?: string;
+  };
+};
