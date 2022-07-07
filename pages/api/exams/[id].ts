@@ -2,16 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { ExamModel, SubjectsModel } from "db/models";
+import { ExamModel } from "db/models";
 
-import type { ExamPUTData } from "types/api";
-import type { ServerResponse } from "types";
+import type { ExamPUTData, LoginData } from "types/api";
+import type { CreateQuestion, ExamRecord, ServerResponse } from "types";
 
-async function updateExam(
-  _id: any,
-  by: any,
-  { exam, questions }: { exam: any; questions: any }
-): Promise<ServerResponse<ExamPUTData>> {
+async function updateExam(_id: any, account: LoginData, body: PutBody): Promise<ServerResponse<ExamPUTData>> {
   await connect();
   let [success, status, message]: ServerResponse<ExamPUTData> = [
     false,
@@ -19,16 +15,18 @@ async function updateExam(
     ReasonPhrases.INTERNAL_SERVER_ERROR,
   ];
 
+  const { createdBy, exam, questions } = body;
   try {
-    await ExamModel.updateOne(
-      { _id },
-      {
-        ...exam,
-        questions,
-        $push: { edited: { by, at: new Date() } },
-      },
-      { runValidators: true }
-    );
+    if (account.access !== "Teacher" && account.access !== "GroupedUser") throw new Error("Invalid User Type");
+
+    const edited = {
+      at: new Date(),
+      by: account._id,
+      model: account.access,
+      name: account.access === "GroupedUser" ? createdBy : undefined,
+    };
+
+    await ExamModel.updateOne({ _id }, { ...exam, questions, $push: { edited } }, { runValidators: true });
 
     [success, status, message] = [
       true,
@@ -62,10 +60,18 @@ export default async function handler({ body, cookies, query, method }: NextApiR
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else
-    [success, status, message] = await updateExam(query.id, JSON.parse(cookies.account ?? "")._id, JSON.parse(body));
+  } else {
+    if (!cookies.account) throw new Error("Account is required");
+    [success, status, message] = await updateExam(query.id, JSON.parse(cookies.account) as LoginData, JSON.parse(body));
+  }
 
   if (typeof message !== "object") message = { message, error: message };
 
   res.status(status).json({ success, ...message });
 }
+
+type PutBody = {
+  exam: ExamRecord;
+  createdBy: string;
+  questions: CreateQuestion[];
+};
