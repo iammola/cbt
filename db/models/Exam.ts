@@ -10,10 +10,10 @@ const DateSchema = new Schema(
     },
     by: {
       type: Schema.Types.ObjectId,
-      refPath: "type",
+      refPath: "model",
       required: true,
     },
-    type: {
+    model: {
       type: String,
       required: true,
       default: "Teacher",
