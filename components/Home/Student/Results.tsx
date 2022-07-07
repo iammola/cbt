@@ -12,7 +12,7 @@ import { format } from "date-fns";
 const Result: React.FC = () => {
   const [{ account }] = useCookies(["account"]);
   const { data: { data } = {}, error } = useSWR<RouteData<StudentCBTResultsGETData>>(
-    `/api/students/${account._id}/cbt_results/`
+    `/api/students/${account?._id}/cbt_results/`
   );
 
   return (

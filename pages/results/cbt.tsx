@@ -17,7 +17,7 @@ const Results: NextPage = () => {
   const [{ account }] = useCookies(["account"]);
   const [exams, setExams] = useState<SelectOption[]>();
   const { data: classes, error } = useSWR<RouteData<ClassesGETData>>(
-    account !== undefined ? `/api/teachers/${account._id}/classes` : null
+    account !== undefined ? `/api/teachers/${account?._id}/classes` : null
   );
 
   const [results, setResults] = useState<TeacherCBTResultsGETData>();
@@ -68,7 +68,7 @@ const Results: NextPage = () => {
   async function getData() {
     if (selectedExam._id !== "") {
       try {
-        const res = await fetch(`/api/teachers/${account._id}/cbt_results/${selectedExam._id}`);
+        const res = await fetch(`/api/teachers/${account?._id}/cbt_results/${selectedExam._id}`);
         const result = (await res.json()) as ClientResponse<TeacherCBTResultsGETData>;
 
         if (result.success) {
