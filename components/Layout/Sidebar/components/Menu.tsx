@@ -1,363 +1,136 @@
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { Fragment, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Fragment, useMemo, useState } from "react";
 import { DesktopComputerIcon, DocumentTextIcon } from "@heroicons/react/outline";
 
 import { classNames } from "utils";
 import { CalendarIcon, HomeIcon, FileTextIcon } from "components/Misc/Icons";
 
 import type { MenuProps } from "types";
+import type { LoginData } from "types/api";
 
 const Menu: React.FC<MenuProps> = ({ open }) => {
+  const [{ account }] = useCookies<"account", { account?: LoginData }>(["account"]);
+
+  const nav = useMemo(() => {
+    const access = account?.access;
+
+    if (!access || access == "Student") return [];
+
+    const nav = {
+      Teacher: [
+        { main: { url: "/home/", title: "Dashboard", Icon: HomeIcon } },
+        {
+          main: { title: "Exams", Icon: FileTextIcon },
+          sub: [
+            { title: "View Exams", url: "/exams/" },
+            { title: "Create an Exam", url: "/exams/create/" },
+          ],
+        },
+        {
+          main: { title: "Results", Icon: DesktopComputerIcon },
+          sub: [
+            { title: "View CBT Results", url: "/results/cbt/" },
+            { title: "Upload Term Comments", url: "/results/comments/" },
+            { title: "Upload Term Result", url: "/results/create/" },
+            { title: "View Term Results", url: "/results/picker/" },
+            { title: "View Transcript", url: "/results/picker/transcript/" },
+            { title: "Check Results Status", url: "/results/check-status/" },
+          ],
+        },
+        { main: { url: "/calendar/", title: "Calendar", Icon: CalendarIcon } },
+        {
+          main: { title: "Registration Forms", Icon: DocumentTextIcon },
+          sub: [
+            { title: "Register an Event", url: "/events/create/" },
+            { title: "Register a Student", url: "/students/create/" },
+          ],
+        },
+      ],
+      GroupedUser: [],
+    }[access];
+
+    return nav;
+  }, [account?.access]);
+
   return (
-    <nav
-      className={classNames("w-full grow", {
-        "px-5": open,
-        "px-1 sm:px-4": !open,
-      })}
-    >
+    <nav className={classNames("w-full grow", { "px-5": open, "px-1 sm:px-4": !open })}>
       <span
         className={classNames(
           "inline-block w-full pb-4 text-[0.6rem] font-semibold uppercase tracking-wider text-gray-400",
-          {
-            "text-center": !open,
-          }
+          { "text-center": !open }
         )}
       >
         Menu
       </span>
       <ul className="flex w-full flex-col items-center justify-center gap-y-2">
-        <MenuItem>
-          <MenuItem.Main>
-            <Link href="/home">
-              <a
-                className={classNames(
+        {nav.map(({ main: { Icon, title, url }, sub }) => {
+          const Elem = (
+            <Fragment>
+              <Icon className={classNames("h-6 w-6 shrink-0", { "ml-3": open })} />
+              <span className={classNames("truncate text-sm", { hidden: !open, block: open })}>{title}</span>
+              {url == undefined && (
+                <ChevronDownIcon className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", { hidden: !open })} />
+              )}
+            </Fragment>
+          );
+
+          return (
+            <MenuItem key={title}>
+              {({ expand, toggleExpand }) => {
+                const classes = classNames(
                   "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
-                  {
-                    "justify-start pr-3": open,
-                    "justify-center sm:py-3": !open,
-                  }
-                )}
-              >
-                <HomeIcon
-                  className={classNames("h-6 w-6 shrink-0", {
-                    "ml-3": open,
-                  })}
-                />
-                <span
-                  className={classNames("truncate text-sm", {
-                    hidden: !open,
-                    block: open,
-                  })}
-                >
-                  Dashboard
-                </span>
-              </a>
-            </Link>
-          </MenuItem.Main>
-        </MenuItem>
-        <MenuItem>
-          {({ expand, toggleExpand }) => (
-            <>
-              <MenuItem.Main>
-                <div
-                  onClick={toggleExpand}
-                  className={classNames(
-                    "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
-                    {
-                      "justify-start pr-3": open,
-                      "justify-center": !open,
-                    }
-                  )}
-                >
-                  <FileTextIcon
-                    className={classNames("h-6 w-6 shrink-0", {
-                      "ml-3": open,
-                    })}
-                  />
-                  <span
-                    className={classNames("truncate text-sm", {
-                      hidden: !open,
-                      block: open,
-                    })}
+                  { "justify-start pr-3": open, "justify-center": !open, "sm:py-3": !open && !url }
+                );
+
+                const list = sub?.map(({ title, url }) => (
+                  <li
+                    key={title}
+                    className="w-full"
                   >
-                    Exams
-                  </span>
-                  <ChevronDownIcon
-                    className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", {
-                      hidden: !open,
-                    })}
-                  />
-                </div>
-              </MenuItem.Main>
-              {open ? (
-                <MenuItem.List expand={expand}>
-                  <li className="w-full">
-                    <Link href="/exams/create/">
+                    <Link href={url}>
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                         <span className="block truncate text-sm">Create an Exam</span>
                       </a>
                     </Link>
                   </li>
-                  <li className="w-full">
-                    <Link href="/exams/">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View Exams</span>
-                      </a>
-                    </Link>
-                  </li>
-                </MenuItem.List>
-              ) : (
-                <MenuItem.Panel expand={expand}>
-                  <li className="w-full">
-                    <Link href="/exams/create/">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Create an Exam</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/exams">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View Exams</span>
-                      </a>
-                    </Link>
-                  </li>
-                </MenuItem.Panel>
-              )}
-            </>
-          )}
-        </MenuItem>
-        <MenuItem>
-          {({ expand, toggleExpand }) => (
-            <>
-              <MenuItem.Main>
-                <div
-                  onClick={toggleExpand}
-                  className={classNames(
-                    "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
-                    {
-                      "justify-start pr-3": open,
-                      "justify-center": !open,
-                    }
-                  )}
-                >
-                  <DesktopComputerIcon
-                    className={classNames("h-6 w-6 shrink-0", {
-                      "ml-3": open,
-                    })}
-                  />
-                  <span
-                    className={classNames("truncate text-sm", {
-                      hidden: !open,
-                      block: open,
-                    })}
-                  >
-                    Results
-                  </span>
-                  <ChevronDownIcon
-                    className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", {
-                      hidden: !open,
-                    })}
-                  />
-                </div>
-              </MenuItem.Main>
-              {open ? (
-                <MenuItem.List expand={expand}>
-                  <li className="w-full">
-                    <Link href="/results/cbt">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View CBT Results</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/comments">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Upload Term Comments</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/create">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Upload Term Result</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/picker">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View Term Results</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/picker/transcript">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View Transcript</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/check-status">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Check Results Status</span>
-                      </a>
-                    </Link>
-                  </li>
-                </MenuItem.List>
-              ) : (
-                <MenuItem.Panel expand={expand}>
-                  <li className="w-full">
-                    <Link href="/results/cbt">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View CBT Results</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/comments">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Upload Term Comments</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/create">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Upload Term Results</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/picker">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View Term Result</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/picker/transcript">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">View Transcript</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/results/check-status">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Check Results Status</span>
-                      </a>
-                    </Link>
-                  </li>
-                </MenuItem.Panel>
-              )}
-            </>
-          )}
-        </MenuItem>
-        <MenuItem>
-          <MenuItem.Main>
-            <Link href="/calendar">
-              <a
-                className={classNames(
-                  "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
-                  {
-                    "justify-start pr-3": open,
-                    "justify-center sm:py-3": !open,
-                  }
-                )}
-              >
-                <CalendarIcon
-                  className={classNames("h-6 w-6 shrink-0", {
-                    "ml-3": open,
-                  })}
-                />
-                <span
-                  className={classNames("truncate text-sm", {
-                    hidden: !open,
-                    block: open,
-                  })}
-                >
-                  Calendar
-                </span>
-              </a>
-            </Link>
-          </MenuItem.Main>
-        </MenuItem>
-        <MenuItem>
-          {({ expand, toggleExpand }) => (
-            <>
-              <MenuItem.Main>
-                <div
-                  onClick={toggleExpand}
-                  className={classNames(
-                    "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
-                    {
-                      "justify-start pr-3": open,
-                      "justify-center": !open,
-                    }
-                  )}
-                >
-                  <DocumentTextIcon
-                    className={classNames("h-6 w-6 shrink-0", {
-                      "ml-3": open,
-                    })}
-                  />
-                  <span
-                    className={classNames("truncate text-sm", {
-                      hidden: !open,
-                      block: open,
-                    })}
-                  >
-                    Registration Forms
-                  </span>
-                  <ChevronDownIcon
-                    className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", {
-                      hidden: !open,
-                    })}
-                  />
-                </div>
-              </MenuItem.Main>
-              {open ? (
-                <MenuItem.List expand={expand}>
-                  <li className="w-full">
-                    <Link href="/events/create">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Register an Event</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/students/create">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Register a Student</span>
-                      </a>
-                    </Link>
-                  </li>
-                </MenuItem.List>
-              ) : (
-                <MenuItem.Panel expand={expand}>
-                  <li className="w-full">
-                    <Link href="/events/create">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Register an Event</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <Link href="/students/create">
-                      <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Register a Student</span>
-                      </a>
-                    </Link>
-                  </li>
-                </MenuItem.Panel>
-              )}
-            </>
-          )}
-        </MenuItem>
+                ));
+
+                return (
+                  <Fragment>
+                    <MenuItem.Main>
+                      {url ? (
+                        <Link
+                          href={url}
+                          className={classes}
+                        >
+                          {Elem}
+                        </Link>
+                      ) : (
+                        <div
+                          className={classes}
+                          onClick={toggleExpand}
+                        >
+                          {Elem}
+                          <ChevronDownIcon
+                            className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", { hidden: !open })}
+                          />
+                        </div>
+                      )}
+                    </MenuItem.Main>
+                    {open ? (
+                      <MenuItem.List expand={expand}>{list}</MenuItem.List>
+                    ) : (
+                      <MenuItem.Panel expand={expand}>{list}</MenuItem.Panel>
+                    )}
+                  </Fragment>
+                );
+              }}
+            </MenuItem>
+          );
+        })}
       </ul>
     </nav>
   );
@@ -371,7 +144,7 @@ const MenuItem: MenuItem = ({ children }) => {
 };
 
 MenuItem.Main = function Main({ children }) {
-  return <>{children}</>;
+  return <Fragment>{children}</Fragment>;
 };
 
 MenuItem.List = function List({ expand, children }) {
