@@ -36,6 +36,8 @@ const Bar: React.FC<TeacherBarProps> = ({ exam, save, modified, saved, uploading
         <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
         <span className="block w-max truncate">{exam?.subject ?? "Select Subject"}</span>
         <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
+        <span className="block w-max truncate">By {exam?.createdBy ?? "You"}</span>
+        <ChevronRightIcon className="h-5 w-5 fill-gray-500" />
         <span className="text-gray-600">Questions</span>
       </div>
       <button

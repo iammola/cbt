@@ -5,17 +5,23 @@ import { Fragment, useEffect, useState } from "react";
 
 import Select from "components/Select";
 
+import type { LoginData } from "types/api";
 import type { TeacherExamModalProps, SelectOption } from "types";
 
-const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) => {
-  const [{ account }] = useCookies(["account"]);
+const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit, ...props }) => {
+  const [{ account }] = useCookies<"account", { account?: LoginData }>(["account"]);
   const [subjects, setSubjects] = useState<SelectOption[] | undefined>();
   const { data: currentSession } = useSWRImmutable("/api/sessions/current/");
   const { data: classes, error } = useSWRImmutable(
-    account !== undefined ? `/api/teachers/${account._id}/classes` : null
+    account?.access === "GroupedUser"
+      ? "/api/classes/"
+      : account?.access === "Teacher"
+      ? `/api/teachers/${account?._id}/classes/`
+      : null
   );
 
   const [duration, setDuration] = useState(0);
+  const [createdByName, setCreatedByName] = useState(props.createdBy);
   const [selectedClass, setSelectedClass] = useState({
     _id: "",
     name: "Loading classes...",
@@ -43,7 +49,15 @@ const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) 
     async function fetchSubjects() {
       setSelectedSubject({ _id: "", name: "Loading subjects..." });
       try {
-        const res = await fetch(`/api/teachers/${account._id}/classes/${_id}/subjects`);
+        const url =
+          account?.access === "GroupedUser"
+            ? `/api/classes/${_id}/subjects`
+            : account?.access === "Teacher"
+            ? `/api/teachers/${account?._id}/classes/${_id}/subjects`
+            : null;
+
+        if (url == null) return;
+        const res = await fetch(url);
         const { success, data, error } = await res.json();
 
         if (success) {
@@ -56,16 +70,20 @@ const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) 
     }
 
     if (_id !== "") fetchSubjects();
-  }, [account?._id, selectedClass]);
+  }, [account, selectedClass]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!account) return;
+    if (account.access === "GroupedUser" && !createdByName) return alert("Fill in your name field.");
 
     if (selectedClass._id !== "" && selectedSubject._id !== "" && currentSession?.data) {
       onSubmit({
         name: {
           class: selectedClass.name,
           subject: selectedSubject.name,
+          createdBy: createdByName ?? account.name.full,
         },
         duration,
         subject: selectedSubject._id as any,
@@ -111,6 +129,25 @@ const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit }) 
             <Dialog.Title className="pb-4 text-center text-4xl font-bold tracking-tight text-gray-800">
               <span>{isEdit ? "Edit" : "Create"} an</span> <span className="text-indigo-500">Exam</span> <span>🚀</span>
             </Dialog.Title>
+            {account?.access !== "Teacher" && (
+              <div className="flex w-full min-w-[20rem] flex-col gap-2.5">
+                <label
+                  htmlFor="teacherName"
+                  className="text-sm font-semibold text-gray-600"
+                >
+                  Your Name
+                </label>
+                <input
+                  required
+                  type="text"
+                  id="teacherName"
+                  readOnly={isEdit}
+                  value={isEdit ? props.createdBy : createdByName ?? ""}
+                  onChange={(e) => !isEdit && setCreatedByName(e.target.value)}
+                  className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+            )}
             <Select
               label="Classes"
               options={classes?.data}

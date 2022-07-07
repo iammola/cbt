@@ -19,6 +19,13 @@ const DateSchema = new Schema(
       default: "Teacher",
       enum: ["GroupedUser", "Teacher"],
     },
+    name: {
+      type: String,
+      immutable: true,
+      required: function (this: { type: string }) {
+        return this.type === "GroupedUser";
+      },
+    },
   },
   { _id: false }
 );

@@ -66,6 +66,7 @@ export type ToggleProps = {
 export type TeacherExamModalProps = {
   open: boolean;
   isEdit: boolean;
+  createdBy: string;
   onSubmit(v: Omit<TeacherExamGETData["details"], "instructions">): void;
 };
 

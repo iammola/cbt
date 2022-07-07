@@ -66,14 +66,14 @@ const Form: React.FC<{ data?: TeacherExamGETData }> = ({ data }) => {
       const saved = savedExams[exam.subject.toString()];
 
       if (saved?.exam.term === exam.term) {
+        const savedDate = format(new Date(saved.lastSaved), "do MMM YYY");
+        const savedDistance = formatDistance(new Date(saved.lastSaved), new Date(), {
+          addSuffix: true,
+          includeSeconds: true,
+        });
+
         const decision = confirm(
-          `Do you want to restore the questions saved on ${format(
-            new Date(saved.lastSaved),
-            "do MMM YYY"
-          )} (${formatDistance(new Date(saved.lastSaved), new Date(), {
-            addSuffix: true,
-            includeSeconds: true,
-          })}) for this subject and class?`
+          `Do you want to restore the questions saved on ${savedDate} (${savedDistance}) for this subject and class?`
         );
 
         if (decision) {
@@ -133,6 +133,7 @@ const Form: React.FC<{ data?: TeacherExamGETData }> = ({ data }) => {
               ...details,
               instructions: instructions.filter(Boolean),
             },
+            createdBy: name.createdBy,
           }),
         });
 
@@ -271,6 +272,7 @@ const Form: React.FC<{ data?: TeacherExamGETData }> = ({ data }) => {
         />
       </form>
       <Modal
+        createdBy={exam?.name.createdBy ?? ""}
         onSubmit={(d) => {
           setExam(d);
           setExamState({ ...examState, details: true });
