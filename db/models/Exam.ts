@@ -10,8 +10,14 @@ const DateSchema = new Schema(
     },
     by: {
       type: Schema.Types.ObjectId,
-      ref: "Teacher",
+      refPath: "type",
       required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      default: "Teacher",
+      enum: ["GroupedUser", "Teacher"],
     },
   },
   { _id: false }
