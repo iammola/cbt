@@ -135,13 +135,14 @@ const ExamModal: React.FC<TeacherExamModalProps> = ({ isEdit, open, onSubmit, ..
                   htmlFor="teacherName"
                   className="text-sm font-semibold text-gray-600"
                 >
-                  Your Name
+                  Your Full Name
                 </label>
                 <input
                   required
                   type="text"
                   id="teacherName"
                   readOnly={isEdit}
+                  placeholder="e.g. Mr. John Doe"
                   value={isEdit ? props.createdBy : createdByName ?? ""}
                   onChange={(e) => !isEdit && setCreatedByName(e.target.value)}
                   className="rounded-md border p-3 pl-5 transition-shadow focus:outline-none focus:ring-2 focus:ring-indigo-400"
