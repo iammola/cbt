@@ -21,17 +21,13 @@ const TranscriptPicker: NextPage = () => {
   const { data: students } = useSWR<RouteData<StudentsGETData>>(`/api/students/?select=name.full`);
 
   const studentOptions = useMemo(
-    () => sort(students?.data?.map((item) => ({ ...item, name: `${item.name.full}` })) ?? []),
+    () => sort(students?.data?.map((item) => ({ _id: String(item._id), name: `${item.name.full}` })) ?? []),
     [students]
   );
 
   useEffect(() => {
-    if (students && !selectedStudent._id)
-      setSelectedStudent({
-        _id: "",
-        name: "Select student",
-      });
-  }, [selectedStudent._id, students]);
+    if (studentOptions.length > 0 && !selectedStudent._id) setSelectedStudent(studentOptions[0]);
+  }, [selectedStudent._id, studentOptions]);
 
   return (
     <section className="flex h-screen w-screen items-center justify-start divide-y-[1.5px] divide-gray-200">
@@ -55,7 +51,7 @@ const TranscriptPicker: NextPage = () => {
               options={studentOptions}
             />
           </div>
-          <Link href={`/results/${`${selectedStudent._id}/`}transcript`}>
+          <Link href={selectedStudent._id ? `/results/${`${selectedStudent._id}/`}transcript` : ""}>
             <a
               target="_blank"
               rel="noopener noreferrer"
