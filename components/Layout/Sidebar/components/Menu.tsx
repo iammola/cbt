@@ -14,14 +14,18 @@ import type { LoginData } from "types/api";
 const Menu: React.FC<MenuProps> = ({ open }) => {
   const [{ account }] = useCookies<"account", { account?: LoginData }>(["account"]);
 
-  const nav = useMemo(() => {
+  const nav = useMemo<MenuNavItem[]>(() => {
     const access = account?.access;
 
     if (!access || access == "Student") return [];
 
+    const general = [
+      { main: { url: "/home/", title: "Dashboard", Icon: HomeIcon } },
+      { main: { url: "/calendar/", title: "Calendar", Icon: CalendarIcon } },
+    ];
+
     const nav = {
       Teacher: [
-        { main: { url: "/home/", title: "Dashboard", Icon: HomeIcon } },
         {
           main: { title: "Exams", Icon: FileTextIcon },
           sub: [
@@ -40,7 +44,6 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
             { title: "Check Results Status", url: "/results/check-status/" },
           ],
         },
-        { main: { url: "/calendar/", title: "Calendar", Icon: CalendarIcon } },
         {
           main: { title: "Registration Forms", Icon: DocumentTextIcon },
           sub: [
@@ -49,10 +52,15 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
           ],
         },
       ],
-      GroupedUser: [],
+      GroupedUser: [
+        {
+          main: { title: "Exams", Icon: FileTextIcon },
+          sub: [{ title: "Create an Exam", url: "/exams/create/" }],
+        },
+      ],
     }[access];
 
-    return nav;
+    return [...nav, ...general];
   }, [account?.access]);
 
   return (
@@ -201,5 +209,17 @@ interface MenuItem
   Panel: React.FC<CP<Pick<Parameters<RenderChildren>[0], "expand">>>;
   Main: React.FC<CP>;
 }
+
+type MenuNavItem = {
+  main: {
+    url?: string;
+    title: string;
+    Icon: React.FC<React.ComponentProps<"svg">>;
+  };
+  sub?: {
+    title: string;
+    url: string;
+  }[];
+};
 
 export default Menu;
