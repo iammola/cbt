@@ -17,7 +17,7 @@ specifiers:
   eslint: ^8.19.0
   eslint-config-next: 12.1.6
   http-status-codes: ^2.2.0
-  mongoose: ^6.4.3
+  mongoose: 6.4.3
   next: 12.1.6
   postcss: ^8.4.14
   prettier: ^2.7.1
