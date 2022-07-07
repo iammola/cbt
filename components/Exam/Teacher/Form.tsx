@@ -142,7 +142,7 @@ const Form: React.FC<{ data?: TeacherExamGETData }> = ({ data }) => {
         setExamState({ ...examState, uploaded: success });
 
         if (success) {
-          setTimeout(router.push, 11e2, "/home");
+          setTimeout(router.reload, 15e2);
           addNotification({
             message: "Upload Success... Redirecting",
             timeout: 1e3,
