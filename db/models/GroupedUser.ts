@@ -2,14 +2,17 @@ import { InferSchemaType, model, models, Model, Schema } from "mongoose";
 
 const GroupedUserSchema = new Schema({
   name: {
-    initials: {
-      type: String,
-      required: true,
-    },
-    full: {
-      type: String,
-      required: true,
-    },
+    required: true,
+    type: new Schema({
+      initials: {
+        type: String,
+        required: true,
+      },
+      full: {
+        type: String,
+        required: true,
+      },
+    }),
   },
   email: {
     type: String,
