@@ -15,10 +15,10 @@ specifiers:
   autoprefixer: ^10.4.7
   date-fns: ^2.28.0
   eslint: ^8.19.0
-  eslint-config-next: ^12.2.0
+  eslint-config-next: 12.2.0
   http-status-codes: ^2.2.0
-  mongoose: ^6.4.3
-  next: ^12.2.0
+  mongoose: 6.4.3
+  next: 12.2.0
   postcss: ^8.4.14
   prettier: ^2.7.1
   prettier-plugin-tailwindcss: ^0.1.11
@@ -585,7 +585,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001363
-      electron-to-chromium: 1.4.180
+      electron-to-chromium: 1.4.181
       node-releases: 2.0.5
       update-browserslist-db: 1.0.4_browserslist@4.21.1
     dev: true
@@ -826,8 +826,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /electron-to-chromium/1.4.180:
-    resolution: {integrity: sha512-7at5ash3FD9U5gPa3/wPr6OdiZd/zBjvDZaaHBpcqFOFUhZiWnb7stkqk8xUFL9H9nk7Yok5vCCNK8wyC/+f8A==}
+  /electron-to-chromium/1.4.181:
+    resolution: {integrity: sha512-T6JzLj+9J6CdPgI7jXLcq5Ao2qyFhEBfWFUExxRRVFdVYAU86SfcLX3Zw6p1HzvngR+M8C4q6eDkQ5flEr1RnA==}
     dev: true
 
   /emoji-regex/9.2.2:
