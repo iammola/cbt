@@ -6,7 +6,6 @@ import { EventModel, ExamModel, SessionModel, SubjectsModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { ClassExamGETData } from "types/api";
-import { loadGetInitialProps } from "next/dist/shared/lib/utils";
 
 async function getExams({ id, filter }: any): Promise<ServerResponse<ClassExamGETData>> {
   await connect();
