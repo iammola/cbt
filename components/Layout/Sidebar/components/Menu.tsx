@@ -90,7 +90,7 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
               {({ expand, toggleExpand }) => {
                 const classes = classNames(
                   "flex w-full cursor-pointer items-center gap-2.5 rounded-lg py-2.5 text-gray-600 hover:bg-gray-100 hover:text-gray-800",
-                  { "justify-start pr-3": open, "justify-center": !open, "sm:py-3": !open && !url }
+                  { "justify-start pr-3": open, "justify-center": !open }
                 );
 
                 const list = sub?.map(({ title, url }) => (
@@ -110,15 +110,12 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
                   <Fragment>
                     <MenuItem.Main>
                       {url ? (
-                        <Link
-                          href={url}
-                          className={classes}
-                        >
-                          {Elem}
+                        <Link href={url}>
+                          <a className={classes}>{Elem}</a>
                         </Link>
                       ) : (
                         <div
-                          className={classes}
+                          className={classNames(classes, { "sm:py-3": !open })}
                           onClick={toggleExpand}
                         >
                           {Elem}
