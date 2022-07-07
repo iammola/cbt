@@ -103,7 +103,7 @@ const ExamSchema = new Schema({
     type: [String],
     trim: true,
   },
-  created: DateSchema,
+  created: { type: DateSchema, required: true },
   edited: {
     type: [DateSchema],
     default: undefined,
