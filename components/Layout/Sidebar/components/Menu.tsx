@@ -60,7 +60,7 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
       ],
     }[access];
 
-    return [...nav, ...general];
+    return [...general, ...nav];
   }, [account?.access]);
 
   return (
