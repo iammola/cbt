@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 import { connect } from "db";
-import { SessionModel, StudentsModel } from "db/models";
+import { SessionModel, StudentModel } from "db/models";
 
 import type { ServerResponse } from "types";
 import type { LoginData } from "types/api";
@@ -25,7 +25,7 @@ async function getCodes(account: LoginData): Promise<ServerResponse<unknown>> {
       { "terms._id.$": true }
     ).lean();
 
-    const students = await StudentsModel.find(
+    const students = await StudentModel.find(
       { "academic.term": currentSession?.terms[0]._id },
       "name.full code"
     ).lean();
