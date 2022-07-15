@@ -10,8 +10,21 @@ const DateSchema = new Schema(
     },
     by: {
       type: Schema.Types.ObjectId,
-      ref: "Teacher",
+      refPath: "model",
       required: true,
+    },
+    model: {
+      type: String,
+      required: true,
+      default: "Teacher",
+      enum: ["GroupedUser", "Teacher"],
+    },
+    name: {
+      type: String,
+      immutable: true,
+      required: function (this: { type: string }) {
+        return this.type === "GroupedUser";
+      },
     },
   },
   { _id: false }
@@ -97,7 +110,7 @@ const ExamSchema = new Schema({
     type: [String],
     trim: true,
   },
-  created: DateSchema,
+  created: { type: DateSchema, required: true },
   edited: {
     type: [DateSchema],
     default: undefined,

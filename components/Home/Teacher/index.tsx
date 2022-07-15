@@ -9,7 +9,7 @@ import type { TeacherSubjectsExtendGETData } from "types/api";
 const Home: React.FC = () => {
   const [{ account }] = useCookies(["account"]);
   const { data: subjectsItems } = useSWR<RouteData<TeacherSubjectsExtendGETData>>(
-    account !== undefined ? `/api/teachers/${account._id}/subjects/extend` : null
+    account !== undefined ? `/api/teachers/${account?._id}/subjects/extend` : null
   );
 
   return (

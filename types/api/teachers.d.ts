@@ -21,6 +21,7 @@ export type TeacherExamGETData = RecordId & {
     name: {
       class: string;
       subject: string;
+      createdBy: string;
     };
     term: string;
   };

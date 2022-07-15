@@ -10,7 +10,7 @@ import type { StudentClassGETData } from "types/api";
 const Home: React.FC = () => {
   const router = useRouter();
   const [{ account }, , removeCookies] = useCookies(["account"]);
-  const { data: classData, error } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account._id}/class/`);
+  const { data: classData, error } = useSWR<RouteData<StudentClassGETData>>(`/api/students/${account?._id}/class/`);
 
   const signOut = () => router.push("/").then(() => removeCookies("account", { path: "/" }));
 
@@ -21,7 +21,7 @@ const Home: React.FC = () => {
           <h2 className="text-3xl font-bold tracking-wider text-slate-700">Dashboard 🚀</h2>
           <div className="text-sm tracking-wide">
             <span className="text-slate-500">Logged in as</span>{" "}
-            <span className="font-medium text-slate-700">{account.name?.full}</span>
+            <span className="font-medium text-slate-700">{account?.name?.full}</span>
             {(classData?.data || error) && (
               <>
                 {" "}

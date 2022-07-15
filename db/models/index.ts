@@ -10,5 +10,6 @@ export { SubjectsModel } from "./Subject";
 
 export { StudentModel } from "./Student";
 export { TeacherModel } from "./Teacher";
+export { GroupedUserModel } from "./GroupedUser";
 
 export { SettingsModel } from "./Settings";

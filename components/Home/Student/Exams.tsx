@@ -15,7 +15,7 @@ import type { StudentExamsGETData } from "types/api";
 const Exam: React.FC = () => {
   const [, triggerRender] = useState(0);
   const [{ account }] = useCookies(["account"]);
-  const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account._id}/exams/`);
+  const { data: { data } = {}, error } = useSWR<RouteData<StudentExamsGETData>>(`/api/students/${account?._id}/exams/`);
 
   useEffect(() => {
     if (!data) return;
