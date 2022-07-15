@@ -3,7 +3,7 @@ import useSWR from "swr";
 import type { NextPage } from "next";
 
 const Codes: NextPage = () => {
-  const { data } = useSWR("/api/codes?filter=students");
+  const { data: { data } = {} } = useSWR("/api/codes?filter=students");
 
   return (
     <div className="prose max-w-none w-full h-full">
