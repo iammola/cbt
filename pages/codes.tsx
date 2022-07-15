@@ -8,7 +8,7 @@ const Codes: NextPage = () => {
   return (
     <div className="prose max-w-none w-full h-full">
       <ul>
-        {data.students.map(({ _id, name, code }) => (
+        {data?.students.map(({ _id, name, code }) => (
           <li key={_id}>
             {name.full} - {code}
           </li>
