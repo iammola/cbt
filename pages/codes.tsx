@@ -17,3 +17,5 @@ const Codes: NextPage = () => {
     </div>
   );
 };
+
+export default Codes;
