@@ -1,12 +1,12 @@
 diff --git a/types/index.d.ts b/types/index.d.ts
-index 00252c43dd2559eb518a779115da7cb20af25439..d57d21fdb8acddcfc8563a065750297e13c0917d 100644
+index 00252c43dd2559eb518a779115da7cb20af25439..c3bac4b7f2cd2d645623834adfeebbb0e645a945 100644
 --- a/types/index.d.ts
 +++ b/types/index.d.ts
 @@ -161,12 +161,13 @@ declare module 'mongoose' {
    export class Schema<EnforcedDocType = any, M = Model<EnforcedDocType, any, any, any>, TInstanceMethods = {}, TQueryHelpers = {}, TVirtuals = any,
      TStaticMethods = {},
      TPathTypeKey extends TypeKeyBaseType = DefaultTypeKey,
-+    SchemaID = true,
++    SchemaID extends boolean = true,
      DocType extends ObtainDocumentType<DocType, EnforcedDocType, TPathTypeKey> = ObtainDocumentType<any, EnforcedDocType, TPathTypeKey>>
      extends events.EventEmitter {
      /**
@@ -64,7 +64,7 @@ index ce94e6221c0c1ed27e4f30d4fc89014cbe5db334..9d60659f64f7f938635037accdf95c2e
    PathValueType extends PathWithTypePropertyBaseType<TypeKey> ? PathValueType[TypeKey] : PathValueType,
    PathValueType extends PathWithTypePropertyBaseType<TypeKey> ? Omit<PathValueType, TypeKey> : {}
 diff --git a/types/schemaoptions.d.ts b/types/schemaoptions.d.ts
-index 8e978bcac2d54fe2ddbd4dfd7960bb311716d2a1..6130dd39500ef26749b371edf5dd3880148b0b19 100644
+index 8e978bcac2d54fe2ddbd4dfd7960bb311716d2a1..401a3b5b93103aa77d55e3ba619ae029f70e6c44 100644
 --- a/types/schemaoptions.d.ts
 +++ b/types/schemaoptions.d.ts
 @@ -10,7 +10,7 @@ declare module 'mongoose' {
@@ -72,7 +72,7 @@ index 8e978bcac2d54fe2ddbd4dfd7960bb311716d2a1..6130dd39500ef26749b371edf5dd3880
  
    type DefaultTypeKey = 'type';
 -  interface SchemaOptions<PathTypeKey extends TypeKeyBaseType = DefaultTypeKey, DocType = unknown, InstanceMethods = {}, QueryHelpers = {}, StaticMethods = {}, virtuals = {}> {
-+  interface SchemaOptions<PathTypeKey extends TypeKeyBaseType = DefaultTypeKey, DocType = unknown, InstanceMethods = {}, QueryHelpers = {}, StaticMethods = {}, virtuals = {}, SchemaID = true> {
++  interface SchemaOptions<PathTypeKey extends TypeKeyBaseType = DefaultTypeKey, DocType = unknown, InstanceMethods = {}, QueryHelpers = {}, StaticMethods = {}, virtuals = {}, SchemaID extends boolean = true> {
      /**
       * By default, Mongoose's init() function creates all the indexes defined in your model's schema by
       * calling Model.createIndexes() after you successfully connect to MongoDB. If you want to disable
