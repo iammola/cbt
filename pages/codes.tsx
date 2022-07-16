@@ -1,3 +1,4 @@
+import Head from "next/head";
 import useSWR from "swr";
 import { Fragment } from "react";
 
@@ -10,6 +11,9 @@ const Codes: NextPage = () => {
 
   return (
     <div className="prose prose-slate max-w-none w-full h-full p-5 md:p-10 text-sm tracking-wide">
+      <Head>
+        <title>Student Codes | CBT | Grand Regal School</title>
+      </Head>
       <h2 className="text-center">Student Codes</h2>
       {data ? (
         Object.entries(
