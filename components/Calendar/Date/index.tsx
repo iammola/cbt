@@ -26,14 +26,17 @@ export const DateItem: React.FC<DateProps> = ({ date, events, ...is }) => {
   return (
     <div
       style={{ gridTemplateRows: "max-content minmax(0, 1fr) max-content" }}
-      className={classNames("grid w-full overflow-hidden border-t border-white/10 pl-2 pt-1.5 pr-1", {
-        "border-b": is.lastRow,
-        "border-r": !is.endOfWeek,
-        "bg-white/5": is.weekend,
-        "text-gray-200": !is.weekend,
-        "text-gray-400/50": !is.sameMonth,
-        "text-gray-400": is.sameMonth && is.weekend,
-      })}
+      className={classNames(
+        "grid w-full min-w-[10.5rem] min-h-[6rem] overflow-hidden border-t border-white/10 pl-2 pt-1.5 pr-1",
+        {
+          "border-b": is.lastRow,
+          "border-r": !is.endOfWeek,
+          "bg-white/5": is.weekend,
+          "text-gray-200": !is.weekend,
+          "text-gray-400/50": !is.sameMonth,
+          "text-gray-400": is.sameMonth && is.weekend,
+        }
+      )}
     >
       {is.today ? (
         <div className="flex h-8 items-center justify-end">
