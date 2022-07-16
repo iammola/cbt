@@ -10,7 +10,7 @@ const DateSchema = new Schema(
     },
     by: {
       type: Schema.Types.ObjectId,
-      refPath: "model",
+      ref: (doc: { model: string }) => doc.model,
       required: true,
     },
     model: {
