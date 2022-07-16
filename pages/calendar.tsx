@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { endOfWeek, getDaysInMonth, lastDayOfMonth, setDate, startOfMonth, subMonths } from "date-fns";
 
-import { Days, Dates, Header } from "components/Calendar";
+import { Dates, Header } from "components/Calendar";
 
 import type { NextPage } from "next";
 
@@ -73,7 +73,6 @@ const Calendar: NextPage = () => {
         monthNext={() => setActiveMonth(subMonths(activeMonth, -1))}
       />
       <div className="flex w-full grow flex-col items-start justify-start">
-        <Days />
         <Dates
           dates={datesObj}
           date={activeMonth}
