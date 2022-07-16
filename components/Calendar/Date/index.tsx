@@ -7,15 +7,15 @@ import { AllEvents } from "./AllEvents";
 export const DateItem: React.FC<DateProps> = ({ date, events, ...is }) => {
   const [showAll, setShowAll] = useState(false);
   const count = useMemo(() => events.reduce((acc, d) => acc + d.events.length, 0), [events]);
-  const first5 = useMemo(
+  const first4 = useMemo(
     () =>
       events.reduce((acc, b) => {
         const eventsCount = acc.reduce((acc, d) => acc + d.events.length, 0);
 
-        if (eventsCount < 5)
+        if (eventsCount < 4)
           acc.push({
             ...b,
-            events: b.events.slice(0, 5 - eventsCount),
+            events: b.events.slice(0, 4 - eventsCount),
           });
 
         return acc;
@@ -45,17 +45,17 @@ export const DateItem: React.FC<DateProps> = ({ date, events, ...is }) => {
         <span className="-mt-1 flex h-8 items-center justify-end pr-1">{date}</span>
       )}
       <Events
-        data={first5}
+        data={first4}
         className="w-full min-w-0 empty:hidden"
         timeClassName="shrink-0 text-[0.625rem] tracking-wider text-gray-200"
         eventClassName="block grow truncate text-xs tracking-wide text-gray-50"
       />
-      {count > 5 && (
+      {count > 4 && (
         <span
           onClick={() => setShowAll(true)}
           className="w-full cursor-pointer bg-neutral-800 pl-3 pb-1 text-xs font-semibold text-gray-400 hover:text-gray-300"
         >
-          {count - 4}+ more...
+          {count - 3}+ more...
         </span>
       )}
       {!!events.length && (
