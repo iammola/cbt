@@ -1,9 +1,11 @@
 import useSWR from "swr";
 
 import type { NextPage } from "next";
+import type { RouteData } from "types";
+import type { CodesGETData } from "types/api";
 
 const Codes: NextPage = () => {
-  const { data: { data } = {} } = useSWR("/api/codes?filter=students");
+  const { data: { data } = {} } = useSWR<RouteData<CodesGETData>>("/api/codes");
 
   return (
     <div className="prose max-w-none w-full h-full">

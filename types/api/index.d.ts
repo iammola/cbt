@@ -7,3 +7,11 @@ export * from "./sessions";
 export * from "./students";
 export * from "./subjects";
 export * from "./teachers";
+
+export type CodesGETData = {
+  students: {
+    _id: string;
+    name: { full: string };
+    code: number;
+  }[];
+};
