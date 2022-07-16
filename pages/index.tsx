@@ -145,7 +145,7 @@ const Home: NextPage = () => {
               placeholder="blur"
               objectPosition="center"
             />
-            <div className="z-1 absolute h-full w-full bg-blue-400/50"></div>
+            <div className="z-1 absolute h-full w-full bg-violet-400/50"></div>
           </div>
         </div>
         <form
@@ -153,8 +153,8 @@ const Home: NextPage = () => {
           className="z-0 flex max-w-full flex-col justify-between gap-y-6 rounded-2xl bg-white py-12 px-5 shadow-xl sm:gap-y-8 md:gap-y-14 md:px-8 lg:px-12"
         >
           <h1 className="pb-4 text-center text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl">
-            <span className="sm:text-blue-500">Log in</span> <span>to your</span>{" "}
-            <span className="text-blue-500">CBT</span> <span>account</span>
+            <span className="sm:text-violet-500">Log in</span> <span>to your</span>{" "}
+            <span className="text-violet-500">CBT</span> <span>account</span>
           </h1>
           <div className="flex items-center justify-between py-3 sm:gap-x-4 sm:px-3 md:gap-x-6 md:px-5">
             {code.map((number, pos) => (
@@ -174,7 +174,7 @@ const Home: NextPage = () => {
             className={classNames(
               "mt-3 flex items-center justify-center gap-4 rounded-md py-2.5 px-3 text-white shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-white",
               {
-                "bg-blue-400 hover:bg-blue-500 focus:ring-blue-500": success === undefined,
+                "bg-violet-400 hover:bg-violet-500 focus:ring-violet-500": success === undefined,
                 "bg-emerald-400 hover:bg-emerald-500 focus:ring-emerald-500": success,
                 "bg-red-400 hover:bg-red-500 focus:ring-red-500": success === false,
               }
@@ -248,7 +248,7 @@ const Input: React.FC<InputProps> = ({ focus, value, focusNext, focusPrevious, h
       onPaste={handlePaste}
       onBeforeInput={validateCharacter}
       onChange={(e) => onChange(e.target.value.slice(-1))}
-      className="h-10 w-10 rounded-md border text-center text-lg font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white sm:h-16 sm:w-16 sm:p-3 sm:text-xl md:h-20 md:w-20 md:p-4 md:text-2xl"
+      className="h-10 w-10 rounded-md border text-center text-lg font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 focus:ring-offset-white sm:h-16 sm:w-16 sm:p-3 sm:text-xl md:h-20 md:w-20 md:p-4 md:text-2xl"
     />
   );
 };
