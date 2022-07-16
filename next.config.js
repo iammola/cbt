@@ -4,5 +4,4 @@ module.exports = {
   reactStrictMode: true,
   trailingSlash: true,
   swcMinify: true,
-  typescript: { ignoreBuildErrors: true },
 };
