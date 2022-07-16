@@ -13,5 +13,6 @@ export type CodesGETData = {
     _id: string;
     name: { full: string };
     code: number;
+    academic: [{ class: { name: string; order: number } }];
   }[];
 };

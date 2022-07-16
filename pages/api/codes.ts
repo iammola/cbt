@@ -23,8 +23,11 @@ async function getCodes(account: LoginData): Promise<ServerResponse<unknown>> {
 
     const students = await StudentModel.find(
       { "academic.term": currentSession?.terms[0]._id },
-      "name.full code"
-    ).lean();
+      "name.full code academic.class.$"
+    )
+      .populate({ path: "academic.class", model: "Class", select: "name order" })
+      .sort({ "name.full": "asc" })
+      .lean();
 
     [success, status, message] = [true, StatusCodes.OK, { data: { students }, message: ReasonPhrases.OK }];
   } catch (error: any) {
