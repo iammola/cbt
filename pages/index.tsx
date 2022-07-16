@@ -11,7 +11,6 @@ import { BadgeCheckIcon, BanIcon, StatusOfflineIcon, StatusOnlineIcon } from "@h
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { classNames } from "utils";
-import Background from "/public/BG.jpg";
 import { LoadingIcon } from "components/Misc/Icons";
 import { useNotifications } from "components/Misc/Notification";
 
@@ -138,11 +137,12 @@ const Home: NextPage = () => {
         <div className="absolute inset-0 z-[-1] h-full w-full">
           <div className="relative h-full w-full">
             <Image
+              alt=""
+              priority
+              src="/BG.jpg"
               layout="fill"
-              alt="The Scenes"
-              src={Background}
+              loading="eager"
               objectFit="cover"
-              placeholder="blur"
               objectPosition="center"
             />
             <div className="z-1 absolute h-full w-full bg-violet-400/50"></div>
