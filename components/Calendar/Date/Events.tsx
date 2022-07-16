@@ -1,17 +1,20 @@
+import { useMemo } from "react";
 import { classNames } from "utils";
 
+// prettier-ignore
+const twColors = ["bg-amber-400" , "bg-indigo-400", "bg-cyan-400", "bg-pink-400", "bg-lime-400", "bg-violet-400", "bg-rose-400", "bg-teal-400", "bg-slate-400"];
+
 export const Events: React.FC<CP<EventProps>> = ({ children, ...props }) => {
-  const colors = [
-    "bg-amber-400",
-    "bg-indigo-400",
-    "bg-cyan-400",
-    "bg-pink-400",
-    "bg-lime-400",
-    "bg-violet-400",
-    "bg-rose-400",
-    "bg-teal-400",
-    "bg-slate-400",
-  ];
+  const colors = useMemo(() => {
+    const chosen: string[] = [];
+    const mostEvents = props.data.reduce<number>((a, { events }) => Math.max(...[a, events.length]), 0);
+
+    while (chosen.length < mostEvents && chosen.length < twColors.length) {
+      const color = twColors[Math.floor(Math.random() * twColors.length)];
+      if (!chosen.includes(color)) chosen.push(color);
+    }
+    return chosen;
+  }, [props.data]);
 
   return (
     <div className={props.className}>
@@ -23,7 +26,7 @@ export const Events: React.FC<CP<EventProps>> = ({ children, ...props }) => {
           >
             <span
               aria-hidden="true"
-              className={classNames("h-1.5 w-1.5 shrink-0 rounded-full", colors[idx % colors.length])}
+              className={classNames("h-1.5 w-1.5 shrink-0 rounded-full", colors[idx])}
             />
             <span className={props.eventClassName}>{event}</span>
             <span className={props.timeClassName}>{time}</span>
