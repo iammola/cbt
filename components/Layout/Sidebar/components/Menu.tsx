@@ -119,9 +119,6 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
                           onClick={toggleExpand}
                         >
                           {Elem}
-                          <ChevronDownIcon
-                            className={classNames("ml-auto h-5 w-5 shrink-0 text-gray-600", { hidden: !open })}
-                          />
                         </div>
                       )}
                     </MenuItem.Main>
