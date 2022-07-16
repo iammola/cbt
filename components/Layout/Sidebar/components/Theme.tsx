@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { MoonIcon as MoonSolidIcon, SunIcon as SunSolidIcon } from "@heroicons/react/solid";
+import { /* MoonIcon as MoonSolidIcon,  */ SunIcon as SunSolidIcon } from "@heroicons/react/solid";
 
 import { classNames } from "utils";
-import { MoonIcon as MoonOutlineIcon, SunIcon as SunOutlineIcon } from "components/Misc/Icons";
+import { /* MoonIcon as MoonOutlineIcon,  */ SunIcon as SunOutlineIcon } from "components/Misc/Icons";
 
 import type { ThemeProps } from "types";
 
@@ -17,13 +17,13 @@ const Theme: React.FC<ThemeProps> = ({ open }) => {
         outline: SunOutlineIcon,
       },
     },
-    {
+    /* {
       label: "Dark",
       Icon: {
         solid: MoonSolidIcon,
         outline: MoonOutlineIcon,
       },
-    },
+    }, */
   ];
 
   useEffect(() => {
@@ -67,13 +67,11 @@ const Theme: React.FC<ThemeProps> = ({ open }) => {
           </div>
         ))}
         <div
-          className={classNames(
-            "absolute inset-y-0 z-[-1] h-full w-1/2 rounded-full py-1 transition-all duration-500",
-            {
-              "left-1 pr-1": hovered === 0,
-              "left-[calc(50%-0.25rem)] pl-1": hovered === 1,
-            }
-          )}
+          style={{ width: `calc(${100 / themes.length}% - 0.25rem)` }}
+          className={classNames("absolute inset-y-0 z-[-1] h-full rounded-full py-1 transition-all duration-500", {
+            "left-1 pr-1": hovered === 0,
+            "left-[calc(50%-0.25rem)] pl-1": hovered === 1,
+          })}
         >
           <span className="inline-block h-full w-full rounded-full bg-white"></span>
         </div>
