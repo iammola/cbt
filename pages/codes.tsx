@@ -8,7 +8,7 @@ const Codes: NextPage = () => {
   const { data: { data } = {} } = useSWR<RouteData<CodesGETData>>("/api/codes");
 
   return (
-    <div className="prose max-w-none w-full h-full">
+    <div className="prose prose-slate max-w-none w-full h-full p-10 text-sm tracking-wide">
       <ul>
         {data?.students.map(({ _id, name, code }) => (
           <li key={_id}>
