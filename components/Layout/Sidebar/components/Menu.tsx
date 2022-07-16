@@ -100,7 +100,7 @@ const Menu: React.FC<MenuProps> = ({ open }) => {
                   >
                     <Link href={url}>
                       <a className="mt-2 flex w-full cursor-pointer items-center justify-start gap-2.5 rounded-lg py-2.5 pr-3 pl-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                        <span className="block truncate text-sm">Create an Exam</span>
+                        <span className="block truncate text-sm">{title}</span>
                       </a>
                     </Link>
                   </li>
