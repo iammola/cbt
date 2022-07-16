@@ -116,7 +116,7 @@ export type StudentGridProps = {
 
 export type StudentBarProps = {
   onSubmit(): void;
-  exam?: TeacherExamGETData["details"]["name"];
+  exam?: Omit<TeacherExamGETData["details"]["name"], "createdBy">;
 };
 
 export type StudentLoaderProps = {
