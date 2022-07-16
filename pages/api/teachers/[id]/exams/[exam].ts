@@ -4,10 +4,10 @@ import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { connect } from "db";
 import { ExamModel, SubjectsModel, TeacherModel } from "db/models";
 
-import type { TeacherExamGETData } from "types/api";
+import type { LoginData, TeacherExamGETData } from "types/api";
 import type { ServerResponse, SubjectsRecord } from "types";
 
-async function getExam(query: any): Promise<ServerResponse<TeacherExamGETData>> {
+async function getExam(query: any, account: LoginData): Promise<ServerResponse<TeacherExamGETData>> {
   await connect();
   let [success, status, message]: ServerResponse<TeacherExamGETData> = [
     false,
@@ -53,6 +53,7 @@ async function getExam(query: any): Promise<ServerResponse<TeacherExamGETData>> 
             name: {
               class: subject.class.name,
               subject: subject?.subjects[0].name,
+              createdBy: account.name.full,
             },
           },
         },
@@ -72,7 +73,7 @@ async function getExam(query: any): Promise<ServerResponse<TeacherExamGETData>> 
   return [success, status, message];
 }
 
-export default async function handler({ method, query }: NextApiRequest, res: NextApiResponse) {
+export default async function handler({ cookies, method, query }: NextApiRequest, res: NextApiResponse) {
   let [success, status, message]: ServerResponse<TeacherExamGETData> = [
     false,
     StatusCodes.INTERNAL_SERVER_ERROR,
@@ -83,7 +84,7 @@ export default async function handler({ method, query }: NextApiRequest, res: Ne
   if (allowedMethods !== method) {
     res.setHeader("Allow", allowedMethods);
     [status, message] = [StatusCodes.METHOD_NOT_ALLOWED, ReasonPhrases.METHOD_NOT_ALLOWED];
-  } else [success, status, message] = await getExam(query);
+  } else [success, status, message] = await getExam(query, JSON.parse(cookies.account ?? "") as LoginData);
 
   if (typeof message !== "object") message = { message, error: message };
 
