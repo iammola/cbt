@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useEffect } from "react";
 import type { NextPage } from "next";
@@ -5,10 +6,12 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import useSWRImmutable from "swr/immutable";
 
-import { Form, Loader } from "components/Exam/Teacher";
+import { Loader } from "components/Exam/Teacher";
 
 import type { RouteData } from "types";
 import type { TeacherExamGETData } from "types/api";
+
+const Form = dynamic(import("components/Exam/Teacher/Form"));
 
 const EditExam: NextPage = () => {
   const router = useRouter();

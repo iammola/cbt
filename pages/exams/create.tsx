@@ -1,7 +1,8 @@
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import type { NextPage } from "next";
 
-import { Form } from "components/Exam/Teacher";
+const Form = dynamic(import("components/Exam/Teacher/Form"));
 
 const CreateExams: NextPage = () => {
   return (
