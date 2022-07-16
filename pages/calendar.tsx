@@ -72,7 +72,13 @@ const Calendar: NextPage = () => {
         monthPrev={() => setActiveMonth(subMonths(activeMonth, 1))}
         monthNext={() => setActiveMonth(subMonths(activeMonth, -1))}
       />
-      <div className="flex w-full grow flex-col items-start justify-start">
+      <div
+        className="grid w-full grow w-full mt-4 overflow-y-auto"
+        style={{
+          gridTemplateRows: "repeat(5, 1fr)",
+          gridTemplateColumns: "repeat(7, minmax(min-content, 1fr))",
+        }}
+      >
         <Dates
           dates={datesObj}
           date={activeMonth}

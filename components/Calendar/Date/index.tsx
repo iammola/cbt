@@ -71,7 +71,7 @@ export const DateItem: React.FC<DateProps> = ({ date, events, ...is }) => {
 };
 
 interface DateProps extends Record<"today" | "lastRow" | "endOfWeek" | "weekend" | "sameMonth", boolean> {
-  date: number;
+  date: string | number;
   events: {
     date: Date;
     time: string;

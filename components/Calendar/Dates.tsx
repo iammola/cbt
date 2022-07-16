@@ -1,5 +1,6 @@
+import { Fragment } from "react";
 import useSWR from "swr";
-import { isEqual, isToday, isSameMonth, endOfWeek, isWeekend, isSameDay } from "date-fns";
+import { isEqual, isToday, isSameMonth, endOfWeek, isWeekend, isSameDay, format } from "date-fns";
 
 import { DateItem } from "./Date";
 
@@ -12,23 +13,20 @@ export const Dates: React.FC<DatesProps> = ({ date, dates }) => {
   );
 
   return (
-    <div
-      className="grid w-full grow grid-cols-7"
-      style={{ gridTemplateRows: "repeat(5, 20%)" }}
-    >
+    <Fragment>
       {dates.map((item, idx) => (
         <DateItem
           key={idx}
-          date={item.value}
           today={isToday(item.date)}
           weekend={isWeekend(item.date)}
           lastRow={idx + 7 >= dates.length}
           sameMonth={isSameMonth(item.date, date)}
           endOfWeek={isEqual(item.date, endOfWeek(item.date))}
           events={events.filter((e) => isSameDay(new Date(e.date), item.date))}
+          date={isToday(item.date) ? item.value : format(item.date, `EEE, d ${item.value === 1 ? "MMM" : ""}`)}
         />
       ))}
-    </div>
+    </Fragment>
   );
 };
 
