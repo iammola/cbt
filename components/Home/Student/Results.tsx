@@ -1,13 +1,13 @@
 import useSWR from "swr";
+import { compareAsc } from "date-fns";
 import { useCookies } from "react-cookie";
 
 import EmptyPage from "./Empty";
 import ErrorPage from "./Error";
-import { Card, Cards, Section, Title } from "./Section";
+import { ScoreCard, Cards, Section, Title } from "./Section";
 
 import type { RouteData } from "types";
 import type { StudentCBTResultsGETData } from "types/api";
-import { format } from "date-fns";
 
 const Result: React.FC = () => {
   const [{ account }] = useCookies(["account"]);
@@ -19,30 +19,16 @@ const Result: React.FC = () => {
     <Section>
       <Title>Results</Title>
       <Cards>
-        {data?.map((item, idx) => (
-          <Card
-            key={idx}
-            className="h-48 gap-y-3"
-          >
-            <h5 className="text-4xl font-bold tracking-wide text-gray-700">{item.score}</h5>
-            <h6 className="text-lg font-medium text-gray-600 line-clamp-2">{item.subject}</h6>
-            <ul className="w-full list-inside list-disc space-y-1">
-              {[
-                ["Spent", item.time, "minute"],
-                ["Attempted", item.attempts, "question"],
-                ["Date:", format(new Date(item.date), "EEEE, dd MMM yyyy")],
-              ].map(([k, v, l], idx) => (
-                <li
-                  key={idx}
-                  className="text-sm text-slate-500"
-                >
-                  {k} <span className="font-medium text-slate-700">{v}</span> {l}
-                  {l && v !== 1 && "s"}
-                </li>
-              ))}
-            </ul>
-          </Card>
-        ))}
+        {data
+          ?.sort((a, b) => compareAsc(new Date(a.date), new Date(b.date)))
+          .map((item, idx) => (
+            <ScoreCard
+              key={idx}
+              {...item}
+              date={new Date(item.date)}
+              className="flex w-[300px] flex-col items-start justify-start rounded-xl bg-white px-5 py-4 shadow h-48 gap-y-3"
+            />
+          ))}
         {data && !data.length && <EmptyPage message="No results to see" />}
         {error && <ErrorPage message="Error loading results!!! Retrying..." />}
         {!data?.length && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}

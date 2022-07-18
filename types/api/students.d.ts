@@ -22,7 +22,6 @@ export type StudentCBTResultsGETData = {
 export type StudentExamsGETData = (Pick<ExamRecord, "_id" | "duration"> & {
   date: Date;
   subject: string;
-  locked?: boolean;
   questions: number;
 })[];
 
