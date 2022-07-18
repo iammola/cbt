@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
-import { format, isFuture, isPast } from "date-fns";
+import { compareDesc, format, isFuture, isPast } from "date-fns";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 
@@ -34,7 +34,7 @@ const Exam: React.FC = () => {
     <Section>
       <Title>Scheduled Exams</Title>
       <Cards>
-        {data?.map((item, idx) => (
+        {data?.sort((a, b) => compareDesc(a.date, b.date)).map((item, idx) => (
           <Card
             key={idx}
             className="h-64 !justify-between gap-y-5"
