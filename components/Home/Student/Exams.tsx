@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
-import { compareDesc, format, isFuture, isPast } from "date-fns";
+import { compareAsc, format, isFuture, isPast } from "date-fns";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 
@@ -34,43 +34,45 @@ const Exam: React.FC = () => {
     <Section>
       <Title>Scheduled Exams</Title>
       <Cards>
-        {data?.sort((a, b) => compareDesc(a.date, b.date)).map((item, idx) => (
-          <Card
-            key={idx}
-            className="h-64 !justify-between gap-y-5"
-          >
-            <h5 className="text-2xl font-bold text-gray-700 line-clamp-2">{item.subject}</h5>
-            <ul className="w-full list-inside list-disc space-y-1">
-              {[
-                [item.questions, "questions"],
-                [item.duration, "minutes"],
-                [format(new Date(item.date), "EEEE, dd MMM yyyy")],
-              ].map(([val, key]) => (
-                <li
-                  key={key}
-                  className="text-sm text-slate-700"
+        {data
+          ?.sort((a, b) => compareAsc(a.date, b.date))
+          .map((item, idx) => (
+            <Card
+              key={idx}
+              className="h-64 !justify-between gap-y-5"
+            >
+              <h5 className="text-2xl font-bold text-gray-700 line-clamp-2">{item.subject}</h5>
+              <ul className="w-full list-inside list-disc space-y-1">
+                {[
+                  [item.questions, "questions"],
+                  [item.duration, "minutes"],
+                  [format(new Date(item.date), "EEEE, dd MMM yyyy")],
+                ].map(([val, key]) => (
+                  <li
+                    key={key}
+                    className="text-sm text-slate-700"
+                  >
+                    <span className="font-medium">{val}</span> {key}
+                  </li>
+                ))}
+              </ul>
+              {isPast(new Date(item.date)) ? (
+                <Link href={`/exams/write/${String(item._id)}`}>
+                  <a className="flex w-full cursor-pointer select-none items-center justify-center rounded-full bg-blue-500 py-2 px-8 text-sm font-medium tracking-wide text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                    Start Exam
+                  </a>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className="flex w-full cursor-pointer select-none items-center justify-center gap-x-1 rounded-full bg-gray-500 py-2 px-8 text-sm font-medium tracking-wide text-white"
                 >
-                  <span className="font-medium">{val}</span> {key}
-                </li>
-              ))}
-            </ul>
-            {isPast(new Date(item.date)) ? (
-              <Link href={`/exams/write/${String(item._id)}`}>
-                <a className="flex w-full cursor-pointer select-none items-center justify-center rounded-full bg-blue-500 py-2 px-8 text-sm font-medium tracking-wide text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                  Start Exam
-                </a>
-              </Link>
-            ) : (
-              <button
-                type="button"
-                className="flex w-full cursor-pointer select-none items-center justify-center gap-x-1 rounded-full bg-gray-500 py-2 px-8 text-sm font-medium tracking-wide text-white"
-              >
-                <LockClosedIcon className="h-5 w-5 fill-white" />
-                Locked
-              </button>
-            )}
-          </Card>
-        ))}
+                  <LockClosedIcon className="h-5 w-5 fill-white" />
+                  Locked
+                </button>
+              )}
+            </Card>
+          ))}
         {data && !data.length && <EmptyPage message="No exams to write" />}
         {error && <ErrorPage message="Error loading exams!!! Retrying..." />}
         {!data?.length && new Array(4).fill(0).map((_, i) => <Skeleton key={i} />)}
