@@ -43,7 +43,7 @@ const Exams: NextPage = () => {
                     #
                   </span>
                 </th>
-                {["Class", "Subject", "Created At", "Created By"].map((i) => (
+                {["Class", "Subject", "Created At"].map((i) => (
                   <th
                     key={i}
                     scope="col"
@@ -61,27 +61,17 @@ const Exams: NextPage = () => {
                   <span className="sr-only">Edit</span>
                 </th>
                 {/* 
-                                  <th
-                                      scope="col"
-                                      className="relative px-6 py-3"
-                                  >
-                                      <span className="sr-only">
-                                          Preview
-                                      </span>
-                                  </th>
-                                  <th
-                                      scope="col"
-                                      className="relative px-6 py-3"
-                                  >
-                                      <span className="sr-only">
-                                          Delete
-                                      </span>
-                                  </th>
-                                   */}
+                 <th scope="col" className="relative px-6 py-3">
+                  <span className="sr-only">Preview</span>
+                 </th>
+                 <th scope="col" className="relative px-6 py-3">
+                  <span className="sr-only">Delete</span>
+                 </th>
+                */}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white text-gray-600">
-              {exams?.data?.map(({ subject, duration, questions, created: { at, by }, ...exam }, idx) => (
+              {exams?.data?.map(({ subject, duration, questions, created: { at }, ...exam }, idx) => (
                 <tr
                   key={idx}
                   className="text-sm font-medium"
@@ -99,24 +89,26 @@ const Exams: NextPage = () => {
                   <td className="whitespace-nowrap px-6 py-4">
                     {capitalizeFirst(formatRelative(new Date(at), new Date()))}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <div className="flex items-center gap-4">
-                      <div className="relative h-10 w-10 shrink-0">
-                        <UserImage
-                          src=""
-                          layout="fill"
-                          objectFit="cover"
-                          objectPosition="center"
-                          className="rounded-full"
-                          initials={{
-                            text: by.name.initials,
-                            className: "rounded-full bg-indigo-300",
-                          }}
-                        />
+                  {/*
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <div className="flex items-center gap-4">
+                        <div className="relative h-10 w-10 shrink-0">
+                          <UserImage
+                            src=""
+                            layout="fill"
+                            objectFit="cover"
+                            objectPosition="center"
+                            className="rounded-full"
+                            initials={{
+                              text: by.name.initials,
+                              className: "rounded-full bg-indigo-300",
+                            }}
+                          />
+                        </div>
+                        <span>{by.name.full}</span>
                       </div>
-                      <span>{by.name.full}</span>
-                    </div>
-                  </td>
+                    </td>
+                  */}
                   <td className="whitespace-nowrap px-6 py-4 text-right tracking-wider">
                     <Link href={`/exams/edit/${exam._id.toString()}`}>
                       <a className="cursor-pointer text-indigo-500 hover:text-indigo-600">Edit</a>
