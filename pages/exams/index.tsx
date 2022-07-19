@@ -29,9 +29,9 @@ const Exams: NextPage = () => {
         />
       </Head>
       <Sidebar />
-      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200">
+      <main className="flex h-full grow flex-col items-center justify-center divide-x-[1.5px] divide-gray-200 overflow-x-auto">
         <Navbar />
-        <section className="flex w-full grow flex-col items-center justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6">
+        <section className="flex w-full grow flex-col items-start justify-start gap-3 overflow-y-auto bg-gray-50/80 py-10 px-6 lg:items-center">
           <table className="min-w-full overflow-hidden rounded-lg shadow-md">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
