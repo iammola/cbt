@@ -17,17 +17,9 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
   ];
 
   try {
-    const events: EventRecord<true>[] = await EventModel.find(
-      {
-        from: {
-          $lte: new Date(+to),
-          $gte: new Date(+from),
-        },
-      },
-      "from exams"
-    )
+    const events = await EventModel.find({ from: { $lte: new Date(+to), $gte: new Date(+from) } }, "from exams")
       .populate("exams", "subject")
-      .lean();
+      .lean<EventRecord<true>[]>();
 
     const data = await Promise.all(
       events.map(async ({ from, exams }) => ({
@@ -43,12 +35,16 @@ async function getEventsRange(from: any, to: any): Promise<ServerResponse<Events
                 .populate("class", "alias")
                 .lean();
 
-              return record === null ? "" : `${record.class.alias} ${record.subjects[0].name}`;
+              return record == null ? "" : `${record.class.alias} ${record.subjects[0].name}`;
             })
           )
         )
           .filter(Boolean)
-          .sort(),
+          .sort((a, b) => {
+            const [, subjectA] = a.split(" ", 2);
+            const [, subjectB] = b.split(" ", 2);
+            return subjectA > subjectB ? 1 : subjectA < subjectB ? -1 : 0;
+          }),
       }))
     );
 
