@@ -92,7 +92,7 @@ const Exams: NextPage = () => {
                     <div className="flex flex-col">
                       <span className="text-sm text-gray-900">{subject}</span>
                       <span className="text-sm text-gray-500">
-                        {duration} mins - {questions} questions
+                        {duration} {duration === 1 ? "min" : "mins" - {questions} {questions === 1 ? "question" : "questions"}
                       </span>
                     </div>
                   </td>
