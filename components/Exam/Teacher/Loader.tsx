@@ -1,7 +1,20 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
 const Loader: React.FC<{ show: boolean }> = ({ show }) => {
+  useEffect(() => {
+    const html = document.documentElement;
+    const setTimer = (): NodeJS.Timeout =>
+      setTimeout(() => {
+        if (html.hasAttribute("style")) {
+          html.removeAttribute("style");
+          setTimeout(setTimer, 1);
+        }
+      }, 1e3);
+
+    setTimer();
+  });
+
   return (
     <Transition
       appear
