@@ -9,10 +9,19 @@ export const Events: React.FC<CP<EventProps>> = ({ children, ...props }) => {
     const chosen: string[] = [];
     const mostEvents = props.data.reduce<number>((a, { events }) => Math.max(...[a, events.length]), 0);
 
-    while (chosen.length < mostEvents && chosen.length < twColors.length) {
+    while (chosen.length < mostEvents) {
+      const allUsed = chosen.length >= twColors.length;
       const color = twColors[Math.floor(Math.random() * twColors.length)];
-      if (!chosen.includes(color)) chosen.push(color);
+
+      // Prevent the same color in a row when all colors have been used
+      if (allUsed && color === chosen.at(-1)) continue;
+
+      // Prevent duplicate colors when there are still other colors to be used
+      if (!allUsed && chosen.includes(color)) continue;
+
+      chosen.push(color);
     }
+
     return chosen;
   }, [props.data]);
 
