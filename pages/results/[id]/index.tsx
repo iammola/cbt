@@ -291,15 +291,15 @@ const Result: NextPage = () => {
               <Image
                 priority
                 layout="fill"
-                alt="VP Signature"
+                alt="Principal Signature"
                 objectFit="contain"
-                src="/Signature VP.png"
+                src="/Principal Signature.jpg"
                 objectPosition="center"
                 className="brightness-50"
               />
             </div>
             <span className="mt-2 self-center text-sm font-medium tracking-wide text-gray-600">
-              V.P. Academics Signature
+              Principal&apos;s Signature
             </span>
           </div>
         </div>

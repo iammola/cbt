@@ -12,9 +12,9 @@ const TranscriptFooter: React.FC<{ remark?: string; className: string }> = ({ cl
           <Image
             priority
             layout="fill"
-            alt="VP Signature"
+            alt="Principal Signature"
             objectFit="contain"
-            src="/Signature VP.png"
+            src="/Principal Signature.jpg"
             objectPosition="center"
             className="brightness-50"
           />
