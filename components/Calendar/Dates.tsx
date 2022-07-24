@@ -9,7 +9,8 @@ import type { EventsRangeGETData } from "types/api";
 
 export const Dates: React.FC<DatesProps> = ({ date, dates }) => {
   const { data: { data: events } = { data: [] } } = useSWR<RouteData<EventsRangeGETData>>(
-    dates.length > 1 && `/api/events/range/?from=${dates[0]?.date.getTime()}&to=${dates.at(-1)?.date.getTime()}`
+    dates.length > 1 &&
+      `/api/events/range/?from=${dates[0].date.getTime()}&to=${dates[dates.length - 1].date.getTime()}`
   );
 
   return (

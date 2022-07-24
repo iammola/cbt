@@ -14,7 +14,7 @@ export const Events: React.FC<CP<EventProps>> = ({ children, ...props }) => {
       const color = twColors[Math.floor(Math.random() * twColors.length)];
 
       // Prevent the same color in a row when all colors have been used
-      if (allUsed && color === chosen.at(-1)) continue;
+      if (allUsed && color === chosen[chosen.length - 1]) continue;
 
       // Prevent duplicate colors when there are still other colors to be used
       if (!allUsed && chosen.includes(color)) continue;

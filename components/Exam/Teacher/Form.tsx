@@ -213,7 +213,7 @@ const Form: React.FC<{ data?: TeacherExamGETData }> = ({ data }) => {
                         className="w-full px-3 pt-1.5 pb-0.5 focus:outline-none"
                         onChange={({ target: { value } }) => {
                           const v = instructions.map((j, i) => (i === idx ? value : j)).filter(Boolean);
-                          v.at(-1) !== "" && v.push("");
+                          if (v[v.length - 1] !== "") v.push("");
                           setInstructions(v);
                         }}
                       />
