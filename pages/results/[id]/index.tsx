@@ -293,7 +293,7 @@ const Result: NextPage = () => {
                 layout="fill"
                 alt="Principal Signature"
                 objectFit="contain"
-                src="/Principal Signature.jpg"
+                src="/Principal Signature.png"
                 objectPosition="center"
                 className="brightness-50"
               />

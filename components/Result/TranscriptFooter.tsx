@@ -14,7 +14,7 @@ const TranscriptFooter: React.FC<{ remark?: string; className: string }> = ({ cl
             layout="fill"
             alt="Principal Signature"
             objectFit="contain"
-            src="/Principal Signature.jpg"
+            src="/Principal Signature.png"
             objectPosition="center"
             className="brightness-50"
           />
